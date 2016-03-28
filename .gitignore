@@ -1,0 +1,30 @@
+# Files not part of core project
+
+Source/MarkLight.Demo/
+Source/Assets/DevTools/
+Source/Assets/UnityVS/
+Source/Assets/DevTools.meta
+Source/Assets/UnityVS.meta
+
+
+# Unity generated
+
+Source/.vs/
+Source/Temp/
+Source/obj/
+Source/UnityGenerated/
+Source/Library/
+
+
+# Visual Studio / MonoDevelop generated
+
+Source/ExportedObj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj

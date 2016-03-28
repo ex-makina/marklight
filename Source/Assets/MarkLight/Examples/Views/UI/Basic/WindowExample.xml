@@ -1,0 +1,7 @@
+<WindowExample>
+  <Button Click="ToggleWindow" Text="Toggle Window" AdjustToText="Width" Alignment="TopLeft" Offset="25,25,0,0" />
+  
+  <Window Id="Window" Title="Window Title" Width="600px" Height="400px">
+    <Label Style="ShowcaseDescription" Text="Window Content" Width="100%" Height="100%" TextAlignment="Center" Margin="50px" />
+  </Window>
+</WindowExample>

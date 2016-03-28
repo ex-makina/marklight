@@ -1,0 +1,30 @@
+<DataGridExample>
+  <DataGrid Width="500">
+    <RowHeader>
+      <ColumnHeader Width="125" Text="Header 1" />
+      <ColumnHeader Width="125" Text="Header 2" />
+      <ColumnHeader Width="*">
+        <Group Orientation="Horizontal" Spacing="18" Alignment="Left">
+          <Image Style="ShowcaseButtonContent" />
+          <Label Text="Custom Header" AdjustToText="Width" />
+        </Group>
+      </ColumnHeader>
+    </RowHeader>
+    
+    <Row>
+      <Column Text="First" />
+      <Column Text="Second" />
+      <Column Text="Third" />
+    </Row>
+    <Row>
+      <Column Text="Hello" />
+      <Column Text="World" />
+      <Column>
+        <Group Orientation="Horizontal" Spacing="18" Alignment="Left">
+          <Image Style="ShowcaseButtonContent" />
+          <Label Text="Custom Content" AdjustToText="Width" FontColor="Black" />
+        </Group>
+      </Column>
+    </Row>
+  </DataGrid>
+</DataGridExample>

@@ -1,0 +1,10 @@
+<TabPanel>
+  <Region Id="TabContent">
+    <ViewSwitcher Id="TabSwitcher">
+      <ContentPlaceholder />
+    </ViewSwitcher>
+  </Region>
+
+  <List Id="TabHeaderList" Orientation="Horizontal" Alignment="TopLeft" ItemSelected="TabHeaderSelected">
+  </List>  
+</TabPanel>

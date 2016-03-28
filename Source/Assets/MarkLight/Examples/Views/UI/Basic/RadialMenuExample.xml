@@ -1,0 +1,11 @@
+<RadialMenuExample>
+  <InteractableRegion Click="ToggleRadialMenu" Margin="50" BackgroundColor="White">
+    <Label Text="{=MenuClickText}" TextAlignment="Center" FontSize="20" FontColor="#000000" />
+    <RadialMenu Id="ContextRadialMenu">
+      <Button Text="Menu 1" Click="MenuButtonClicked" />
+      <Button Text="Menu 2" Click="MenuButtonClicked" />
+      <Button Text="Menu 3" Click="MenuButtonClicked" />
+      <Button Text="Menu 4" Click="MenuButtonClicked" />
+    </RadialMenu>
+  </InteractableRegion>
+</RadialMenuExample>

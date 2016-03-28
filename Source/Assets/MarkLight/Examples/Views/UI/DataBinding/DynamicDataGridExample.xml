@@ -1,0 +1,20 @@
+<DynamicDataGridExample>
+  <Group Orientation="Horizontal" Spacing="15px" ContentAlignment="Top">
+    <Group Orientation="Vertical" Spacing="15px">
+      <Button Text="Add" Click="Add" Width="120" />
+      <Button Text="Remove" Click="Remove" IsDisabled="{=!DataGrid.DataGridList.IsItemSelected}" Width="120" />
+    </Group>
+
+    <DataGrid Id="DataGrid" Width="500" Items="{Highscores}">
+      <RowHeader>
+        <ColumnHeader Width="*" Text="Player" />
+        <ColumnHeader Width="*" Text="Score" />
+      </RowHeader>
+
+      <Row IsTemplate="True">
+        <Column Text="{#Item.Player.FirstName} {#Item.Player.LastName}" />
+        <Column Text="{=#Item.Score}" />
+      </Row>
+    </DataGrid>
+  </Group>
+</DynamicDataGridExample>

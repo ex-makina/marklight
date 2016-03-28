@@ -1,0 +1,68 @@
+<UIExamples>
+  <UserInterface>    
+    <Region BackgroundColor="Gray70">
+      <TabPanel Style="Menu" Margin="0,10,0,0">
+        <Tab Text="Buttons &amp; Input">
+          <TabPanel Style="SubMenu" TabListOrientation="Horizontal" Margin="5">
+            <Tab Text="Buttons">
+              <ButtonsExample Style="Reset" />
+            </Tab>
+            <Tab Text="ComboBox">
+              <ComboBoxExample Style="Reset" />
+            </Tab>
+            <Tab Text="InputField">
+              <InputFieldExample Style="Reset" />
+            </Tab>
+            <Tab Text="RadialMenu">
+              <RadialMenuExample Style="Reset" />
+            </Tab>
+            <Tab Text="Slider">
+              <SliderExample Style="Reset" />
+            </Tab>
+          </TabPanel>
+        </Tab>
+
+        <Tab Text="Layout &amp; Lists">
+          <TabPanel Style="SubMenu" TabListOrientation="Horizontal" Margin="5">
+            <Tab Text="DataGrid">
+              <DataGridExample Style="Reset" />
+            </Tab>
+            <Tab Text="Group">
+              <GroupExample Style="Reset" />
+            </Tab>
+            <Tab Text="List">
+              <ListExample Style="Reset" />
+            </Tab>
+            <Tab Text="TabPanel">
+              <TabPanelExample Style="Reset" />
+            </Tab>
+            <Tab Text="Panel">
+              <PanelExample Style="Reset" />
+            </Tab>
+            <Tab Text="Window">
+              <WindowExample Style="Reset" />
+            </Tab>
+          </TabPanel>
+        </Tab>
+
+        <Tab Text="Data Binding">
+          <TabPanel Style="SubMenu" TabListOrientation="Horizontal" Margin="5">
+            <Tab Text="ComboBox">
+              <DynamicComboBoxExample Style="Reset" />
+            </Tab>
+            <Tab Text="DataGrid">
+              <DynamicDataGridExample Style="Reset" />
+            </Tab>
+            <Tab Text="List">
+              <DynamicListExample Style="Reset" />
+            </Tab>
+            <Tab Text="TabPanel">
+              <DynamicTabPanelExample Style="Reset" />
+            </Tab>
+          </TabPanel>
+        </Tab>
+      </TabPanel>
+    </Region>
+  </UserInterface>
+  <EventSystem />
+</UIExamples>

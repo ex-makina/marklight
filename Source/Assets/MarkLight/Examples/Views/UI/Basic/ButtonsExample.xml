@@ -1,0 +1,27 @@
+<ButtonsExample>
+  <Group Spacing="25">
+    <Group Orientation="Horizontal" Spacing="50">
+      <Group Spacing="10px">
+        <CheckBox Text="Option 1" />
+        <CheckBox Text="Option 2" />
+        <CheckBox Text="Option 3" />
+      </Group>
+
+      <Group Spacing="10px">
+        <RadioButton Text="Option 1" />
+        <RadioButton Text="Option 2" />
+        <RadioButton Text="Option 3" />
+      </Group>
+    </Group>
+    
+    
+    <Group Orientation="Horizontal" Spacing="25px" ContentAlignment="Top">
+      <Button Text="Click" Click="ButtonClick" />
+      <Button Text="Toggle" IsToggleButton="True" />
+      <Button Text="Content">
+        <Image Style="ShowcaseButtonContent" />
+      </Button>
+    </Group>
+    <Label Text="Button clicked [b]{ButtonClickCount}[/b] times" FontSize="16" AdjustToText="Width" />
+  </Group>
+</ButtonsExample>

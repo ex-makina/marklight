@@ -1,0 +1,12 @@
+<ComboBoxExample>
+  <Group Orientation="Vertical" Spacing="15px" ContentAlignment="Left">
+    <ComboBox Id="ComboBox">
+      <ComboBoxItem Text="ComboBoxItem 1" />
+      <ComboBoxItem Text="ComboBoxItem 2" />
+      <ComboBoxItem Text="ComboBoxItem 3" />
+      <ComboBoxItem Text="ComboBoxItem 4" />
+      <ComboBoxItem Text="ComboBoxItem 5" />
+    </ComboBox>
+    <CheckBox IsChecked="{ComboBox.IsDropUp}" Text="IsDropUp" />
+  </Group>
+</ComboBoxExample>

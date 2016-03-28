@@ -1,0 +1,113 @@
+﻿v2.0.0-beta2
+- Dependency fields functionality added and all views have been converted to utilize dependency fields.
+- Fixed bug in tab panel were dynamically created tabs wasn't deactivated by default
+- Fixed bug where list didn't notify parents of layout change when list is rebuilt. 
+
+v2.0.0-beta
+- Bigger scope. The framework is no longer limited to UI. Any element in the scene can be created with the framework.
+- Binding to properties as well as fields.
+- Multi-binding through binding transformations or format strings.
+- New binding operators for creating local bindings, one-way bindings, and negated bindings.
+- More dynamic handling of value propagation and binding dependency checks. 
+- Dynamic loading of view-XML. View XML can be loaded during run-time. 
+- View fields (i.e. both fields and properties) can be mapped through class attributes.
+- State-management. Simplified handling of views having different states. You no longer need separate fields for different states, e.g. PressedButtonColor, HighlightedButtonColor, etc. You only need one field and storing the various states is handled by the framework.
+- Animation between states are defined using a new StateAnimation view. Overall handling different states and animation between them requires much less code.
+- New ObservableList<T> class that is a generic list that can be bound to views such as the List, FlowList, DataGrid, ComboBox and TabPanel. Any changes to the list (add, remove) will be automatically propagated to the views that it's bound to.
+- List-views respond to changes in their data better (no longer rebuilds entire list on changes).
+- TabPanel can be bound to dynamic list for dynamic tab creation.
+- Multiple themes in the same scene. No longer restricted to one default theme. Themes can also be specified for individual views.
+- AdjustToText fields on Button and ListItem - for adjusting its size to text.
+- Disabled button styles added to the themes.
+- Base directory of the framework can be changed and be put in any folder.
+- Events and view actions added to animation views.
+- The framework now provides means to access all of the unity component fields even if mappings doesn't exist.
+- Fixed Panel bug where breadth of scrollbars where assumed to be 20px.
+- Add disabled Button styles to CheckBox and RadioButton.
+- Added OverrideWidth and OverrideHeight fields to UIView
+- Added IsVisible field that when set to false still renders the view but with alpha = 0
+- Local state field can be changed on views by using the "--" notation
+- Added Content view to base view that references the view that contains the contents of the view (usually the view itself unless a ContentPlaceholder is used).
+- The fields Theme and Style are now inherited and applied to children that haven't set their styles.
+- Added Next/Previous method and ActiveView to ViewSwitcher
+- ListItem size can be adjusted with AdjustToText field. If set the ListItems will adjust their width/height to the text. Useful mainly if you want to create 
+  horizontal lists where each item is adjusted to the length of the text.
+- Dynamic data is no longer removed upone clean up so dynamic data can be visible even though the scene isn't running.
+- IsAlive property added to View.
+- View actions can be disabled so even when triggered no action handlers are invoked.
+- More flexible binding system, we can bind to uninitialized data, example: SelectedItem on the List. 
+- Sprites and fonts can be loaded dynamically by using path strings provided they've been loaded once in the scene before the scene is run.
+- Set-fields no longer required, View.IsSet(viewpath) can be used to see if a view field has been set.
+
+v1.4.2
+- MarkUX now fully compatible with iOS
+- Fixed compatibility issue with IL2CPP (in TypeHelper.GetExpressionValues)
+- Window IsMovable setting is no longer ignored
+- Added SelectedItem/SelectedItems property to ComboBox, List, FlowList, DataGrid
+- ComboBox SelectionChanged action now gets passed action-data ListSelectionActionData
+- GCAlloc calls reduced by not traversing over empty dictionaries every frame in View.TriggerChangeHandlers()
+- Updated ViewFieldAnimator.UpdateAnimation to use time.unscaledDeltaTime so UI works while pausing
+- Added CanSlide view field to Slider that can be used to disable the user to be able to slide the slider
+- Fixed so BoolValueConverter system value converter uses ToBoolean instead of ToSingle
+- PreserveAspect view field added to View that maps to the corresponding field on the image component
+- Added field TabItemsSpacing to TabPanel for changing spacing between tab-items
+- Removed prefab path from configuration
+
+v1.4
+- New theme: FlatUI
+- New standard view: TabPanel
+- New standard view: Window
+- New standard view: ComboBox
+- New standard view: CheckBox
+- New standard view: RadioButton
+- New standard view: ChildCanvas, for adding child canvases (used to control draw sort order)
+- Prefab system replaced by templates which fixed a number of issues caused by prefabs losing their connection when switching scenes and reloading views
+- Fixed ExecutionEngineException caused by TypeHelper.CreateInstance on iOS.
+- Fixed ReflectionTypeLoadException in occuring in some compatibility modes of Win 32 player.
+- Added option on view-presenter to disable undo logic while generating UI which saves a lot of memory in the editor
+- Showcase Standard Views updated to showcase new views and themes
+- Showcase Standard Views now separated into separate view files to make it easier to inspect.
+- Sprite asset paths can now refer to sub-sprites within the atlas using the notation: /path/to/sprite.psd:subsprite
+- Added access to ViewFieldAnimator state through ViewAnimator class
+- Color values can now be specified in r,g,b or r,g,b,a format: "1.0,0.4,0.2" or "1,1,1,0.5"
+- Added masking to List view so list items can be masked by the list
+- Fixed issue with element size changes being ignored. 
+- Folder /Views added to project root and is intended for custom views not included in the MarkUX framework
+- Added view-action EnabledChanged that is triggered after a view is enabled/disabled
+- Changed base class of custom action-data from BaseEventData to ActionData. Renamed classes to match.
+- ItemsChanged action added to FlowList and List
+- Added drag actions to ClickableRegion and renamed it to InteractableRegion
+- New fields added to various views which are listed below
+- Added fields: ParentView, LayoutParent and LayoutParentView to View
+- Added fields for RowHeight, TextOffset and HeaderTextOffset to DataGrid
+- Added fields for setting column text style to DataGrid
+- Added field ScrollBarBreadth to Panel
+- Added field ShowItemLabel to ListItem
+- Added fields for setting header text style to List and FlowList
+- Added field ShowMask to Mask view
+- Added fields ItemWidth and ItemHeight to List view
+- Added fields TextAlignment and TextMargin to list view
+- Added field IncludeContainerInContent to ContentContainer view for when you want to remove the container itself when adding content views
+
+v1.3
+- Full source included in the package
+
+v1.2
+- Added RadialMenu view
+- Added DataGrid view for presenting static and dynamic data in a grid
+- Added support for embedding views within the text of a Label
+- Added BBCode style syntax for changing color, size and style of text within a Label
+- Added HyperLink view for presenting clickable text
+- Added InteractableRegion view for surfaces that responds to click events
+- Animations can now be created programmatically using the ViewFieldAnimator class
+- Updated standard views example scene to include the RadialMenu, HyperLink, DataGrid and Label (embedded views)
+- Groups can now sort its content. It has a new view field SortDirection and all views have a new SortIndex field
+- Asset made compatible with earlier version of unity. Now only requires Unity 4.6
+
+v1.1
+- Added configuration functionality through config-file at MarkUX/Configuration/Configuration.asset
+- Added BackgroundMaterial field to views for setting background image material
+- Fixed Mac bug were subfolders where ignored when processing view assets
+
+v1.0
+- initial Release

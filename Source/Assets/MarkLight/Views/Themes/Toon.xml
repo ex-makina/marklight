@@ -1,0 +1,115 @@
+<Theme Name="Toon" BaseDirectory="Assets/MarkLight/Themes/Toon/">
+  <Label Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" Width="120" Height="40" />
+  <Label Style="Level" Width="80px" Height="60px" Font="Fonts/CarterOne.ttf" FontSize="30" FontColor="White" ShadowColor="#333333" ShadowDistance="2,-2" OutlineColor="#333333" OutlineDistance="2,-1" TextAlignment="Center" />
+  <Label Style="TitleRibbon" Font="Fonts/CarterOne.ttf" FontSize="36" FontColor="White" Height="60px" ShadowColor="#368f16" ShadowDistance="2,-2" OutlineColor="#368f16" OutlineDistance="2,-1" />
+  <Label Style="ShowcaseHeader" Font="Fonts/CarterOne.ttf" FontSize="30" FontColor="White" Height="60px" ShadowColor="#000000" ShadowDistance="2,-2" OutlineColor="#000000" OutlineDistance="2,-1" />
+  <Label Style="ShowcaseDescription" Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" FontColor="#000000" />
+  <Label Style="ShowcaseListLabel" Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="18" FontColor="White" />
+  <Label Style="ShowcaseGroupLabel" Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="18" FontColor="White" />
+
+  <Button BackgroundImage="Sprites/Button.psd" Disabled-BackgroundImage="Sprites/ButtonDisabled.psd" Pressed-BackgroundImage="Sprites/ButtonPressed.psd" Highlighted-BackgroundImage="Sprites/ButtonHighlighted.psd" BackgroundImageType="Sliced"
+          Font="Fonts/CarterOne.ttf" FontSize="30" FontColor="White" Width="160px" Height="60px" ShadowColor="#368f16" ShadowDistance="2,-2" OutlineColor="#368f16" OutlineDistance="2,-1"
+          Disabled-FontColor="Gray70" Disabled-ShadowColor="Gray40" Disabled-OutlineColor="Gray40"/>
+  <Button Style="Round" BackgroundImage="Sprites/RoundButton.psd" Pressed-BackgroundImage="Sprites/RoundButtonPressed.psd" Highlighted-BackgroundImage="Sprites/RoundButtonHighlighted.psd" Width="69" Height="72" />
+  <Button Style="CheckBox" BackgroundImage="Sprites/CheckButton.psd" Pressed-BackgroundImage="Sprites/CheckButtonPressed.psd" Highlighted-BackgroundImage="Sprites/CheckButton.psd" IsToggleButton="True" Width="52" Height="52" />
+
+  <CheckBox CheckBoxImage="Sprites/CheckButton.psd" Checked-CheckBoxImage="Sprites/CheckButtonPressed.psd" CheckBoxWidth="26" CheckBoxHeight="26" Height="26" 
+            CheckBoxColor="#ffffff" Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" FontStyle="Normal" FontColor="#000000" Spacing="10px"
+            Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
+
+  <RadioButton RadioButtonImage="Sprites/RadioButton.psd" Checked-RadioButtonImage="Sprites/RadioButtonPressed.psd" RadioButtonWidth="26" RadioButtonHeight="26" Height="26"
+               RadioButtonColor="#ffffff" Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" FontStyle="Normal" FontColor="#000000" Spacing="10px"
+               Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
+
+  <Image Style="MenuBackground" Sprite="Sprites/MenuBackground.psd" />
+  <Image Style="BackArrow" Sprite="Sprites/BackArrow.psd" Width="69" Height="72" />
+  <Image Style="MenuIcon" Sprite="Sprites/MenuIcon.psd" Width="69" Height="72" />
+  <Image Style="TitleRibbon" Sprite="Sprites/Ribbon.psd" Width="424" Height="107" />
+  <Image Style="ShowcaseButtonContent" Sprite="Sprites/Lock.psd" Width="33" Height="41" Offset="0,-10,-10,0" Alignment="TopRight" />
+  <Image Style="ShowcaseImage" Sprite="Sprites/Lock.psd" Width="33" Height="41" />
+
+  <Frame Style="Window" BackgroundImage="Sprites/Frame.psd" BackgroundImageType="Sliced" />
+  <Frame Style="ShowcasePanel" BackgroundImage="Sprites/Frame.psd" BackgroundImageType="Sliced" BackgroundColor="#ffffff" Alignment="Top" />
+  <Frame Style="ShowcaseGroup" BackgroundColor="Gray70" ContentMargin="5px" />
+
+  <Region Style="Window" BackgroundImage="Sprites/Frame.psd" BackgroundImageType="Sliced" />
+  <Region Style="DefaultBackgroundRegion" BackgroundImage="Sprites/MenuBackground.psd" BackgroundColor="#ffffff" />
+  <Region Style="ShowcaseListRegion" Margin="3px" BackgroundColor="Gray70" />
+
+  <HyperLink FontColor="#0077ff" Highlighted-FontColor="#0037ff" Pressed-FontColor="#7207ff" Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" Width="120" Height="40" />
+
+  <InputField BackgroundImage="Sprites/InputFieldBackground.psd" BackgroundImageType="Sliced" Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="18"/>
+
+  <Slider SliderBackgroundImage="Sprites/Slider.psd" SliderFillImage="Sprites/SliderFill.psd" SliderHandleImage="Sprites/SliderHandle.psd" SliderHandleColor="White" SliderFillMargin="9,6,9,7" SliderBackgroundImageType="Sliced" SliderFillImageType="Sliced" SliderHandleImageType="Simple" Breadth="45" Length="120" SliderHandleLength="34" SliderHandleBreadth="34" />
+
+  <Panel VerticalScrollbarBreadth="20" HorizontalScrollbarBreadth="20"
+       VerticalScrollbarImage="Sprites/VerticalScrollbar.psd" VerticalScrollbarImageType="Sliced"
+       HorizontalScrollbarImage="Sprites/HorizontalScrollbar.psd" HorizontalScrollbarImageType="Sliced"
+       VerticalScrollbarHandleImage="Sprites/VerticalScrollbarHandle.psd" VerticalScrollbarHandleImageType="Sliced"
+       HorizontalScrollbarHandleImage="Sprites/HorizontalScrollbarHandle.psd" HorizontalScrollbarHandleImageType="Sliced"
+         />
+
+  <Window TitleRegionWidth="424" TitleRegionHeight="107" TitleRegionImage="Sprites/Ribbon.psd" TitleRegionColor="#ffffff" TitleRegionImageType="Simple"
+      WindowImage="Sprites/Frame.psd" WindowImageType="Sliced" WindowColor="#ffffff" TitleRegionOffset="0,-50px,0,0"
+      TitleFont="Fonts/CarterOne.ttf"
+      TitleFontSize="36" TitleFontColor="White" TitleShadowColor="#368f16" TitleShadowDistance="2,-2" TitleOutlineColor="#368f16" TitleOutlineDistance="2,-1"
+      CloseButtonAlignment="TopRight"
+      CloseButtonColor="#ffffff"
+      CloseButtonImage="Sprites/CloseButton.psd"
+      CloseButtonImageType="Simple"
+      Highlighted--CloseButtonImage="Sprites/CloseButtonHighlighted.psd"
+      Pressed--CloseButtonImage="Sprites/CloseButtonPressed.psd"
+      Highlighted--CloseButtonColor="#ffffff" Pressed--CloseButtonColor="#ffffff"
+      CloseButtonOffset="0px,0px,0px,0" CloseButtonWidth="44" CloseButtonHeight="45"
+      TitleAlignment="Top" TitleOffset="0,18px,0,0" />
+
+  <List BackgroundImage="Sprites/ListBox.psd" BackgroundImageType="Sliced" BackgroundColor="White" ListMaskImage="Sprites/ListBoxMask.psd" ListMaskImageType="Sliced" ListMaskColor="#ffffff" />
+  <ListItem Breadth="40" TextMargin="25,0,0,0" TextAlignment="Left" BackgroundColor="White"
+            Selected-BackgroundColor="#dbd7e3" Pressed-BackgroundColor="#dbd7e3"
+            Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontStyle="Normal" FontSize="22" FontColor="#8f86a3"
+            Selected-FontColor="#000000" Pressed-FontColor="White" />
+
+  <TabPanel TabContentColor="#ffffff" TabContentImage="Sprites/TabContent.psd" TabContentImageType="Sliced" TabListContentMargin="0" 
+            TabListColor="Clear" TabListMaskImage="" TabListMaskShowGraphic="False" TabListSpacing="-5" TabListOffset="10,2,0,0"
+            HorizontalTopLeft-TabListOffset="10,2,0,0" HorizontalTop-TabListOffset="0,2,0,0" HorizontalTopRight-TabListOffset="0,2,10,0" />  
+  <TabHeader Breadth="40" TextPadding="20,10,20,10" TextAlignment="Center" 
+             BackgroundImage="Sprites/Tab.psd" BackgroundImageType="Sliced" Selected-BackgroundImage="Sprites/TabPressed.psd" Pressed-BackgroundImage="Sprites/TabPressed.psd"
+             BackgroundColor="White" Selected-BackgroundColor="White" Pressed-BackgroundColor="White"
+             Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontStyle="Normal" FontSize="22" FontColor="#000000" />
+
+  <ComboBox Height="40" Width="300" ButtonFont="Fonts/AveriaSansLibre-LightItalic.ttf" ButtonFontSize="22" 
+          ButtonFontColor="#000000" Pressed--ButtonFontColor="#000000" Highlighted--ButtonFontColor="#000000"
+          ButtonShadowColor="Clear" ButtonOutlineColor="Clear"
+          ButtonImage="Sprites/ComboBoxButton.psd" ButtonImageType="Sliced" Pressed--ButtonImage="Sprites/ComboBoxButtonPressed.psd"
+          Highlighted--ButtonImage="Sprites/ComboBoxButton.psd"
+          ButtonColor="#ffffff" Highlighted--ButtonColor="#dbd7e3" Pressed--ButtonColor="#dbd7e3"
+          ButtonTextAlignment="Left" ButtonTextMargin="25,0,0,0" />
+  <ComboBoxItem Breadth="40" TextMargin="25,0,0,0" TextAlignment="Left" BackgroundColor="White"
+            Selected-BackgroundColor="#dbd7e3" Highlighted-BackgroundColor="#dbd7e3" Pressed-BackgroundColor="#dbd7e3"
+            Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontStyle="Normal" FontSize="22" FontColor="#8f86a3"
+            Selected-FontColor="#000000" Pressed-FontColor="#000000" />
+  
+  <DataGrid BackgroundColor="White" ColumnTextMargin="10,0,10,0" ColumnTextAlignment="Left" ListMaskImage="" ListMaskShowGraphic="False" />
+  <RowHeader Height="40" BackgroundColor="Gray70" />
+  <ColumnHeader Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" FontStyle="Bold" />
+  <Row Breadth="40" BackgroundColor="White" Selected-BackgroundColor="#c3f7c5" Pressed-BackgroundColor="#dbd7e3" />
+  <Column Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" FontColor="#000000" />
+
+  <TabPanel Style="Menu" TabContentColor="#9F9B9B" TabContentImage="Sprites/TabContent.psd" TabContentImageType="Sliced" TabListContentMargin="0"
+          TabListColor="Clear" TabListMaskImage="" TabListMaskShowGraphic="False" TabListSpacing="-5" TabListOffset="10,2,0,0"
+          HorizontalTopLeft-TabListOffset="10,2,0,0" HorizontalTop-TabListOffset="0,2,0,0" HorizontalTopRight-TabListOffset="0,2,10,0" />
+  <TabHeader Style="Menu" Breadth="40" TextPadding="20,10,20,10" TextAlignment="Center"
+             BackgroundImage="Sprites/Tab.psd" BackgroundImageType="Sliced" Selected-BackgroundImage="Sprites/TabPressed.psd" Pressed-BackgroundImage="Sprites/TabPressed.psd"
+             BackgroundColor="White" Selected-BackgroundColor="#9F9B9B" Pressed-BackgroundColor="#9F9B9B"
+             Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontStyle="Normal" FontSize="22" FontColor="#000000" />
+  <TabPanel Style="SubMenu" TabContentColor="#D3CACA" TabContentImage="Sprites/TabContent.psd" TabContentImageType="Sliced" TabListContentMargin="0"
+          TabListColor="Clear" TabListMaskImage="" TabListMaskShowGraphic="False" TabListSpacing="-5" TabListOffset="10,2,0,0"
+          HorizontalTopLeft-TabListOffset="10,2,0,0" HorizontalTop-TabListOffset="0,2,0,0" HorizontalTopRight-TabListOffset="0,2,10,0" />
+  <TabHeader Style="SubMenu" Breadth="40" TextPadding="20,10,20,10" TextAlignment="Center"
+             BackgroundImage="Sprites/Tab.psd" BackgroundImageType="Sliced" Selected-BackgroundImage="Sprites/TabPressed.psd" Pressed-BackgroundImage="Sprites/TabPressed.psd"
+             BackgroundColor="White" Selected-BackgroundColor="#D3CACA" Pressed-BackgroundColor="#D3CACA"
+             Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontStyle="Normal" FontSize="22" FontColor="#000000" />
+  
+  <!--9F9B9BFF-->
+  <!--D3CACAFF-->
+</Theme>

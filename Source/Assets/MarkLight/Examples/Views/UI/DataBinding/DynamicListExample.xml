@@ -1,0 +1,17 @@
+<DynamicListExample>
+  <Group Orientation="Vertical" Spacing="15px" ContentAlignment="Left">
+    <CheckBox Id="MultiSelectCheckBox" Text="Multi-select" />
+    
+    <Group Orientation="Horizontal" Spacing="15px">
+      <Button Text="Add" Click="Add" AdjustToText="Width" TextPadding="20,10,20,10" />
+      <Button Text="Remove" Click="Remove" IsDisabled="{=!HighscoresList.IsItemSelected}" AdjustToText="Width" TextPadding="20,10,20,10" />
+    </Group>
+
+    <List Id="HighscoresList" Items="{Highscores}" Width="194" CanMultiSelect="{=MultiSelectCheckBox.IsChecked}" CanDeselect="{=MultiSelectCheckBox.IsChecked}"
+          Orientation="Vertical">
+      <ListItem Text="{#Item.Player.FirstName}" IsTemplate="True" />
+    </List>
+
+    <Label Text="{HighscoresList.SelectedItem.Player.FirstName} {HighscoresList.SelectedItem.Player.LastName}" AdjustToText="Width" />
+  </Group>
+</DynamicListExample>

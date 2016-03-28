@@ -1,0 +1,14 @@
+<TabHeader Click="ListItemMouseClick" MouseEnter="ListItemMouseEnter"
+           MouseExit="ListItemMouseExit" MouseDown="ListItemMouseDown" MouseUp="ListItemMouseUp"
+           AdjustToText="Width" Text="{=#ParentTab.Text}">
+  <ContentPlaceholder />  
+  <Label Id="ItemLabel" />
+
+  <StateAnimation From="Any" To="Highlighted">
+    <Animate Field="BackgroundColor" Duration="0.05" />
+  </StateAnimation>
+
+  <StateAnimation From="Highlighted" To="Default">
+    <Animate Field="BackgroundColor" Duration="0.5" />
+  </StateAnimation>
+</TabHeader>

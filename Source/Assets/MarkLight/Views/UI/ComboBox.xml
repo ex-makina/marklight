@@ -1,0 +1,9 @@
+<ComboBox>
+  <Button Id="ComboBoxButton" IsToggleButton="True" Width="100%" Height="100%" Click="ComboBoxButtonClick" />
+  <UICanvas Id="ComboBoxListCanvas" Alignment="Top" OverrideSorting="True" SortingOrder="10">
+    <List Id="ComboBoxList" Width="100%" Alignment="Top" IsActive="False" 
+          ItemSelected="ComboBoxListSelectionChanged">
+      <ContentPlaceholder />
+    </List>
+  </UICanvas>
+</ComboBox>

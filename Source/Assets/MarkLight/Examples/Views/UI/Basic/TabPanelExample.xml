@@ -1,0 +1,44 @@
+<TabPanelExample>
+  <Group>
+    <Group Orientation="Horizontal" Spacing="50" ContentAlignment="Top">     
+      <TabPanel Id="TabPanel" Width="500" Height="400">
+        <Tab Text="Tab 1">
+          <Label Text="Tab 1" AdjustToText="Width"/>
+        </Tab>
+        <Tab Text="Tab 2">
+          <Label Text="Tab 2" AdjustToText="Width" />
+        </Tab>
+        <Tab>
+          <!-- custom header -->
+          <TabHeader Length="120" AdjustToText="None">
+            <Group Orientation="Horizontal" Spacing="10">
+              <Image Style="ShowcaseButtonContent" Offset="0" />
+              <Label Text="Tab 3" AdjustToText="Width" />
+            </Group>
+          </TabHeader>
+          
+          <Label Text="Tab 3" AdjustToText="Width" />
+        </Tab>
+      </TabPanel>
+
+      <Group ContentAlignment="Left">
+        <Label Text="Tab Alignment" />
+        <RadioButton Text="Horizontal TopLeft" IsChecked="True" Click="SetTabOrientation" />
+        <RadioButton Text="Horizontal Top" Click="SetTabOrientation" />
+        <RadioButton Text="Horizontal TopRight" Click="SetTabOrientation" />
+
+        <RadioButton Text="Horizontal BottomLeft" Click="SetTabOrientation" />
+        <RadioButton Text="Horizontal Bottom" Click="SetTabOrientation" />
+        <RadioButton Text="Horizontal BottomRight" Click="SetTabOrientation" />
+
+        <RadioButton Text="Vertical TopLeft" Click="SetTabOrientation" />
+        <RadioButton Text="Vertical Left" Click="SetTabOrientation" />
+        <RadioButton Text="Vertical BottomLeft" Click="SetTabOrientation" />
+
+        <RadioButton Text="Vertical TopRight" Click="SetTabOrientation" />
+        <RadioButton Text="Vertical Right" Click="SetTabOrientation" />
+        <RadioButton Text="Vertical BottomRight" Click="SetTabOrientation" />
+      </Group>
+    </Group>
+  </Group>  
+</TabPanelExample>

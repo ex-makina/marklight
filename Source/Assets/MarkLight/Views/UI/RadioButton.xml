@@ -1,0 +1,6 @@
+<RadioButton Click="RadioButtonClick">
+  <Group Id="RadioButtonGroup" Orientation="Horizontal">
+    <Image Id="RadioButtonImageView" />
+    <Label Id="RadioButtonLabel" AdjustToText="Width" Height="100%" />
+  </Group>
+</RadioButton>

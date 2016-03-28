@@ -1,0 +1,13 @@
+<Window OverrideSorting="True" IsOpen="True" SortingOrder="5" WindowRegion.IsActive="True" Closed-WindowRegion.IsActive="False">
+  <Region Id="WindowRegion">
+    <InteractableRegion Id="TitleRegion" Alignment="Top" Drag="WindowDrag" BeginDrag="WindowBeginDrag">
+      <Label Id="TitleLabel" AdjustToText="Width" />
+    </InteractableRegion>
+
+    <Region Id="ContentRegion">
+      <ContentPlaceholder  />
+    </Region>
+
+    <Button Id="CloseButton" Click="CloseButtonClick" />
+  </Region>
+</Window>

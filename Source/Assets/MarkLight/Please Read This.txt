@@ -1,0 +1,33 @@
+====  MarkLight v2.0.0-beta2  ===========================
+
+Thank you very much for participating in the MarkLight Beta.
+
+    Subscribe to http://www.reddit.com/r/markuxdev and use it for conversation around MarkLight
+	Check out http://www.markux.com/ for the latest API docs and tutorials
+
+
+
+====  Upgrading from earlier versions  =================
+
+Backup your project. Remove the MarkLight folder and import the new package. For easy upgrade in the future keep your custom views and themes in a folder outside the /MarkUX folder (e.g. in the folder /Views at the project root).
+
+
+====  Package Details  =================================
+
+(required)
+MarkLight\Configuration\* .............. Configuration asset
+MarkLight\Source\Editor\*............... Editor extension.
+MarkLight\Source\* ..................... Framework API.
+MarkLight\Themes\* ..................... Assets files for the themes
+MarkLight\Views\* ...................... Framework Views
+
+(recommended)
+
+MarkLight\Examples\ ................. Example views, scenes and scripts
+
+
+====  Documentation  ===================================
+
+Please check http://www.markux.com for the most up to date versions of the API docs and tutorials.
+
+

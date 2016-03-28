@@ -1,0 +1,81 @@
+<GroupExample>
+  <Group Orientation="Horizontal" Spacing="60px" ContentAlignment="Top">
+    <Group Orientation="Vertical" Spacing="15">
+      <Label Text="Horizontal Groups" Alignment="Top" AdjustToText="Width" />
+      <Group Orientation="Horizontal" Spacing="4">
+        <Frame Style="ShowcaseGroup">
+          <Label Style="ShowcaseGroupLabel" Text="Item 1" AdjustToText="Width" />
+        </Frame>
+        <Frame Style="ShowcaseGroup">
+          <Label Style="ShowcaseGroupLabel" Text="Large Item 2" AdjustToText="Width" Height="80" />
+        </Frame>
+        <Frame Style="ShowcaseGroup">
+          <Label Style="ShowcaseGroupLabel" Text="Item 3" AdjustToText="Width" />
+        </Frame>
+      </Group>
+      <Group Orientation="Horizontal" Spacing="4" ContentAlignment="Top">
+        <Frame Style="ShowcaseGroup">
+          <Label Style="ShowcaseGroupLabel" Text="Item 1" AdjustToText="Width" />
+        </Frame>
+        <Frame Style="ShowcaseGroup">
+          <Label Style="ShowcaseGroupLabel" Text="Large Item 2" AdjustToText="Width" Height="80" />
+        </Frame>
+        <Frame Style="ShowcaseGroup">
+          <Label Style="ShowcaseGroupLabel" Text="Item 3" AdjustToText="Width" />
+        </Frame>
+      </Group>
+      <Group Orientation="Horizontal" Spacing="4" ContentAlignment="Bottom">
+        <Frame Style="ShowcaseGroup">
+          <Label Style="ShowcaseGroupLabel" Text="Item 1" AdjustToText="Width" />
+        </Frame>
+        <Frame Style="ShowcaseGroup">
+          <Label Style="ShowcaseGroupLabel" Text="Large Item 2" AdjustToText="Width" Height="80" />
+        </Frame>
+        <Frame Style="ShowcaseGroup">
+          <Label Style="ShowcaseGroupLabel" Text="Item 3" AdjustToText="Width" />
+        </Frame>
+      </Group>
+    </Group>
+
+    <Group Orientation="Vertical" Spacing="15">
+      <Label Text="Vertical Groups" Alignment="Top" AdjustToText="Width" />
+      <Group Orientation="Horizontal" Spacing="15">
+        <Group Orientation="Vertical" Spacing="4">
+          <Frame Style="ShowcaseGroup">
+            <Label Style="ShowcaseGroupLabel" Text="Item 1" AdjustToText="Width" />
+          </Frame>
+          <Frame Style="ShowcaseGroup">
+            <Label Style="ShowcaseGroupLabel" Text="Large Item 2" AdjustToText="Width" Height="80" />
+          </Frame>
+          <Frame Style="ShowcaseGroup">
+            <Label Style="ShowcaseGroupLabel" Text="Item 3" AdjustToText="Width" />
+          </Frame>
+        </Group>
+
+        <Group Orientation="Vertical" Spacing="4" ContentAlignment="Left">
+          <Frame Style="ShowcaseGroup">
+            <Label Style="ShowcaseGroupLabel" Text="Item 1" AdjustToText="Width" />
+          </Frame>
+          <Frame Style="ShowcaseGroup">
+            <Label Style="ShowcaseGroupLabel" Text="Large Item 2" AdjustToText="Width" Height="80" />
+          </Frame>
+          <Frame Style="ShowcaseGroup">
+            <Label Style="ShowcaseGroupLabel" Text="Item 3" AdjustToText="Width" />
+          </Frame>
+        </Group>
+
+        <Group Orientation="Vertical" Spacing="4" ContentAlignment="Right">
+          <Frame Style="ShowcaseGroup">
+            <Label Style="ShowcaseGroupLabel" Text="Item 1" AdjustToText="Width" />
+          </Frame>
+          <Frame Style="ShowcaseGroup">
+            <Label Style="ShowcaseGroupLabel" Text="Large Item 2" AdjustToText="Width" Height="80" />
+          </Frame>
+          <Frame Style="ShowcaseGroup">
+            <Label Style="ShowcaseGroupLabel" Text="Item 3" AdjustToText="Width" />
+          </Frame>
+        </Group>
+      </Group>
+    </Group>
+  </Group>
+</GroupExample>

@@ -1,0 +1,82 @@
+<Theme Name="Flat" BaseDirectory="Assets/MarkLight/Themes/Flat/">
+  <Label Font="Fonts/Roboto-Bold.ttf" FontSize="18" FontColor="#ffffff" Width="200" Height="50" />
+  <Label Style="ShowcaseHeader" Font="Fonts/Roboto-Regular.ttf" FontSize="26" FontColor="#ffffff" />
+  <Label Style="ShowcaseDescription" Font="Fonts/Roboto-Light.ttf" FontSize="18" FontColor="#ffffff" />
+
+  <Button BackgroundColor="#7d7d7d" FontColor="#ffffff" FontStyle="Normal" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a"
+          Highlighted-FontColor="#000000" Pressed-FontColor="#ffffff" Height="50px"
+          Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" Disabled-BackgroundColor="#7d7d7d" />
+
+  <CheckBox CheckBoxImage="Sprites/CheckBox.psd" Checked-CheckBoxImage="Sprites/CheckBoxPressed.psd" CheckBoxWidth="24" CheckBoxHeight="24" Height="25"
+        CheckBoxColor="#ffffff" Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontStyle="Normal" FontColor="#ffffff" Spacing="10px"
+        Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
+
+  <RadioButton RadioButtonImage="Sprites/RadioButton.psd" Checked-RadioButtonImage="Sprites/RadioButtonPressed.psd" RadioButtonWidth="19" RadioButtonHeight="19" Height="25"        
+      RadioButtonColor="#ffffff" RadioButtonOffset="0,1,0,0" Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#ffffff" FontStyle="Normal" Spacing="10px"
+      Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
+
+  <Image Style="ShowcaseButtonContent" Sprite="Sprites/RainbowSquare.psd" Width="20" Height="20" Offset="10,0,0,0" Alignment="Left" />
+  <Image Style="ShowcaseImage" Sprite="Sprites/RainbowSquare.psd" Width="400" Height="400" />
+
+  <Frame Style="Window" BackgroundColor="Gray80" />
+  <Frame Style="ShowcaseGroup" BackgroundColor="#7d7d7d" ContentMargin="5px" />
+  <Frame Style="ShowcasePanel" BackgroundColor="#252931" Alignment="Top" />
+  
+  <Region Style="ShowcaseListRegion" Margin="5px" BackgroundColor="#7d7d7d" />
+  <Region Style="Window" BackgroundColor="Gray80" />
+  <Region Style="DefaultBackgroundRegion" BackgroundColor="#131419" />
+
+  <HyperLink FontColor="#8cade3" Highlighted-FontColor="#c7dafb" Pressed-FontColor="#ef706a" Font="Fonts/Roboto-Light.ttf" FontSize="18" Width="200" Height="50" />
+
+  <InputField Font="Fonts/Roboto-Light.ttf" BackgroundColor="White" FontSize="18" FontColor="#000000" Width="400px" Height="50px" TextMargin="10px,12px,10px,0px" SelectionColor="#ef706a" />
+
+  <Slider SliderFillColor="#ef706a" SliderHandleColor="#f8f6f3" SliderBackgroundColor="#626262" Breadth="12" SliderHandleLength="11" SliderHandleBreadth="22"/>
+
+  <Panel HorizontalScrollbarBreadth="10" VerticalScrollbarBreadth="10"
+       HorizontalScrollbarColor="#000000" VerticalScrollbarColor="#000000"
+       HorizontalScrollbarHandleColor="#ef706a" VerticalScrollbarHandleColor="#ef706a" />
+
+  <Window TitleRegionWidth="100%" TitleRegionHeight="50px" TitleRegionColor="#ef706a" WindowColor="#252931"
+        TitleFont="Fonts/Roboto-Regular.ttf" TitleFontColor="#ffffff"
+        CloseButtonColor="#ffffff"
+        CloseButtonAlignment="TopRight"
+        CloseButtonImage="Sprites/CloseButton.psd" CloseButtonImageType="Simple"
+        Highlighted--CloseButtonColor="#626262" Pressed--CloseButtonColor="#000000"
+        CloseButtonOffset="0,19px,16px,0" CloseButtonWidth="11" CloseButtonHeight="12"
+        TitleAlignment="Left" TitleOffset="26px,0,0,0" />
+
+  <List BackgroundColor="White" ContentMargin="2" />
+  <ListItem Breadth="50" TextMargin="10,0,10,0" TextAlignment="Left" BackgroundColor="White"
+            Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a"
+            Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#000000" />
+
+  <TabPanel TabContentColor="#3b414e" TabListContentMargin="0" TabListColor="Clear" />
+  <TabHeader Breadth="50" TextPadding="20,10,20,10" TextAlignment="Center" BackgroundColor="#262b35"
+             Selected-BackgroundColor="#3b414e" Highlighted-BackgroundColor="#262b35" Pressed-BackgroundColor="#3b414e"
+             Font="Fonts/Roboto-Bold.ttf" FontSize="18" FontColor="#ffffff" AdjustToText="Width" />
+
+  <ComboBox Height="52" Width="300" ButtonMargin="0,2,0,0" ButtonFont="Fonts/Roboto-Regular.ttf" ButtonFontSize="18" ButtonFontColor="#000000" 
+            ButtonTextAlignment="Left" ButtonTextMargin="10,0,10,0"
+            Pressed--ButtonFontColor="#000000" Highlighted--ButtonFontColor="#000000" ButtonImage="Sprites/ComboBoxButton.psd" ButtonImageType="Sliced" 
+            ButtonColor="#ffffff" Pressed--ButtonImage="Sprites/ComboBoxButtonPressed.psd" Highlighted--ButtonColor="#dddddd" Pressed--ButtonColor="#eeeeee"            
+            ListColor="#ffffff" ListMargin="2,0,0,0" ListContentMargin="0" />
+  <ComboBoxItem Breadth="50px" Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#000000" TextMargin="10,0,10,0" TextAlignment="Left"
+                BackgroundColor="White" Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a" />
+
+  <DataGrid BackgroundColor="White" ColumnTextMargin="10,0,10,0" ColumnTextAlignment="Left" />
+  <RowHeader Height="50" BackgroundColor="Gray70" />
+  <ColumnHeader Font="Fonts/Roboto-Bold.ttf" FontSize="18" />
+  <Row Breadth="50" BackgroundColor="White" Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a" />
+  <Column Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#000000" />
+  
+  <!-- example scenes -->
+  <TabPanel Style="Menu" TabContentColor="#4A4A4A" TabListContentMargin="0" TabListColor="Clear" TabListSpacing="0" />
+  <TabHeader Style="Menu" Breadth="50" TextPadding="20,10,20,10" TextAlignment="Center" BackgroundColor="#262b35"
+             Selected-BackgroundColor="#4A4A4A" Highlighted-BackgroundColor="#262b35" Pressed-BackgroundColor="#4A4A4A" 
+             Font="Fonts/Roboto-Bold.ttf" FontSize="18" FontColor="#ffffff" AdjustToText="Width" />
+  <TabPanel Style="SubMenu" TabContentColor="Clear" TabListContentMargin="0" TabListColor="Clear" TabListSpacing="2" />
+  <TabHeader Style="SubMenu" Breadth="40" TextPadding="15,10,15,10" TextAlignment="Center" BackgroundColor="#262b35"
+             Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="#262b35" Pressed-BackgroundColor="#ef706a"
+             Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#ffffff" AdjustToText="Width"
+             Selected-FontColor="#000000" />
+</Theme>

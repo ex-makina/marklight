@@ -1,0 +1,5 @@
+This is a views-folder which means all views and themes (XML-files) with the extension .xml in this folder (and subfolders) will be automatically processed by the MarkLight view processor.
+
+To create a new custom view right-click on the folder and select Assets->Create->View.
+
+You can add/change folders processed by the view processor by modifying the configuration asset at /MarkLight/Configuration/Configuration.asset

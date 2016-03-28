@@ -1,0 +1,3 @@
+<Column Alignment="TopLeft">
+  <Label Id="ColumnLabel" Width="100%" Height="100%" />
+</Column>

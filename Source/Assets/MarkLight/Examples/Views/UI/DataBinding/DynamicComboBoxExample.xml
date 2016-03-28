@@ -1,0 +1,14 @@
+<DynamicComboBoxExample>
+  <Group Orientation="Vertical" Spacing="15px" ContentAlignment="Left">   
+    <Group Orientation="Horizontal" Spacing="15px">
+      <Button Text="Add" Click="Add" AdjustToText="Width" TextPadding="20,10,20,10" />
+      <Button Text="Remove" Click="Remove" IsDisabled="{=!CanRemove}" AdjustToText="Width" TextPadding="20,10,20,10" />
+    </Group>
+
+    <ComboBox Id="ComboBox" Items="{Menus}" ItemSelected="ItemSelected">
+      <ComboBoxItem Text="{#Item.Text}" IsTemplate="True" />
+    </ComboBox>
+
+    <Label Id="Label" Text="{ComboBox.ComboBoxList.SelectedItem.Text}: {ComboBox.ComboBoxList.SelectedItem.Description}" AdjustToText="Width" IsVisible="False" />
+  </Group>
+</DynamicComboBoxExample>

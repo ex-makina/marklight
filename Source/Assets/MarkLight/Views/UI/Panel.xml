@@ -1,0 +1,14 @@
+<Panel>
+  <Region Id="PanelRegion">
+    <Mask Id="ScrollbarMask">
+      <ScrollRect Id="ScrollRect">
+        <Frame Id="ScrollContent">
+          <ContentPlaceholder />
+        </Frame>
+      </ScrollRect>
+    </Mask>
+
+    <Scrollbar Id="HorizontalScrollbar" Orientation="Horizontal" />
+    <Scrollbar Id="VerticalScrollbar" Orientation="Vertical" />
+  </Region>
+</Panel>

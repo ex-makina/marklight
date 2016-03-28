@@ -1,0 +1,5 @@
+<Scrollbar Breadth="20" HandleColor="White">
+  <Region Id="SlidingArea">
+    <Image Id="Handle" UpdateRectTransform="False" />
+  </Region>
+</Scrollbar>

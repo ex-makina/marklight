@@ -1,0 +1,14 @@
+<DynamicTabPanelExample>
+  <Group Spacing="25">
+    <Group Orientation="Horizontal" Spacing="10">
+      <Button Text="Add Tab" Click="AddTab" IsDisabled="{=!CanAdd}" AdjustToText="Width" />
+      <Button Text="Remove Tab" Click="RemoveTab" IsDisabled="{=!CanRemove}" AdjustToText="Width" />
+    </Group>
+    
+    <TabPanel Id="TabPanel" Items="{Menus}" Width="700" Height="250">
+      <Tab Text="{=#Item.Text}" IsTemplate="True">
+        <Label Text="{=#Item.Description}" AdjustToText="Width" />
+      </Tab>
+    </TabPanel>
+  </Group>
+</DynamicTabPanelExample>

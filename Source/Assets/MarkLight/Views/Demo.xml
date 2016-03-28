@@ -1,0 +1,5 @@
+<DemoMessage>
+  <UserInterface>
+    <Label Id="Label" FontSize="28" Text="If you see this the beta has expired. Please visit www.markux.com for more information." AdjustToText="Width" Alignment="TopLeft" />
+  </UserInterface>
+</DemoMessage>

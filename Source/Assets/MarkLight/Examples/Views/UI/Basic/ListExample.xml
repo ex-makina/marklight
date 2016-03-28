@@ -1,0 +1,16 @@
+<ListExample>
+  <Group Orientation="Vertical" Spacing="15px" ContentAlignment="Left">
+    <CheckBox Id="MultiSelectCheckBox" Text="Multi-select" />
+
+    <List Id="StaticList" Width="194" CanMultiSelect="{=MultiSelectCheckBox.IsChecked}" CanDeselect="{=MultiSelectCheckBox.IsChecked}"
+      Orientation="Vertical" ItemSelected="ListItemSelected">
+      <ListItem Text="Item 1" />
+      <ListItem Text="Item 2" />
+      <ListItem Text="Long Item 3" />
+      <ListItem Text="Item 4" />
+    </List>
+
+    <Label Id="SelectedItemLabel" Text="" AdjustToText="Width" />
+
+  </Group>
+</ListExample>

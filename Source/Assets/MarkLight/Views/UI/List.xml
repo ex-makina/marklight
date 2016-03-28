@@ -1,0 +1,5 @@
+<List>  
+  <Mask Id="ListMask">
+    <ContentPlaceholder />
+  </Mask>
+</List>
