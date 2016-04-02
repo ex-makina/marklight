@@ -98,16 +98,11 @@ namespace MarkLight
                 return;                
             }
 
-            if (!Demo.Init(this, this, 6, null))
-            {
-                rootView = RootView;
-            }
-
             rootView.ForThisAndEachChild<View>(x =>
             {
                 try
                 {
-                    Demo.Init(this, x, 1, null);
+                    x.InitializeInternalDefaultValues();
                 }
                 catch (Exception e)
                 {
@@ -119,7 +114,7 @@ namespace MarkLight
             {
                 try
                 {
-                    Demo.Init(this, x, 2, null);
+                    x.InitializeInternal();
                 }
                 catch (Exception e)
                 {
@@ -131,7 +126,7 @@ namespace MarkLight
             {
                 try
                 {
-                    Demo.Init(this, x, 3, null);
+                    x.Initialize();
                 }
                 catch (Exception e)
                 {
@@ -140,8 +135,8 @@ namespace MarkLight
 
             }, true, null, TraversalAlgorithm.ReverseBreadthFirst);
 
-            rootView.ForThisAndEachChild<View>(x => Demo.Init(this, x, 4, null), true, null, TraversalAlgorithm.BreadthFirst);
-            rootView.ForThisAndEachChild<View>(x => Demo.Init(this, x, 5, null), true, null, TraversalAlgorithm.ReverseBreadthFirst);
+            rootView.ForThisAndEachChild<View>(x => x.PropagateBindings(), true, null, TraversalAlgorithm.BreadthFirst);
+            rootView.ForThisAndEachChild<View>(x => x.QueueAllChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
 
             // TriggerChangeHandlers()            
             int pass = 0;
@@ -428,23 +423,6 @@ namespace MarkLight
             }
 
             return _valueInterpolatorsForType.Get(viewFieldType);
-        }
-
-        /// <summary>
-        /// Prints demo message.
-        /// </summary>
-        public void DemoMessage()
-        {
-            if (RootView != null)
-            {
-                if (RootView.GetComponent<DemoMessage>() == null)
-                {
-                    GameObject.DestroyImmediate(RootView);
-                    var demoMessage = ViewData.CreateView<DemoMessage>(this, this, "Flat");
-                    demoMessage.UpdateMessage();
-                    RootView = demoMessage.gameObject;
-                }
-            }            
         }
 
         #endregion

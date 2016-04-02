@@ -367,7 +367,7 @@ namespace MarkLight
                     ValueConverter = ValueConverter ?? ViewData.GetValueConverterForType(ViewFieldTypeName);
 
                     // handle special case if converter is null and field type is enum
-                    if (ValueConverter == null && ViewFieldType.IsEnum)
+                    if (ValueConverter == null && ViewFieldType.IsEnum())
                     {
                         ValueConverter = new EnumValueConverter(ViewFieldType);
                     }
