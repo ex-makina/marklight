@@ -22,6 +22,7 @@ namespace MarkLight
         public string ViewName;
         public string Id;
         public string Style;
+        public string BasedOn;
         public string Xml;
 
         [NonSerialized]

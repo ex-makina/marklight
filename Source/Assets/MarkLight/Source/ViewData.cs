@@ -34,7 +34,7 @@ namespace MarkLight
 
             viewPresenter.Themes.Clear();
             viewPresenter.Themes.AddRange(viewPresenter.ThemeData.Select(x => x.ThemeName).OrderBy(x => x));
-            
+
             // validate views and check for cyclical dependencies
             foreach (var viewType in viewPresenter.ViewTypeData)
             {
@@ -60,7 +60,7 @@ namespace MarkLight
 
             // destroy any remaining objects under the view-presenter that should not be there
             if (viewPresenter.transform.childCount > 0)
-            {                
+            {
                 for (int i = viewPresenter.transform.childCount - 1; i >= 0; --i)
                 {
                     var go = viewPresenter.transform.GetChild(i).gameObject;
@@ -89,9 +89,9 @@ namespace MarkLight
         public static void LoadAllXml(IEnumerable<TextAsset> xmlAssets)
         {
             var viewPresenter = ViewPresenter.Instance;
-            
+
             // clear existing views from view presenter
-            viewPresenter.Clear();            
+            viewPresenter.Clear();
 
             // load view xml
             foreach (var xmlAsset in xmlAssets)
@@ -115,7 +115,7 @@ namespace MarkLight
         /// Loads XML string to the view database.
         /// </summary>
         public static void LoadXml(string xml, string xmlAssetName = "")
-        {            
+        {
             XElement xmlElement = null;
             try
             {
@@ -207,7 +207,7 @@ namespace MarkLight
 
             // set mapped fields and their converters and change handlers
             var mapFields = type.GetFields().SelectMany(x => x.GetCustomAttributes(typeof(MapViewField), true));
-            var mapClassFields = type.GetCustomAttributes(typeof(MapViewField), true);            
+            var mapClassFields = type.GetCustomAttributes(typeof(MapViewField), true);
             viewTypeData.MapViewFields.AddRange(mapFields.Select(x => (x as MapViewField).MapFieldData));
             viewTypeData.MapViewFields.AddRange(mapClassFields.Select(x => (x as MapViewField).MapFieldData));
 
@@ -315,7 +315,7 @@ namespace MarkLight
             var baseDirectoryAttr = xmlElement.Attribute("BaseDirectory");
             var baseDirectory = baseDirectoryAttr != null ? baseDirectoryAttr.Value : String.Empty;
             themeData.BaseDirectory = baseDirectory;
-            
+
             // load theme elements
             foreach (var childElement in xmlElement.Elements())
             {
@@ -332,6 +332,12 @@ namespace MarkLight
                 if (styleAttr != null)
                 {
                     themeElement.Style = styleAttr.Value;
+                }
+
+                var basedOnAttr = childElement.Attribute("BasedOn");
+                if (basedOnAttr != null)
+                {
+                    themeElement.BasedOn = basedOnAttr.Value;
                 }
 
                 themeElement.XmlElement = childElement;
@@ -382,12 +388,12 @@ namespace MarkLight
             }
 
             // get view XML
-            var viewType = GetViewType(viewName); 
+            var viewType = GetViewType(viewName);
             if (viewType == null)
             {
                 viewType = typeof(View);
             }
-            
+
             // create view game object with required components
             var go = new GameObject(viewTypeData.ViewName);
             if (typeof(UIView).IsAssignableFrom(viewType))
@@ -416,9 +422,9 @@ namespace MarkLight
                 Component component = null;
                 if (componentField == "Transform")
                 {
-                    component = go.transform;                    
+                    component = go.transform;
                 }
-                else if(componentField == "RectTransform")
+                else if (componentField == "RectTransform")
                 {
                     component = go.transform as RectTransform;
                 }
@@ -465,7 +471,7 @@ namespace MarkLight
             ContentPlaceholder contentContainer = view.Find<ContentPlaceholder>(true, view);
             var contentLayoutParent = view;
             if (contentContainer != null)
-            {                
+            {
                 contentLayoutParent = contentContainer.LayoutParent;
                 view.Content = contentLayoutParent;
 
@@ -489,7 +495,7 @@ namespace MarkLight
                         contentElementStyleAttr != null ? contentElementStyleAttr.Value : style, // TODO not setting this to null may cause problems lets see..
                         contentElement.Elements());
                     SetViewValues(contentView, contentElement, parent);
-                }                
+                }
             }
 
             // set view references
@@ -502,7 +508,7 @@ namespace MarkLight
                 {
                     var referenceFieldInfo = viewType.GetField(referenceField);
                     referenceFieldInfo.SetValue(view, referencedView);
-                }                    
+                }
             }
 
             // set view default values
@@ -541,7 +547,7 @@ namespace MarkLight
                 string viewFieldValue = attribute.Value;
 
                 // check if the field value is allowed to be be set from xml
-                bool notAllowed = viewTypeData.FieldsNotSetFromXml.Contains(viewFieldPath); 
+                bool notAllowed = viewTypeData.FieldsNotSetFromXml.Contains(viewFieldPath);
                 if (notAllowed)
                 {
                     Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}.{3}\". Field not allowed to be set from xml.", view.GameObjectName, viewFieldValue, view.ViewTypeName, viewFieldPath));
@@ -568,7 +574,7 @@ namespace MarkLight
                     {
                         stateViewField = stateViewField.Substring(1);
                     }
- 
+
                     // setting the state of the source view
                     view.AddStateValue(state, stateViewField, attribute.Value, context, isSubState);
                     continue;
@@ -592,7 +598,7 @@ namespace MarkLight
                 // we are setting a normal view field
                 view.SetValue(attribute.Name.LocalName, attribute.Value, true, null, context, true);
             }
-            
+
         }
 
         /// <summary>
