@@ -462,7 +462,7 @@ namespace MarkLight
                 var childView = CreateView(childElement.Name.LocalName, view, view,
                     childThemeAttr != null ? childThemeAttr.Value : theme,
                     childViewIdAttr != null ? childViewIdAttr.Value : String.Empty,
-                    childViewStyleAttr != null ? childViewStyleAttr.Value : style, // TODO not setting this to null may cause problems lets see..
+                    GetChildViewStyle(view.Style, childViewStyleAttr),
                     childElement.Elements());
                 SetViewValues(childView, childElement, view);
             }
@@ -492,7 +492,7 @@ namespace MarkLight
                     var contentView = CreateView(contentElement.Name.LocalName, contentLayoutParent, parent,
                         contentThemeAttr != null ? contentThemeAttr.Value : theme,
                         contentElementIdAttr != null ? contentElementIdAttr.Value : String.Empty,
-                        contentElementStyleAttr != null ? contentElementStyleAttr.Value : style, // TODO not setting this to null may cause problems lets see..
+                        GetChildViewStyle(view.Style, contentElementStyleAttr),
                         contentElement.Elements());
                     SetViewValues(contentView, contentElement, parent);
                 }
@@ -530,6 +530,15 @@ namespace MarkLight
             }
 
             return view;
+        }
+
+        /// <summary>
+        /// Gets child view style based on attribute value.
+        /// </summary>
+        private static string GetChildViewStyle(string parentStyle, XAttribute childViewStyleAttr)
+        {
+            var childStyleName = childViewStyleAttr != null ? childViewStyleAttr.Value : String.Empty;
+            return childStyleName == "*" ? parentStyle : childStyleName;
         }
 
         /// <summary>
@@ -598,7 +607,6 @@ namespace MarkLight
                 // we are setting a normal view field
                 view.SetValue(attribute.Name.LocalName, attribute.Value, true, null, context, true);
             }
-
         }
 
         /// <summary>
