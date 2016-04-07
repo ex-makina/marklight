@@ -50,7 +50,7 @@ namespace MarkLight.Views.UI
             for (int i = 0; i < columns.Count; ++i)
             {
                 var defWidth = columns[i].Width.Value;
-                if (!columns[i].IsSet("Width") || defWidth.Fill == true)
+                if (!columns[i].Width.IsSet || defWidth.Fill == true)
                 {
                     columnsToFill.Add(columns[i]);
                     continue;
@@ -83,16 +83,16 @@ namespace MarkLight.Views.UI
             float offset = 0;
             foreach (var column in columns)
             {
-                if (!column.IsSet("TextAlignment"))
+                if (!column.TextAlignment.IsSet)
                 {
-                    var textAlignment = ParentDataGrid.IsSet("ColumnHeaderTextAlignment") ? ParentDataGrid.ColumnHeaderTextAlignment :
+                    var textAlignment = ParentDataGrid.ColumnHeaderTextAlignment.IsSet ? ParentDataGrid.ColumnHeaderTextAlignment :
                         ParentDataGrid.ColumnTextAlignment;
                     column.TextAlignment.Value = textAlignment.Value;
                 }
 
-                if (!column.IsSet("TextMargin"))
+                if (!column.TextMargin.IsSet)
                 {
-                    var textMargin = ParentDataGrid.IsSet("ColumnHeaderTextMargin") ? ParentDataGrid.ColumnHeaderTextMargin :
+                    var textMargin = ParentDataGrid.ColumnHeaderTextMargin.IsSet ? ParentDataGrid.ColumnHeaderTextMargin :
                         ParentDataGrid.ColumnTextMargin;
                     column.TextMargin.Value = textMargin.Value;
                 }

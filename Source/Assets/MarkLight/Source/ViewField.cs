@@ -43,6 +43,7 @@ namespace MarkLight
                 else
                 {
                     _value = value;
+                    _isSet = true;
                 }
             }
         }
@@ -61,6 +62,25 @@ namespace MarkLight
                 else
                 {
                     _value = value;
+                    _isSet = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets boolean indicating if the value has been set. 
+        /// </summary>
+        public bool IsSet
+        {
+            get
+            {
+                if (ParentView != null)
+                {
+                    return ParentView.IsSet(ViewFieldPath);
+                }
+                else
+                {
+                    return _isSet;
                 }
             }
         }
@@ -290,6 +310,13 @@ namespace MarkLight
     {
         public static implicit operator UnityEngine.HideFlags(_HideFlags value) { return value.Value; }
     }
+
+    [Serializable]
+    public class _OverflowMode : ViewField<OverflowMode>
+    {
+        public static implicit operator OverflowMode(_OverflowMode value) { return value.Value; }
+    }
+
 
     [Serializable]
     public class _object : ViewField<object> { }

@@ -253,6 +253,20 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Returns first view of type T found.
+        /// </summary>
+        public static T Find<T>(this GameObject gameObject, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View
+        {
+            var view = gameObject.GetComponent<View>();
+            if (view == null)
+            {
+                return null;
+            }
+
+            return view.Find<T>(x => true, recursive, parent, traversalAlgorithm);
+        }
+
+        /// <summary>
         /// Returns first view of type T with the specified ID.
         /// </summary>
         public static T Find<T>(this View view, string id, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View

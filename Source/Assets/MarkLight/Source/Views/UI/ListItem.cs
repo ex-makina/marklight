@@ -239,22 +239,22 @@ namespace MarkLight.Views.UI
             // adjust width and height to ParentList
             if (ParentList == null || ParentList.Orientation == ElementOrientation.Horizontal)
             {
-                Width.DirectValue = IsSet(() => Width) && Width.Value.Unit != ElementSizeUnit.Percents ? Width.Value : new ElementSize(Length.Value);
+                Width.DirectValue = Width.IsSet && Width.Value.Unit != ElementSizeUnit.Percents ? Width.Value : new ElementSize(Length.Value);
 
-                if (!IsSet(() => Height))
+                if (!Height.IsSet)
                 {
-                    Height.DirectValue = IsSet(() => Breadth) ? new ElementSize(Breadth.Value) : ElementSize.FromPercents(1);
+                    Height.DirectValue = Breadth.IsSet ? new ElementSize(Breadth.Value) : ElementSize.FromPercents(1);
                 }                
             }
             else
             {
                 // if neither width nor length is set, use 100% width                
-                if (!IsSet(() => Width))
+                if (!Width.IsSet)
                 {
-                    Width.DirectValue = IsSet(() => Length) ? new ElementSize(Length.Value) : ElementSize.FromPercents(1);
+                    Width.DirectValue = Length.IsSet ? new ElementSize(Length.Value) : ElementSize.FromPercents(1);
                 }
 
-                Height.DirectValue = IsSet(() => Height) && Height.Value.Unit != ElementSizeUnit.Percents ? Height.Value : new ElementSize(Breadth.Value);
+                Height.DirectValue = Height.IsSet && Height.Value.Unit != ElementSizeUnit.Percents ? Height.Value : new ElementSize(Breadth.Value);
             }
 
             base.LayoutChanged();

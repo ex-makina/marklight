@@ -284,8 +284,8 @@ namespace MarkLight.Views.UI
         /// </summary>
         public override void LayoutChanged()
         {
-            Width.DirectValue = IsSet(() => Width) ? Width.Value : (Orientation == ElementOrientation.Horizontal ? Length.Value : Breadth.Value);
-            Height.DirectValue = IsSet(() => Height) ? Height.Value : (Orientation == ElementOrientation.Horizontal ? Breadth.Value : Length.Value);
+            Width.DirectValue = Width.IsSet ? Width.Value : (Orientation == ElementOrientation.Horizontal ? Length.Value : Breadth.Value);
+            Height.DirectValue = Height.IsSet ? Height.Value : (Orientation == ElementOrientation.Horizontal ? Breadth.Value : Length.Value);
 
             base.LayoutChanged();
 

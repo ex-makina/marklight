@@ -142,11 +142,31 @@ namespace MarkLight.Views.UI
         public _bool CanSelect;
 
         /// <summary>
+        /// Indicates how items overflow.
+        /// </summary>
+        /// <d>Enum indicating how items should overflow as they reach the boundaries of the list.</d>
+        public _OverflowMode Overflow;
+
+        /// <summary>
         /// Spacing between list items.
         /// </summary>
         /// <d>The spacing between list items.</d>
         [ChangeHandler("LayoutChanged")]
         public _ElementSize Spacing;
+
+        /// <summary>
+        /// Horizontal spacing between list items.
+        /// </summary>
+        /// <d>The horizontal spacing between list items.</d>
+        [ChangeHandler("LayoutChanged")]
+        public _ElementSize HorizontalSpacing;
+
+        /// <summary>
+        /// Vertical spacing between list items.
+        /// </summary>
+        /// <d>The vertical spacing between list items.</d>
+        [ChangeHandler("LayoutChanged")]
+        public _ElementSize VerticalSpacing;
 
         /// <summary>
         /// The alignment of list items.
@@ -240,6 +260,8 @@ namespace MarkLight.Views.UI
         public override void LayoutChanged()
         {
             // arrange items like a group
+            float horizontalSpacing = HorizontalSpacing.IsSet ? HorizontalSpacing.Value.Pixels : Spacing.Value.Pixels;
+            float verticalSpacing = VerticalSpacing.IsSet ? VerticalSpacing.Value.Pixels : Spacing.Value.Pixels;
             float maxWidth = 0f;
             float maxHeight = 0f;
             float totalWidth = 0f;
@@ -276,12 +298,18 @@ namespace MarkLight.Views.UI
             // get size of content and set content offsets and alignment
             int childCount = children.Count;
             int childIndex = 0;
+            bool firstItem = true;
+            float xOffset = 0;
+            float yOffset = 0;
+            float maxColumnWidth = 0;
+            float maxRowHeight = 0;
+            
             for (int i = 0; i < childCount; ++i)
             {
                 var view = children[i];
 
                 // don't group disabled or destroyed views
-                if (view.IsActive == false || view.IsDestroyed)
+                if (!view.IsActive || view.IsDestroyed)
                     continue;
 
                 if (view.Width.Value.Unit == ElementSizeUnit.Percents)
@@ -309,42 +337,108 @@ namespace MarkLight.Views.UI
                         percentageHeight = true;
                     }
                 }
-
-                // set offsets and alignment
-                var offset = new ElementMargin(
-                    new ElementSize(isHorizontal ? totalWidth + Spacing.Value.Pixels * childIndex : 0f, ElementSizeUnit.Pixels),
-                    new ElementSize(!isHorizontal ? totalHeight + Spacing.Value.Pixels * childIndex : 0f, ElementSizeUnit.Pixels));
-                view.OffsetFromParent.DirectValue = offset;
-
-                // set desired alignment if it is valid for the orientation otherwise use defaults
-                var alignment = isHorizontal ? ElementAlignment.Left : ElementAlignment.Top;
-                var desiredAlignment = IsSet(() => ContentAlignment) ? ContentAlignment : view.Alignment;
-                if (isHorizontal && (desiredAlignment == ElementAlignment.Top || desiredAlignment == ElementAlignment.Bottom
-                    || desiredAlignment == ElementAlignment.TopLeft || desiredAlignment == ElementAlignment.BottomLeft))
+                                                                
+                if (Overflow == OverflowMode.Overflow)
                 {
-                    view.Alignment.DirectValue = alignment | desiredAlignment;
-                }
-                else if (!isHorizontal && (desiredAlignment == ElementAlignment.Left || desiredAlignment == ElementAlignment.Right
-                    || desiredAlignment == ElementAlignment.TopLeft || desiredAlignment == ElementAlignment.TopRight))
-                {
-                    view.Alignment.DirectValue = alignment | desiredAlignment;
+                    // set offsets and alignment
+                    var offset = new ElementMargin(
+                        new ElementSize(isHorizontal ? totalWidth + horizontalSpacing * childIndex : 0f, ElementSizeUnit.Pixels),
+                        new ElementSize(!isHorizontal ? totalHeight + verticalSpacing * childIndex : 0f, ElementSizeUnit.Pixels));
+                    view.OffsetFromParent.DirectValue = offset;
+
+                    // set desired alignment if it is valid for the orientation otherwise use defaults                
+                    var alignment = isHorizontal ? ElementAlignment.Left : ElementAlignment.Top;
+                    var desiredAlignment = ContentAlignment.IsSet ? ContentAlignment : view.Alignment;
+                    if (isHorizontal && (desiredAlignment == ElementAlignment.Top || desiredAlignment == ElementAlignment.Bottom
+                        || desiredAlignment == ElementAlignment.TopLeft || desiredAlignment == ElementAlignment.BottomLeft))
+                    {
+                        view.Alignment.DirectValue = alignment | desiredAlignment;
+                    }
+                    else if (!isHorizontal && (desiredAlignment == ElementAlignment.Left || desiredAlignment == ElementAlignment.Right
+                        || desiredAlignment == ElementAlignment.TopLeft || desiredAlignment == ElementAlignment.TopRight))
+                    {
+                        view.Alignment.DirectValue = alignment | desiredAlignment;
+                    }
+                    else
+                    {
+                        view.Alignment.DirectValue = alignment;
+                    }
+
+                    // get size of content
+                    if (!percentageWidth)
+                    {
+                        totalWidth += view.Width.Value.Pixels;
+                        maxWidth = Mathf.Max(maxWidth, view.Width.Value.Pixels);
+                    }
+
+                    if (!percentageHeight)
+                    {
+                        totalHeight += view.Height.Value.Pixels;
+                        maxHeight = Mathf.Max(maxHeight, view.Height.Value.Pixels);
+                    }
                 }
                 else
                 {
-                    view.Alignment.DirectValue = alignment;
-                }
+                    // overflow mode is set to wrap
+                    // set alignment
+                    view.Alignment.DirectValue = ElementAlignment.TopLeft;
 
-                // get size of content
-                if (!percentageWidth)
-                {
-                    totalWidth += view.Width.Value.Pixels;
-                    maxWidth = view.Width.Value.Pixels > maxWidth ? view.Width.Value.Pixels : maxWidth;
-                }
+                    // set offsets of item
+                    if (isHorizontal)
+                    {
+                        if (firstItem)
+                        {
+                            // first item, don't check for overflow
+                            xOffset = 0;
+                            firstItem = false;
+                        }
+                        else if ((xOffset + view.Width.Value.Pixels + horizontalSpacing) > ActualWidth)
+                        {
+                            // item overflows to the next row
+                            xOffset = 0;
+                            yOffset += maxRowHeight + verticalSpacing;
+                            maxRowHeight = 0;
+                        }
+                        else
+                        {
+                            // item continues on the same row
+                            xOffset += horizontalSpacing;
+                        }
 
-                if (!percentageHeight)
-                {
-                    totalHeight += view.Height.Value.Pixels;
-                    maxHeight = view.Height.Value.Pixels > maxHeight ? view.Height.Value.Pixels : maxHeight;
+                        // set offset
+                        view.OffsetFromParent.DirectValue = new ElementMargin(ElementSize.FromPixels(xOffset), ElementSize.FromPixels(yOffset));
+                        xOffset += view.Width.Value.Pixels;
+                        maxRowHeight = Mathf.Max(maxRowHeight, view.Height.Value.Pixels);
+                        maxWidth = Mathf.Max(maxWidth, xOffset);
+                        maxHeight = Mathf.Max(maxHeight, yOffset + view.Height.Value.Pixels);
+                    }
+                    else
+                    {
+                        if (firstItem)
+                        {
+                            yOffset = 0;
+                            firstItem = false;
+                        }
+                        else if ((yOffset + view.Height.Value.Pixels + verticalSpacing) > ActualHeight)
+                        {
+                            // overflow to next column                        
+                            yOffset = 0;
+                            xOffset += maxColumnWidth + horizontalSpacing;
+                            maxColumnWidth = 0;
+                        }
+                        else
+                        {
+                            // add spacing
+                            yOffset += verticalSpacing;
+                        }
+
+                        // set offset
+                        view.OffsetFromParent.DirectValue = new ElementMargin(ElementSize.FromPixels(xOffset), ElementSize.FromPixels(yOffset));
+                        yOffset += view.Height.Value.Pixels;
+                        maxColumnWidth = Mathf.Max(maxColumnWidth, view.Width.Value.Pixels);
+                        maxWidth = Mathf.Max(maxWidth, xOffset + view.Width.Value.Pixels);
+                        maxHeight = Mathf.Max(maxHeight, yOffset);
+                    }
                 }
 
                 // update child layout
@@ -352,48 +446,66 @@ namespace MarkLight.Views.UI
                 ++childIndex;
             }
 
-            // set width and height 
-            float totalSpacing = childCount > 1 ? (childIndex - 1) * Spacing.Value.Pixels : 0f;
 
-            if (!IsSet(() => Width))
+            if (Overflow == OverflowMode.Overflow)
             {
-                // if width is not explicitly set then adjust to content
-                if (!percentageWidth)
+                // set width and height of list            
+                if (!Width.IsSet)
                 {
-                    // add margins
-                    totalWidth += isHorizontal ? totalSpacing : 0f;
-                    totalWidth += Margin.Value.Left.Pixels + Margin.Value.Right.Pixels + ListMask.Margin.Value.Left.Pixels + ListMask.Margin.Value.Right.Pixels
-                        + Padding.Value.Left.Pixels + Padding.Value.Right.Pixels;
-                    maxWidth += Margin.Value.Left.Pixels + Margin.Value.Right.Pixels + ListMask.Margin.Value.Left.Pixels + ListMask.Margin.Value.Right.Pixels
-                        + Padding.Value.Left.Pixels + Padding.Value.Right.Pixels;
+                    // if width is not explicitly set then adjust to content
+                    if (!percentageWidth)
+                    {
+                        // add margins
+                        totalWidth += isHorizontal ? (childCount > 1 ? (childIndex - 1) * horizontalSpacing : 0f) : 0f;
+                        totalWidth += Margin.Value.Left.Pixels + Margin.Value.Right.Pixels + ListMask.Margin.Value.Left.Pixels + ListMask.Margin.Value.Right.Pixels
+                            + Padding.Value.Left.Pixels + Padding.Value.Right.Pixels;
+                        maxWidth += Margin.Value.Left.Pixels + Margin.Value.Right.Pixels + ListMask.Margin.Value.Left.Pixels + ListMask.Margin.Value.Right.Pixels
+                            + Padding.Value.Left.Pixels + Padding.Value.Right.Pixels;
 
-                    // adjust width to content
-                    Width.DirectValue = new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels);
+                        // adjust width to content
+                        Width.DirectValue = new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels);
+                    }
+                    else
+                    {
+                        Width.DirectValue = new ElementSize(1, ElementSizeUnit.Percents);
+                    }
                 }
-                else
+
+                if (!Height.IsSet)
                 {
-                    Width.DirectValue = new ElementSize(1, ElementSizeUnit.Percents);
+                    // if height is not explicitly set then adjust to content
+                    if (!percentageHeight)
+                    {
+                        // add margins
+                        totalHeight += !isHorizontal ? (childCount > 1 ? (childIndex - 1) * verticalSpacing : 0f) : 0f;
+                        totalHeight += Margin.Value.Top.Pixels + Margin.Value.Bottom.Pixels + ListMask.Margin.Value.Top.Pixels + ListMask.Margin.Value.Bottom.Pixels
+                            + Padding.Value.Top.Pixels + Padding.Value.Bottom.Pixels;
+                        maxHeight += Margin.Value.Top.Pixels + Margin.Value.Bottom.Pixels + ListMask.Margin.Value.Top.Pixels + ListMask.Margin.Value.Bottom.Pixels
+                            + Padding.Value.Top.Pixels + Padding.Value.Bottom.Pixels;
+
+                        // adjust height to content
+                        Height.DirectValue = new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels);
+                    }
+                    else
+                    {
+                        Height.DirectValue = new ElementSize(1, ElementSizeUnit.Percents);
+                    }
                 }
             }
-
-            if (!IsSet(() => Height))
-            {
-                // if height is not explicitly set then adjust to content
-                if (!percentageHeight)
+            else
+            {           
+                // adjust size to content
+                if (isHorizontal)
                 {
-                    // add margins
-                    totalHeight += !isHorizontal ? totalSpacing : 0f;
-                    totalHeight += Margin.Value.Top.Pixels + Margin.Value.Bottom.Pixels + ListMask.Margin.Value.Top.Pixels + ListMask.Margin.Value.Bottom.Pixels
-                        + Padding.Value.Top.Pixels + Padding.Value.Bottom.Pixels;
-                    maxHeight += Margin.Value.Top.Pixels + Margin.Value.Bottom.Pixels + ListMask.Margin.Value.Top.Pixels + ListMask.Margin.Value.Bottom.Pixels
-                        + Padding.Value.Top.Pixels + Padding.Value.Bottom.Pixels;
-
-                    // adjust height to content
-                    Height.DirectValue = new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels);
+                    maxHeight += Margin.Value.Top.Pixels + Margin.Value.Bottom.Pixels + ListMask.Margin.Value.Top.Pixels + 
+                        ListMask.Margin.Value.Bottom.Pixels + Padding.Value.Top.Pixels + Padding.Value.Bottom.Pixels;
+                    Height.DirectValue = ElementSize.FromPixels(maxHeight);
                 }
                 else
                 {
-                    Height.DirectValue = new ElementSize(1, ElementSizeUnit.Percents);
+                    maxWidth += Margin.Value.Left.Pixels + Margin.Value.Right.Pixels + ListMask.Margin.Value.Left.Pixels + 
+                        ListMask.Margin.Value.Right.Pixels + Padding.Value.Left.Pixels + Padding.Value.Right.Pixels;
+                    Width.DirectValue = ElementSize.FromPixels(maxWidth);
                 }
             }
 

@@ -42,8 +42,12 @@ namespace MarkLight.Views.UI
         /// <d>The end angle of the radial menu.</d>
         public _float EndAngle;
 
+        /// <summary>
+        /// Animation duration.
+        /// </summary>
+        /// <d>The open/close animation duration.</d>
         [DurationValueConverter]
-        public float AnimationDuration;
+        public _float AnimationDuration;
 
         private bool _isOpen;
         private List<ViewFieldAnimator> _menuAnimators;        
@@ -312,7 +316,7 @@ namespace MarkLight.Views.UI
                     offsetAnimator.Field = "OffsetFromParent";
                     offsetAnimator.From = new ElementMargin(_menuOffset.x, _menuOffset.y);
                     offsetAnimator.To = new ElementMargin(xOffset + _menuOffset.x, -yOffset + _menuOffset.y, 0, 0);
-                    offsetAnimator.Duration = IsSet(() => AnimationDuration) ? AnimationDuration : 0.2f;
+                    offsetAnimator.Duration = AnimationDuration.IsSet ? AnimationDuration : 0.2f;
                     offsetAnimator.TargetView = child;
                     _menuAnimators.Add(offsetAnimator);
 

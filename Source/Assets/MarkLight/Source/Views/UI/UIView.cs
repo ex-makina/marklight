@@ -287,8 +287,8 @@ namespace MarkLight.Views.UI
 
             // update rectTransform
             // horizontal alignment and positioning
-            var width = IsSet(() => OverrideWidth) ? OverrideWidth : Width;
-            var height = IsSet(() => OverrideHeight) ? OverrideHeight : Height;
+            var width = OverrideWidth.IsSet ? OverrideWidth : Width;
+            var height = OverrideHeight.IsSet ? OverrideHeight : Height;
 
             float xMin = 0f;
             float xMax = 0f;
@@ -378,7 +378,7 @@ namespace MarkLight.Views.UI
             if (!UpdateBackground)
                 return; // background image is updated elsewhere
 
-            if (IsSet("Alpha") || IsSet("IsVisible"))
+            if (Alpha.IsSet || IsVisible.IsSet)
             {
                 if (_canvasGroup == null)
                 {
@@ -400,7 +400,7 @@ namespace MarkLight.Views.UI
             if (ImageComponent != null)
             {
                 // set image color to white if sprite has been set but not color
-                if (IsSet("BackgroundImage") && !IsSet("BackgroundColor"))
+                if (BackgroundImage.IsSet && !BackgroundColor.IsSet)
                 {
                     ImageComponent.color = Color.white;
                 }

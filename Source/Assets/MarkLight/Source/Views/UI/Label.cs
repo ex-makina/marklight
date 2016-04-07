@@ -251,7 +251,7 @@ namespace MarkLight.Views.UI
             base.BehaviorChanged();
 
             TextComponent.alignment = TextAnchor;
-            if (IsSet(() => ShadowColor) || IsSet(() => ShadowDistance))
+            if (ShadowColor.IsSet || ShadowDistance.IsSet)
             {
                 var shadowComponent = GetComponent<Shadow>();
                 if (shadowComponent == null)
@@ -263,7 +263,7 @@ namespace MarkLight.Views.UI
                 shadowComponent.effectDistance = ShadowDistance.Value;
             }
 
-            if (IsSet(() => OutlineColor) || IsSet(() => OutlineDistance))
+            if (OutlineColor.IsSet || OutlineDistance.IsSet)
             {
                 var outlineComponent = GetComponent<Outline>();
                 if (outlineComponent == null)

@@ -89,7 +89,7 @@ namespace MarkLight.Views.UI
         {
             base.Initialize();
 
-            if (!IsSet(() => StartView))
+            if (!StartView.IsSet)
             {
                 if (SwitchToDefault)
                 {

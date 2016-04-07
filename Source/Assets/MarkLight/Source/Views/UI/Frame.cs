@@ -99,12 +99,12 @@ namespace MarkLight.Views.UI
                 maxHeight += Margin.Value.Top.Pixels + Margin.Value.Bottom.Pixels + ContentMargin.Value.Bottom.Pixels + ContentMargin.Value.Top.Pixels;
 
                 // adjust size to content unless it has been set
-                if (!IsSet(() => Width))
+                if (!Width.IsSet)
                 {
                     Width.DirectValue = new ElementSize(maxWidth);
                 }
 
-                if (!IsSet(() => Height))
+                if (!Height.IsSet)
                 {
                     Height.DirectValue = new ElementSize(maxHeight);
                 }
