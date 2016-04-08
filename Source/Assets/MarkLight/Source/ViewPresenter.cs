@@ -35,6 +35,7 @@ namespace MarkLight
         public List<string> FontPaths;
         public List<Material> Materials;
         public List<string> MaterialPaths;
+        public bool DisableAutomaticReload;
 
         private static ViewPresenter _instance;
         private Dictionary<string, Type> _viewTypes;

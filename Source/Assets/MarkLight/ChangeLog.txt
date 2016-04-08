@@ -1,46 +1,47 @@
 ﻿v2.0.0-beta2
+- Added option on view presenter to disable automatic reloading of views when XML changes
 - Added view actions for dragging to ScrollRect and Panel
 - Added DisableInteractionScrollDelta to ScrollRect so user interaction with child views can be disabled while scrolling
-- Dependency fields functionality added and all views have been converted to utilize dependency fields.
-- Replaced AlwaysBlockRaycast with RaycastBlockMode and fixed bug where setting was ignored when Alpha was set to 0. 
-- Fixed bug in tab panel were dynamically created tabs wasn't deactivated by default.
-- Fixed bug where list didn't notify parents of layout change when list is rebuilt. 
+- Dependency fields functionality added and all views have been converted to utilize dependency fields
+- Replaced AlwaysBlockRaycast with RaycastBlockMode and fixed bug where setting was ignored when Alpha was set to 0
+- Fixed bug in tab panel were dynamically created tabs wasn't deactivated by default
+- Fixed bug where list didn't notify parents of layout change when list is rebuilt
 
 v2.0.0-beta
-- Bigger scope. The framework is no longer limited to UI. Any element in the scene can be created with the framework.
-- Binding to properties as well as fields.
-- Multi-binding through binding transformations or format strings.
-- New binding operators for creating local bindings, one-way bindings, and negated bindings.
-- More dynamic handling of value propagation and binding dependency checks. 
-- Dynamic loading of view-XML. View XML can be loaded during run-time. 
-- View fields (i.e. both fields and properties) can be mapped through class attributes.
-- State-management. Simplified handling of views having different states. You no longer need separate fields for different states, e.g. PressedButtonColor, HighlightedButtonColor, etc. You only need one field and storing the various states is handled by the framework.
-- Animation between states are defined using a new StateAnimation view. Overall handling different states and animation between them requires much less code.
-- New ObservableList<T> class that is a generic list that can be bound to views such as the List, FlowList, DataGrid, ComboBox and TabPanel. Any changes to the list (add, remove) will be automatically propagated to the views that it's bound to.
-- List-views respond to changes in their data better (no longer rebuilds entire list on changes).
-- TabPanel can be bound to dynamic list for dynamic tab creation.
-- Multiple themes in the same scene. No longer restricted to one default theme. Themes can also be specified for individual views.
-- AdjustToText fields on Button and ListItem - for adjusting its size to text.
-- Disabled button styles added to the themes.
-- Base directory of the framework can be changed and be put in any folder.
-- Events and view actions added to animation views.
-- The framework now provides means to access all of the unity component fields even if mappings doesn't exist.
-- Fixed Panel bug where breadth of scrollbars where assumed to be 20px.
-- Add disabled Button styles to CheckBox and RadioButton.
+- Bigger scope. The framework is no longer limited to UI. Any element in the scene can be created with the framework
+- Binding to properties as well as fields
+- Multi-binding through binding transformations or format strings
+- New binding operators for creating local bindings, one-way bindings, and negated bindings
+- More dynamic handling of value propagation and binding dependency checks
+- Dynamic loading of view-XML. View XML can be loaded during run-time
+- View fields (i.e. both fields and properties) can be mapped through class attributes
+- State-management. Simplified handling of views having different states. You no longer need separate fields for different states, e.g. PressedButtonColor, HighlightedButtonColor, etc. You only need one field and storing the various states is handled by the framework
+- Animation between states are defined using a new StateAnimation view. Overall handling different states and animation between them requires much less code
+- New ObservableList<T> class that is a generic list that can be bound to views such as the List, FlowList, DataGrid, ComboBox and TabPanel. Any changes to the list (add, remove) will be automatically propagated to the views that it's bound to
+- List-views respond to changes in their data better (no longer rebuilds entire list on changes)
+- TabPanel can be bound to dynamic list for dynamic tab creation
+- Multiple themes in the same scene. No longer restricted to one default theme. Themes can also be specified for individual views
+- AdjustToText fields on Button and ListItem - for adjusting its size to text
+- Disabled button styles added to the themes
+- Base directory of the framework can be changed and be put in any folder
+- Events and view actions added to animation views
+- The framework now provides means to access all of the unity component fields even if mappings doesn't exist
+- Fixed Panel bug where breadth of scrollbars where assumed to be 20px
+- Add disabled Button styles to CheckBox and RadioButton
 - Added OverrideWidth and OverrideHeight fields to UIView
 - Added IsVisible field that when set to false still renders the view but with alpha = 0
 - Local state field can be changed on views by using the "--" notation
-- Added Content view to base view that references the view that contains the contents of the view (usually the view itself unless a ContentPlaceholder is used).
-- The fields Theme and Style are now inherited and applied to children that haven't set their styles.
+- Added Content view to base view that references the view that contains the contents of the view (usually the view itself unless a ContentPlaceholder is used)
+- The fields Theme and Style are now inherited and applied to children that haven't set their styles
 - Added Next/Previous method and ActiveView to ViewSwitcher
-- ListItem size can be adjusted with AdjustToText field. If set the ListItems will adjust their width/height to the text. Useful mainly if you want to create 
-  horizontal lists where each item is adjusted to the length of the text.
-- Dynamic data is no longer removed upone clean up so dynamic data can be visible even though the scene isn't running.
-- IsAlive property added to View.
-- View actions can be disabled so even when triggered no action handlers are invoked.
-- More flexible binding system, we can bind to uninitialized data, example: SelectedItem on the List. 
-- Sprites and fonts can be loaded dynamically by using path strings provided they've been loaded once in the scene before the scene is run.
-- Set-fields no longer required, View.IsSet(viewpath) can be used to see if a view field has been set.
+- ListItem size can be adjusted with AdjustToText field. If set the ListItems will adjust their width/height to the text. Useful mainly if you want to create
+  horizontal lists where each item is adjusted to the length of the text
+- Dynamic data is no longer removed upone clean up so dynamic data can be visible even though the scene isn't running
+- IsAlive property added to View
+- View actions can be disabled so even when triggered no action handlers are invoked
+- More flexible binding system, we can bind to uninitialized data, example: SelectedItem on the List.
+- Sprites and fonts can be loaded dynamically by using path strings provided they've been loaded once in the scene before the scene is run
+- Set-fields no longer required, View.IsSet(viewpath) can be used to see if a view field has been set
 
 v1.4.2
 - MarkUX now fully compatible with iOS

@@ -29,7 +29,7 @@ namespace MarkLight.Editor
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
             // don't process view XML assets while playing or when there is no view presenter in the scene
-            if (Application.isPlaying || ViewPresenter.Instance == null)
+            if (Application.isPlaying || ViewPresenter.Instance == null || ViewPresenter.Instance.DisableAutomaticReload)
             {
                 return;
             }

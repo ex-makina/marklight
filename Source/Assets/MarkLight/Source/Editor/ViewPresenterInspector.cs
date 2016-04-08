@@ -42,7 +42,10 @@ namespace MarkLight.Editor
             if (newSelectedViewIndex != selectedViewIndex)
             {
                 // .. trigger reload on view presenter
-                ViewData.GenerateViews();
+                if (!viewPresenter.DisableAutomaticReload)
+                {
+                    ViewData.GenerateViews();
+                }
             }
 
             // default theme selection
@@ -58,8 +61,14 @@ namespace MarkLight.Editor
             if (newSelectedThemeIndex != selectedThemeIndex)
             {
                 // .. trigger reload on view presenter
-                ViewData.GenerateViews();
+                if (!viewPresenter.DisableAutomaticReload)
+                {
+                    ViewData.GenerateViews();
+                }
             }
+
+            // disable automatic reload option
+            viewPresenter.DisableAutomaticReload = EditorGUILayout.Toggle("Disable Automatic Reload", viewPresenter.DisableAutomaticReload);
 
             // reload button
             if (GUILayout.Button("Reload Views"))
