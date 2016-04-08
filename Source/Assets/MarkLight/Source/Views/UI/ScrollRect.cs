@@ -154,6 +154,12 @@ namespace MarkLight.Views.UI
 #endif
 
         /// <summary>
+        /// Scroll delta distance for disabling interaction.
+        /// </summary>
+        /// <d>If set any interaction with child views (clicks, etc) is disabled when the specified amount of pixels has been scrolled. This is used e.g. to disable clicks while scrolling a selectable list of items.</d>
+        public _float DisableInteractionScrollDelta;
+
+        /// <summary>
         /// Scrollable viewport.
         /// </summary>
         /// <d>References the RectTransform parent to the content.</d>
@@ -165,6 +171,32 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Component responsible for handling scrollable content.</d>
         public UnityEngine.UI.ScrollRect ScrollRectComponent;
+
+        /// <summary>
+        /// Slider begin drag.
+        /// </summary>
+        /// <d>Triggered when the user presses mouse on and starts to drag over the slider.</d>
+        public ViewAction BeginDrag;
+
+        /// <summary>
+        /// Slider end drag.
+        /// </summary>
+        /// <d>Triggered when the user stops dragging mouse over the slider.</d>
+        public ViewAction EndDrag;
+
+        /// <summary>
+        /// Slider drag.
+        /// </summary>
+        /// <d>Triggered as the user drags the mouse over the slider.</d>
+        public ViewAction Drag;
+
+        /// <summary>
+        /// Slider initialize potential drag.
+        /// </summary>
+        /// <d>Triggered as the user initiates a potential drag over the slider.</d>
+        public ViewAction InitializePotentialDrag;
+        
+        private bool _hasDisabledInteraction;
 
         #endregion
 
@@ -204,7 +236,7 @@ namespace MarkLight.Views.UI
                 if (child != null)
                 {
                     ScrollRectComponent.content = child.RectTransform;
-                }                
+                }
             }
 
             // workaround for panel blocking drag events in child views
@@ -214,7 +246,7 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
-        /// Workaround for blocking of drag events in child views.
+        /// Workaround for draggable child views blocking drag events.
         /// </summary>
         private void UnblockDragEvents()
         {
@@ -249,16 +281,14 @@ namespace MarkLight.Views.UI
 
                 // unblock drag events if the view doesn't handle drag events
                 if (!hasDragEntries)
-                {
-                    ScrollRect scrollRect = this;
-
+                {                   
                     // unblock initialize potential drag 
                     var initializePotentialDragEntry = new EventTrigger.Entry();
                     initializePotentialDragEntry.eventID = EventTriggerType.InitializePotentialDrag;
                     initializePotentialDragEntry.callback = new EventTrigger.TriggerEvent();
                     initializePotentialDragEntry.callback.AddListener(eventData =>
                     {
-                        scrollRect.SendMessage("OnInitializePotentialDrag", eventData);
+                        SendMessage("OnInitializePotentialDrag", eventData);
                     });
                     triggers.Add(initializePotentialDragEntry);
 
@@ -268,7 +298,7 @@ namespace MarkLight.Views.UI
                     beginDragEntry.callback = new EventTrigger.TriggerEvent();
                     beginDragEntry.callback.AddListener(eventData =>
                     {
-                        scrollRect.SendMessage("OnBeginDrag", eventData);
+                        SendMessage("OnBeginDrag", eventData);
                     });
                     triggers.Add(beginDragEntry);
 
@@ -278,7 +308,7 @@ namespace MarkLight.Views.UI
                     dragEntry.callback = new EventTrigger.TriggerEvent();
                     dragEntry.callback.AddListener(eventData =>
                     {
-                        scrollRect.SendMessage("OnDrag", eventData);
+                        SendMessage("OnDrag", eventData);
                     });
                     triggers.Add(dragEntry);
 
@@ -288,11 +318,54 @@ namespace MarkLight.Views.UI
                     endDragEntry.callback = new EventTrigger.TriggerEvent();
                     endDragEntry.callback.AddListener(eventData =>
                     {
-                        scrollRect.SendMessage("OnEndDrag", eventData);
+                        SendMessage("OnEndDrag", eventData);
                     });
                     triggers.Add(endDragEntry);
                 }
-            });
+            });           
+        }
+
+        /// <summary>
+        /// Called on scroll rect drag begin.
+        /// </summary>
+        public void ScrollRectBeginDrag(PointerEventData eventData)
+        {
+            if (!DisableInteractionScrollDelta.IsSet)
+                return;                      
+
+            Debug.Log("BeginDrag");
+        }
+
+        /// <summary>
+        /// Called on scroll rect drag end.
+        /// </summary>
+        public void ScrollRectEndDrag(PointerEventData eventData)
+        {
+            if (!DisableInteractionScrollDelta.IsSet)
+                return;                        
+            
+            // unblock raycasts
+            if (_hasDisabledInteraction)
+            {
+                this.ForEachChild<UIView>(x => x.RaycastBlockMode.Value = MarkLight.RaycastBlockMode.Default, false);
+            }
+        }
+
+        /// <summary>
+        /// Called on scroll rect drag.
+        /// </summary>
+        public void ScrollRectDrag(PointerEventData eventData)
+        {
+            if (!DisableInteractionScrollDelta.IsSet)
+                return;
+
+            // block raycasts if scrolled specified delta distance
+            var pos = eventData.position - eventData.pressPosition;
+            if (pos.magnitude > DisableInteractionScrollDelta)
+            {
+                this.ForEachChild<UIView>(x => x.RaycastBlockMode.Value = MarkLight.RaycastBlockMode.Never, false);
+                _hasDisabledInteraction = true;
+            }
         }
 
         #endregion

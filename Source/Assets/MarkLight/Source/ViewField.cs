@@ -317,6 +317,11 @@ namespace MarkLight
         public static implicit operator OverflowMode(_OverflowMode value) { return value.Value; }
     }
 
+    [Serializable]
+    public class _RaycastBlockMode : ViewField<RaycastBlockMode>
+    {
+        public static implicit operator RaycastBlockMode(_RaycastBlockMode value) { return value.Value; }
+    }
 
     [Serializable]
     public class _object : ViewField<object> { }

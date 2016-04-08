@@ -18,6 +18,10 @@ namespace MarkLight.Views.UI
     /// Panel view.
     /// </summary>
     /// <d>Presents scrollable content. Content can be aligned using the ContentAlignment field.</d>
+    [MapViewField("Drag", "ScrollRect.Drag")]
+    [MapViewField("InitializePotentialDrag", "ScrollRect.InitializePotentialDrag")]
+    [MapViewField("BeginDrag", "ScrollRect.BeginDrag")]
+    [MapViewField("EndDrag", "ScrollRect.EndDrag")]
     [HideInPresenter]
     public class Panel : UIView
     {
@@ -349,6 +353,13 @@ namespace MarkLight.Views.UI
         [MapTo("ScrollRect.VerticalScrollbarVisibility")]
         public _ScrollbarVisibility VerticalScrollbarVisibility;
 #endif
+
+        /// <summary>
+        /// Scroll delta distance for disabling interaction.
+        /// </summary>
+        /// <d>If set any interaction with child views (clicks, etc) is disabled when the specified distance has been scrolled. This is used e.g. to disable clicks while scrolling a selectable list of items.</d>
+        [MapTo("ScrollRect.DisableInteractionScrollDelta")]
+        public _float DisableInteractionScrollDelta;
 
         /// <summary>
         /// Scrollable viewport.

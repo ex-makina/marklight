@@ -160,10 +160,10 @@ namespace MarkLight.Views.UI
         public _ElementSize Breadth;
 
         /// <summary>
-        /// Indicates if item is selected on mouse down.
+        /// Indicates if item is selected on mouse up.
         /// </summary>
-        /// <d>Boolean indicating if item is selected on mouse down (true by default). If set to false the item is selected on mouse up (click).</d>
-        public _bool SelectOnMouseDown;
+        /// <d>Boolean indicating if item is selected on mouse up rather than on mouse down.</d>
+        public _bool SelectOnMouseUp;
 
         [NotSetFromXml]
         [ChangeHandler("IsSelectedChanged", TriggerImmediately = true)]
@@ -219,7 +219,6 @@ namespace MarkLight.Views.UI
             base.SetDefaultValues();
             Breadth.DirectValue = new ElementSize(40);
             Length.DirectValue = new ElementSize(120);
-            SelectOnMouseDown.DirectValue = true;
             TextPadding.DirectValue = new ElementMargin();
 
             // list item label
@@ -306,7 +305,7 @@ namespace MarkLight.Views.UI
             if (ParentList == null || State == "Disabled")
                 return;
 
-            if (SelectOnMouseDown.Value)
+            if (!SelectOnMouseUp.Value)
                 return;
 
             ParentList.SelectItem(this, true);
@@ -357,7 +356,7 @@ namespace MarkLight.Views.UI
             if (ParentList == null || State == "Disabled")
                 return;
                         
-            if (SelectOnMouseDown.Value)
+            if (!SelectOnMouseUp.Value)
             {
                 ParentList.SelectItem(this, true);
             }

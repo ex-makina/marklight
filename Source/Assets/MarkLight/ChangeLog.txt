@@ -1,6 +1,9 @@
 ﻿v2.0.0-beta2
+- Added view actions for dragging to ScrollRect and Panel
+- Added DisableInteractionScrollDelta to ScrollRect so user interaction with child views can be disabled while scrolling
 - Dependency fields functionality added and all views have been converted to utilize dependency fields.
-- Fixed bug in tab panel were dynamically created tabs wasn't deactivated by default
+- Replaced AlwaysBlockRaycast with RaycastBlockMode and fixed bug where setting was ignored when Alpha was set to 0. 
+- Fixed bug in tab panel were dynamically created tabs wasn't deactivated by default.
 - Fixed bug where list didn't notify parents of layout change when list is rebuilt. 
 
 v2.0.0-beta

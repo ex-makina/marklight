@@ -64,7 +64,7 @@ namespace MarkLight.Views.UI
         {
             base.SetDefaultValues();
 
-            AlwaysBlockRaycast.DirectValue = true;
+            RaycastBlockMode.DirectValue = MarkLight.RaycastBlockMode.Always;
         }
 
         #endregion

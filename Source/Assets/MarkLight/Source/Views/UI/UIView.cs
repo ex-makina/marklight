@@ -91,13 +91,13 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The view rect transform is used to manipulate the position, rotation and scale of the view in relation to the layout parent view's transform or in world space. For most UIViews the transform manipulated indirectly through other view fields such as Width, Height, Margin, Offset, Alignment and through the UIView's internal layout logic.</d>
         public RectTransform RectTransform;
-
+        
         /// <summary>
-        /// Indicates if raycast always is blocked.
+        /// Indicates when raycast should be blocked.
         /// </summary>
-        /// <d>Boolean indicating if the view always should block raycasts even if it is transparent. By default transparent views does not block raycasts.</d>
+        /// <d>Enum indicating when raycasts should be blocked by the view.</d>
         [ChangeHandler("BackgroundChanged")]
-        public _bool AlwaysBlockRaycast;
+        public _RaycastBlockMode RaycastBlockMode;
 
         /// <summary>
         /// Alpha value.
@@ -237,7 +237,8 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>A reference to the layout root of the UI views.</d>
         public UserInterface LayoutRoot;
-        private CanvasGroup _canvasGroup;
+        
+        protected CanvasGroup _canvasGroup;
 
         #endregion
 
@@ -269,7 +270,6 @@ namespace MarkLight.Views.UI
             IsActive.DirectValue = true;
             OffsetFromParent.DirectValue = new ElementMargin();
             SortIndex.DirectValue = 0;
-            AlwaysBlockRaycast.DirectValue = false;
             UpdateRectTransform.DirectValue = true;
             UpdateBackground.DirectValue = true;
         }
@@ -378,7 +378,7 @@ namespace MarkLight.Views.UI
             if (!UpdateBackground)
                 return; // background image is updated elsewhere
 
-            if (Alpha.IsSet || IsVisible.IsSet)
+            if (Alpha.IsSet || IsVisible.IsSet || RaycastBlockMode.IsSet)
             {
                 if (_canvasGroup == null)
                 {
@@ -389,12 +389,22 @@ namespace MarkLight.Views.UI
                     }
                 }
 
-                if (IsActive)
+                _canvasGroup.alpha = IsVisible.Value ? Alpha.Value : 0;
+
+                if (RaycastBlockMode == MarkLight.RaycastBlockMode.Always)
                 {
-                    _canvasGroup.alpha = IsVisible.Value ? Alpha.Value : 0;
-                    _canvasGroup.blocksRaycasts = IsVisible ? Alpha > 0 : false;
-                    _canvasGroup.interactable = IsVisible ?  Alpha > 0 : false;
+                    _canvasGroup.blocksRaycasts = true;
                 }
+                else if (RaycastBlockMode == MarkLight.RaycastBlockMode.Never)
+                {
+                    _canvasGroup.blocksRaycasts = false;
+                }
+                else
+                {
+                    _canvasGroup.blocksRaycasts = (IsVisible && Alpha > 0);
+                }
+
+                _canvasGroup.interactable = IsVisible ?  Alpha > 0 : false;
             }
                         
             if (ImageComponent != null)
@@ -406,7 +416,7 @@ namespace MarkLight.Views.UI
                 }
 
                 // if image color is clear disable image component
-                ImageComponent.enabled = AlwaysBlockRaycast ? true : ImageComponent.color.a > 0;
+                ImageComponent.enabled = RaycastBlockMode == MarkLight.RaycastBlockMode.Always ? true : ImageComponent.color.a > 0;
             }
         }
 

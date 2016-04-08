@@ -30,6 +30,7 @@ namespace MarkLight
         public Type ViewFieldType;
         public bool ViewFieldPathParsed;
         public string ParseError;
+        public bool SevereParseError;
 
         private HashSet<ValueObserver> _valueObservers;
         private bool _isSet;
@@ -68,9 +69,14 @@ namespace MarkLight
                 // attempt to parse path
                 if (!ParseViewFieldPath())
                 {
-                    // path can't be resolved at this point, can be an error but can also be expected behavior
-                    //Debug.Log(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\". {2}", SourceView.GameObjectName, inValue, ParseError));
-                    // TODO comment above
+                    // path can't be resolved at this point
+                    if (SevereParseError)
+                    {
+                        // severe parse error means the path is incorrect
+                        Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\". {2}", SourceView.GameObjectName, inValue, ParseError));
+                    }
+
+                    // unsevere parse errors can be expected, e.g. value along path is null
                     return null;
                 }
             }
@@ -299,6 +305,7 @@ namespace MarkLight
         /// </summary>
         public bool ParseViewFieldPath()
         {
+            SevereParseError = false;
             ViewFieldPathParsed = false;
             ViewFieldPathInfo.MemberInfo.Clear();
             ViewFieldPathInfo.Dependencies.Clear();
@@ -336,6 +343,7 @@ namespace MarkLight
                 var memberInfo = viewFieldType.GetFieldInfo(viewField);
                 if (memberInfo == null)
                 {
+                    SevereParseError = true;
                     ParseError = String.Format("Unable to parse view field path \"{0}\". Couldn't find member with the name \"{1}\".", ViewFieldPath, viewField);
                     return false;
                 }

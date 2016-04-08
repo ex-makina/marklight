@@ -1,2 +1,2 @@
-<ScrollRect UpdateBackground="False">
+<ScrollRect UpdateBackground="False" Drag="ScrollRectDrag" BeginDrag="ScrollRectBeginDrag" EndDrag="ScrollRectEndDrag">
 </ScrollRect>
