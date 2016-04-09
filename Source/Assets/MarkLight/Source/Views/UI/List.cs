@@ -142,6 +142,12 @@ namespace MarkLight.Views.UI
         public _bool CanSelect;
 
         /// <summary>
+        /// Indicates if items are deselected immediately after being selected.
+        /// </summary>
+        /// <d>A boolean indicating if items are deselected immediately after being selected. Useful if you want to trigger selection action but don't want the item to remain selected.</d>
+        public _bool DeselectAfterSelect;
+
+        /// <summary>
         /// Indicates how items overflow.
         /// </summary>
         /// <d>Enum indicating how items should overflow as they reach the boundaries of the list.</d>
@@ -181,6 +187,12 @@ namespace MarkLight.Views.UI
         /// <d>If list items has SortIndex set they can be sorted in the direction specified.</d>
         [ChangeHandler("LayoutChanged")]
         public _ElementSortDirection SortDirection;
+
+        /// <summary>
+        /// Indicates if items are selected on mouse up.
+        /// </summary>
+        /// <d>Boolean indicating if items are selected on mouse up rather than mouse down (default).</d>
+        public _bool SelectOnMouseUp;
 
         /// <summary>
         /// List item padding.
@@ -559,6 +571,13 @@ namespace MarkLight.Views.UI
                         // deselect and trigger actions
                         SetSelected(presentedListItem as ListItem, false);
                     }
+                }
+
+                // should this item immediately be deselected?
+                if (DeselectAfterSelect)
+                {
+                    // yes.
+                    SetSelected(listItem, false); 
                 }
             }            
         }

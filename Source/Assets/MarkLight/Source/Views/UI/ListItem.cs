@@ -159,12 +159,6 @@ namespace MarkLight.Views.UI
         [ChangeHandler("LayoutsChanged")]
         public _ElementSize Breadth;
 
-        /// <summary>
-        /// Indicates if item is selected on mouse up.
-        /// </summary>
-        /// <d>Boolean indicating if item is selected on mouse up rather than on mouse down.</d>
-        public _bool SelectOnMouseUp;
-
         [NotSetFromXml]
         [ChangeHandler("IsSelectedChanged", TriggerImmediately = true)]
         public _bool IsSelected;        
@@ -305,7 +299,7 @@ namespace MarkLight.Views.UI
             if (ParentList == null || State == "Disabled")
                 return;
 
-            if (!SelectOnMouseUp.Value)
+            if (!ParentList.SelectOnMouseUp.Value)
                 return;
 
             ParentList.SelectItem(this, true);
@@ -356,7 +350,7 @@ namespace MarkLight.Views.UI
             if (ParentList == null || State == "Disabled")
                 return;
                         
-            if (!SelectOnMouseUp.Value)
+            if (!ParentList.SelectOnMouseUp.Value)
             {
                 ParentList.SelectItem(this, true);
             }
