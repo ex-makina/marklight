@@ -89,7 +89,7 @@ namespace MarkLight
         /// <summary>
         /// Parses string into element size.
         /// </summary>
-        public static ElementSize Parse(string value)
+        public static ElementSize Parse(string value, Vector3 unitSize)
         {
             ElementSize elementSize = new ElementSize();
             string trimmedValue = value.Trim();
@@ -109,6 +109,24 @@ namespace MarkLight
             {
                 int lastIndex = trimmedValue.LastIndexOf("px", StringComparison.OrdinalIgnoreCase);
                 elementSize.Value = System.Convert.ToSingle(trimmedValue.Substring(0, lastIndex), CultureInfo.InvariantCulture);
+                elementSize.Unit = ElementSizeUnit.Pixels;
+            }
+            else if (trimmedValue.EndsWith("ux"))
+            {
+                int lastIndex = trimmedValue.LastIndexOf("ux", StringComparison.OrdinalIgnoreCase);
+                elementSize.Value = System.Convert.ToSingle(trimmedValue.Substring(0, lastIndex), CultureInfo.InvariantCulture) * unitSize.x;
+                elementSize.Unit = ElementSizeUnit.Pixels;
+            }
+            else if (trimmedValue.EndsWith("uy"))
+            {
+                int lastIndex = trimmedValue.LastIndexOf("uy", StringComparison.OrdinalIgnoreCase);
+                elementSize.Value = System.Convert.ToSingle(trimmedValue.Substring(0, lastIndex), CultureInfo.InvariantCulture) * unitSize.y;
+                elementSize.Unit = ElementSizeUnit.Pixels;
+            }
+            else if (trimmedValue.EndsWith("uz"))
+            {
+                int lastIndex = trimmedValue.LastIndexOf("uz", StringComparison.OrdinalIgnoreCase);
+                elementSize.Value = System.Convert.ToSingle(trimmedValue.Substring(0, lastIndex), CultureInfo.InvariantCulture) * unitSize.z;
                 elementSize.Unit = ElementSizeUnit.Pixels;
             }
             else

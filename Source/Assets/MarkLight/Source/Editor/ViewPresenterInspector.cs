@@ -70,6 +70,20 @@ namespace MarkLight.Editor
             // disable automatic reload option
             viewPresenter.DisableAutomaticReload = EditorGUILayout.Toggle("Disable Automatic Reload", viewPresenter.DisableAutomaticReload);
 
+            // unit size option
+            Vector3 newUnitSize = EditorGUILayout.Vector3Field("Unit Size", viewPresenter.UnitSize);
+            if (newUnitSize != viewPresenter.UnitSize)
+            {
+                viewPresenter.UnitSize = newUnitSize;
+            }
+
+            // base directory
+            string newBaseDirectory = EditorGUILayout.DelayedTextField("Base Directory", viewPresenter.BaseDirectory);
+            if (newBaseDirectory != viewPresenter.BaseDirectory)
+            {
+                viewPresenter.BaseDirectory = newBaseDirectory;
+            }
+
             // reload button
             if (GUILayout.Button("Reload Views"))
             {

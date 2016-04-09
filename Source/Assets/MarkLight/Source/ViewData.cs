@@ -11,6 +11,7 @@ using System.IO;
 using MarkLight.Animation;
 using MarkLight.Views.UI;
 using MarkLight.Views;
+using MarkLight.ValueConverters;
 #endregion
 
 namespace MarkLight
@@ -313,8 +314,36 @@ namespace MarkLight
             themeData.ThemeName = themeNameAttr.Value;
 
             var baseDirectoryAttr = xmlElement.Attribute("BaseDirectory");
-            var baseDirectory = baseDirectoryAttr != null ? baseDirectoryAttr.Value : String.Empty;
-            themeData.BaseDirectory = baseDirectory;
+            themeData.BaseDirectorySet = baseDirectoryAttr != null;
+            if (themeData.BaseDirectorySet)
+            {
+                themeData.BaseDirectory = baseDirectoryAttr.Value;
+            }
+            
+            var unitSizeAttr = xmlElement.Attribute("UnitSize");
+            themeData.UnitSizeSet = unitSizeAttr != null;
+            if (themeData.UnitSizeSet)
+            {           
+                if (String.IsNullOrEmpty(unitSizeAttr.Value))
+                {
+                    // use default unit size
+                    themeData.UnitSize = ViewPresenter.Instance.UnitSize;
+                }
+                else
+                {
+                    var converter = new Vector3ValueConverter();
+                    var result = converter.Convert(unitSizeAttr.Value);
+                    if (result.Success)
+                    {
+                        themeData.UnitSize = (Vector3)result.ConvertedValue;
+                    }
+                    else
+                    {
+                        Debug.LogError(String.Format("[MarkLight] {0}: Error parsing theme XML. Unable to parse UnitSize attribute value \"{1}\".", xmlAssetName, unitSizeAttr.Value));
+                        themeData.UnitSize = ViewPresenter.Instance.UnitSize;
+                    }
+                }
+            }
 
             // load theme elements
             foreach (var childElement in xmlElement.Elements())
@@ -350,16 +379,16 @@ namespace MarkLight
         /// <summary>
         /// Creates view of specified type.
         /// </summary>
-        public static T CreateView<T>(View layoutParent, View parent, string themeName = "", string id = "", string style = "", IEnumerable<XElement> contentXml = null) where T : View
+        public static T CreateView<T>(View layoutParent, View parent, ValueConverterContext context = null, string themeName = "", string id = "", string style = "", IEnumerable<XElement> contentXml = null) where T : View
         {
             Type viewType = typeof(T);
-            return CreateView(viewType.Name, layoutParent, parent, themeName, id, style, contentXml) as T;
+            return CreateView(viewType.Name, layoutParent, parent, context, themeName, id, style, contentXml) as T;
         }
 
         /// <summary>
         /// Creates view of specified type.
         /// </summary>
-        public static View CreateView(string viewName, View layoutParent, View parent, string theme = "", string id = "", string style = "", IEnumerable<XElement> contentXml = null)
+        public static View CreateView(string viewName, View layoutParent, View parent, ValueConverterContext context = null, string theme = "", string id = "", string style = "", IEnumerable<XElement> contentXml = null)
         {
             // Creates the views in the following order:
             // CreateView(view)
@@ -380,6 +409,12 @@ namespace MarkLight
                 theme = ViewPresenter.Instance.DefaultTheme;
             }
 
+            // initialize value converter context
+            if (context == null)
+            {
+                context = ValueConverterContext.Default;
+            }
+                        
             // create view from XML
             var viewTypeData = GetViewTypeData(viewName);
             if (viewTypeData == null)
@@ -458,13 +493,14 @@ namespace MarkLight
                 var childViewIdAttr = childElement.Attribute("Id");
                 var childViewStyleAttr = childElement.Attribute("Style");
                 var childThemeAttr = childElement.Attribute("Theme");
+                var childContext = GetValueConverterContext(context, childElement, view.GameObjectName);
 
-                var childView = CreateView(childElement.Name.LocalName, view, view,
+                var childView = CreateView(childElement.Name.LocalName, view, view, childContext,
                     childThemeAttr != null ? childThemeAttr.Value : theme,
                     childViewIdAttr != null ? childViewIdAttr.Value : String.Empty,
                     GetChildViewStyle(view.Style, childViewStyleAttr),
                     childElement.Elements());
-                SetViewValues(childView, childElement, view);
+                SetViewValues(childView, childElement, view, childContext);
             }
 
             // search for a content placeholder
@@ -488,13 +524,14 @@ namespace MarkLight
                     var contentElementIdAttr = contentElement.Attribute("Id");
                     var contentElementStyleAttr = contentElement.Attribute("Style");
                     var contentThemeAttr = contentElement.Attribute("Theme");
+                    var contentContext = GetValueConverterContext(context, contentElement, view.GameObjectName);
 
-                    var contentView = CreateView(contentElement.Name.LocalName, contentLayoutParent, parent,
+                    var contentView = CreateView(contentElement.Name.LocalName, contentLayoutParent, parent, contentContext,
                         contentThemeAttr != null ? contentThemeAttr.Value : theme,
                         contentElementIdAttr != null ? contentElementIdAttr.Value : String.Empty,
                         GetChildViewStyle(view.Style, contentElementStyleAttr),
                         contentElement.Elements());
-                    SetViewValues(contentView, contentElement, parent);
+                    SetViewValues(contentView, contentElement, parent, contentContext);
                 }
             }
 
@@ -515,21 +552,61 @@ namespace MarkLight
             view.SetDefaultValues();
 
             // set internal view values that appear inside the root view element of the view XML file
-            SetViewValues(view, viewTypeData.XmlElement, view);
+            SetViewValues(view, viewTypeData.XmlElement, view, context);
 
             // set theme values
-            var themeAttr = viewTypeData.XmlElement.Attribute("Theme");
-            var themeData = GetThemeData(themeAttr != null ? themeAttr.Value : theme);
-
+            var themeData = GetThemeData(theme);
             if (themeData != null)
             {
                 foreach (var themeElement in themeData.GetThemeElementData(view.ViewTypeName, view.Id, view.Style))
                 {
-                    SetViewValues(view, themeElement.XmlElement, view, new ValueConverterContext { BaseDirectory = themeData.BaseDirectory });
+                    var themeValueContext = new ValueConverterContext(context);
+                    if (themeData.BaseDirectorySet)
+                    {
+                        themeValueContext.BaseDirectory = themeData.BaseDirectory;
+                    }
+                    if (themeData.UnitSizeSet)
+                    {
+                        themeValueContext.UnitSize = themeData.UnitSize;
+                    }
+
+                    SetViewValues(view, themeElement.XmlElement, view, themeValueContext);
                 }
             }
 
             return view;
+        }
+
+        /// <summary>
+        /// Creates value converter context from element settings.
+        /// </summary>
+        private static ValueConverterContext GetValueConverterContext(ValueConverterContext parentContext, XElement element, string viewName)
+        {
+            var elementContext = new ValueConverterContext(parentContext);
+
+            var baseDirectoryAttr = element.Attribute("BaseDirectory");
+            var unitSizeAttr = element.Attribute("UnitSize");
+            if (baseDirectoryAttr != null)
+            {
+                elementContext.BaseDirectory = baseDirectoryAttr.Value;                
+            }
+            if (unitSizeAttr != null)
+            {
+                var unitSizeString = unitSizeAttr.Value;
+                var converter = new Vector3ValueConverter();
+                var result = converter.Convert(unitSizeString);
+                if (result.Success)
+                {
+                    elementContext.UnitSize = (Vector3)result.ConvertedValue;
+                }
+                else
+                {
+                    Debug.LogError(String.Format("[MarkLight] {0}: Error parsing view XML. Unable to parse UnitSize attribute value \"{1}\".", viewName, unitSizeString));
+                    elementContext.UnitSize = ViewPresenter.Instance.UnitSize;
+                }
+            }
+
+            return elementContext;
         }
 
         /// <summary>
@@ -544,7 +621,7 @@ namespace MarkLight
         /// <summary>
         /// Sets view values parsed from XML.
         /// </summary>
-        private static void SetViewValues(View view, XElement xmlElement, View parent, ValueConverterContext context = null)
+        private static void SetViewValues(View view, XElement xmlElement, View parent, ValueConverterContext context)
         {
             if (view == null)
                 return;

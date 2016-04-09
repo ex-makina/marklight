@@ -1,9 +1,11 @@
 ﻿v2.0.0-beta2
+- BaseDirectory can now be specified on views (inherited by children). Default value can be set on view presenter
+- Added UnitSize a user-defined scalable element size unit (postfix "ux", "uy" and "uz"). Can specified on views (inherited by children) and the default value can be set on the view presenter
 - Added option on view presenter to disable automatic reloading of views when XML changes
 - Added view actions for dragging to ScrollRect and Panel
 - Added DisableInteractionScrollDelta to ScrollRect so user interaction with child views can be disabled while scrolling
 - Dependency fields functionality added and all views have been converted to utilize dependency fields
-- Replaced AlwaysBlockRaycast with RaycastBlockMode and fixed bug where setting was ignored when Alpha was set to 0
+- Replaced AlwaysBlockRaycast with RaycastBlockMode enum and fixed bug where setting was ignored when Alpha was set to 0
 - Fixed bug in tab panel were dynamically created tabs wasn't deactivated by default
 - Fixed bug where list didn't notify parents of layout change when list is rebuilt
 

@@ -52,7 +52,7 @@ namespace MarkLight.ValueConverters
                 var stringValue = (string)value;
                 try
                 {
-                    var convertedValue = ElementSize.Parse(stringValue);
+                    var convertedValue = ElementSize.Parse(stringValue, context.UnitSize);
                     return new ConversionResult(convertedValue);
                 }
                 catch (Exception e)

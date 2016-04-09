@@ -34,14 +34,26 @@ namespace MarkLight
         /// <summary>
         /// The style of the view.
         /// </summary>
-        /// <d>Used as selector by the styles. Specifies the name of the style that is to be applied to the view. The style is applied when the view is created (usually in the editor as the view XML is processed).</d>
+        /// <d>Used as selector by the styles. Specifies the name of the style that is to be applied to the view and any children that explicitly inherits its style. The style is applied when the view is created (usually in the editor as the view XML is processed).</d>
         public string Style;
 
         /// <summary>
         /// The theme of the view.
         /// </summary>
-        /// <d>Specifies the name of the theme that is applied to the view. The theme determines which set of styles are to be considered when applying matching styles to the view.</d>
+        /// <d>Specifies the name of the theme that is applied to the view and its children. The theme determines which set of styles are to be considered when applying matching styles to the view.</d>
         public string Theme;
+
+        /// <summary>
+        /// Base directory.
+        /// </summary>
+        /// <d>Specifies the base directory to be used by the view and its children. The base directory is used when loading resources such as sprites, fonts, etc.</d>
+        public string BaseDirectory;
+
+        /// <summary>
+        /// Unit size.
+        /// </summary>
+        /// <d>Specifies the user-defined unit size to be used by the view and its children. Used when element size is specified in user-defined units to convert it into pixels.</d>
+        public Vector3 UnitSize;
 
         /// <summary>
         /// Layout parent view.
@@ -929,7 +941,7 @@ namespace MarkLight
 
             if (viewFieldData.ValueConverter != null)
             {
-                viewFieldData.ValueConverter.Convert(value, context != null ? context : ValueConverterContext.Empty);
+                viewFieldData.ValueConverter.Convert(value, context != null ? context : ValueConverterContext.Default);
             }
 
             // set state value

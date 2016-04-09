@@ -831,7 +831,7 @@ namespace MarkLight.Views.UI
             if (tabHeader == null)
             {
                 // create default TabHeader                
-                tabHeader = ViewData.CreateView<TabHeader>(TabHeaderList.Content, tab.Parent, Theme, String.Empty, Style);
+                tabHeader = ViewData.CreateView<TabHeader>(TabHeaderList.Content, tab.Parent, null, Theme, String.Empty, Style);
                 tabHeader.ParentTab = tab;
                 if (index >= 0)
                 {

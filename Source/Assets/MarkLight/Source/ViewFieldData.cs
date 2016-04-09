@@ -86,7 +86,7 @@ namespace MarkLight
             // get converted value            
             if (ValueConverter != null)
             {
-                var conversionResult = ValueConverter.Convert(value, context != null ? context : ValueConverterContext.Empty);
+                var conversionResult = ValueConverter.Convert(value, context != null ? context : ValueConverterContext.Default);
                 if (!conversionResult.Success)
                 {
                     Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}\". Value converion failed. {3}", SourceView.GameObjectName, value, ViewFieldPath, conversionResult.ErrorMessage));

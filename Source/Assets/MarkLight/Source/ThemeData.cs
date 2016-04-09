@@ -21,8 +21,11 @@ namespace MarkLight
 
         public string ThemeName;
         public string BaseDirectory;
+        public Vector3 UnitSize;
         public string Xml;
         public List<ThemeElementData> ThemeElementData;
+        public bool BaseDirectorySet;
+        public bool UnitSizeSet;
 
         [NonSerialized]
         private XElement _xmlElement;

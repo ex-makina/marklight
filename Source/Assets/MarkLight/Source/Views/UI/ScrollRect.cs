@@ -326,17 +326,6 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
-        /// Called on scroll rect drag begin.
-        /// </summary>
-        public void ScrollRectBeginDrag(PointerEventData eventData)
-        {
-            if (!DisableInteractionScrollDelta.IsSet)
-                return;                      
-
-            Debug.Log("BeginDrag");
-        }
-
-        /// <summary>
         /// Called on scroll rect drag end.
         /// </summary>
         public void ScrollRectEndDrag(PointerEventData eventData)

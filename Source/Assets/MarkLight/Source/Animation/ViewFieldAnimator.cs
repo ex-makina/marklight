@@ -127,7 +127,7 @@ namespace MarkLight.Animation
             var converter = ViewData.GetValueConverterForType(viewFieldData.ViewFieldTypeName);
             if (From == null && !String.IsNullOrEmpty(FromStringValue))
             {
-                var result = converter.Convert(FromStringValue, ValueConverterContext.Empty);
+                var result = converter.Convert(FromStringValue, ValueConverterContext.Default);
                 if (!result.Success)
                 {
                     Debug.LogError(String.Format("[MarkLight] Unable to parse animation From value \"{0}\". {1}", From, result.ErrorMessage));
@@ -139,7 +139,7 @@ namespace MarkLight.Animation
 
             if (To == null && !String.IsNullOrEmpty(ToStringValue))
             {
-                var result = converter.Convert(ToStringValue, ValueConverterContext.Empty);
+                var result = converter.Convert(ToStringValue, ValueConverterContext.Default);
                 if (!result.Success)
                 {
                     Debug.LogError(String.Format("[MarkLight] Unable to parse animation To value \"{0}\". {1}", To, result.ErrorMessage));

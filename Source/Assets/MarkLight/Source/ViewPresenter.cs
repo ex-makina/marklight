@@ -17,7 +17,7 @@ namespace MarkLight
     /// <summary>
     /// MarkLight Presentation Engine.
     /// </summary>
-    [AddComponentMenu("MarkLight/Presentation Engine")]
+    [AddComponentMenu("MarkLight/View Presenter")]
     public class ViewPresenter : View
     {
         #region Fields
@@ -67,6 +67,7 @@ namespace MarkLight
             FontPaths = new List<string>();
             Materials = new List<Material>();
             MaterialPaths = new List<string>();
+            UnitSize = new Vector3(40, 40, 40);
         }
 
         #endregion

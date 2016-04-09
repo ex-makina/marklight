@@ -41,7 +41,7 @@ namespace MarkLight
         /// </summary>
         public ConversionResult Convert(object value)
         {
-            return Convert(value, ValueConverterContext.Empty);
+            return Convert(value, ValueConverterContext.Default);
         }
 
         /// <summary>

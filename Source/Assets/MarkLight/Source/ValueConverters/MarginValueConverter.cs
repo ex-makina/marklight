@@ -54,28 +54,28 @@ namespace MarkLight.ValueConverters
                     ElementMargin convertedValue = null;
                     if (valueList.Length == 1)
                     {
-                        convertedValue = new ElementMargin(ElementSize.Parse(valueList[0]));
+                        convertedValue = new ElementMargin(ElementSize.Parse(valueList[0], context.UnitSize));
                     }
                     else if (valueList.Length == 2)
                     {
                         convertedValue = new ElementMargin(
-                            ElementSize.Parse(valueList[0]),
-                            ElementSize.Parse(valueList[1]));
+                            ElementSize.Parse(valueList[0], context.UnitSize),
+                            ElementSize.Parse(valueList[1], context.UnitSize));
                     }
                     else if (valueList.Length == 3)
                     {
                         convertedValue = new ElementMargin(
-                            ElementSize.Parse(valueList[0]),
-                            ElementSize.Parse(valueList[1]),
-                            ElementSize.Parse(valueList[2]));
+                            ElementSize.Parse(valueList[0], context.UnitSize),
+                            ElementSize.Parse(valueList[1], context.UnitSize),
+                            ElementSize.Parse(valueList[2], context.UnitSize));
                     }
                     else if (valueList.Length == 4)
                     {
                         convertedValue = new ElementMargin(
-                            ElementSize.Parse(valueList[0]),
-                            ElementSize.Parse(valueList[1]),
-                            ElementSize.Parse(valueList[2]),
-                            ElementSize.Parse(valueList[3]));
+                            ElementSize.Parse(valueList[0], context.UnitSize),
+                            ElementSize.Parse(valueList[1], context.UnitSize),
+                            ElementSize.Parse(valueList[2], context.UnitSize),
+                            ElementSize.Parse(valueList[3], context.UnitSize));
                     }
                     else
                     {
