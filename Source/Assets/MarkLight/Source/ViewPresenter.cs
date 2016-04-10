@@ -108,7 +108,7 @@ namespace MarkLight
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(String.Format("[MarkLight] {0}: Initialize failed. Exception thrown: {1}", x.GameObjectName, Utils.GetError(e)));
+                    Debug.LogError(String.Format("[MarkLight] {0}: InitializeInternalDefaultValues() failed. Exception thrown: {1}", x.GameObjectName, Utils.GetError(e)));
                 }
             });
 
@@ -120,7 +120,7 @@ namespace MarkLight
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(String.Format("[MarkLight] {0}: Initialize failed. Exception thrown: {1}", x.GameObjectName, Utils.GetError(e)));
+                    Debug.LogError(String.Format("[MarkLight] {0}: InitializeInternal() failed. Exception thrown: {1}", x.GameObjectName, Utils.GetError(e)));
                 }
             });
 
@@ -132,7 +132,7 @@ namespace MarkLight
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(String.Format("[MarkLight] {0}: Initialize failed. Exception thrown: {1}", x.GameObjectName, Utils.GetError(e)));
+                    Debug.LogError(String.Format("[MarkLight] {0}: Initialize() failed. Exception thrown: {1}", x.GameObjectName, Utils.GetError(e)));
                 }
 
             }, true, null, TraversalAlgorithm.ReverseBreadthFirst);

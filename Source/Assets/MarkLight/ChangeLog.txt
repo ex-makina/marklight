@@ -1,4 +1,5 @@
 ﻿v2.0.0-beta2
+- Added Activated/Deactivated view action to View that gets triggered once after view is initialized and every time the view is activated/deactivated
 - Added DeselectAfterSelect and SelectOnMouseUp fields to List 
 - BaseDirectory can now be specified on views (inherited by children). Default value can be set on view presenter
 - Added UnitSize a user-defined scalable element size unit (postfix "ux", "uy" and "uz"). Can specified on views (inherited by children) and the default value can be set on the view presenter

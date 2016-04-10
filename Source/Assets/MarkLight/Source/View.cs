@@ -148,6 +148,18 @@ namespace MarkLight
         public _bool IsTemplate;
 
         /// <summary>
+        /// Activated view action.
+        /// </summary>
+        /// <d>Triggered every time the view is activated. Also triggered once the view is intialized if it starts out activated.</d>
+        public ViewAction Activated;
+
+        /// <summary>
+        /// Deactivated view action.
+        /// </summary>
+        /// <d>Triggered every time the view is deactivated. Also triggered once the view is intialized if it starts out deactivated.</d>
+        public ViewAction Deactivated;
+
+        /// <summary>
         /// Indicates if the view has been destroyed by GameObject.Destroy().
         /// </summary>
         [NotSetFromXml]
@@ -1094,6 +1106,15 @@ namespace MarkLight
         public virtual void IsActiveChanged()
         {
             gameObject.SetActive(IsActive.Value);
+
+            if (IsActive.Value)
+            {
+                Activated.Trigger();
+            }
+            else
+            {
+                Deactivated.Trigger();
+            }
         }
 
         /// <summary>
