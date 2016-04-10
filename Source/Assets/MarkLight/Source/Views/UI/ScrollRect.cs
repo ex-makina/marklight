@@ -281,7 +281,7 @@ namespace MarkLight.Views.UI
 
                 // unblock drag events if the view doesn't handle drag events
                 if (!hasDragEntries)
-                {                   
+                {
                     // unblock initialize potential drag 
                     var initializePotentialDragEntry = new EventTrigger.Entry();
                     initializePotentialDragEntry.eventID = EventTriggerType.InitializePotentialDrag;
@@ -322,7 +322,7 @@ namespace MarkLight.Views.UI
                     });
                     triggers.Add(endDragEntry);
                 }
-            });           
+            });
         }
 
         /// <summary>

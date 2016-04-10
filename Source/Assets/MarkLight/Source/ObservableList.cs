@@ -104,6 +104,54 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Informs observers that item has been modified.
+        /// </summary>
+        public void ItemModified(T item, string fieldPath = "")
+        {
+            int index = IndexOf(item);
+            if (index < 0)
+                return;
+
+            ItemsModified(index, index, fieldPath);
+        }
+
+        /// <summary>
+        /// Informs observers that item has been modified.
+        /// </summary>
+        public void ItemModified(int index, string fieldPath = "")
+        {
+            if (index < 0 || index >= Count)
+                return;
+            
+            ItemsModified(index, index, fieldPath);            
+        }
+
+        /// <summary>
+        /// Informs observers that all items have been modified.
+        /// </summary>
+        public void ItemsModified(string fieldPath = "")
+        {
+            if (Count <= 0)
+                return;
+
+            if (ListChanged != null)
+            {
+                ListChanged(this, new ListChangedEventArgs { ListChangeAction = ListChangeAction.Modify, StartIndex = 0, EndIndex = Count - 1, FieldPath = fieldPath });
+            }
+        }
+
+        /// <summary>
+        /// Informs observers that items have been modified.
+        /// </summary>
+        public void ItemsModified(int startIndex, int endIndex, string fieldPath = "")
+        {
+            if (ListChanged != null)
+            {
+                ListChanged(this, new ListChangedEventArgs { ListChangeAction = ListChangeAction.Modify, StartIndex = startIndex, EndIndex = endIndex, FieldPath = fieldPath });
+            }
+        }
+
+        /// <summary>
         /// Returns list as read-only collection.
         /// </summary>
         public ReadOnlyCollection<T> AsReadOnly()

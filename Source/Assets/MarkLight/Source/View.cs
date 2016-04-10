@@ -1248,12 +1248,17 @@ namespace MarkLight
         /// Notifies all value observers that are dependent on the specified field. E.g. when field "Name" changes, value observers on "Name.FirstName"
         /// and "Name.LastName" are notified in this method. 
         /// </summary>
-        public void NotifyDependentValueObservers(string viewFieldPath)
+        public void NotifyDependentValueObservers(string viewFieldPath, bool includeViewField = false)
         {
             foreach (var viewFieldData in _viewFieldData.Values)
             {
                 if (!viewFieldData.IsOwner)
                     continue;
+
+                if (includeViewField && viewFieldData.ViewFieldPath == viewFieldPath)
+                {
+                    viewFieldData.NotifyValueObservers(new HashSet<ViewFieldData>());
+                }
 
                 if (viewFieldData.ViewFieldPathInfo.Dependencies.Count > 0 &&
                     viewFieldData.ViewFieldPathInfo.Dependencies.Contains(viewFieldPath))

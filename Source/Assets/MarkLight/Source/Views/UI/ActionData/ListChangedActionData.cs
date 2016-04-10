@@ -16,6 +16,7 @@ namespace MarkLight.Views.UI
         public ListChangeAction ListChangeAction;
         public int StartIndex;
         public int EndIndex;
+        public string FieldPath;
 
         #endregion
     }

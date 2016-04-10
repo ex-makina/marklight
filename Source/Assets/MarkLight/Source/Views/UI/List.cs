@@ -692,10 +692,14 @@ namespace MarkLight.Views.UI
             {
                 RemoveRange(e.StartIndex, e.EndIndex);
             }
+            else if (e.ListChangeAction == ListChangeAction.Modify)
+            {
+                ItemsModified(e.StartIndex, e.EndIndex, e.FieldPath);
+            }
 
             if (ListChanged.HasEntries)
             {
-                ListChanged.Trigger(new ListChangedActionData { ListChangeAction = e.ListChangeAction, StartIndex = e.StartIndex, EndIndex = e.EndIndex });
+                ListChanged.Trigger(new ListChangedActionData { ListChangeAction = e.ListChangeAction, StartIndex = e.StartIndex, EndIndex = e.EndIndex, FieldPath = e.FieldPath });
             }
 
             // update sort index
@@ -823,6 +827,47 @@ namespace MarkLight.Views.UI
             {
                 DestroyListItem(i);
             }
+        }
+
+        /// <summary>
+        /// Called when item data in the list have been modified.
+        /// </summary>
+        private void ItemsModified(int startIndex, int endIndex, string fieldPath = "")
+        {
+            // validate input
+            int lastIndex = _presentedListItems.Count - 1;
+            bool listMatch = _presentedListItems.Count == Items.Value.Count;
+            if (startIndex < 0 || startIndex > lastIndex || endIndex < startIndex || endIndex > lastIndex || !listMatch)
+            {
+                Debug.LogWarning(String.Format("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName));
+                Rebuild();
+                return;
+            }
+
+            // notify observers that item has changed
+            for (int i = startIndex; i <= endIndex; ++i)
+            {
+                ItemModified(i, fieldPath);
+            }
+        }
+
+        /// <summary>
+        /// Called when item data in list has been modified.
+        /// </summary>
+        private void ItemModified(int index, string fieldPath = "")
+        {
+            object itemData = Items.Value[index];
+            var listItem = _presentedListItems[index];
+            var path = String.IsNullOrEmpty(fieldPath) ? "Item" : "Item." + fieldPath;
+
+            listItem.ForThisAndEachChild<UIView>(x =>
+            {
+                // TODO can be made faster if a HasItemBinding flag is implemented, also we can stop traversing the tree if another item is set
+                if (x.Item.Value == itemData)
+                {
+                    x.NotifyDependentValueObservers(path, true);
+                }
+            });
         }
 
         /// <summary>

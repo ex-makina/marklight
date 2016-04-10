@@ -16,6 +16,7 @@ namespace MarkLight
         public ListChangeAction ListChangeAction;
         public int StartIndex;
         public int EndIndex;
+        public string FieldPath;
     }
 
     /// <summary>
@@ -46,6 +47,11 @@ namespace MarkLight
         /// <summary>
         /// All items cleared from list.
         /// </summary>
-        Clear = 4
+        Clear = 4,
+
+        /// <summary>
+        /// Items modified in list.
+        /// </summary>
+        Modify = 5
     }
 }
