@@ -195,6 +195,12 @@ namespace MarkLight.Views.UI
         public _bool SelectOnMouseUp;
 
         /// <summary>
+        /// Indicates if template is to be shown in the editor.
+        /// </summary>
+        /// <d>Boolean indicating if template should be shown in the editor.</d>
+        public _bool ShowTemplateInEditor;        
+
+        /// <summary>
         /// List item padding.
         /// </summary>
         /// <d>Adds padding to the list.</d>
@@ -271,6 +277,18 @@ namespace MarkLight.Views.UI
         /// </summary>
         public override void LayoutChanged()
         {
+#if UNITY_EDITOR
+            // if ShowTemplateInEditor is set and we are in editor the template may be visible
+            if (ShowTemplateInEditor && Application.isEditor)
+            {
+                // hide template if we have any items to present
+                if (ListItemTemplate != null && _presentedListItems.Count > 0)
+                {
+                    ListItemTemplate.Deactivate();
+                }
+            }
+#endif
+
             // arrange items like a group
             float horizontalSpacing = HorizontalSpacing.IsSet ? HorizontalSpacing.Value.Pixels : Spacing.Value.Pixels;
             float verticalSpacing = VerticalSpacing.IsSet ? VerticalSpacing.Value.Pixels : Spacing.Value.Pixels;
@@ -934,7 +952,15 @@ namespace MarkLight.Views.UI
             _presentedListItems = new List<ListItem>();
             if (ListItemTemplate != null)
             {
+#if UNITY_EDITOR
+                // deactivate if ShowTemplateInEditor is false or we are outside the editor
+                if (!ShowTemplateInEditor || !Application.isEditor)
+                {
+                    ListItemTemplate.Deactivate();
+                }
+#else
                 ListItemTemplate.Deactivate();
+#endif
             }
 
             UpdatePresentedListItems();            
@@ -951,9 +977,9 @@ namespace MarkLight.Views.UI
             UpdateSortIndex();
         }
 
-        #endregion
+#endregion
 
-        #region Properties
+#region Properties
 
         /// <summary>
         /// Returns list item template.
@@ -971,6 +997,6 @@ namespace MarkLight.Views.UI
             }
         }
         
-        #endregion
+#endregion
     }
 }

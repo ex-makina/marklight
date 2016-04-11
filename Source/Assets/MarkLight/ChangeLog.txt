@@ -1,4 +1,5 @@
 ﻿v2.0.0-beta2
+- Added ShowTemplateInEditor to List so template is visible while working with it in the editor
 - Added mechanism to update bound list item data through ObservableList methods: ItemModified and ItemsModified.
 - Added Activated/Deactivated view action to View that gets triggered once after view is initialized and every time the view is activated/deactivated
 - Added DeselectAfterSelect and SelectOnMouseUp fields to List 
