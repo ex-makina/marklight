@@ -31,6 +31,7 @@ namespace MarkLight
         public bool ViewFieldPathParsed;
         public string ParseError;
         public bool SevereParseError;
+        public bool PropagateFirst;
 
         private HashSet<ValueObserver> _valueObservers;
         private bool _isSet;

@@ -468,6 +468,14 @@ namespace MarkLight
 
                         viewFieldData.RegisterValueObserver(targetBindingValueObserver);
                         AddValueObserver(targetBindingValueObserver);
+
+                        // if this is a local binding and target view is the same as source view 
+                        // we need to make sure value propagation happens in an intuitive order
+                        // so that if we e.g. bind Text="{#Item.Score}" that Item.Score propagates to Text first. 
+                        if (isLocalField && viewFieldData.TargetView == bindingView)
+                        {
+                            sourceViewFieldData.PropagateFirst = true;
+                        }
                     }
                 }
             }
@@ -905,7 +913,7 @@ namespace MarkLight
         /// </summary>
         public void PropagateBindings()
         {
-            foreach (var viewFieldData in _viewFieldData.Values)
+            foreach (var viewFieldData in _viewFieldData.Values.OrderByDescending(x => x.PropagateFirst))
             {
                 viewFieldData.NotifyBindingValueObservers(new HashSet<ViewFieldData>());
             }
