@@ -104,6 +104,15 @@ namespace MarkLight.ValueConverters
             }
         }
 
+        /// <summary>
+        /// Converts value to string.
+        /// </summary>
+        public override string ConvertToString(object value)
+        {
+            ElementMargin margin = value as ElementMargin;
+            return margin.ToString();
+        }
+
         #endregion
     }
 }

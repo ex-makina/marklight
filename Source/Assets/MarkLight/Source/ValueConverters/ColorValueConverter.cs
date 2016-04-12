@@ -648,6 +648,15 @@ namespace MarkLight.ValueConverters
         }
 
         /// <summary>
+        /// Converts value to string.
+        /// </summary>
+        public override string ConvertToString(object value)
+        {
+            Color color = (Color)value;
+            return String.Format("{0},{1},{2},{3}", color.r, color.g, color.b, color.a);
+        }
+
+        /// <summary>
         /// Gets color from hex value.
         /// </summary>
         public static Color? HexToColor(string hex)

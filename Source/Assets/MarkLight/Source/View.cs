@@ -1,4 +1,5 @@
-﻿#region Using Statements
+﻿//#define DISABLE_INIT_TRYCATCH // uncomment if you don't want exceptions to be caught during initialization of views
+#region Using Statements
 using MarkLight.ValueConverters;
 using MarkLight.Views;
 using System;
@@ -207,7 +208,7 @@ namespace MarkLight
         private Dictionary<string, MethodInfo> _changeHandlerMethods;
         private Dictionary<string, string> _expressionViewField;
         private List<ViewAction> _eventSystemViewActions;
-        private bool _defaultState;
+        private bool _isDefaultState;
         private string _previousState;
         private StateAnimation _stateAnimation;
 
@@ -278,7 +279,7 @@ namespace MarkLight
             }
 
             // if default state set default state value
-            if (_defaultState && updateDefaultState)
+            if (_isDefaultState && updateDefaultState)
             {
                 var defaultStateValues = _stateValues.Get(DefaultStateName);
                 if (defaultStateValues != null)
@@ -286,7 +287,7 @@ namespace MarkLight
                     // update default state value
                     if (defaultStateValues.ContainsKey(viewField))
                     {
-                        defaultStateValues[viewField].SetValue(value);
+                        defaultStateValues[viewField].SetValue(value, viewFieldData.ValueConverter.ConvertToString(value));
                     }
                 }
             }
@@ -560,18 +561,6 @@ namespace MarkLight
             {
                 currentStateValues[stateValue.ViewFieldPath] = stateValue;
             }
-
-            // if it's a non-default state value make sure we create a equivalent default state value for it
-            bool isDefaultState = stateValue.State == DefaultStateName;
-            if (!isDefaultState)
-            {
-                ViewFieldStateValue defaultStateValue = new ViewFieldStateValue();
-                defaultStateValue.State = DefaultStateName;
-                defaultStateValue.ValueConverterContext = stateValue.ValueConverterContext;
-                defaultStateValue.ViewFieldPath = stateValue.ViewFieldPath;
-                defaultStateValue.SetValue(GetValue(defaultStateValue.ViewFieldPath));
-                SetStateValue(defaultStateValue);
-            }
         }
 
         /// <summary>
@@ -700,7 +689,7 @@ namespace MarkLight
         {
             State.DirectValue = DefaultStateName;
             IsActive.DirectValue = true;
-            _defaultState = true;
+            _isDefaultState = true;
 
             // initialize lists and dictionaries
             _viewFieldData = new Dictionary<string, ViewFieldData>();
@@ -713,7 +702,7 @@ namespace MarkLight
             _expressionViewField = new Dictionary<string, string>();
             _eventSystemViewActions = new List<ViewAction>();
             _previousState = State;
-            _defaultState = State == DefaultStateName;
+            _isDefaultState = State == DefaultStateName;
         }
 
         /// <summary>
@@ -994,6 +983,19 @@ namespace MarkLight
                         Value = value,
                         ValueConverterContext = context
                     });
+
+                    // for every state value we need to store the default value so we can revert back to it
+                    var defaultStateValue = ViewFieldStateValues.FirstOrDefault(x => x.State == DefaultStateName && x.ViewFieldPath == mappedViewField);
+                    if (defaultStateValue == null)
+                    {
+                        ViewFieldStateValues.Add(new ViewFieldStateValue
+                        {
+                            State = DefaultStateName,
+                            ViewFieldPath = mappedViewField,
+                            ValueConverterContext = ValueConverterContext.Empty,
+                            DefaultValueNotSet = true
+                        });
+                    }
                 }
             }
         }
@@ -1131,13 +1133,6 @@ namespace MarkLight
         /// </summary>
         public virtual void StateChanged()
         {
-            // no state changes are made while generating UI in editor, this is to prevent default state-values from being overwritten
-            if (!Application.isPlaying)
-            {
-                State.DirectValue = DefaultStateName;
-                return;
-            }
-
             // stop previous animation if active and get new state animation
             if (_stateAnimation != null && !_stateAnimation.IsAnimationCompleted)
             {
@@ -1145,7 +1140,34 @@ namespace MarkLight
             }
             _stateAnimation = GetStateAnimation(_previousState, State);
 
-            _defaultState = State == DefaultStateName;
+            // if we are changing from default state we need to make sure all default state values has been set
+            if (_isDefaultState)
+            {
+                var defaultStateValues = _stateValues.Get(DefaultStateName);
+                if (defaultStateValues != null) // no state values set nothing to do
+                {
+                    foreach (var stateValue in defaultStateValues.Values)
+                    {
+                        if (stateValue.DefaultValueNotSet)
+                        {
+                            // get view field data
+                            var viewFieldData = GetViewFieldData(stateValue.ViewFieldPath);
+                            if (viewFieldData == null)
+                            {
+                                Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign default state value to view field \"{1}\". View field not found.", GameObjectName, stateValue.ViewFieldPath));
+                            }
+                            else
+                            {
+                                // set default value
+                                var value = GetValue(stateValue.ViewFieldPath);
+                                stateValue.SetValue(value, viewFieldData.ValueConverter.ConvertToString(value));
+                            }
+                        }
+                    }
+                }
+            }
+
+            _isDefaultState = State == DefaultStateName;
             _previousState = State;
 
             // get state values
@@ -1320,9 +1342,123 @@ namespace MarkLight
             return false;
         }
 
-#endregion
+        /// <summary>
+        /// Calls InitializeInternalDefaultValues() and catches and prints any exception thrown.
+        /// </summary>
+        internal void TryInitializeInternalDefaultValues()
+        {
+#if !DISABLE_INIT_TRYCATCH
+            try
+            {
+                InitializeInternalDefaultValues();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(String.Format("[MarkLight] {0}: InitializeInternalDefaultValues() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
+            }
+#else
+            InitializeInternalDefaultValues();
+#endif 
+        }
 
-#region Properties
+        /// <summary>
+        /// Calls InitializeInternalDefaultValues() and catches and prints any exception thrown if define is set.
+        /// </summary>
+        internal void TryInitializeInternal()
+        {
+#if !DISABLE_INIT_TRYCATCH
+            try
+            {
+                InitializeInternal();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(String.Format("[MarkLight] {0}: InitializeInternal() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
+            }
+#else
+            InitializeInternal();
+#endif 
+        }
+
+        /// <summary>
+        /// Calls Initialize() and catches and prints any exception thrown.
+        /// </summary>
+        internal void TryInitialize()
+        {
+#if !DISABLE_INIT_TRYCATCH
+            try
+            {
+                Initialize();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(String.Format("[MarkLight] {0}: Initialize() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
+            }
+#else
+            Initialize();
+#endif 
+        }
+
+        /// <summary>
+        /// Calls PropagateBindings() and catches and prints any exception thrown.
+        /// </summary>
+        internal void TryPropagateBindings()
+        {
+#if !DISABLE_INIT_TRYCATCH
+            try
+            {
+                PropagateBindings();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(String.Format("[MarkLight] {0}: PropagateBindings() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
+            }
+#else
+            PropagateBindings();
+#endif
+        }
+
+        /// <summary>
+        /// Calls QueueAllChangeHandlers() and catches and prints any exception thrown.
+        /// </summary>
+        internal void TryQueueAllChangeHandlers()
+        {
+#if !DISABLE_INIT_TRYCATCH
+            try
+            {
+                QueueAllChangeHandlers();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(String.Format("[MarkLight] {0}: QueueAllChangeHandlers() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
+            }
+#else
+            QueueAllChangeHandlers();
+#endif
+        }
+
+        /// <summary>
+        /// Calls TriggerChangeHandlers() and catches and prints any exception thrown.
+        /// </summary>
+        internal void TryTriggerChangeHandlers()
+        {
+#if !DISABLE_INIT_TRYCATCH
+            try
+            {
+                TriggerChangeHandlers();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(String.Format("[MarkLight] {0}: TriggerChangeHandlers() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
+            }
+#else
+            TriggerChangeHandlers();
+#endif
+        }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Gets boolean indicating if this view is live (enabled and not destroyed).
@@ -1391,6 +1527,6 @@ namespace MarkLight
             }
         }
 
-        #endregion
+#endregion
     }
 }

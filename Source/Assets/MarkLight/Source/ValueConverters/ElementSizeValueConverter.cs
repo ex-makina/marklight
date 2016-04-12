@@ -64,6 +64,15 @@ namespace MarkLight.ValueConverters
             return ConversionFailed(value);
         }
 
+        /// <summary>
+        /// Converts value to string.
+        /// </summary>
+        public override string ConvertToString(object value)
+        {
+            ElementSize elementSize = value as ElementSize;
+            return elementSize.ToString();
+        }
+
         #endregion
     }
 }

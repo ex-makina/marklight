@@ -82,6 +82,15 @@ namespace MarkLight.ValueConverters
             return ConversionFailed(value);
         }
 
+        /// <summary>
+        /// Converts value to string.
+        /// </summary>
+        public override string ConvertToString(object value)
+        {
+            Vector4 v = (Vector4)value;
+            return String.Format("{0},{1},{2},{3}", v.x, v.y, v.z, v.w);
+        }
+
         #endregion
     }
 }

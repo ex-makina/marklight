@@ -71,6 +71,16 @@ namespace MarkLight.ValueConverters
             return ConversionFailed(value);
         }
 
+        /// <summary>
+        /// Converts value to string.
+        /// </summary>
+        public override string ConvertToString(object value)
+        {
+            Quaternion quaternion = (Quaternion)value;
+            Vector3 eulerAngles = quaternion.eulerAngles;
+            return String.Format("{0},{1},{2}", eulerAngles.x, eulerAngles.y, eulerAngles.z);
+        }
+
         #endregion
     }
 }

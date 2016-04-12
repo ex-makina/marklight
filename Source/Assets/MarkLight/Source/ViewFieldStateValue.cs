@@ -22,6 +22,7 @@ namespace MarkLight
         public string State;
         public string Value;
         public ValueConverterContext ValueConverterContext;
+        public bool DefaultValueNotSet;
 
         private object _objectValue;
 
@@ -35,6 +36,16 @@ namespace MarkLight
         public object GetValue()
         {
             return _objectValue != null ? _objectValue : Value;
+        }
+
+        /// <summary>
+        /// Sets value of field.
+        /// </summary>
+        public void SetValue(object value, string stringValue)
+        {
+            _objectValue = value;
+            Value = stringValue;
+            DefaultValueNotSet = false;
         }
 
         /// <summary>

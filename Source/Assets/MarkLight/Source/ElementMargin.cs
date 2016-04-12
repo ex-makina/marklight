@@ -145,6 +145,15 @@ namespace MarkLight
             return new ElementMargin(new ElementSize(), new ElementSize(), new ElementSize(), bottom);
         }
 
+        /// <summary>
+        /// Converts margin to string.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return String.Format("{0},{1},{3},{4}", Left.ToString(), Top.ToString(), Right.ToString(), Bottom.ToString());
+        }
+
         #endregion
 
         #region Properties

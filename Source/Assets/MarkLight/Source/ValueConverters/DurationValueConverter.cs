@@ -82,6 +82,14 @@ namespace MarkLight.ValueConverters
             return ConversionFailed(value);
         }
 
+        /// <summary>
+        /// Converts value to string.
+        /// </summary>
+        public override string ConvertToString(object value)
+        {
+            return value.ToString() + "s";
+        }
+
         #endregion
     }
 }

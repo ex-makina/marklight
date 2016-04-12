@@ -100,45 +100,11 @@ namespace MarkLight
                 return;                
             }
 
-            rootView.ForThisAndEachChild<View>(x =>
-            {
-                try
-                {
-                    x.InitializeInternalDefaultValues();
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(String.Format("[MarkLight] {0}: InitializeInternalDefaultValues() failed. Exception thrown: {1}", x.GameObjectName, Utils.GetError(e)));
-                }
-            });
-
-            rootView.ForThisAndEachChild<View>(x => 
-            {
-                try
-                {
-                    x.InitializeInternal();
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(String.Format("[MarkLight] {0}: InitializeInternal() failed. Exception thrown: {1}", x.GameObjectName, Utils.GetError(e)));
-                }
-            });
-
-            rootView.ForThisAndEachChild<View>(x => 
-            {
-                try
-                {
-                    x.Initialize();
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(String.Format("[MarkLight] {0}: Initialize() failed. Exception thrown: {1}", x.GameObjectName, Utils.GetError(e)));
-                }
-
-            }, true, null, TraversalAlgorithm.ReverseBreadthFirst);
-
-            rootView.ForThisAndEachChild<View>(x => x.PropagateBindings(), true, null, TraversalAlgorithm.BreadthFirst);
-            rootView.ForThisAndEachChild<View>(x => x.QueueAllChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
+            rootView.ForThisAndEachChild<View>(x => x.TryInitializeInternalDefaultValues());
+            rootView.ForThisAndEachChild<View>(x => x.TryInitializeInternal());
+            rootView.ForThisAndEachChild<View>(x => x.TryInitialize(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
+            rootView.ForThisAndEachChild<View>(x => x.TryPropagateBindings(), true, null, TraversalAlgorithm.BreadthFirst);
+            rootView.ForThisAndEachChild<View>(x => x.TryQueueAllChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
 
             // TriggerChangeHandlers()            
             int pass = 0;
@@ -151,7 +117,7 @@ namespace MarkLight
                 }
 
                 // as long as there are change handlers queued, go through all views and trigger them
-                rootView.ForThisAndEachChild<View>(x => x.TriggerChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
+                rootView.ForThisAndEachChild<View>(x => x.TryTriggerChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
                 ++pass;
             }
         }
@@ -263,6 +229,15 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Gets asset path from sprite.
+        /// </summary>
+        public string GetSpriteAssetPath(Sprite sprite)
+        {
+            int index = Sprites.IndexOf(sprite);
+            return SpritePaths[index];
+        }
+
+        /// <summary>
         /// Gets pre-loaded font from asset path.
         /// </summary>
         public Font GetFont(string assetPath)
@@ -280,6 +255,15 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Gets asset path from font.
+        /// </summary>
+        public string GetFontAssetPath(Font font)
+        {
+            int index = Fonts.IndexOf(font);
+            return FontPaths[index];
+        }
+
+        /// <summary>
         /// Gets pre-loaded material from asset path.
         /// </summary>
         public Material GetMaterial(string assetPath)
@@ -294,6 +278,15 @@ namespace MarkLight
             }
 
             return _materialDictionary.Get(assetPath);
+        }
+
+        /// <summary>
+        /// Gets asset path from material.
+        /// </summary>
+        public string GetMaterialAssetPath(Material material)
+        {
+            int index = Materials.IndexOf(material);
+            return MaterialPaths[index];
         }
 
         /// <summary>

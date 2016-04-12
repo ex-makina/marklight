@@ -138,6 +138,21 @@ namespace MarkLight
             return elementSize;
         }
 
+        /// <summary>
+        /// Converts element size to string.
+        /// </summary>
+        public override string ToString()
+        {
+            if (Unit == ElementSizeUnit.Percents)
+            {
+                return Value.ToString() + "%";
+            }
+            else
+            {
+                return Value.ToString();
+            }
+        }
+
         #endregion
 
         #region Properties

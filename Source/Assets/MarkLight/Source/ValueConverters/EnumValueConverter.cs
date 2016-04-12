@@ -21,7 +21,6 @@ namespace MarkLight.ValueConverters
 
         #endregion
 
-
         #region Constructor
 
         /// <summary>
@@ -73,6 +72,14 @@ namespace MarkLight.ValueConverters
             }
 
             return ConversionFailed(value);
+        }
+
+        /// <summary>
+        /// Converts value to string.
+        /// </summary>
+        public override string ConvertToString(object value)
+        {
+            return Enum.GetName(_enumType, value);
         }
 
         #endregion

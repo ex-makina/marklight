@@ -53,6 +53,14 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Converts value to string.
+        /// </summary>
+        public virtual string ConvertToString(object value)
+        {
+            return String.Empty;
+        }
+
+        /// <summary>
         /// Gets conversion failed result with formatted error message.
         /// </summary>
         protected ConversionResult ConversionFailed(object value, string reason)
