@@ -65,6 +65,10 @@ namespace MarkLight
                                 value = !((bool)value);
                             }
 
+                            // TODO debug
+                            //Debug.Log(String.Format("Propagating Value \"{4}\": {0}.{1} -> {2}.{3}", Sources[0].ViewFieldData.TargetView.ViewTypeName, Sources[0].ViewFieldData.TargetViewFieldPath,
+                            //    Target.TargetView.ViewTypeName, Target.TargetViewFieldPath, value.ToString()));
+
                             // set value
                             Target.SetValue(value, callstack);
                         }

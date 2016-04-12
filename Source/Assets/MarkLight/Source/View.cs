@@ -924,7 +924,8 @@ namespace MarkLight
         /// </summary>
         public void QueueAllChangeHandlers()
         {
-            foreach (var viewFieldData in _viewFieldData.Values)
+            var _viewFieldDataList = new List<ViewFieldData>(_viewFieldData.Values);                        
+            foreach (var viewFieldData in _viewFieldDataList)
             {
                 viewFieldData.NotifyChangeHandlerValueObservers(new HashSet<ViewFieldData>());
             }
