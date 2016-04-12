@@ -148,14 +148,14 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// List item length.
         /// </summary>
-        /// <d>Specifies the list item width.</d>
+        /// <d>Specifies the list item length. Used as the default item width when Width isn't set.</d>
         [ChangeHandler("LayoutsChanged")]
         public _ElementSize Length;
 
         /// <summary>
         /// List item breadth.
         /// </summary>
-        /// <d>Specifies the list item breadth.</d>
+        /// <d>Specifies the list item breadth. Used as the default item height when Height isn't set.</d>
         [ChangeHandler("LayoutsChanged")]
         public _ElementSize Breadth;
 

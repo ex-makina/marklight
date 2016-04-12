@@ -208,16 +208,24 @@ namespace MarkLight
         /// </summary>
         public ViewTypeData GetViewTypeData(string viewTypeName)
         {
-            if (_viewTypeDataDictionary == null)
+            if (_viewTypeDataDictionary == null || !_viewTypeDataDictionary.ContainsKey(viewTypeName))
             {
-                _viewTypeDataDictionary = new Dictionary<string, ViewTypeData>();
-                foreach (var viewTypeData in ViewTypeData)
-                {
-                    _viewTypeDataDictionary.Add(viewTypeData.ViewName, viewTypeData);
-                }
+                LoadViewTypeDataDictionary();
             }
 
             return _viewTypeDataDictionary[viewTypeName];
+        }
+
+        /// <summary>
+        /// Loads the view type data dictionary.
+        /// </summary>
+        private void LoadViewTypeDataDictionary()
+        {
+            _viewTypeDataDictionary = new Dictionary<string, ViewTypeData>();
+            foreach (var viewTypeData in ViewTypeData)
+            {
+                _viewTypeDataDictionary.Add(viewTypeData.ViewName, viewTypeData);
+            }
         }
 
         /// <summary>
