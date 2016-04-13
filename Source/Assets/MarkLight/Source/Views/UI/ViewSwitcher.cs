@@ -112,7 +112,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         public void SwitchTo(View view, bool animate = true)
         {
-            this.ForEachChild<View>(x => SwitchTo(x, x == view, animate), false);
+            SwitchTo(view, null, animate);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         public void SwitchTo(string id, bool animate = true)
         {
-            this.ForEachChild<View>(x => SwitchTo(x, String.Equals(x.Id, id, StringComparison.OrdinalIgnoreCase), animate), false);
+            SwitchTo(id, null, animate);
         }
 
         /// <summary>
@@ -128,10 +128,34 @@ namespace MarkLight.Views.UI
         /// </summary>
         public void SwitchTo(int index, bool animate = true)
         {
+            SwitchTo(index, null, animate);
+        }
+
+        /// <summary>
+        /// Switches to another view passing data to it.
+        /// </summary>
+        public void SwitchTo(View view, object data, bool animate)
+        {
+            this.ForEachChild<View>(x => SetActive(x, x == view, animate, data), false);
+        }
+
+        /// <summary>
+        /// Switches to another view passing data to it.
+        /// </summary>
+        public void SwitchTo(string id, object data, bool animate)
+        {
+            this.ForEachChild<View>(x => SetActive(x, String.Equals(x.Id, id, StringComparison.OrdinalIgnoreCase), animate, data), false);
+        }
+
+        /// <summary>
+        /// Switches to another view passing data to it.
+        /// </summary>
+        public void SwitchTo(int index, object data, bool animate)
+        {
             int i = 0;
             this.ForEachChild<View>(x =>
             {
-                SwitchTo(x, index == i, animate);
+                SetActive(x, index == i, animate, data);
                 ++i;
             }, false);
         }
@@ -139,7 +163,7 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Switches to view.
         /// </summary>
-        private void SwitchTo(View view, bool active, bool animate)
+        private void SetActive(View view, bool active, bool animate, object data)
         {
             bool previouslyEnabled = view.IsActive;
             if (!active && previouslyEnabled && animate)
@@ -159,7 +183,14 @@ namespace MarkLight.Views.UI
             {
                 if (active)
                 {
-                    view.Activate();
+                    if (data != null)
+                    {
+                        view.Activate(data);
+                    }
+                    else
+                    {
+                        view.Activate();
+                    }
                 }
                 else
                 {
@@ -175,7 +206,15 @@ namespace MarkLight.Views.UI
                     TransitionInAnimation.SetAnimationTarget(view);
                     TransitionInAnimation.StartAnimation();
                 }
-                view.Activate();
+
+                if (data != null)
+                {
+                    view.Activate(data);
+                }
+                else
+                {
+                    view.Activate();
+                }
             }
 
             if (active)

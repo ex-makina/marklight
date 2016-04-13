@@ -1228,6 +1228,16 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Activates the view and sends data to it.
+        /// </summary>
+        public void Activate(object data)
+        {
+            IsActive.DirectValue = true;
+            gameObject.SetActive(true);
+            Activated.Trigger(data);
+        }
+
+        /// <summary>
         /// Deactivates the view.
         /// </summary>
         public void Deactivate()

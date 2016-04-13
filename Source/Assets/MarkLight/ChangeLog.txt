@@ -1,4 +1,6 @@
 ﻿v2.1.0
+- View switcher can pass along custom data to the view switched to through the Activated view action
+- Action handlers can now take any custom data as parameter
 - Default state of views is now stored in serializable format and view state can be changed during compile time
 - Fixed bug with programmatically loaded view XML missing when reloading the scene
 - Fixed bug where local bindings propagated in the wrong order
@@ -66,7 +68,7 @@ v1.4.2
 - Added field TabItemsSpacing to TabPanel for changing spacing between tab-items
 - Removed prefab path from configuration
 
-v1.4
+v1.4.0
 - New theme: FlatUI
 - New standard view: TabPanel
 - New standard view: Window
@@ -102,10 +104,10 @@ v1.4
 - Added fields TextAlignment and TextMargin to list view
 - Added field IncludeContainerInContent to ContentContainer view for when you want to remove the container itself when adding content views
 
-v1.3
+v1.3.0
 - Full source included in the package
 
-v1.2
+v1.2.0
 - Added RadialMenu view
 - Added DataGrid view for presenting static and dynamic data in a grid
 - Added support for embedding views within the text of a Label
@@ -117,10 +119,10 @@ v1.2
 - Groups can now sort its content. It has a new view field SortDirection and all views have a new SortIndex field
 - Asset made compatible with earlier version of unity. Now only requires Unity 4.6
 
-v1.1
+v1.1.0
 - Added configuration functionality through config-file at MarkUX/Configuration/Configuration.asset
 - Added BackgroundMaterial field to views for setting background image material
 - Fixed Mac bug were subfolders where ignored when processing view assets
 
-v1.0
+v1.0.0
 - initial Release

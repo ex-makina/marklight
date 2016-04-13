@@ -135,6 +135,42 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Triggers the view action custom data.
+        /// </summary>
+        public void Trigger(object customData)
+        {
+            if (IsDisabled)
+                return;
+
+            // go through the entries and call them
+            if (_viewActionEntries != null)
+            {
+                foreach (var entry in _viewActionEntries)
+                {
+                    entry.Invoke(customData);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Triggers the view action.
+        /// </summary>
+        public void Trigger(ActionData actionData, BaseEventData baseEventData, object customData)
+        {
+            if (IsDisabled)
+                return;
+
+            // go through the entries and call them
+            if (_viewActionEntries != null)
+            {
+                foreach (var entry in _viewActionEntries)
+                {
+                    entry.Invoke(actionData, baseEventData, customData);
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds view action entry. 
         /// </summary>
         internal void AddEntry(ViewActionEntry viewActionEntry)

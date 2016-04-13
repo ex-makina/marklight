@@ -32,6 +32,8 @@ namespace MarkLight
         private int _actionDataParameterIndex;
         private bool _hasEventDataParemeter;
         private int _eventDataParameterIndex;
+        private bool _hasCustomDataParameter;
+        private int _customDataParameterIndex;
 
         #endregion
 
@@ -42,7 +44,7 @@ namespace MarkLight
         /// </summary>
         public void Invoke()
         {
-            Invoke(null, null);
+            Invoke(null, null, null);
         }
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace MarkLight
         /// </summary>
         public void Invoke(ActionData actionData)
         {
-            Invoke(actionData, null);
+            Invoke(actionData, null, null);
         }
 
         /// <summary>
@@ -58,13 +60,21 @@ namespace MarkLight
         /// </summary>
         public void Invoke(BaseEventData baseEventData)
         {
-            Invoke(null, baseEventData);
+            Invoke(null, baseEventData, null);
+        }
+
+        /// <summary>
+        /// Invokes the view action method with custom event data.
+        /// </summary>
+        public void Invoke(object customData)
+        {
+            Invoke(null, null, customData);
         }
 
         /// <summary>
         /// Invokes the view action method with parameters.
         /// </summary>
-        internal void Invoke(ActionData actionData, BaseEventData baseEventData)
+        internal void Invoke(ActionData actionData, BaseEventData baseEventData, object customData)
         {
             if (!_initialized)
             {
@@ -82,6 +92,11 @@ namespace MarkLight
             if (_hasEventDataParemeter)
             {
                 _parameters[_eventDataParameterIndex] = baseEventData;
+            }
+
+            if (_hasCustomDataParameter)
+            {
+                _parameters[_customDataParameterIndex] = customData;
             }
 
             // call action handler
@@ -139,8 +154,8 @@ namespace MarkLight
                 }
                 else
                 {
-                    Debug.LogError(String.Format("[MarkLight] View action \"{0}.{1}\" has parameter \"{2}\" with invalid type. Only subtypes of View, ActionData and BaseEventData are allowed.", ParentView.ViewTypeName, ViewActionHandlerName, viewActionMethodParameters[i].Name));
-                    return;
+                    _hasCustomDataParameter = true;
+                    _customDataParameterIndex = i;
                 }
             }
 
