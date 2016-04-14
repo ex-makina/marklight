@@ -1,5 +1,6 @@
 ﻿v2.1.0
-- View switcher can pass along custom data to the view switched to through the Activated view action
+- Intellisense in XML now possible through simple configuration. XSD schema can be updated by clicking a button on the view presenter
+- View switcher can pass along custom data to the view switched to through the SwitchTo method and Activated view action
 - Action handlers can now take any custom data as parameter
 - Default state of views is now stored in serializable format and view state can be changed during compile time
 - Fixed bug with programmatically loaded view XML missing when reloading the scene

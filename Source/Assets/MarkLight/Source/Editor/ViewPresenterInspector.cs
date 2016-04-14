@@ -67,9 +67,6 @@ namespace MarkLight.Editor
                 }
             }
 
-            // disable automatic reload option
-            viewPresenter.DisableAutomaticReload = EditorGUILayout.Toggle("Disable Automatic Reload", viewPresenter.DisableAutomaticReload);
-
             // unit size option
             Vector3 newUnitSize = EditorGUILayout.Vector3Field("Unit Size", viewPresenter.UnitSize);
             if (newUnitSize != viewPresenter.UnitSize)
@@ -82,6 +79,15 @@ namespace MarkLight.Editor
             if (newBaseDirectory != viewPresenter.BaseDirectory)
             {
                 viewPresenter.BaseDirectory = newBaseDirectory;
+            }
+
+            // disable automatic reload option
+            viewPresenter.DisableAutomaticReload = EditorGUILayout.Toggle("Disable Automatic Reload", viewPresenter.DisableAutomaticReload);
+
+            // generate XSD schema
+            if (GUILayout.Button("Generate Schema"))
+            {
+                ViewPostprocessor.GenerateXsdSchema();
             }
 
             // reload button

@@ -53,6 +53,17 @@ namespace MarkLight
                 }
             }
 
+            // sort view type data by dependencies
+            try
+            {
+                viewPresenter.ViewTypeData = SortByDependency(viewPresenter.ViewTypeData);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(String.Format("[MarkLight] Unable to generate views. {0}", e.Message));
+                return;
+            }
+
             // destroy layout root
             if (viewPresenter.RootView != null)
             {
@@ -632,6 +643,10 @@ namespace MarkLight
                 string viewFieldPath = attribute.Name.LocalName;
                 string viewFieldValue = attribute.Value;
 
+                // ignore namespace specification
+                if (String.Equals(viewFieldPath, "xmlns", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
                 // check if the field value is allowed to be be set from xml
                 bool notAllowed = viewTypeData.FieldsNotSetFromXml.Contains(viewFieldPath);
                 if (notAllowed)
@@ -732,6 +747,46 @@ namespace MarkLight
         public static ValueInterpolator GetValueInterpolatorForType(string viewFieldType)
         {
             return ViewPresenter.Instance.GetValueInterpolatorForType(viewFieldType);
+        }
+
+        /// <summary>
+        /// Sorts the view elements by their dependencies so they can be processed in the right order.
+        /// </summary>
+        private static List<ViewTypeData> SortByDependency(List<ViewTypeData> viewTypeDataList)
+        {
+            var sorted = new List<ViewTypeData>();
+            while (viewTypeDataList.Any(x => !x.PermanentMark))
+            {
+                var viewTypeData = viewTypeDataList.First(x => !x.PermanentMark);
+                Visit(viewTypeData, sorted, String.Empty);
+            }
+
+            return sorted;
+        }
+
+        /// <summary>
+        /// Used by dependency sort algorithm.
+        /// </summary>
+        private static void Visit(ViewTypeData viewTypeData, List<ViewTypeData> sorted, string dependencyChain)
+        {
+            if (viewTypeData.TemporaryMark)
+            {
+                // cyclical dependency detected
+                throw new Exception(String.Format("Cyclical dependency {0}{1} detected.", dependencyChain, viewTypeData.ViewName));
+            }
+            else if (!viewTypeData.PermanentMark)
+            {
+                viewTypeData.TemporaryMark = true;
+                foreach (var dependency in viewTypeData.Dependencies)
+                {
+                    Visit(dependency, sorted, String.Format("{0}{1}->", dependencyChain, viewTypeData.ViewName));
+                }
+                viewTypeData.TemporaryMark = false;
+                viewTypeData.PermanentMark = true;
+
+                // add element to list
+                sorted.Add(viewTypeData);
+            }
         }
 
         #endregion

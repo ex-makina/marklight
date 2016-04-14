@@ -17,6 +17,7 @@ namespace MarkLight.Editor
         #region Fields
 
         public List<string> ViewPaths;
+        public string SchemaFile;
         private static Configuration _instance;
 
         #endregion
@@ -32,6 +33,28 @@ namespace MarkLight.Editor
             ViewPaths.Add("Assets/Views/");
             ViewPaths.Add("Assets/MarkLight/Views/");
             ViewPaths.Add("Assets/MarkLight/Examples/Views/");
+            SchemaFile = "Assets/MarkLight/Views/Schemas/MarkLight.xsd";
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Validate paths.
+        /// </summary>
+        public Configuration GetValidated()
+        {
+            // make sure all paths ends with "/"
+            for (int i = 0; i < ViewPaths.Count; ++i)
+            {
+                if (!ViewPaths[i].EndsWith("/"))
+                {
+                    ViewPaths[i] += "/";
+                }
+            }
+                        
+            return this;
         }
 
         #endregion
@@ -46,14 +69,14 @@ namespace MarkLight.Editor
             get
             {
                 if (_instance != null)
-                    return _instance;
+                    return _instance.GetValidated();
                 
                 // check default directory
                 Configuration configuration = AssetDatabase.LoadAssetAtPath("Assets/MarkLight/Configuration/Configuration.asset", typeof(Configuration)) as Configuration;
                 if (configuration != null)
                 {
                     _instance = configuration;
-                    return _instance;
+                    return _instance.GetValidated();
                 }
 
                 // search for configuration
@@ -75,7 +98,7 @@ namespace MarkLight.Editor
                 AssetDatabase.Refresh();
                     
                 _instance = configuration;              
-                return _instance;
+                return _instance.GetValidated();
             }
         }
 

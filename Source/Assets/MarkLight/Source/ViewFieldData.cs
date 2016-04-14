@@ -142,7 +142,7 @@ namespace MarkLight
                 if (targetView == null)
                 {
                     hasValue = false;
-                    Debug.LogError(String.Format("[MarkLight] {0}: Unable to get value from view field \"{1}\". View along path is null.", SourceView.GameObjectName, ViewFieldPath));
+                    //Debug.LogError(String.Format("[MarkLight] {0}: Unable to get value from view field \"{1}\". View along path is null.", SourceView.GameObjectName, ViewFieldPath));
                     return null;
                 }
 
