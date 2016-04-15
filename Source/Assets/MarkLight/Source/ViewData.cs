@@ -754,6 +754,13 @@ namespace MarkLight
         /// </summary>
         private static List<ViewTypeData> SortByDependency(List<ViewTypeData> viewTypeDataList)
         {
+            // reset permanent and temporary marks used while sorting
+            viewTypeDataList.ForEach(x =>
+            {
+                x.PermanentMark = false;
+                x.TemporaryMark = false;
+            });
+
             var sorted = new List<ViewTypeData>();
             while (viewTypeDataList.Any(x => !x.PermanentMark))
             {
