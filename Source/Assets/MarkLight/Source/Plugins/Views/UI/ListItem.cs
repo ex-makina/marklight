@@ -139,6 +139,13 @@ namespace MarkLight.Views.UI
         #endregion
 
         /// <summary>
+        /// Indicates if the item is disabled.
+        /// </summary>
+        /// <d>If set to true the item enters the "Disabled" state and can't be interacted with.</d>
+        [ChangeHandler("IsDisabledChanged")]
+        public _bool IsDisabled;
+
+        /// <summary>
         /// List item text padding.
         /// </summary>
         /// <d>Padding added to list item text when AdjustToText is set.</d>
@@ -401,6 +408,47 @@ namespace MarkLight.Views.UI
             else
             {
                 SetState("Default");
+            }
+        }
+
+        /// <summary>
+        /// Called when IsDisabled field changes.
+        /// </summary>
+        public virtual void IsDisabledChanged()
+        {
+            if (IsDisabled)
+            {
+                SetState("Disabled");
+
+                // disable list item actions
+                Click.IsDisabled = true;
+                MouseEnter.IsDisabled = true;
+                MouseExit.IsDisabled = true;
+                MouseDown.IsDisabled = true;
+                MouseUp.IsDisabled = true;
+            }
+            else
+            {
+                SetState("Default");
+
+                // enable list item actions
+                Click.IsDisabled = false;
+                MouseEnter.IsDisabled = false;
+                MouseExit.IsDisabled = false;
+                MouseDown.IsDisabled = false;
+                MouseUp.IsDisabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Sets the state of the view.
+        /// </summary>
+        public override void SetState(string state)
+        {
+            base.SetState(state);
+            if (ItemLabel != null)
+            {
+                ItemLabel.SetState(state);
             }
         }
 

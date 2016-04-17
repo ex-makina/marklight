@@ -99,7 +99,9 @@
   <ListItem Breadth="65" TextMargin="25,0,0,0" TextAlignment="Left" BackgroundColor="White"
             Selected-BackgroundColor="#dbd7e3" Pressed-BackgroundColor="#dbd7e3"
             Font="Fonts/Lato-Light.ttf" FontStyle="Normal" FontSize="24" FontColor="#8f86a3"
-            Selected-FontColor="#000000" Pressed-FontColor="#000000" />
+            Selected-FontColor="#000000" Pressed-FontColor="#000000"
+            Disabled-FontStyle="Italic" Disabled-FontColor="Gray80"
+            />
   
   <TabPanel TabContentColor="#ffffff" TabListContentMargin="0" TabListColor="Clear" TabListMaskImage="" TabListMaskShowGraphic="False" />  
   <TabHeader Breadth="50" TextPadding="20,10,20,10" TextAlignment="Center" BackgroundColor="#3c4764"

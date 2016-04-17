@@ -48,6 +48,7 @@
   <List BackgroundColor="White" ContentMargin="2" />
   <ListItem Breadth="50" TextMargin="10,0,10,0" TextAlignment="Left" BackgroundColor="White"
             Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a"
+            Disabled-FontStyle="Italic" Disabled-FontColor="Gray60"
             Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#000000" />
 
   <TabPanel TabContentColor="#3b414e" TabListContentMargin="0" TabListColor="Clear" />
