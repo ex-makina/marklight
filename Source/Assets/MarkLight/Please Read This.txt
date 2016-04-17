@@ -20,7 +20,7 @@ Backup your project. Remove the MarkLight folder and import the new package. For
 (required)
 MarkLight\Configuration\* .............. Configuration asset
 MarkLight\Source\Editor\* .............. Editor extension
-MarkLight\Source\* ..................... Framework API
+MarkLight\Source\Plugins\* ............. Framework API
 MarkLight\Themes\* ..................... Assets files for the themes
 MarkLight\Views\* ...................... Framework Views
 
@@ -31,6 +31,4 @@ MarkLight\Examples\ .................... Example views, scenes and scripts
 
 ====  Documentation  ===================================
 
-Please check http://www.marklightforunity.com for the most up to date versions of the API docs and tutorials.
-
-
+Please check out http://www.marklightforunity.com for the most up to date versions of the API docs and tutorials.

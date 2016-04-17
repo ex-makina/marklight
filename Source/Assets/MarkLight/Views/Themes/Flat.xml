@@ -1,4 +1,4 @@
-<Theme Name="Flat" BaseDirectory="Assets/MarkLight/Themes/Flat/">
+<Theme Name="Flat" BaseDirectory="Assets/MarkLight/Themes/Flat/" xmlns="MarkLight">
   <Label Font="Fonts/Roboto-Bold.ttf" FontSize="18" FontColor="#ffffff" Width="200" Height="50" />
   <Label Style="ShowcaseHeader" Font="Fonts/Roboto-Regular.ttf" FontSize="26" FontColor="#ffffff" />
   <Label Style="ShowcaseDescription" Font="Fonts/Roboto-Light.ttf" FontSize="18" FontColor="#ffffff" />
