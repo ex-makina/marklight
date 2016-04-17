@@ -1,4 +1,4 @@
-<Theme Name="Toon" BaseDirectory="Assets/MarkLight/Themes/Toon/">
+<Theme Name="Toon" BaseDirectory="Assets/MarkLight/Themes/Toon/" xmlns="MarkLight">
   <Label Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" Width="120" Height="40" />
   <Label Style="Level" Width="80px" Height="60px" Font="Fonts/CarterOne.ttf" FontSize="30" FontColor="White" ShadowColor="#333333" ShadowDistance="2,-2" OutlineColor="#333333" OutlineDistance="2,-1" TextAlignment="Center" />
   <Label Style="TitleRibbon" Font="Fonts/CarterOne.ttf" FontSize="36" FontColor="White" Height="60px" ShadowColor="#368f16" ShadowDistance="2,-2" OutlineColor="#368f16" OutlineDistance="2,-1" />

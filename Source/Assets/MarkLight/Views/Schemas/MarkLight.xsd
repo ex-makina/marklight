@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema id="MarkLight" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="MarkLight" xmlns="MarkLight" attributeFormDefault="unqualified" elementFormDefault="qualified">
 
-  <xs:element name="NewView" type="NewView" />
-  <xs:complexType name="NewView">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-  </xs:complexType>
-
   <xs:element name="ContentPlaceholder" type="ContentPlaceholder" />
   <xs:complexType name="ContentPlaceholder">
     <xs:sequence>
@@ -32,6 +8,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -47,6 +24,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="UserInterface" type="UserInterface" />
@@ -56,6 +34,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -115,6 +94,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Group" type="Group" />
@@ -124,6 +104,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -171,6 +152,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Label" type="Label" />
@@ -180,6 +162,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -242,6 +225,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="StateAnimation" type="StateAnimation" />
@@ -253,6 +237,7 @@
     <xs:attribute name="To" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -274,6 +259,7 @@
     <xs:attribute name="AnimationResumed" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Animate" type="Animate" />
@@ -292,6 +278,7 @@
     <xs:attribute name="StartOffset" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -313,6 +300,7 @@
     <xs:attribute name="AnimationResumed" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Button" type="Button" />
@@ -322,6 +310,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -391,6 +380,7 @@
     <xs:attribute name="MouseUp" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="ViewSwitcher" type="ViewSwitcher" />
@@ -400,6 +390,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -447,6 +438,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="TestView2" type="TestView2" />
@@ -456,6 +448,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -500,6 +493,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="EventSystem" type="EventSystem" />
@@ -509,6 +503,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -534,6 +529,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="TestView" type="TestView" />
@@ -548,6 +544,7 @@
     <xs:attribute name="counter" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -594,6 +591,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Cube" type="Cube" />
@@ -603,6 +601,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -618,6 +617,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="View" type="View" />
@@ -627,6 +627,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -642,6 +643,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="ViewAnimation" type="ViewAnimation" />
@@ -651,6 +653,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -672,6 +675,7 @@
     <xs:attribute name="AnimationResumed" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Image" type="Image" />
@@ -681,6 +685,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -737,6 +742,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="CheckBox" type="CheckBox" />
@@ -746,6 +752,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -815,6 +822,7 @@
     <xs:attribute name="Click" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Column" type="Column" />
@@ -824,6 +832,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -882,6 +891,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="ColumnHeader" type="ColumnHeader" />
@@ -891,6 +901,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -949,6 +960,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="UICanvas" type="UICanvas" />
@@ -958,6 +970,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1017,6 +1030,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Mask" type="Mask" />
@@ -1026,6 +1040,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1070,6 +1085,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="List" type="List" />
@@ -1079,6 +1095,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1153,6 +1170,7 @@
     <xs:attribute name="ListChanged" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="ComboBox" type="ComboBox" />
@@ -1162,6 +1180,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1259,6 +1278,7 @@
     <xs:attribute name="ItemSelected" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="ComboBoxItem" type="ComboBoxItem" />
@@ -1268,6 +1288,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1338,6 +1359,7 @@
     <xs:attribute name="MouseUp" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="DataGrid" type="DataGrid" />
@@ -1347,6 +1369,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1422,10 +1445,11 @@
     <xs:attribute name="IsDestroyed" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="ItemDeselected" type="xs:string" />
-    <xs:attribute name="ListChanged" type="xs:string" />
     <xs:attribute name="ItemSelected" type="xs:string" />
+    <xs:attribute name="ListChanged" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Region" type="Region" />
@@ -1435,6 +1459,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1478,6 +1503,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Frame" type="Frame" />
@@ -1487,6 +1513,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1532,6 +1559,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="HyperLink" type="HyperLink" />
@@ -1541,6 +1569,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1609,6 +1638,7 @@
     <xs:attribute name="MouseUp" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="InputField" type="InputField" />
@@ -1618,6 +1648,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1696,6 +1727,7 @@
     <xs:attribute name="ValueChanged" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="InteractableRegion" type="InteractableRegion" />
@@ -1705,6 +1737,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1753,6 +1786,7 @@
     <xs:attribute name="InitializePotentialDrag" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="ListItem" type="ListItem" />
@@ -1762,6 +1796,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1832,6 +1867,7 @@
     <xs:attribute name="MouseUp" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="ScrollRect" type="ScrollRect" />
@@ -1841,6 +1877,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1908,6 +1945,7 @@
     <xs:attribute name="InitializePotentialDrag" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Scrollbar" type="Scrollbar" />
@@ -1917,6 +1955,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -1970,6 +2009,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Panel" type="Panel" />
@@ -1979,6 +2019,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2069,12 +2110,13 @@
     <xs:attribute name="IsTemplate" type="xs:string" />
     <xs:attribute name="IsDestroyed" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="EndDrag" type="xs:string" />
-    <xs:attribute name="BeginDrag" type="xs:string" />
-    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
     <xs:attribute name="Drag" type="xs:string" />
+    <xs:attribute name="EndDrag" type="xs:string" />
+    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
+    <xs:attribute name="BeginDrag" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="RadialMenu" type="RadialMenu" />
@@ -2084,6 +2126,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2131,6 +2174,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="RadioButton" type="RadioButton" />
@@ -2140,6 +2184,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2209,6 +2254,7 @@
     <xs:attribute name="Click" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Row" type="Row" />
@@ -2218,6 +2264,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2288,6 +2335,7 @@
     <xs:attribute name="MouseUp" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="RowHeader" type="RowHeader" />
@@ -2297,6 +2345,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2340,6 +2389,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Slider" type="Slider" />
@@ -2349,6 +2399,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2420,6 +2471,7 @@
     <xs:attribute name="InitializePotentialDrag" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Tab" type="Tab" />
@@ -2429,6 +2481,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2474,6 +2527,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="TabHeader" type="TabHeader" />
@@ -2483,6 +2537,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2553,6 +2608,7 @@
     <xs:attribute name="MouseUp" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="TabPanel" type="TabPanel" />
@@ -2563,6 +2619,7 @@
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2644,6 +2701,7 @@
     <xs:attribute name="ListChanged" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="UIView" type="UIView" />
@@ -2653,6 +2711,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2696,6 +2755,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="Window" type="Window" />
@@ -2705,6 +2765,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2836,6 +2897,7 @@
     <xs:attribute name="CloseButtonClick" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="ButtonsExample" type="ButtonsExample" />
@@ -2845,6 +2907,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2889,6 +2952,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="ComboBoxExample" type="ComboBoxExample" />
@@ -2898,6 +2962,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2941,6 +3006,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="InputFieldExample" type="InputFieldExample" />
@@ -2950,6 +3016,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -2993,6 +3060,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="RadialMenuExample" type="RadialMenuExample" />
@@ -3002,6 +3070,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3046,6 +3115,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="SliderExample" type="SliderExample" />
@@ -3055,6 +3125,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3098,6 +3169,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="DataGridExample" type="DataGridExample" />
@@ -3107,6 +3179,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3150,6 +3223,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="GroupExample" type="GroupExample" />
@@ -3159,6 +3233,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3202,6 +3277,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="ListExample" type="ListExample" />
@@ -3211,6 +3287,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3254,6 +3331,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="TabPanelExample" type="TabPanelExample" />
@@ -3263,6 +3341,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3306,6 +3385,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="PanelExample" type="PanelExample" />
@@ -3315,6 +3395,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3358,6 +3439,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="WindowExample" type="WindowExample" />
@@ -3367,6 +3449,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3410,6 +3493,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="DynamicComboBoxExample" type="DynamicComboBoxExample" />
@@ -3420,6 +3504,7 @@
     <xs:attribute name="Menus" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3464,6 +3549,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="DynamicDataGridExample" type="DynamicDataGridExample" />
@@ -3474,6 +3560,7 @@
     <xs:attribute name="Highscores" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3517,6 +3604,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="DynamicListExample" type="DynamicListExample" />
@@ -3527,6 +3615,7 @@
     <xs:attribute name="Highscores" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3570,6 +3659,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="DynamicTabPanelExample" type="DynamicTabPanelExample" />
@@ -3580,6 +3670,7 @@
     <xs:attribute name="Menus" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3625,6 +3716,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:element name="UIExamples" type="UIExamples" />
@@ -3634,6 +3726,7 @@
     </xs:sequence>
     <xs:attribute name="Id" type="xs:string" />
     <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
@@ -3649,6 +3742,7 @@
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
   <xs:simpleType name="EnumHideFlags">
@@ -3900,4 +3994,14 @@
       <xs:enumeration value="TopToBottom" />
     </xs:restriction>
   </xs:simpleType>
+
+  <xs:element name="Theme" type="Theme" />
+  <xs:complexType name="Theme">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="Name" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+  </xs:complexType>
 </xs:schema>

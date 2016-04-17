@@ -39,6 +39,12 @@ namespace MarkLight
         public string Style;
 
         /// <summary>
+        /// Based on style.
+        /// </summary>
+        /// <d>Used in style definition to specify which style it's based on.</d>
+        public string BasedOn;
+
+        /// <summary>
         /// The theme of the view.
         /// </summary>
         /// <d>Specifies the name of the theme that is applied to the view and its children. The theme determines which set of styles are to be considered when applying matching styles to the view.</d>

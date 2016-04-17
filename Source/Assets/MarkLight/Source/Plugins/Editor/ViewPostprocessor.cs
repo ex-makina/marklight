@@ -158,12 +158,16 @@ namespace MarkLight.Editor
                         enums.Add(viewFieldData.ViewFieldType);
                     }
 
-                    sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", viewField, isEnum ? "Enum" + viewFieldData.ViewFieldTypeName : "xs:string",
-                        Environment.NewLine);
+                    sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", viewField, isEnum ? "Enum" + viewFieldData.ViewFieldTypeName : "xs:string", Environment.NewLine);
                 }
+
+                sb.AppendFormat("    <xs:anyAttribute processContents=\"skip\" />{0}", Environment.NewLine);
 
                 sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
             }
+
+            // destroy temporary root view
+            GameObject.DestroyImmediate(temporaryRootView.gameObject);
 
             // add enums
             foreach (var enumType in enums)
@@ -180,9 +184,19 @@ namespace MarkLight.Editor
                 sb.AppendFormat("    </xs:restriction>{0}", Environment.NewLine);
                 sb.AppendFormat("  </xs:simpleType>{0}", Environment.NewLine);
             }
-            
-            GameObject.DestroyImmediate(temporaryRootView.gameObject);
 
+            // add theme element
+            sb.AppendLine();
+            sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", "Theme", Environment.NewLine);
+            sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", "Theme", Environment.NewLine);
+            sb.AppendFormat("    <xs:sequence>{0}", Environment.NewLine);
+            sb.AppendFormat("      <xs:any processContents=\"lax\" minOccurs=\"0\" maxOccurs=\"unbounded\" />{0}", Environment.NewLine);
+            sb.AppendFormat("    </xs:sequence>{0}", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "BaseDirectory", "xs:string", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Name", "xs:string", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "UnitSize", "xs:string", Environment.NewLine);            
+            sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
+                       
             sb.AppendLine("</xs:schema>");
 
             // save file

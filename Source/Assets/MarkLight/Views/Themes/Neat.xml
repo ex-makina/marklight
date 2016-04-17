@@ -1,4 +1,4 @@
-<Theme Name="Neat" BaseDirectory="Assets/MarkLight/Themes/Neat/">
+<Theme Name="Neat" BaseDirectory="Assets/MarkLight/Themes/Neat/" xmlns="MarkLight">
   <Label Font="Fonts/Lato-Light.ttf" FontSize="18" FontColor="#5a566e" Width="120" Height="36" />
   <Label Style="Header" Font="Fonts/Lato-Regular.ttf" FontSize="26" FontColor="#5a566e" />
   <Label Style="Paragraph" Font="Fonts/Lato-Light.ttf" FontSize="18" FontColor="#5a566e" LineSpacing="1.4" />
