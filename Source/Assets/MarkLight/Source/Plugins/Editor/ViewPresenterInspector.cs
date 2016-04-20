@@ -75,7 +75,7 @@ namespace MarkLight.Editor
             }
 
             // base directory
-            string newBaseDirectory = EditorGUILayout.DelayedTextField("Base Directory", viewPresenter.BaseDirectory);
+            string newBaseDirectory = EditorGUILayout.TextField("Base Directory", viewPresenter.BaseDirectory);
             if (newBaseDirectory != viewPresenter.BaseDirectory)
             {
                 viewPresenter.BaseDirectory = newBaseDirectory;
