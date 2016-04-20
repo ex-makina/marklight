@@ -429,7 +429,7 @@ namespace MarkLight.Views.UI
             }
             else
             {
-                SetState("Default");
+                SetState(IsSelected ? "Selected" : "Default");
 
                 // enable list item actions
                 Click.IsDisabled = false;

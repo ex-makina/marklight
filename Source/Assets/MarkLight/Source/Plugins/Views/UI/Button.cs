@@ -267,7 +267,7 @@ namespace MarkLight.Views.UI
             }
             else
             {
-                SetState("Default");
+                SetState(IsToggleButton && ToggleValue ? "Pressed" : "Default");
 
                 // enable button actions
                 Click.IsDisabled = false;

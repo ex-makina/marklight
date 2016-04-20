@@ -870,16 +870,10 @@ namespace MarkLight.Views.UI
         /// </summary>
         public virtual void TabHeaderListOrientationChanged()
         {
-            string state = String.Format("{0}{1}", TabHeaderList.Orientation.ToString(), TabHeaderList.Alignment.ToString());            
+            string state = String.Format("{0}{1}", TabHeaderList.Orientation.Value.ToString(), TabHeaderList.Alignment.Value.ToString());            
             SetState(state);
             TabHeaderList.SetState(state);
 
-            // inform tab headers of list orientation change
-            TabHeaderList.Content.ForEachChild<TabHeader>(x => 
-            {
-                x.SetState(state);
-                x.LayoutChanged();
-            });
             QueueChangeHandler("LayoutChanged");
         }
 

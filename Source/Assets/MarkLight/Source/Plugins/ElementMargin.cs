@@ -151,7 +151,7 @@ namespace MarkLight
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("{0},{1},{3},{4}", Left.ToString(), Top.ToString(), Right.ToString(), Bottom.ToString());
+            return String.Format("{0},{1},{2},{3}", Left.ToString(), Top.ToString(), Right.ToString(), Bottom.ToString());
         }
 
         #endregion
