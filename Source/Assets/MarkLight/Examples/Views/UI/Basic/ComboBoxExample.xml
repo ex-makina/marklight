@@ -1,4 +1,4 @@
-<ComboBoxExample>
+<ComboBoxExample xmlns="MarkLight">
   <Group Orientation="Vertical" Spacing="15px" ContentAlignment="Left">
     <ComboBox Id="ComboBox">
       <ComboBoxItem Text="ComboBoxItem 1" />

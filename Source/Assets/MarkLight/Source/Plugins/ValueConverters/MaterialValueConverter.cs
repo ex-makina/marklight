@@ -101,7 +101,7 @@ namespace MarkLight.ValueConverters
         /// </summary>
         public override string ConvertToString(object value)
         {
-            return ViewPresenter.Instance.GetMaterialAssetPath(value as Material);
+            return value != null ? ViewPresenter.Instance.GetMaterialAssetPath(value as Material) : String.Empty;
         }
 
         #endregion

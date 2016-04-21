@@ -54,7 +54,7 @@ namespace MarkLight.Editor
 
             // create new view asset
             string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/NewView.xml");
-            File.WriteAllText(assetPathAndName, "<NewView>\n</NewView>");
+            File.WriteAllText(assetPathAndName, "<NewView xmlns=\"MarkLight\">\n</NewView>");
             AssetDatabase.Refresh();
             EditorUtility.FocusProjectWindow();
             Selection.activeObject = AssetDatabase.LoadAssetAtPath(assetPathAndName, typeof(TextAsset));

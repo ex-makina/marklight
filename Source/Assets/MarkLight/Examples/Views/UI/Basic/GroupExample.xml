@@ -1,4 +1,4 @@
-<GroupExample>
+<GroupExample xmlns="MarkLight">
   <Group Orientation="Horizontal" Spacing="60px" ContentAlignment="Top">
     <Group Orientation="Vertical" Spacing="15">
       <Label Text="Horizontal Groups" Alignment="Top" AdjustToText="Width" />

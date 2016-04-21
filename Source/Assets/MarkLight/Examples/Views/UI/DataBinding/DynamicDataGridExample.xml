@@ -1,4 +1,4 @@
-<DynamicDataGridExample>
+<DynamicDataGridExample xmlns="MarkLight">
   <Group Orientation="Horizontal" Spacing="15px" ContentAlignment="Top">
     <Group Orientation="Vertical" Spacing="15px">
       <Button Text="Add" Click="Add" Width="120" />

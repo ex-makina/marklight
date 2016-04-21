@@ -1,4 +1,4 @@
-<UIExamples>
+<UIExamples xmlns="MarkLight">
   <UserInterface>    
     <Region BackgroundColor="#a6bbca">
       <TabPanel Style="Menu" Margin="10,10,10,10">

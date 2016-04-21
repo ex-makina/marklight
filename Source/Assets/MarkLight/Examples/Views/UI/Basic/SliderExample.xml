@@ -1,4 +1,4 @@
-<SliderExample>
+<SliderExample xmlns="MarkLight">
   <Group Orientation="Horizontal" Spacing="30" ContentAlignment="Bottom">
     <Group Orientation="Vertical">
       <Slider Id="Slider1" />

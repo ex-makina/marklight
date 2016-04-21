@@ -55,7 +55,7 @@ you read through the Getting Started guide at:
 
 Here are instructions to get intellisense in Visual Studio when editing view XML. 
 
-1. Navigate to the visual studio schema cache folder, e.g:
+1. Navigate to the Visual Studio schema cache folder, e.g:
 
 C:\Program Files (x86)\Microsoft Visual Studio 14.0\Xml\Schemas
 
@@ -71,6 +71,10 @@ and copy it back to the folder being asked to do so with administrator authoriza
 
 3. If you've added your own custom views and want intellisense for them you can update
 the schema file by clicking "Generate Schema" on your view presenter.
+
+4. Add a namespace attribute (xmlns) to your view XML root element, e.g. in YourView.xml:
+
+<YourView xmlns="MarkLight">
 
 
 ==== Serialization errors when importing asset  ==================================

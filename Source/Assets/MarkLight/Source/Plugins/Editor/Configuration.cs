@@ -79,18 +79,19 @@ namespace MarkLight.Editor
                     return _instance.GetValidated();
                 }
 
-                // search for configuration
-                var guid = AssetDatabase.FindAssets("t:Configuration name:Configuration", null).FirstOrDefault();
-                if (!String.IsNullOrEmpty(guid))
+                // search for configuration asset
+                var configFilePath = System.IO.Directory.GetFiles(Application.dataPath, "Configuration.asset", System.IO.SearchOption.AllDirectories).FirstOrDefault();
+                if (!String.IsNullOrEmpty(configFilePath))
                 {
-                    configuration = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guid), typeof(Configuration)) as Configuration;
+                    string localPath = "Assets/" + configFilePath.Substring(Application.dataPath.Length + 1);
+                    configuration = AssetDatabase.LoadAssetAtPath(localPath, typeof(Configuration)) as Configuration;
                     if (configuration != null)
                     {
                         _instance = configuration;
                         return _instance;
                     }
                 }
-                    
+
                 // no configuration found. create new at default location                 
                 System.IO.Directory.CreateDirectory("Assets/MarkLight/Configuration/");
                 configuration = ScriptableObject.CreateInstance<Configuration>();

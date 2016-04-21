@@ -101,7 +101,7 @@ namespace MarkLight.ValueConverters
         /// </summary>
         public override string ConvertToString(object value)
         {
-            return ViewPresenter.Instance.GetFontAssetPath(value as Font);
+            return value != null ? ViewPresenter.Instance.GetFontAssetPath(value as Font) : String.Empty;
         }
 
         #endregion

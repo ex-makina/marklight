@@ -132,7 +132,7 @@ namespace MarkLight.ValueConverters
         /// </summary>
         public override string ConvertToString(object value)
         {
-            return ViewPresenter.Instance.GetSpriteAssetPath(value as Sprite);
+            return value != null ? ViewPresenter.Instance.GetSpriteAssetPath(value as Sprite) : String.Empty;
         }
 
         #endregion

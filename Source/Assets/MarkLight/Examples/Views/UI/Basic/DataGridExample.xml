@@ -1,4 +1,4 @@
-<DataGridExample>
+<DataGridExample xmlns="MarkLight">
   <DataGrid Width="500">
     <RowHeader>
       <ColumnHeader Width="125" Text="Header 1" />

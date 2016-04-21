@@ -1,4 +1,4 @@
-<RadialMenuExample>
+<RadialMenuExample xmlns="MarkLight">
   <InteractableRegion Click="ToggleRadialMenu" Margin="50" BackgroundColor="White">
     <Label Text="{=MenuClickText}" TextAlignment="Center" FontSize="20" FontColor="#000000" />
     <RadialMenu Id="ContextRadialMenu">

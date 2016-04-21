@@ -1,4 +1,4 @@
-<DynamicTabPanelExample>
+<DynamicTabPanelExample xmlns="MarkLight">
   <Group Spacing="25">
     <Group Orientation="Horizontal" Spacing="10">
       <Button Text="Add Tab" Click="AddTab" IsDisabled="{=!CanAdd}" AdjustToText="Width" />
