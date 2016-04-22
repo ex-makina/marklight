@@ -320,7 +320,7 @@ namespace MarkLight.Views.UI
         public Tab SelectedTab;
         public ViewSwitcher TabSwitcher;
 
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public bool StaticTabsGenerated;
 
         private IObservableList _oldItems;

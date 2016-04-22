@@ -210,13 +210,13 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Indicates if the button is pressed.
         /// </summary>
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public bool IsPressed;
 
         /// <summary>
         /// Indicates if the mouse is over the button.
         /// </summary>
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public bool IsMouseOver;
 
         #endregion

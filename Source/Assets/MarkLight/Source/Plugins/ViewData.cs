@@ -24,7 +24,7 @@ namespace MarkLight
         #region Methods
 
         /// <summary>
-        /// Goes through the view XML and creates/updates the scene objects.
+        /// Goes through XUML and creates/updates the scene objects.
         /// </summary>
         public static void GenerateViews()
         {
@@ -96,19 +96,19 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Loads all view XML assets.
+        /// Loads all XUML assets.
         /// </summary>
-        public static void LoadAllXml(IEnumerable<TextAsset> xmlAssets)
+        public static void LoadAllXuml(IEnumerable<TextAsset> xumlAssets)
         {
             var viewPresenter = ViewPresenter.Instance;
 
             // clear existing views from view presenter
             viewPresenter.Clear();
 
-            // load view xml
-            foreach (var xmlAsset in xmlAssets)
+            // load xuml
+            foreach (var xumlAsset in xumlAssets)
             {
-                LoadXml(xmlAsset);
+                LoadXuml(xumlAsset);
             }
 
             // generate views
@@ -116,63 +116,63 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Loads XML file to the view database.
+        /// Loads XUML file to the view database.
         /// </summary>
-        public static void LoadXml(TextAsset xmlAsset)
+        public static void LoadXuml(TextAsset xumlAsset)
         {
-            LoadXml(xmlAsset.text, xmlAsset.name);
+            LoadXuml(xumlAsset.text, xumlAsset.name);
         }
 
         /// <summary>
-        /// Loads XML string to the view database.
+        /// Loads XUML string to the view database.
         /// </summary>
-        public static void LoadXml(string xml, string xmlAssetName = "")
+        public static void LoadXuml(string xuml, string xumlAssetName = "")
         {
-            XElement xmlElement = null;
+            XElement xumlElement = null;
             try
             {
-                xmlElement = XElement.Parse(xml);
+                xumlElement = XElement.Parse(xuml);
             }
             catch (Exception e)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Error parsing view XML. Exception thrown: {1}", xmlAssetName, Utils.GetError(e)));
+                Debug.LogError(String.Format("[MarkLight] {0}: Error parsing XUML. Exception thrown: {1}", xumlAssetName, Utils.GetError(e)));
                 return;
             }
 
-            // what kind of XML file is this? 
-            if (String.Equals(xmlElement.Name.LocalName, "Theme", StringComparison.OrdinalIgnoreCase))
+            // what kind of XUML file is this? 
+            if (String.Equals(xumlElement.Name.LocalName, "Theme", StringComparison.OrdinalIgnoreCase))
             {
                 // theme
-                LoadThemeXml(xmlElement, xml, xmlAssetName);
+                LoadThemeXuml(xumlElement, xuml, xumlAssetName);
             }
-            else if (String.Equals(xmlElement.Name.LocalName, "Dictionary", StringComparison.OrdinalIgnoreCase))
+            else if (String.Equals(xumlElement.Name.LocalName, "Dictionary", StringComparison.OrdinalIgnoreCase))
             {
                 // resource dictionary
             }
             else
             {
                 // view
-                LoadViewXml(xmlElement, xml);
+                LoadViewXuml(xumlElement, xuml);
             }
         }
 
         /// <summary>
-        /// Loads view XML to view database.
+        /// Loads XUML to view database.
         /// </summary>
-        private static void LoadViewXml(XElement xmlElement, string xml)
+        private static void LoadViewXuml(XElement xumlElement, string xuml)
         {
             var viewPresenter = ViewPresenter.Instance;
-            viewPresenter.ViewTypeData.RemoveAll(x => String.Equals(x.ViewName, xmlElement.Name.LocalName, StringComparison.OrdinalIgnoreCase));
+            viewPresenter.ViewTypeData.RemoveAll(x => String.Equals(x.ViewName, xumlElement.Name.LocalName, StringComparison.OrdinalIgnoreCase));
 
             var viewTypeData = new ViewTypeData();
             viewPresenter.ViewTypeData.Add(viewTypeData);
 
-            viewTypeData.Xml = xml;
-            viewTypeData.XmlElement = xmlElement;
-            viewTypeData.ViewName = xmlElement.Name.LocalName;
+            viewTypeData.Xuml = xuml;
+            viewTypeData.XumlElement = xumlElement;
+            viewTypeData.ViewName = xumlElement.Name.LocalName;
 
             // set dependency names
-            foreach (var descendant in xmlElement.Descendants())
+            foreach (var descendant in xumlElement.Descendants())
             {
                 if (!viewTypeData.DependencyNames.Contains(descendant.Name.LocalName, StringComparer.OrdinalIgnoreCase))
                 {
@@ -268,16 +268,16 @@ namespace MarkLight
                     viewTypeData.ViewFieldChangeHandlers.Add(new ViewFieldChangeHandler { ViewField = field.Name, ChangeHandlerName = changeHandler.Name, TriggerImmediately = changeHandler.TriggerImmediately });
                 }
 
-                var notNotSetFromXml = field.GetCustomAttributes(typeof(NotSetFromXml), true).FirstOrDefault() as NotSetFromXml;
-                if (notNotSetFromXml != null)
+                var notNotSetFromXuml = field.GetCustomAttributes(typeof(NotSetFromXuml), true).FirstOrDefault() as NotSetFromXuml;
+                if (notNotSetFromXuml != null)
                 {
-                    viewTypeData.FieldsNotSetFromXml.Add(field.Name);
+                    viewTypeData.FieldsNotSetFromXuml.Add(field.Name);
                 }
             }
 
             // get the normal fields that aren't mapped
             var fields = type.GetFields().Where(x =>
-                !viewTypeData.FieldsNotSetFromXml.Contains(x.Name) &&
+                !viewTypeData.FieldsNotSetFromXuml.Contains(x.Name) &&
                 !viewTypeData.ReferenceFields.Contains(x.Name) &&
                 !viewTypeData.ComponentFields.Contains(x.Name) &&
                 !viewTypeData.ViewActionFields.Contains(x.Name) &&
@@ -285,7 +285,7 @@ namespace MarkLight
                 !x.IsStatic
             ).Select(y => y.Name);
             var properties = type.GetProperties().Where(x =>
-                !viewTypeData.FieldsNotSetFromXml.Contains(x.Name) &&
+                !viewTypeData.FieldsNotSetFromXuml.Contains(x.Name) &&
                 !viewTypeData.ReferenceFields.Contains(x.Name) &&
                 !viewTypeData.ComponentFields.Contains(x.Name) &&
                 !viewTypeData.ViewActionFields.Contains(x.Name) &&
@@ -303,16 +303,16 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Loads view XML to view database.
+        /// Loads XUML to view database.
         /// </summary>
-        private static void LoadThemeXml(XElement xmlElement, string xml, string xmlAssetName)
+        private static void LoadThemeXuml(XElement xumlElement, string xuml, string xumlAssetName)
         {
             var viewPresenter = ViewPresenter.Instance;
 
-            var themeNameAttr = xmlElement.Attribute("Name");
+            var themeNameAttr = xumlElement.Attribute("Name");
             if (themeNameAttr == null)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Error parsing theme XML. Name attribute missing.", xmlAssetName));
+                Debug.LogError(String.Format("[MarkLight] {0}: Error parsing theme XUML. Name attribute missing.", xumlAssetName));
             }
 
             viewPresenter.ThemeData.RemoveAll(x => String.Equals(x.ThemeName, themeNameAttr.Value, StringComparison.OrdinalIgnoreCase));
@@ -320,18 +320,18 @@ namespace MarkLight
             var themeData = new ThemeData();
             viewPresenter.ThemeData.Add(themeData);
 
-            themeData.Xml = xml;
-            themeData.XmlElement = xmlElement;
+            themeData.Xuml = xuml;
+            themeData.XumlElement = xumlElement;
             themeData.ThemeName = themeNameAttr.Value;
 
-            var baseDirectoryAttr = xmlElement.Attribute("BaseDirectory");
+            var baseDirectoryAttr = xumlElement.Attribute("BaseDirectory");
             themeData.BaseDirectorySet = baseDirectoryAttr != null;
             if (themeData.BaseDirectorySet)
             {
                 themeData.BaseDirectory = baseDirectoryAttr.Value;
             }
             
-            var unitSizeAttr = xmlElement.Attribute("UnitSize");
+            var unitSizeAttr = xumlElement.Attribute("UnitSize");
             themeData.UnitSizeSet = unitSizeAttr != null;
             if (themeData.UnitSizeSet)
             {           
@@ -350,14 +350,14 @@ namespace MarkLight
                     }
                     else
                     {
-                        Debug.LogError(String.Format("[MarkLight] {0}: Error parsing theme XML. Unable to parse UnitSize attribute value \"{1}\".", xmlAssetName, unitSizeAttr.Value));
+                        Debug.LogError(String.Format("[MarkLight] {0}: Error parsing theme XUML. Unable to parse UnitSize attribute value \"{1}\".", xumlAssetName, unitSizeAttr.Value));
                         themeData.UnitSize = ViewPresenter.Instance.UnitSize;
                     }
                 }
             }
 
             // load theme elements
-            foreach (var childElement in xmlElement.Elements())
+            foreach (var childElement in xumlElement.Elements())
             {
                 var themeElement = new ThemeElementData();
                 themeElement.ViewName = childElement.Name.LocalName;
@@ -380,8 +380,8 @@ namespace MarkLight
                     themeElement.BasedOn = basedOnAttr.Value;
                 }
 
-                themeElement.XmlElement = childElement;
-                themeElement.Xml = childElement.ToString();
+                themeElement.XumlElement = childElement;
+                themeElement.Xuml = childElement.ToString();
 
                 themeData.ThemeElementData.Add(themeElement);
             }
@@ -390,16 +390,16 @@ namespace MarkLight
         /// <summary>
         /// Creates view of specified type.
         /// </summary>
-        public static T CreateView<T>(View layoutParent, View parent, ValueConverterContext context = null, string themeName = "", string id = "", string style = "", IEnumerable<XElement> contentXml = null) where T : View
+        public static T CreateView<T>(View layoutParent, View parent, ValueConverterContext context = null, string themeName = "", string id = "", string style = "", IEnumerable<XElement> contentXuml = null) where T : View
         {
             Type viewType = typeof(T);
-            return CreateView(viewType.Name, layoutParent, parent, context, themeName, id, style, contentXml) as T;
+            return CreateView(viewType.Name, layoutParent, parent, context, themeName, id, style, contentXuml) as T;
         }
 
         /// <summary>
         /// Creates view of specified type.
         /// </summary>
-        public static View CreateView(string viewName, View layoutParent, View parent, ValueConverterContext context = null, string theme = "", string id = "", string style = "", IEnumerable<XElement> contentXml = null)
+        public static View CreateView(string viewName, View layoutParent, View parent, ValueConverterContext context = null, string theme = "", string id = "", string style = "", IEnumerable<XElement> contentXuml = null)
         {
             // Creates the views in the following order:
             // CreateView(view)
@@ -426,14 +426,14 @@ namespace MarkLight
                 context = ValueConverterContext.Default;
             }
                         
-            // create view from XML
+            // create view from XUML
             var viewTypeData = GetViewTypeData(viewName);
             if (viewTypeData == null)
             {
                 return null;
             }
 
-            // get view XML
+            // get view type
             var viewType = GetViewType(viewName);
             if (viewType == null)
             {
@@ -456,7 +456,7 @@ namespace MarkLight
             view.Style = style;
             view.Theme = theme;
             view.Content = view;
-            view.ViewXmlName = viewName;
+            view.ViewXumlName = viewName;
 
             // set component fields
             foreach (var componentField in viewTypeData.ComponentFields)
@@ -498,8 +498,8 @@ namespace MarkLight
                 dependencyFieldInstance.ViewFieldPath = dependencyField;
             }
 
-            // parse child XML and for each child create views and set their values
-            foreach (var childElement in viewTypeData.XmlElement.Elements())
+            // parse child XUML and for each child create views and set their values
+            foreach (var childElement in viewTypeData.XumlElement.Elements())
             {
                 var childViewIdAttr = childElement.Attribute("Id");
                 var childViewStyleAttr = childElement.Attribute("Style");
@@ -526,11 +526,11 @@ namespace MarkLight
                 GameObject.DestroyImmediate(contentContainer.gameObject);
             }
 
-            // parse content XML and for each content child create views and set their values
-            if (contentXml != null)
+            // parse content XUML and for each content child create views and set their values
+            if (contentXuml != null)
             {
                 // create content views
-                foreach (var contentElement in contentXml)
+                foreach (var contentElement in contentXuml)
                 {
                     var contentElementIdAttr = contentElement.Attribute("Id");
                     var contentElementStyleAttr = contentElement.Attribute("Style");
@@ -562,8 +562,8 @@ namespace MarkLight
             // set view default values
             view.SetDefaultValues();
 
-            // set internal view values that appear inside the root view element of the view XML file
-            SetViewValues(view, viewTypeData.XmlElement, view, context);
+            // set internal view values that appear inside the root element of the XUML file
+            SetViewValues(view, viewTypeData.XumlElement, view, context);
 
             // set theme values
             var themeData = GetThemeData(theme);
@@ -581,7 +581,7 @@ namespace MarkLight
                         themeValueContext.UnitSize = themeData.UnitSize;
                     }
 
-                    SetViewValues(view, themeElement.XmlElement, view, themeValueContext);
+                    SetViewValues(view, themeElement.XumlElement, view, themeValueContext);
                 }
             }
 
@@ -612,7 +612,7 @@ namespace MarkLight
                 }
                 else
                 {
-                    Debug.LogError(String.Format("[MarkLight] {0}: Error parsing view XML. Unable to parse UnitSize attribute value \"{1}\".", viewName, unitSizeString));
+                    Debug.LogError(String.Format("[MarkLight] {0}: Error parsing XUML. Unable to parse UnitSize attribute value \"{1}\".", viewName, unitSizeString));
                     elementContext.UnitSize = ViewPresenter.Instance.UnitSize;
                 }
             }
@@ -630,15 +630,15 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Sets view values parsed from XML.
+        /// Sets view values parsed from XUML.
         /// </summary>
-        private static void SetViewValues(View view, XElement xmlElement, View parent, ValueConverterContext context)
+        private static void SetViewValues(View view, XElement xumlElement, View parent, ValueConverterContext context)
         {
             if (view == null)
                 return;
 
             var viewTypeData = GetViewTypeData(view.ViewTypeName);
-            foreach (var attribute in xmlElement.Attributes())
+            foreach (var attribute in xumlElement.Attributes())
             {
                 string viewFieldPath = attribute.Name.LocalName;
                 string viewFieldValue = attribute.Value;
@@ -647,11 +647,11 @@ namespace MarkLight
                 if (String.Equals(viewFieldPath, "xmlns", StringComparison.OrdinalIgnoreCase))
                     continue;
 
-                // check if the field value is allowed to be be set from xml
-                bool notAllowed = viewTypeData.FieldsNotSetFromXml.Contains(viewFieldPath);
+                // check if the field value is allowed to be be set from xuml
+                bool notAllowed = viewTypeData.FieldsNotSetFromXuml.Contains(viewFieldPath);
                 if (notAllowed)
                 {
-                    Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}.{3}\". Field not allowed to be set from xml.", view.GameObjectName, viewFieldValue, view.ViewTypeName, viewFieldPath));
+                    Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}.{3}\". Field not allowed to be set from XUML.", view.GameObjectName, viewFieldValue, view.ViewTypeName, viewFieldPath));
                     continue;
                 }
 

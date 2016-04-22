@@ -22,13 +22,13 @@ namespace MarkLight
         public string ThemeName;
         public string BaseDirectory;
         public Vector3 UnitSize;
-        public string Xml;
+        public string Xuml;
         public List<ThemeElementData> ThemeElementData;
         public bool BaseDirectorySet;
         public bool UnitSizeSet;
 
         [NonSerialized]
-        private XElement _xmlElement;
+        private XElement _xumlElement;
 
         [NonSerialized]
         private Dictionary<string, List<ThemeElementData>> _themeElementData;
@@ -132,26 +132,26 @@ namespace MarkLight
         #region Properties
 
         /// <summary>
-        /// Gets or sets XML element.
+        /// Gets or sets XUML element.
         /// </summary>
-        public XElement XmlElement
+        public XElement XumlElement
         {
             get
             {
-                if (_xmlElement == null && !String.IsNullOrEmpty(Xml))
+                if (_xumlElement == null && !String.IsNullOrEmpty(Xuml))
                 {
                     try
                     {
-                        _xmlElement = XElement.Parse(Xml);
+                        _xumlElement = XElement.Parse(Xuml);
                     }
                     catch
                     {
                     }
                 }
 
-                return _xmlElement;
+                return _xumlElement;
             }
-            set { _xmlElement = value; }
+            set { _xumlElement = value; }
         }
 
         #endregion

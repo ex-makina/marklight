@@ -5,10 +5,10 @@ using System;
 namespace MarkLight
 {
     /// <summary>
-    /// Attribute indicating that field is not to be set from XML.
+    /// Attribute indicating that field is not to be set from XUML.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
-    public class NotSetFromXml : Attribute
+    public class NotSetFromXuml : Attribute
     {
     }
 }

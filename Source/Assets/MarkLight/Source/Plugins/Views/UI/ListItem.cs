@@ -166,14 +166,14 @@ namespace MarkLight.Views.UI
         [ChangeHandler("LayoutsChanged")]
         public _ElementSize Breadth;
 
-        [NotSetFromXml]
+        [NotSetFromXuml]
         [ChangeHandler("IsSelectedChanged", TriggerImmediately = true)]
         public _bool IsSelected;        
 
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public _bool IsPressed;
 
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public _bool IsMouseOver;
 
         /// <summary>

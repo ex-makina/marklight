@@ -17,18 +17,18 @@ using System.Text.RegularExpressions;
 namespace MarkLight.Editor
 {
     /// <summary>
-    /// Processes view XML assets and generates scene objects.
+    /// Processes view XUML assets and generates scene objects.
     /// </summary>
     internal class ViewPostprocessor : AssetPostprocessor
     {
         #region Methods
 
         /// <summary>
-        /// Processes the view XML assets that are added, deleted, updated, etc. and generates the scene objects.
+        /// Processes the XUML assets that are added, deleted, updated, etc. and generates the scene objects.
         /// </summary>
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
-            // don't process view XML assets while playing or when there is no view presenter in the scene
+            // don't process XUML assets while playing or when there is no view presenter in the scene
             if (Application.isPlaying || ViewPresenter.Instance == null || ViewPresenter.Instance.DisableAutomaticReload)
             {
                 return;
@@ -57,37 +57,37 @@ namespace MarkLight.Editor
         }
 
         /// <summary>
-        /// Processes view XML assets.
+        /// Processes XUML assets.
         /// </summary>
         public static void ProcessViewAssets()
         {
-            // don't process view XML assets while playing or when there is no view presenter in the scene
+            // don't process XUML assets while playing or when there is no view presenter in the scene
             if (Application.isPlaying || ViewPresenter.Instance == null)
             {
                 return;
             }
 
-            // get all view XML assets
+            // get all XUML assets
             HashSet<TextAsset> viewAssets = new HashSet<TextAsset>();
             foreach (var path in Configuration.Instance.ViewPaths)
             {
                 string localPath = path.StartsWith("Assets/") ? path.Substring(7) : path;
-                foreach (var asset in GetXmlAssetsAtPath(localPath))
+                foreach (var asset in GetXumlAssetsAtPath(localPath))
                 {
                     viewAssets.Add(asset);
                 }
             }
 
-            // load view XML assets
-            ViewData.LoadAllXml(viewAssets);               
+            // load XUML assets
+            ViewData.LoadAllXuml(viewAssets);               
 
             Debug.Log("[MarkLight] Views processed. " + DateTime.Now.ToString());
         }
 
         /// <summary>
-        /// Gets all XML assets of a certain type at a path.
+        /// Gets all XUML assets of a certain type at a path.
         /// </summary>
-        private static List<TextAsset> GetXmlAssetsAtPath(string path)
+        private static List<TextAsset> GetXumlAssetsAtPath(string path)
         {
             var assets = new List<TextAsset>();
             string searchPath = Application.dataPath + "/" + path;

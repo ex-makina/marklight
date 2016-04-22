@@ -23,10 +23,10 @@ namespace MarkLight
         public string Id;
         public string Style;
         public string BasedOn;
-        public string Xml;
+        public string Xuml;
 
         [NonSerialized]
-        private XElement _xmlElement;
+        private XElement _xumlElement;
 
         #endregion        
 
@@ -47,26 +47,26 @@ namespace MarkLight
         #region Properties
 
         /// <summary>
-        /// Gets or sets XML element.
+        /// Gets or sets XUML element.
         /// </summary>
-        public XElement XmlElement
+        public XElement XumlElement
         {
             get
             {
-                if (_xmlElement == null && !String.IsNullOrEmpty(Xml))
+                if (_xumlElement == null && !String.IsNullOrEmpty(Xuml))
                 {
                     try
                     {
-                        _xmlElement = XElement.Parse(Xml);
+                        _xumlElement = XElement.Parse(Xuml);
                     }
                     catch
                     {
                     }
                 }
 
-                return _xmlElement; 
+                return _xumlElement; 
             }
-            set { _xmlElement = value; }
+            set { _xumlElement = value; }
         }
 
         #endregion

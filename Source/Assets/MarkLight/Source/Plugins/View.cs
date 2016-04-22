@@ -35,7 +35,7 @@ namespace MarkLight
         /// <summary>
         /// The style of the view.
         /// </summary>
-        /// <d>Used as selector by the styles. Specifies the name of the style that is to be applied to the view and any children that explicitly inherits its style. The style is applied when the view is created (usually in the editor as the view XML is processed).</d>
+        /// <d>Used as selector by the styles. Specifies the name of the style that is to be applied to the view and any children that explicitly inherits its style. The style is applied when the view is created (usually in the editor as the XUML is processed).</d>
         public string Style;
 
         /// <summary>
@@ -66,21 +66,21 @@ namespace MarkLight
         /// Layout parent view.
         /// </summary>
         /// <d>The layout parent view is the direct ascendant of the current view in the scene object hierarchy.</d>
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public View LayoutParent;
 
         /// <summary>
         /// Parent view.
         /// </summary>
-        /// <d>The parent of the view is the logical parent to which this view belongs. In the view XML any view you can see has the current view as its logical parent.</d>
-        [NotSetFromXml]
+        /// <d>The parent of the view is the logical parent to which this view belongs. In the XUML any view you can see has the current view as its logical parent.</d>
+        [NotSetFromXuml]
         public View Parent;
 
         /// <summary>
         /// Content view.        
         /// </summary>
         /// <d>View that is the parent to the content of this view. Usually it is the current view itself but when a ContentPlaceholder is used the Content points to the view that contains the ContentPlaceholder.</d>
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public View Content;
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace MarkLight
         /// </summary>
         /// <d>View state name. Determines state values to be applied to the view. All views start out in the "Default" state and when the state changes the values associated with that state are applied to the view.</d>
         [ChangeHandler("StateChanged", TriggerImmediately = true)]
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public _string State;
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace MarkLight
         /// <summary>
         /// Rotation of the view.
         /// </summary>
-        /// <d>The local rotation of the view in relation to the layout parent view transform. Stored as a Quaternion but specified in the view XML as euler angles.</d>
+        /// <d>The local rotation of the view in relation to the layout parent view transform. Stored as a Quaternion but specified in XUML as euler angles.</d>
         [MapTo("Transform.localRotation")]
         public _Quaternion Rotation;
 
@@ -169,37 +169,37 @@ namespace MarkLight
         /// <summary>
         /// Indicates if the view has been destroyed by GameObject.Destroy().
         /// </summary>
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public _bool IsDestroyed;
 
         /// <summary>
         /// Indicates if the view has been created dynamically. 
         /// </summary>
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public _bool IsDynamic;
 
         /// <summary>
         /// The name of the view's type.
         /// </summary>
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public string ViewTypeName;
 
         /// <summary>
-        /// Name of the view as given by the view XML.
+        /// Name of the view as specified in the XUML.
         /// </summary>
-        [NotSetFromXml]
-        public string ViewXmlName;
+        [NotSetFromXuml]
+        public string ViewXumlName;
 
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public List<ViewFieldBinding> ViewFieldBindings;
 
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public List<ViewActionEntry> ViewActionEntries;
 
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public List<ViewFieldStateValue> ViewFieldStateValues;
 
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public List<string> SetViewFieldNames;
 
         public static string DefaultStateName = "Default";
@@ -1065,7 +1065,7 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Called after the view is initialized but before any XML values are set. Used to set default values on the view.
+        /// Called after the view is initialized but before any XUML values are set. Used to set default values on the view.
         /// </summary>
         public virtual void SetDefaultValues()
         {
@@ -1527,7 +1527,7 @@ namespace MarkLight
         {
             get
             {
-                var viewName = ViewTypeName == "View" ? ViewXmlName : ViewTypeName;                
+                var viewName = ViewTypeName == "View" ? ViewXumlName : ViewTypeName;                
                 return !String.IsNullOrEmpty(Id) ? String.Format("{0} ({1})", viewName, Id) : viewName;
             }
         }

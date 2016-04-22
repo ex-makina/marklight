@@ -33,13 +33,13 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Boolean indicating if the hyperlink is being pressed.
         /// </summary>
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public bool IsPressed;
 
         /// <summary>
         /// Boolean indicating if mouse is over the hyperlink.
         /// </summary>
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public bool IsMouseOver;
 
         /// <summary>

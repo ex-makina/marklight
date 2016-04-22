@@ -51,9 +51,9 @@ you read through the Getting Started guide at:
     http://www.marklightforunity.com/docs/tutorials/gettingstarted.html
 
 
-==== How to get intellisense in XML (highly recommended)  ========================
+==== How to get intellisense in XUML (highly recommended)  =======================
 
-Here are instructions to get intellisense in Visual Studio when editing view XML. 
+Here are instructions to get intellisense in Visual Studio when editing XUML. 
 
 1. Navigate to the Visual Studio schema cache folder, e.g:
 
@@ -72,7 +72,7 @@ and copy it back to the folder being asked to do so with administrator authoriza
 3. If you've added your own custom views and want intellisense for them you can update
 the schema file by clicking "Generate Schema" on your view presenter.
 
-4. Add a namespace attribute (xmlns) to your view XML root element, e.g. in YourView.xml:
+4. Add a namespace attribute (xmlns) to your XUML root element, e.g. in YourView.xml:
 
 <YourView xmlns="MarkLight">
 

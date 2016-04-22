@@ -45,7 +45,7 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Converts view XML attribute to a view value.
+        /// Converts XUML attribute to a view value.
         /// </summary>
         public virtual ConversionResult Convert(object value, ValueConverterContext context)
         {

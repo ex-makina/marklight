@@ -2,11 +2,11 @@
 - Added selection and replace logic to ObservableList
 - ListItems can be set in Disabled state through IsDisabled field
 - Moved source code into /Plugins directory so framework isn't recompiled when project code changes
-- Intellisense in XML now possible through simple configuration. XSD schema can be updated by clicking a button on the view presenter
+- Intellisense in XUML now possible through simple configuration. XSD schema can be updated by clicking a button on the view presenter
 - View switcher can pass along custom data to the view switched to through the SwitchTo method and Activated view action
 - Action handlers can now take any custom data as parameter
 - Default state of views is now stored in serializable format and view state can be changed during compile time
-- Fixed bug with programmatically loaded view XML missing when reloading the scene
+- Fixed bug with programmatically loaded view XUML missing when reloading the scene
 - Fixed bug where local bindings propagated in the wrong order
 - Added ShowTemplateInEditor to List so template can be made visible while working with it in the editor
 - Added mechanism to update bound list item data through ObservableList methods: ItemModified and ItemsModified.
@@ -14,7 +14,7 @@
 - Added DeselectAfterSelect and SelectOnMouseUp fields to List 
 - BaseDirectory can now be specified on views (inherited by children). Default value can be set on view presenter
 - Added UnitSize a user-defined scalable element size unit (postfix "ux", "uy" and "uz"). Can specified on views (inherited by children) and the default value can be set on the view presenter
-- Added option on view presenter to disable automatic reloading of views when XML changes
+- Added option on view presenter to disable automatic reloading of views when XUML changes
 - Added view actions for dragging to ScrollRect and Panel
 - Added DisableInteractionScrollDelta to ScrollRect so user interaction with child views can be disabled while scrolling
 - Dependency fields functionality added and all views have been converted to utilize dependency fields
@@ -28,7 +28,7 @@ v2.0.0
 - Multi-binding through binding transformations or format strings
 - New binding operators for creating local bindings, one-way bindings, and negated bindings
 - More dynamic handling of value propagation and binding dependency checks
-- Dynamic loading of view-XML. View XML can be loaded during run-time
+- Dynamic loading of view XUML. View XUML can be loaded during run-time
 - View fields (i.e. both fields and properties) can be mapped through class attributes
 - State-management. Simplified handling of views having different states. You no longer need separate fields for different states, e.g. PressedButtonColor, HighlightedButtonColor, etc. You only need one field and storing the various states is handled by the framework
 - Animation between states are defined using a new StateAnimation view. Overall handling different states and animation between them requires much less code

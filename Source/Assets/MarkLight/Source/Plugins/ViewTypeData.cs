@@ -20,13 +20,13 @@ namespace MarkLight
         #region Fields
 
         public string ViewName;
-        public string Xml;
+        public string Xuml;
         public List<string> DependencyNames;
         public List<string> ViewActionFields;
         public List<string> DependencyFields;
         public List<string> ComponentFields;
         public List<string> ReferenceFields;
-        public List<string> FieldsNotSetFromXml;
+        public List<string> FieldsNotSetFromXuml;
         public List<string> ExcludedComponentFields;
         public List<string> ViewFields;
         public List<MapViewFieldData> MapViewFields;
@@ -37,7 +37,7 @@ namespace MarkLight
         public bool HideInPresenter;
 
         [NonSerialized]
-        private XElement _xmlElement;
+        private XElement _xumlElement;
 
         [NonSerialized]
         private List<ViewTypeData> _dependencies;
@@ -65,7 +65,7 @@ namespace MarkLight
             DependencyFields = new List<string>();
             ComponentFields = new List<string>();
             ReferenceFields = new List<string>();
-            FieldsNotSetFromXml = new List<string>();
+            FieldsNotSetFromXuml = new List<string>();
             ExcludedComponentFields = new List<string>();
             ViewFields = new List<string>();
             MapViewFields = new List<MapViewFieldData>();
@@ -144,26 +144,26 @@ namespace MarkLight
         #region Properties
 
         /// <summary>
-        /// Gets or sets XML element.
+        /// Gets or sets XUML element.
         /// </summary>
-        public XElement XmlElement
+        public XElement XumlElement
         {
             get
             {
-                if (_xmlElement == null && !String.IsNullOrEmpty(Xml))
+                if (_xumlElement == null && !String.IsNullOrEmpty(Xuml))
                 {
                     try
                     {
-                        _xmlElement = XElement.Parse(Xml);
+                        _xumlElement = XElement.Parse(Xuml);
                     }
                     catch
                     {
                     }
                 }
 
-                return _xmlElement; 
+                return _xumlElement; 
             }
-            set { _xmlElement = value; }
+            set { _xumlElement = value; }
         }
 
         /// <summary>

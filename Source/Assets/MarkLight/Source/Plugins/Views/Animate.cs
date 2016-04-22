@@ -88,10 +88,10 @@ namespace MarkLight.Views
         [DurationValueConverter]
         public float StartOffset;
 
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public string FromStringValue;
 
-        [NotSetFromXml]
+        [NotSetFromXuml]
         public string ToStringValue;
 
         private ViewFieldAnimator _viewFieldAnimator;

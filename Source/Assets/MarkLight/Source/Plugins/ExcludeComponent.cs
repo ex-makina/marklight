@@ -5,7 +5,7 @@ using System;
 namespace MarkLight
 {
     /// <summary>
-    /// Attribute indicating that field is not to be set from XML.
+    /// Attribute indicating that component isn't to be automatically added to the view.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class ExcludeComponent : Attribute
