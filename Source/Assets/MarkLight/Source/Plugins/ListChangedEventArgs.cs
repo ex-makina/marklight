@@ -52,6 +52,11 @@ namespace MarkLight
         /// <summary>
         /// Items modified in list.
         /// </summary>
-        Modify = 5
+        Modify = 5,
+
+        /// <summary>
+        /// Item selected in list
+        /// </summary>
+        Select = 6
     }
 }

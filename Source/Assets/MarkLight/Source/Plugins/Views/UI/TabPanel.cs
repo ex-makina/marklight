@@ -625,6 +625,10 @@ namespace MarkLight.Views.UI
             {
                 RemoveRange(e.StartIndex, e.EndIndex);
             }
+            else if (e.ListChangeAction == ListChangeAction.Select)
+            {                
+                SelectTab(e.StartIndex, true);
+            }
 
             if (ListChanged.HasEntries)
             {

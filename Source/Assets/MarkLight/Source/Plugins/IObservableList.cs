@@ -26,6 +26,7 @@ namespace MarkLight
         void Add(IEnumerable items);
         bool Remove(object item);
         void Remove(IEnumerable items);
+        void SetSelected(object item);
 
         #endregion
 

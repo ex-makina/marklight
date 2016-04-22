@@ -19,7 +19,8 @@ namespace MarkLight
         #region Fields
 
         private List<T> _list;
-        public event EventHandler<ListChangedEventArgs> ListChanged;
+        private object _selectedItem;
+        public event EventHandler<ListChangedEventArgs> ListChanged;        
 
         #endregion
 
@@ -609,6 +610,14 @@ namespace MarkLight
             return _list.TrueForAll(predicate);
         }
 
+        /// <summary>
+        /// Sets selected item without notifying observers.
+        /// </summary>
+        public void SetSelected(object item)
+        {
+            _selectedItem = item;
+        }
+
         #endregion
 
         #region Properties
@@ -670,6 +679,50 @@ namespace MarkLight
                     if (ListChanged != null)
                     {
                         ListChanged(this, new ListChangedEventArgs { ListChangeAction = ListChangeAction.Replace, StartIndex = index, EndIndex = index });
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected item.
+        /// </summary>
+        public T SelectedItem
+        {
+            get
+            {
+                return _selectedItem != null ? (T)_selectedItem : default(T);
+            }
+            set
+            {
+                SelectedIndex = IndexOf(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected index.
+        /// </summary>
+        public int SelectedIndex
+        {
+            get
+            {
+                return _selectedItem != null ? IndexOf((T)_selectedItem) : -1;
+            }
+            set
+            {
+                if (value < 0 || value >= Count)
+                {
+                    _selectedItem = null;
+                    return;
+                }
+
+                int currentIndex = SelectedIndex;
+                if (currentIndex != value)
+                {
+                    _selectedItem = this[value];
+                    if (ListChanged != null)
+                    {
+                        ListChanged(this, new ListChangedEventArgs { ListChangeAction = ListChangeAction.Select, StartIndex = value, EndIndex = value });
                     }
                 }
             }

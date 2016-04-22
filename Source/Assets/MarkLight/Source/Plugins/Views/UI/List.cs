@@ -647,8 +647,12 @@ namespace MarkLight.Views.UI
             {
                 // item selected
                 _selectedItem = listItem.Item.Value;
-                SelectedItem.Value = _selectedItem;
+                SelectedItem.Value = _selectedItem;                
                 IsItemSelected.Value = true;
+                if (Items.Value != null)
+                {
+                    Items.Value.SetSelected(_selectedItem);
+                }
 
                 // add to list of selected items
                 SelectedItems.Value.Add(listItem.Item.Value);
@@ -669,6 +673,11 @@ namespace MarkLight.Views.UI
                 {
                     _selectedItem = SelectedItems.Value.LastOrDefault();
                     SelectedItem.Value = _selectedItem;
+
+                    if (Items.Value != null)
+                    {
+                        Items.Value.SetSelected(_selectedItem);
+                    }
                 }
                 IsItemSelected.Value = SelectedItems.Value.Count > 0;
 
@@ -713,6 +722,10 @@ namespace MarkLight.Views.UI
             else if (e.ListChangeAction == ListChangeAction.Modify)
             {
                 ItemsModified(e.StartIndex, e.EndIndex, e.FieldPath);
+            }
+            else if (e.ListChangeAction == ListChangeAction.Select)
+            {
+                SelectItem(e.StartIndex);
             }
 
             if (ListChanged.HasEntries)
