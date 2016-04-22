@@ -105,6 +105,57 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Replaces the items in the list.
+        /// </summary>
+        public void Replace(IEnumerable<T> newItems)
+        {
+            var newItemsList = new List<T>(newItems);
+            int newItemsCount = newItemsList.Count;
+            if (newItemsCount <= 0)
+            {
+                Clear();
+                return;
+            }
+
+            int replaceCount = newItemsCount >= Count ? Count : newItemsCount;            
+            for (int i = 0; i < replaceCount; ++i)
+            {
+                _list[i] = newItemsList[i];
+            }
+
+            if (ListChanged != null)
+            {
+                ListChanged(this, new ListChangedEventArgs { ListChangeAction = ListChangeAction.Replace, StartIndex = 0, EndIndex = replaceCount - 1 });
+            }
+
+            if (newItemsCount > Count)
+            {
+                // old list smaller than new - add items
+                AddRange(newItemsList.Skip(replaceCount));
+            }
+            else if (newItemsCount < Count)
+            {
+                // old list larger than new - remove items
+                RemoveRange(newItemsCount, Count - newItemsCount);
+            }
+        }
+
+        /// <summary>
+        /// Replaces a single item in the list.
+        /// </summary>
+        public void Replace(int index, T item)
+        {
+            if (index < 0 || index >= Count)
+                return;
+
+            _list[index] = item;
+            if (ListChanged != null)
+            {
+                ListChanged(this, new ListChangedEventArgs { ListChangeAction = ListChangeAction.Replace, StartIndex = index, EndIndex = index });
+            }
+        }
+
+        /// <summary>
         /// Informs observers that item has been modified.
         /// </summary>
         public void ItemModified(T item, string fieldPath = "")
@@ -616,6 +667,14 @@ namespace MarkLight
         public void SetSelected(object item)
         {
             _selectedItem = item;
+        }
+
+        /// <summary>
+        /// Gets index of an item.
+        /// </summary>
+        public int GetIndex(object item)
+        {
+            return item != null ? IndexOf((T)item) : -1;
         }
 
         #endregion

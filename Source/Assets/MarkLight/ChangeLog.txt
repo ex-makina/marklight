@@ -1,4 +1,5 @@
 ﻿v2.1.0
+- Added selection and replace logic to ObservableList
 - ListItems can be set in Disabled state through IsDisabled field
 - Moved source code into /Plugins directory so framework isn't recompiled when project code changes
 - Intellisense in XML now possible through simple configuration. XSD schema can be updated by clicking a button on the view presenter

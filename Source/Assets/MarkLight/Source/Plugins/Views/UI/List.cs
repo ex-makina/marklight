@@ -727,15 +727,21 @@ namespace MarkLight.Views.UI
             {
                 SelectItem(e.StartIndex);
             }
+            else if (e.ListChangeAction == ListChangeAction.Replace)
+            {
+                ItemsReplaced(e.StartIndex, e.EndIndex);
+            }
+            else if (e.ListChangeAction == ListChangeAction.Move)
+            {
+            }
 
             if (ListChanged.HasEntries)
             {
                 ListChanged.Trigger(new ListChangedActionData { ListChangeAction = e.ListChangeAction, StartIndex = e.StartIndex, EndIndex = e.EndIndex, FieldPath = e.FieldPath });
             }
-
+                        
             // update sort index
             UpdateSortIndex();
-
             LayoutsChanged();
         }
 
@@ -750,8 +756,8 @@ namespace MarkLight.Views.UI
                 if (!x.IsLive)
                     return;
 
-                // should this be sorted?
-                x.SortIndex.DirectValue = index;
+                int itemIndex = Items.Value != null ? Items.Value.GetIndex(x.Item.Value) : index;
+                x.SortIndex.DirectValue = itemIndex;
                 ++index;
             }, false);
         }
@@ -902,6 +908,48 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
+        /// Called when item data in the list have been replaced.
+        /// </summary>
+        private void ItemsReplaced(int startIndex, int endIndex)
+        {
+            // validate input
+            int lastIndex = _presentedListItems.Count - 1;
+            bool listMatch = _presentedListItems.Count == Items.Value.Count;
+            if (startIndex < 0 || startIndex > lastIndex || endIndex < startIndex || endIndex > lastIndex || !listMatch)
+            {
+                Debug.LogWarning(String.Format("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName));
+                Rebuild();
+                return;
+            }
+
+            // replace items
+            for (int i = startIndex; i <= endIndex; ++i)
+            {
+                ItemReplaced(i);
+            }
+        }
+
+        /// <summary>
+        /// Called when item data in list has been replaced.
+        /// </summary>
+        private void ItemReplaced(int index)
+        {
+            object newItemData = Items.Value[index];
+            var listItem = _presentedListItems[index];
+            var oldItemData = listItem.Item.Value;
+            
+            listItem.ForThisAndEachChild<UIView>(x =>
+            {
+                // TODO can be made faster if a HasItemBinding flag is implemented, also we can stop traversing the tree if another item is set
+                if (x.Item.Value == oldItemData)
+                {
+                    x.Item.Value = newItemData;
+                    x.NotifyDependentValueObservers("Item", true);
+                }
+            });
+        }
+
+        /// <summary>
         /// Creates and initializes a new list item.
         /// </summary>
         private ListItem CreateListItem(int index)
@@ -990,9 +1038,9 @@ namespace MarkLight.Views.UI
             UpdateSortIndex();
         }
 
-#endregion
+        #endregion
 
-#region Properties
+        #region Properties
 
         /// <summary>
         /// Returns list item template.
@@ -1010,6 +1058,6 @@ namespace MarkLight.Views.UI
             }
         }
         
-#endregion
+        #endregion
     }
 }
