@@ -9,7 +9,7 @@ using UnityEngine;
 namespace MarkLight
 {
     /// <summary>
-    /// Maps one field to another.
+    /// Declares a change handler that will be invoked whenever the field changes value.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
     public class ChangeHandler : Attribute
