@@ -1,4 +1,4 @@
-<Slider Drag="SliderDrag" BeginDrag="SliderBeginDrag" EndDrag="SliderEndDrag" InitializePotentialDrag = "SliderInitializePotentialDrag">
+<Slider Drag="SliderDrag" BeginDrag="SliderBeginDrag" EndDrag="SliderEndDrag" InitializePotentialDrag="SliderInitializePotentialDrag">
   <Region Id="SliderRegion">
     <Image Id="SliderBackgroundImageView" />
     <Region Id="SliderFillRegion">

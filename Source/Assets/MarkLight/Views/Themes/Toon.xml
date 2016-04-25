@@ -1,4 +1,4 @@
-<Theme Name="Toon" BaseDirectory="Assets/MarkLight/Themes/Toon/">
+<Theme Name="Toon" BaseDirectory="Assets/MarkLight/Themes/Toon/" xmlns="MarkLight">
   <Label Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" Width="120" Height="40" />
   <Label Style="Level" Width="80px" Height="60px" Font="Fonts/CarterOne.ttf" FontSize="30" FontColor="White" ShadowColor="#333333" ShadowDistance="2,-2" OutlineColor="#333333" OutlineDistance="2,-1" TextAlignment="Center" />
   <Label Style="TitleRibbon" Font="Fonts/CarterOne.ttf" FontSize="36" FontColor="White" Height="60px" ShadowColor="#368f16" ShadowDistance="2,-2" OutlineColor="#368f16" OutlineDistance="2,-1" />
@@ -66,8 +66,9 @@
   <List BackgroundImage="Sprites/ListBox.psd" BackgroundImageType="Sliced" BackgroundColor="White" ListMaskImage="Sprites/ListBoxMask.psd" ListMaskImageType="Sliced" ListMaskColor="#ffffff" />
   <ListItem Breadth="40" TextMargin="25,0,0,0" TextAlignment="Left" BackgroundColor="White"
             Selected-BackgroundColor="#dbd7e3" Pressed-BackgroundColor="#dbd7e3"
-            Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontStyle="Normal" FontSize="22" FontColor="#8f86a3"
-            Selected-FontColor="#000000" Pressed-FontColor="White" />
+            Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontStyle="Normal" FontSize="22" FontColor="#8f86a3"            
+            Selected-FontColor="#000000" Pressed-FontColor="White"
+            Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
 
   <TabPanel TabContentColor="#ffffff" TabContentImage="Sprites/TabContent.psd" TabContentImageType="Sliced" TabListContentMargin="0" 
             TabListColor="Clear" TabListMaskImage="" TabListMaskShowGraphic="False" TabListSpacing="-5" TabListOffset="10,2,0,0"

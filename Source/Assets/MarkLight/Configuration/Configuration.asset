@@ -15,3 +15,4 @@ MonoBehaviour:
   - Assets/Views/
   - Assets/MarkLight/Views/
   - Assets/MarkLight/Examples/Views/
+  SchemaFile: Assets/MarkLight/Views/Schemas/MarkLight.xsd

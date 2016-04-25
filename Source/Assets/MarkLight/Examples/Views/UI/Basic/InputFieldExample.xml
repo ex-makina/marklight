@@ -1,4 +1,4 @@
-<InputFieldExample>
+<InputFieldExample xmlns="MarkLight">
   <Group Orientation="Horizontal" Spacing="30px" ContentAlignment="Top">
     <Group Orientation="Vertical" Spacing="6px">
       <Label Text="Single Line" AdjustToText="Width" />

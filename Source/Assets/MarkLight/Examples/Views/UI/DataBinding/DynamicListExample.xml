@@ -1,4 +1,4 @@
-<DynamicListExample>
+<DynamicListExample xmlns="MarkLight">
   <Group Orientation="Vertical" Spacing="15px" ContentAlignment="Left">
     <CheckBox Id="MultiSelectCheckBox" Text="Multi-select" />
     

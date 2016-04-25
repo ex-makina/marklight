@@ -1,4 +1,4 @@
-<TabPanelExample>
+<TabPanelExample xmlns="MarkLight">
   <Group>
     <Group Orientation="Horizontal" Spacing="50" ContentAlignment="Top">     
       <TabPanel Id="TabPanel" Width="500" Height="400">

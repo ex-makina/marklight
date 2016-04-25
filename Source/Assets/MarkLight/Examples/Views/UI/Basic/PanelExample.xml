@@ -1,4 +1,4 @@
-<PanelExample>
+<PanelExample xmlns="MarkLight">
   <Panel Width="300px" Height="300px">
     <Region Width="600px" Height="600px">
       <Region Width="50%" Height="50%" Alignment="TopLeft" BackgroundColor="Gray70" />
