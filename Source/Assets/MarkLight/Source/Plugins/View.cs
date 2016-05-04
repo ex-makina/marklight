@@ -1,4 +1,4 @@
-﻿#define DISABLE_INIT_TRYCATCH // uncomment if you don't want exceptions to be caught during initialization of views
+﻿//#define DISABLE_INIT_TRYCATCH // uncomment if you don't want exceptions to be caught during initialization of views
 #region Using Statements
 using MarkLight.ValueConverters;
 using MarkLight.Views;
