@@ -79,7 +79,14 @@ namespace MarkLight.Editor
             }
 
             // load XUML assets
-            ViewData.LoadAllXuml(viewAssets);               
+            ViewData.LoadAllXuml(viewAssets);
+            
+            // update xsd schema
+            if (ViewPresenter.Instance.UpdateXsdSchema)
+            {
+                ViewPresenter.Instance.UpdateXsdSchema = false;
+                GenerateXsdSchema();
+            }
 
             Debug.Log("[MarkLight] Views processed. " + DateTime.Now.ToString());
         }
@@ -139,7 +146,7 @@ namespace MarkLight.Editor
                         
                 // instantiate view to get detailed information about each view field
                 var view = ViewData.CreateView(viewType.ViewName, temporaryRootView, temporaryRootView);
-                ViewPresenter.Instance.InitializeViews(view);
+                view.InitializeViews();
 
                 var viewFields = new List<string>(viewType.ViewFields);
                 viewFields.AddRange(viewType.DependencyFields);

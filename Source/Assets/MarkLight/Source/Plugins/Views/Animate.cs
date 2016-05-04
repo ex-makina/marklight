@@ -47,7 +47,7 @@ namespace MarkLight.Views
         /// <summary>
         /// Animation view field.
         /// </summary>
-        /// <d>The view field that should be animated.</d>
+        /// <d>Path to the view field that should be animated.</d>
         [ChangeHandler("BehaviorChanged")]
         public string Field;
 
@@ -68,7 +68,7 @@ namespace MarkLight.Views
         /// <summary>
         /// Animation reverse speed.
         /// </summary>
-        /// <d>The speed the animation should have when run in reverse.</d>
+        /// <d>The speed the animation should have when run in reverse (percentage of original speed).</d>
         [ChangeHandler("BehaviorChanged")]
         public float ReverseSpeed;
 

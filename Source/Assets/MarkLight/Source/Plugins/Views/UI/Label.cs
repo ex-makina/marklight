@@ -389,6 +389,9 @@ namespace MarkLight.Views.UI
                 return String.Format("[{0}]", tag);
             });
 
+            // replace newline in string
+            formattedText = formattedText.Replace("\\n", Environment.NewLine);
+
             // split the string up on each line
             StringBuilder result = new StringBuilder();
             var splitString = formattedText.Split(new string[] { separatorString }, StringSplitOptions.None);

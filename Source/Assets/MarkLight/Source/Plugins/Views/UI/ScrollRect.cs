@@ -34,7 +34,7 @@ namespace MarkLight.Views.UI
         /// Indicates if the content can scroll vertically.
         /// </summary>
         /// <d>Boolean indicating if the content can be scrolled vertically.</d>
-        [MapTo("ScrollRectComponent.vertically")]
+        [MapTo("ScrollRectComponent.vertical")]
         public _bool CanScrollVertically;
 
         /// <summary>
@@ -337,6 +337,7 @@ namespace MarkLight.Views.UI
             if (_hasDisabledInteraction)
             {
                 this.ForEachChild<UIView>(x => x.RaycastBlockMode.Value = MarkLight.RaycastBlockMode.Default, false);
+                _hasDisabledInteraction = false;
             }
         }
 
@@ -345,7 +346,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         public void ScrollRectDrag(PointerEventData eventData)
         {
-            if (!DisableInteractionScrollDelta.IsSet)
+            if (!DisableInteractionScrollDelta.IsSet || _hasDisabledInteraction)
                 return;
 
             // block raycasts if scrolled specified delta distance

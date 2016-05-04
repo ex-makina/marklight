@@ -1,4 +1,16 @@
-﻿v2.1.0
+﻿v2.2.0
+- Resource dictionaries added that can be used to bind dictionary values to view fields (e.g. for localization)
+- Fixed so resources can be programmatically loaded from the Resources folder during runtime
+- Fixed bug where "\n" wasn't translated into newlines in Label text
+- Added CanvasGroup property to View so it can be accessed externally
+- Fixed so underscore _ is allowed in binding paths
+- Fixed bug where using DisableInteractionScrollDelta caused performance problems when scrolling panel
+- Fixed bug where IsActive always was set to True at initialization even if set to False in XUML
+- Added CreateView<T> to View that can be used to create child views instead of ViewData.CreateView<T>
+- Added InitializeViews method to View that can be used instead of ViewPresenter.Instance.InitializeViews
+- Fixed bug where ScrollRect.CanScrollVertically mapped to the wrong field
+
+v2.1.0
 - Added selection and replace logic to ObservableList
 - ListItems can be set in Disabled state through IsDisabled field
 - Moved source code into /Plugins directory so framework isn't recompiled when project code changes

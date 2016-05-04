@@ -92,7 +92,7 @@ namespace MarkLight
             }
 
             // initialize views
-            viewPresenter.InitializeViews(viewPresenter.RootView);
+            viewPresenter.Initialize();
         }
 
         /// <summary>
@@ -145,9 +145,10 @@ namespace MarkLight
                 // theme
                 LoadThemeXuml(xumlElement, xuml, xumlAssetName);
             }
-            else if (String.Equals(xumlElement.Name.LocalName, "Dictionary", StringComparison.OrdinalIgnoreCase))
+            else if (String.Equals(xumlElement.Name.LocalName, "ResourceDictionary", StringComparison.OrdinalIgnoreCase))
             {
                 // resource dictionary
+                LoadResourceDictionaryXuml(xumlElement, xuml, xumlAssetName);
             }
             else
             {
@@ -303,7 +304,7 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Loads XUML to view database.
+        /// Loads XUML to theme database.
         /// </summary>
         private static void LoadThemeXuml(XElement xumlElement, string xuml, string xumlAssetName)
         {
@@ -385,6 +386,102 @@ namespace MarkLight
 
                 themeData.ThemeElementData.Add(themeElement);
             }
+        }
+
+        /// <summary>
+        /// Loads XUML to resource dictionary database.
+        /// </summary>
+        private static void LoadResourceDictionaryXuml(XElement xumlElement, string xuml, string xumlAssetName)
+        {            
+            var viewPresenter = ViewPresenter.Instance;
+            var dictionaryNameAttr = xumlElement.Attribute("Name");
+            string dictionaryName = dictionaryNameAttr != null ? dictionaryNameAttr.Value : "Default";
+
+            // see if dictionary exist otherwise create a new one
+            ResourceDictionary resourceDictionary = viewPresenter.ResourceDictionaries.FirstOrDefault(x => String.Equals(x.Name, dictionaryName, StringComparison.OrdinalIgnoreCase));
+            if (resourceDictionary == null)
+            {
+                resourceDictionary = new ResourceDictionary();
+                viewPresenter.ResourceDictionaries.Add(resourceDictionary);
+            }
+
+            resourceDictionary.Name = dictionaryName;
+            resourceDictionary.Xuml = xuml;
+            resourceDictionary.XumlElement = xumlElement;
+
+            // load resources
+            var resources = LoadResourceXuml(xumlAssetName, xumlElement, null, null, null, null);
+            resourceDictionary.AddResources(resources);
+        }
+
+        /// <summary>
+        /// Loads resources from a resource element.
+        /// </summary>
+        private static List<Resource> LoadResourceXuml(string xumlAssetName, XElement xumlElement, string parentKey, string parentValue, string parentLanguage, string parentPlatform)
+        {
+            var resources = new List<Resource>();
+            foreach (var childElement in xumlElement.Elements())
+            {
+                var resource = new Resource();
+                if (childElement.Name.LocalName == "Resource")
+                {
+                    var keyAttr = childElement.Attribute("Key");
+                    resource.Key = keyAttr != null ? keyAttr.Value : parentKey;
+
+                    var valueAttr = childElement.Attribute("Value");
+                    resource.Value = valueAttr != null ? valueAttr.Value : parentValue;
+
+                    var languageAttr = childElement.Attribute("Language");
+                    resource.Language = languageAttr != null ? languageAttr.Value : parentLanguage;
+
+                    var platformAttr = childElement.Attribute("Platform");
+                    resource.Platform = platformAttr != null ? platformAttr.Value : parentPlatform;
+                }
+                else if (childElement.Name.LocalName == "ResourceGroup")
+                {
+                    var keyAttr = childElement.Attribute("Key");
+                    string key = null;
+                    string value = null;
+                    string language = null;
+                    string platform = null;
+
+                    if (keyAttr != null)
+                    {
+                        key = keyAttr.Value;
+                    }
+
+                    var valueAttr = childElement.Attribute("Value");
+                    if (valueAttr != null)
+                    {
+                        value = valueAttr.Value;
+                    }
+
+                    var languageAttr = childElement.Attribute("Language");
+                    if (languageAttr != null)
+                    {
+                        language = languageAttr.Value;
+                    }
+
+                    var platformAttr = childElement.Attribute("Platform");
+                    if (platformAttr != null)
+                    {
+                        platform = platformAttr.Value;
+                    }
+
+                    var childResources = LoadResourceXuml(xumlAssetName, childElement, key ?? parentKey, value ?? parentValue,
+                        language ?? parentLanguage, platform ?? parentPlatform);
+                    resources.AddRange(childResources);
+                }
+                else
+                {
+                    Debug.LogError(String.Format("[MarkLight] {0}: Error parsing resource dictionary XUML. Unrecognizable element \"{1}\".", xumlAssetName, childElement.Name.LocalName));
+                    continue;
+                }
+
+                resources.Add(resource);
+            }
+
+            return resources;
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace MarkLight.Views.UI
     /// <summary>
     /// TabHeader view.
     /// </summary>
-    /// <d>Displays the content of a tab header in the tab panel.</d>
+    /// <d>Displays the content of a tab header in the tab panel. Has the states: Default, Disabled, Highlighted, Pressed and Selected.</d>
     [HideInPresenter]
     public class TabHeader : ListItem
     {
