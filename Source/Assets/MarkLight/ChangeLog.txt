@@ -1,4 +1,5 @@
 ﻿v2.2.0
+- Static methods can be used as transformation methods in multi bindings using the notation: $ViewType.StaticMethod(...)
 - Resource dictionaries added that can be used to bind dictionary values to view fields (e.g. for localization)
 - Fixed so resources can be programmatically loaded from the Resources folder during runtime
 - Fixed bug where "\n" wasn't translated into newlines in Label text

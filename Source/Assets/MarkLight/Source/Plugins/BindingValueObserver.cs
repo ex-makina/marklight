@@ -22,7 +22,7 @@ namespace MarkLight
         public BindingType BindingType;
         public string FormatString;
         public MethodInfo TransformMethod;
-        public View ParentView;
+        public View ParentView;        
 
         #endregion
 
@@ -75,7 +75,14 @@ namespace MarkLight
                         }
 
                         // set transformed value
-                        Target.SetValue(TransformMethod.Invoke(ParentView, pars), callstack);
+                        if (TransformMethod.IsStatic)
+                        {
+                            Target.SetValue(TransformMethod.Invoke(null, pars), callstack);
+                        }
+                        else
+                        {
+                            Target.SetValue(TransformMethod.Invoke(ParentView, pars), callstack);                            
+                        }
                         break;
 
                     case BindingType.MultiBindingFormatString:

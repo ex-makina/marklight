@@ -376,8 +376,25 @@ namespace MarkLight
 
                 bindingValueObserver.BindingType = BindingType.MultiBindingTransform;
                 bindingValueObserver.ParentView = Parent;
-                bindingValueObserver.TransformMethod = Parent.GetType().GetMethod(bindings[0], BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
+                // get transformation method
+                string transformMethodName = bindings[0];
+                Type transformMethodViewType = Parent.GetType();
+
+                string[] transformStr = bindings[0].Split('.');
+                if (transformStr.Length == 2)
+                {
+                    transformMethodViewType = ViewData.GetViewType(transformStr[0]);
+                    transformMethodName = transformStr[1];
+
+                    if (transformMethodViewType == null)
+                    {
+                        Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". View \"{3}\" not found.", GameObjectName, viewFieldBinding, viewField, transformStr[0]));
+                        return;
+                    }
+                }
+
+                bindingValueObserver.TransformMethod = transformMethodViewType.GetMethod(transformMethodName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
                 if (bindingValueObserver.TransformMethod == null)
                 {
                     Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Transform method \"{3}\" not found in view type \"{4}\".", GameObjectName, viewFieldBinding, viewField, bindings[0], Parent.ViewTypeName));
@@ -1537,6 +1554,30 @@ namespace MarkLight
 #else
             TriggerChangeHandlers();
 #endif
+        }
+
+        /// <summary>
+        /// Returns string based on format string and parameters.
+        /// </summary>
+        public static string Format(string format, params object[] args)
+        {
+            return String.Format(format, args);
+        }
+
+        /// <summary>
+        /// Returns string based on format string and parameters.
+        /// </summary>
+        public static string Format2(string format, object arg1, object arg2)
+        {
+            return String.Format(format, arg1, arg2);
+        }
+
+        /// <summary>
+        /// Returns string based on format string and parameters.
+        /// </summary>
+        public static string Format3(string format, object arg1, object arg2, object arg3)
+        {
+            return String.Format(format, arg1, arg2, arg3);
         }
 
         #endregion
