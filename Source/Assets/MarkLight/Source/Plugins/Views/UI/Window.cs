@@ -660,9 +660,6 @@ namespace MarkLight.Views.UI
                 return;
 
             Close();
-
-            // restore close button to default state as it no longer receives mouse events
-            CloseButton.SetState("Default");
         }
 
         /// <summary>
@@ -672,7 +669,7 @@ namespace MarkLight.Views.UI
         {
             if (IsOpen)
             {
-                SetState("Default");
+                SetState(DefaultStateName);
             }
             else
             {

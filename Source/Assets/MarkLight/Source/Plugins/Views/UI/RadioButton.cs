@@ -301,7 +301,7 @@ namespace MarkLight.Views.UI
             }
             else
             {
-                SetState(IsChecked ? "Checked" : "Default");
+                SetState(IsChecked ? "Checked" : DefaultStateName);
 
                 // enable button actions
                 Click.IsDisabled = false;

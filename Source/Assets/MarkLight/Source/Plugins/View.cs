@@ -1560,9 +1560,17 @@ namespace MarkLight
         /// <summary>
         /// Returns string based on format string and parameters.
         /// </summary>
-        public static string Format(string format, params object[] args)
+        public static string Format(string format, object arg)
         {
-            return String.Format(format, args);
+            return String.Format(format, arg ?? String.Empty);
+        }
+
+        /// <summary>
+        /// Returns string based on format string and parameters.
+        /// </summary>
+        public static string Format1(string format, object arg)
+        {
+            return String.Format(format, arg ?? String.Empty);
         }
 
         /// <summary>
@@ -1570,7 +1578,7 @@ namespace MarkLight
         /// </summary>
         public static string Format2(string format, object arg1, object arg2)
         {
-            return String.Format(format, arg1, arg2);
+            return String.Format(format, arg1 ?? String.Empty, arg2 ?? String.Empty);
         }
 
         /// <summary>
@@ -1578,7 +1586,7 @@ namespace MarkLight
         /// </summary>
         public static string Format3(string format, object arg1, object arg2, object arg3)
         {
-            return String.Format(format, arg1, arg2, arg3);
+            return String.Format(format, arg1 ?? String.Empty, arg2 ?? String.Empty, arg3 ?? String.Empty);
         }
 
         #endregion

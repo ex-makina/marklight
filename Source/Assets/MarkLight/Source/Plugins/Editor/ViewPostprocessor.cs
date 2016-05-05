@@ -203,7 +203,42 @@ namespace MarkLight.Editor
             sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Name", "xs:string", Environment.NewLine);
             sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "UnitSize", "xs:string", Environment.NewLine);            
             sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
-                       
+
+            // add resource dictionary element
+            sb.AppendLine();
+            sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", "ResourceDictionary", Environment.NewLine);
+            sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", "ResourceDictionary", Environment.NewLine);
+            sb.AppendFormat("    <xs:sequence minOccurs=\"0\" maxOccurs=\"unbounded\">{0}", Environment.NewLine);
+            sb.AppendFormat("      <xs:element name=\"Resource\" type=\"Resource\" minOccurs=\"0\" maxOccurs=\"unbounded\" />{0}", Environment.NewLine);
+            sb.AppendFormat("      <xs:element name=\"ResourceGroup\" type=\"ResourceGroup\" minOccurs=\"0\" maxOccurs=\"unbounded\" />{0}", Environment.NewLine);
+            sb.AppendFormat("    </xs:sequence>{0}", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Name", "xs:string", Environment.NewLine);
+            sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
+
+            // add resource element
+            sb.AppendLine();
+            sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", "Resource", Environment.NewLine);
+            sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", "Resource", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Key", "xs:string", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Value", "xs:string", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Language", "xs:string", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Platform", "xs:string", Environment.NewLine);
+            sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
+
+            // add resource group element
+            sb.AppendLine();
+            sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", "ResourceGroup", Environment.NewLine);
+            sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", "ResourceGroup", Environment.NewLine);
+            sb.AppendFormat("    <xs:sequence minOccurs=\"0\" maxOccurs=\"unbounded\">{0}", Environment.NewLine);
+            sb.AppendFormat("      <xs:element name=\"Resource\" type=\"Resource\" minOccurs=\"0\" maxOccurs=\"unbounded\" />{0}", Environment.NewLine);
+            sb.AppendFormat("      <xs:element name=\"ResourceGroup\" type=\"ResourceGroup\" minOccurs=\"0\" maxOccurs=\"unbounded\" />{0}", Environment.NewLine);
+            sb.AppendFormat("    </xs:sequence>{0}", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Key", "xs:string", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Value", "xs:string", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Language", "xs:string", Environment.NewLine);
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Platform", "xs:string", Environment.NewLine);
+            sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
+
             sb.AppendLine("</xs:schema>");
 
             // save file
