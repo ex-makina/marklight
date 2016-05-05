@@ -459,6 +459,26 @@ namespace MarkLight.Views.UI
             }
         }
 
+        /// <summary>
+        /// Gets canvas group component.
+        /// </summary>
+        public CanvasGroup CanvasGroup
+        {
+            get
+            {
+                if (_canvasGroup == null)
+                {
+                    _canvasGroup = gameObject.GetComponent<CanvasGroup>();
+                    if (_canvasGroup == null)
+                    {
+                        _canvasGroup = gameObject.AddComponent<CanvasGroup>();
+                    }
+                }
+
+                return _canvasGroup;
+            }
+        }
+
         #endregion
     }
 }

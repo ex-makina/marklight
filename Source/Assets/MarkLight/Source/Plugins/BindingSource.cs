@@ -13,25 +13,23 @@ namespace MarkLight
     /// <summary>
     /// Binding source.
     /// </summary>
-    public class BindingSource
+    public abstract class BindingSource
     {
-        #region Fields
+        #region Methods
 
-        public ViewFieldData ViewFieldData;
-        public bool NegateValue;
+        /// <summary>
+        /// Gets value from binding source.
+        /// </summary>
+        public abstract object GetValue(out bool hasValue);
 
         #endregion
 
-        #region Constructor
+        #region Properties
 
         /// <summary>
-        /// Initializes a new instance of the class.
+        /// Gets binding source string.
         /// </summary>
-        public BindingSource(ViewFieldData viewFieldData, bool negateValue = false)
-        {
-            ViewFieldData = viewFieldData;
-            NegateValue = negateValue;
-        }
+        public abstract string BindingSourceString { get; }
 
         #endregion
     }

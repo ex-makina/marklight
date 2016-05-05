@@ -757,7 +757,7 @@ namespace MarkLight.Views.UI
             SetItemData(newTabView, itemData);
 
             // initialize view
-            ViewPresenter.Instance.InitializeViews(newTabView);
+            newTabView.InitializeViews();
             newTabView.Deactivate();
 
             // create tab header
@@ -847,7 +847,8 @@ namespace MarkLight.Views.UI
                     SetItemData(tabHeader, itemData);
                 }
 
-                ViewPresenter.Instance.InitializeViews(tabHeader);
+                // initialize tab header
+                tabHeader.InitializeViews();
             }
             else
             {

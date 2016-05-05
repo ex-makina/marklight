@@ -969,7 +969,7 @@ namespace MarkLight.Views.UI
             newItemView.Activate();
 
             // initialize view
-            ViewPresenter.Instance.InitializeViews(newItemView);
+            newItemView.InitializeViews();            
 
             return newItemView;
         }

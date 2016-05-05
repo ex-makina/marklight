@@ -469,6 +469,13 @@ namespace MarkLight.Views.UI
         public _AdjustToText CloseButtonAdjustToText;
 
         /// <summary>
+        /// Active state of the window close button.
+        /// </summary>
+        /// <d>Boolean indicating if window button is active (visible and updated).</d>
+        [MapTo("CloseButton.IsActive")]
+        public _bool CloseButtonIsActive;
+
+        /// <summary>
         /// Window close button.
         /// </summary>
         /// <d>The window close button.</d>
@@ -653,9 +660,6 @@ namespace MarkLight.Views.UI
                 return;
 
             Close();
-
-            // restore close button to default state as it no longer receives mouse events
-            CloseButton.SetState("Default");
         }
 
         /// <summary>
@@ -665,7 +669,7 @@ namespace MarkLight.Views.UI
         {
             if (IsOpen)
             {
-                SetState("Default");
+                SetState(DefaultStateName);
             }
             else
             {

@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -21,6 +22,7 @@ namespace MarkLight
     /// Base class for view models.
     /// </summary>
     /// <d>Base class for all view models in the framework. All view models must be a subclass of this class to be processed and managed the framework. </d>
+    [HideInPresenter]
     public class View : MonoBehaviour
     {
         #region Fields
@@ -375,8 +377,25 @@ namespace MarkLight
 
                 bindingValueObserver.BindingType = BindingType.MultiBindingTransform;
                 bindingValueObserver.ParentView = Parent;
-                bindingValueObserver.TransformMethod = Parent.GetType().GetMethod(bindings[0], BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
+                // get transformation method
+                string transformMethodName = bindings[0];
+                Type transformMethodViewType = Parent.GetType();
+
+                string[] transformStr = bindings[0].Split('.');
+                if (transformStr.Length == 2)
+                {
+                    transformMethodViewType = ViewData.GetViewType(transformStr[0]);
+                    transformMethodName = transformStr[1];
+
+                    if (transformMethodViewType == null)
+                    {
+                        Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". View \"{3}\" not found.", GameObjectName, viewFieldBinding, viewField, transformStr[0]));
+                        return;
+                    }
+                }
+
+                bindingValueObserver.TransformMethod = transformMethodViewType.GetMethod(transformMethodName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
                 if (bindingValueObserver.TransformMethod == null)
                 {
                     Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Transform method \"{3}\" not found in view type \"{4}\".", GameObjectName, viewFieldBinding, viewField, bindings[0], Parent.ViewTypeName));
@@ -385,8 +404,16 @@ namespace MarkLight
 
                 foreach (var binding in bindings.Skip(1))
                 {
-                    bool isLocalField, isNegatedField, isOneWay;
-                    var sourceFieldName = ParseBindingString(binding, out isLocalField, out isNegatedField, out isOneWay);
+                    bool isLocalField, isNegatedField, isOneWay, isResource;
+                    var sourceFieldName = ParseBindingString(binding, out isLocalField, out isNegatedField, out isOneWay, out isResource);
+
+                    // is this a binding to a resource in a resource dictionary?
+                    if (isResource)
+                    {
+                        // yes.
+                        SetResourceBinding(bindingValueObserver, sourceFieldName);
+                        continue;
+                    }
 
                     // if the binding is defined as a local field (through the '#' notation) we are binding to a field on this view 
                     // otherwise we are binding to our parent view
@@ -401,7 +428,7 @@ namespace MarkLight
                     }
                     //Debug.Log(String.Format("Creating binding {0} <-> {1}", sourceViewFieldData.ViewFieldPath, viewFieldData.ViewFieldPath));
 
-                    bindingValueObserver.Sources.Add(new BindingSource(sourceViewFieldData, isNegatedField));
+                    bindingValueObserver.Sources.Add(new ViewFieldBindingSource(sourceViewFieldData, isNegatedField));
                     sourceViewFieldData.RegisterValueObserver(bindingValueObserver);
                 }
             }
@@ -444,8 +471,16 @@ namespace MarkLight
                 foreach (var match in matches)
                 {
                     var binding = match.Groups["field"].Value.Trim();
-                    bool isLocalField, isNegatedField, isOneWay;
-                    var sourceFieldName = ParseBindingString(binding, out isLocalField, out isNegatedField, out isOneWay);
+                    bool isLocalField, isNegatedField, isOneWay, isResource;
+                    var sourceFieldName = ParseBindingString(binding, out isLocalField, out isNegatedField, out isOneWay, out isResource);
+                    
+                    // is this a binding to a resource in a resource dictionary?
+                    if (isResource)
+                    {
+                        // yes.
+                        SetResourceBinding(bindingValueObserver, sourceFieldName);
+                        continue;
+                    }
 
                     // if the binding is defined as a local field (through the '#' notation) we are binding to a field on this view 
                     // otherwise we are binding to our parent view
@@ -460,9 +495,10 @@ namespace MarkLight
                     }
                     //Debug.Log(String.Format("Creating binding {0} <-> {1}", sourceViewFieldData.ViewFieldPath, viewFieldData.ViewFieldPath));
 
-                    bindingValueObserver.Sources.Add(new BindingSource(sourceViewFieldData, isNegatedField));
+                    bindingValueObserver.Sources.Add(new ViewFieldBindingSource(sourceViewFieldData, isNegatedField));
                     sourceViewFieldData.RegisterValueObserver(bindingValueObserver);
 
+                    // handle two-way bindings
                     if (!formatStringBinding && !isOneWay)
                     {
                         bindingValueObserver.BindingType = BindingType.SingleBinding;
@@ -471,7 +507,7 @@ namespace MarkLight
                         var targetBindingValueObserver = new BindingValueObserver();
                         targetBindingValueObserver.BindingType = BindingType.SingleBinding;
                         targetBindingValueObserver.Target = sourceViewFieldData;
-                        targetBindingValueObserver.Sources.Add(new BindingSource(viewFieldData, isNegatedField));
+                        targetBindingValueObserver.Sources.Add(new ViewFieldBindingSource(viewFieldData, isNegatedField));
 
                         viewFieldData.RegisterValueObserver(targetBindingValueObserver);
                         AddValueObserver(targetBindingValueObserver);
@@ -491,13 +527,36 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Sets resource binding.
+        /// </summary>
+        private void SetResourceBinding(BindingValueObserver bindingValueObserver, string sourceFieldName)
+        {
+            string dictionaryName = null;
+            string resourceKey = sourceFieldName;
+
+            int resourceIndex = sourceFieldName.IndexOf('.', 0);
+            if (resourceIndex > 0)
+            {
+                resourceKey = sourceFieldName.Substring(resourceIndex + 1);
+                dictionaryName = sourceFieldName.Substring(0, resourceIndex);
+            }
+
+            var resourceBindingSource = new ResourceBindingSource(dictionaryName, resourceKey);
+            bindingValueObserver.Sources.Add(resourceBindingSource);
+
+            // so here we want to register a resource binding observer in the dictionary
+            ResourceDictionary.RegisterResourceBindingObserver(dictionaryName, resourceKey, bindingValueObserver);
+        }
+
+        /// <summary>
         /// Parses binding string and returns view field path.
         /// </summary>
-        private string ParseBindingString(string binding, out bool isLocalField, out bool isNegatedField, out bool isOneWay)
+        private string ParseBindingString(string binding, out bool isLocalField, out bool isNegatedField, out bool isOneWay, out bool isResource)
         {
             isLocalField = false;
             isNegatedField = false;
             isOneWay = false;
+            isResource = false;
 
             var viewField = binding;
             while (viewField.Length > 0)
@@ -515,6 +574,11 @@ namespace MarkLight
                 else if (viewField.StartsWith("="))
                 {
                     isOneWay = true;
+                    viewField = viewField.Substring(1);
+                }
+                else if (viewField.StartsWith("@"))
+                {
+                    isResource = true;
                     viewField = viewField.Substring(1);
                 }
                 else
@@ -693,10 +757,6 @@ namespace MarkLight
         /// </summary>
         public virtual void InitializeInternalDefaultValues()
         {
-            State.DirectValue = DefaultStateName;
-            IsActive.DirectValue = true;
-            _isDefaultState = true;
-
             // initialize lists and dictionaries
             _viewFieldData = new Dictionary<string, ViewFieldData>();
             _stateValues = new Dictionary<string, Dictionary<string, ViewFieldStateValue>>();
@@ -1260,6 +1320,23 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Creates a child view of specified type.
+        /// </summary>
+        public T CreateView<T>(int siblingIndex = -1, ValueConverterContext context = null, string themeName = "", string id = "", string style = "", IEnumerable<XElement> contentXuml = null) where T : View
+        {
+            var view = ViewData.CreateView<T>(this, this, context, themeName, Id, style);
+
+            // set view sibling index
+            if (siblingIndex > 0)
+            {
+                view.GameObject.transform.SetSiblingIndex(siblingIndex);
+            }
+
+            view.IsDynamic.DirectValue = true;
+            return view;           
+        }
+
+        /// <summary>
         /// Creates a view from a template and adds it to a parent at specified index.
         /// </summary>
         public static T CreateView<T>(T template, View layoutParent, int siblingIndex = -1) where T : View
@@ -1284,7 +1361,7 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Adds a view from a template.
+        /// Creates a child view from a template.
         /// </summary>
         public T CreateView<T>(T template, int siblingIndex = -1) where T : View
         {
@@ -1327,6 +1404,14 @@ namespace MarkLight
             }
 
             SetValue(() => LayoutParent, target);
+        }
+
+        /// <summary>
+        /// Initializes this view and all children. Used if the view is created dynamically and need to be called once to propertly initialize the view.
+        /// </summary>
+        public void InitializeViews()
+        {
+            ViewPresenter.Instance.InitializeViews(this);
         }
 
         /// <summary>
@@ -1470,6 +1555,38 @@ namespace MarkLight
 #else
             TriggerChangeHandlers();
 #endif
+        }
+
+        /// <summary>
+        /// Returns string based on format string and parameters.
+        /// </summary>
+        public static string Format(string format, object arg)
+        {
+            return String.Format(format, arg ?? String.Empty);
+        }
+
+        /// <summary>
+        /// Returns string based on format string and parameters.
+        /// </summary>
+        public static string Format1(string format, object arg)
+        {
+            return String.Format(format, arg ?? String.Empty);
+        }
+
+        /// <summary>
+        /// Returns string based on format string and parameters.
+        /// </summary>
+        public static string Format2(string format, object arg1, object arg2)
+        {
+            return String.Format(format, arg1 ?? String.Empty, arg2 ?? String.Empty);
+        }
+
+        /// <summary>
+        /// Returns string based on format string and parameters.
+        /// </summary>
+        public static string Format3(string format, object arg1, object arg2, object arg3)
+        {
+            return String.Format(format, arg1 ?? String.Empty, arg2 ?? String.Empty, arg3 ?? String.Empty);
         }
 
         #endregion

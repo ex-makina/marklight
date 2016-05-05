@@ -22,7 +22,7 @@ namespace MarkLight
         public BindingType BindingType;
         public string FormatString;
         public MethodInfo TransformMethod;
-        public View ParentView;
+        public View ParentView;        
 
         #endregion
 
@@ -49,22 +49,15 @@ namespace MarkLight
             {
                 base.Notify(callstack);
                 bool hasValue;
-                string boolTypeName = typeof(bool).Name;
 
                 //Debug.Log(String.Format("Source(s) updated. Updating target field: {0}", Target.ViewFieldPath));
                 switch (BindingType)
                 {
                     default:
                     case BindingType.SingleBinding:
-                        var value = Sources[0].ViewFieldData.GetValue(out hasValue);
+                        var value = Sources[0].GetValue(out hasValue);
                         if (hasValue)
                         {
-                            // check if value is to be negated
-                            if (Sources[0].NegateValue && Sources[0].ViewFieldData.ViewFieldTypeName == boolTypeName)
-                            {
-                                value = !((bool)value);
-                            }
-
                             // use to debug
                             //Debug.Log(String.Format("Propagating Value \"{4}\": {0}.{1} -> {2}.{3}", Sources[0].ViewFieldData.TargetView.ViewTypeName, Sources[0].ViewFieldData.TargetViewFieldPath,
                             //    Target.TargetView.ViewTypeName, Target.TargetViewFieldPath, value.ToString()));
@@ -78,30 +71,25 @@ namespace MarkLight
                         object[] pars = Sources.Count > 0 ? new object[Sources.Count] : null;
                         for (int i = 0; i < pars.Length; ++i)
                         {
-                            pars[i] = Sources[i].ViewFieldData.GetValue(out hasValue);
-
-                            // check if value is to be negated
-                            if (hasValue && Sources[i].NegateValue && Sources[i].ViewFieldData.ViewFieldTypeName == boolTypeName)
-                            {
-                                pars[i] = !((bool)pars[i]);
-                            }
+                            pars[i] = Sources[i].GetValue(out hasValue);
                         }
 
                         // set transformed value
-                        Target.SetValue(TransformMethod.Invoke(ParentView, pars), callstack);
+                        if (TransformMethod.IsStatic)
+                        {
+                            Target.SetValue(TransformMethod.Invoke(null, pars), callstack);
+                        }
+                        else
+                        {
+                            Target.SetValue(TransformMethod.Invoke(ParentView, pars), callstack);                            
+                        }
                         break;
 
                     case BindingType.MultiBindingFormatString:
                         object[] formatPars = Sources.Count > 0 ? new object[Sources.Count] : null;
                         for (int i = 0; i < formatPars.Length; ++i)
                         {
-                            formatPars[i] = Sources[i].ViewFieldData.GetValue(out hasValue);
-
-                            // check if value is to be negated
-                            if (hasValue && Sources[i].NegateValue && Sources[i].ViewFieldData.ViewFieldTypeName == boolTypeName)
-                            {
-                                formatPars[i] = !((bool)formatPars[i]);
-                            }
+                            formatPars[i] = Sources[i].GetValue(out hasValue);
                         }
 
                         // set format string value
@@ -112,30 +100,39 @@ namespace MarkLight
             }
             catch (Exception e)
             {
-                switch (BindingType)
-                {
-                    default:
-                    case BindingType.SingleBinding:
-                        Debug.LogError(String.Format("[MarkLight] Exception thrown when propagating single binding value from source \"{0}.{1}\" to target \"{2}.{3}\": {4}", Sources[0].ViewFieldData.SourceView.ViewTypeName, Sources[0].ViewFieldData.ViewFieldPath, Target.SourceView.ViewTypeName, Target.ViewFieldPath, Utils.GetError(e)));
-                        break;
-
-                    case BindingType.MultiBindingTransform:
-                    case BindingType.MultiBindingFormatString:
-                        StringBuilder sb = new StringBuilder();
-                        foreach (var source in Sources)
-                        {
-                            if (source != Sources[0])
-                            {
-                                sb.Append(", ");
-                            }
-                            sb.AppendFormat("{0}.{1}", source.ViewFieldData.SourceView.ViewTypeName, source.ViewFieldData.ViewFieldPath);
-                        }
-
-                        Debug.LogError(String.Format("[MarkLight] Exception thrown when propagating single binding value from sources \"{0}\" to target \"{2}.{3}\": {4}", sb.ToString(), Target.SourceView.ViewTypeName, Target.ViewFieldPath, Utils.GetError(e)));
-                        break;
-                }
+                PrintBindingError(e);
             }
         }
+
+        /// <summary>
+        /// Prints a formatted error message.
+        /// </summary>
+        private void PrintBindingError(Exception e)
+        {
+            switch (BindingType)
+            {
+                default:
+                case BindingType.SingleBinding:
+                    Debug.LogError(String.Format("[MarkLight] Exception thrown when propagating single binding value from source \"{0}\" to target \"{1}.{2}\": {3}", Sources[0].BindingSourceString, Target.SourceView.ViewTypeName, Target.ViewFieldPath, Utils.GetError(e)));
+                    break;
+
+                case BindingType.MultiBindingTransform:
+                case BindingType.MultiBindingFormatString:
+                    StringBuilder sb = new StringBuilder();
+                    foreach (var source in Sources)
+                    {
+                        if (source != Sources[0])
+                        {
+                            sb.Append(", ");
+                        }
+
+                        sb.AppendFormat(source.BindingSourceString);
+                    }
+
+                    Debug.LogError(String.Format("[MarkLight] Exception thrown when propagating single binding value from sources \"{0}\" to target \"{1}.{2}\": {3}", sb.ToString(), Target.SourceView.ViewTypeName, Target.ViewFieldPath, Utils.GetError(e)));
+                    break;
+            }
+        }    
 
         #endregion
     }

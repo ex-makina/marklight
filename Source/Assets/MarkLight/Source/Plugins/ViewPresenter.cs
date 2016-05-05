@@ -24,8 +24,11 @@ namespace MarkLight
 
         public List<ViewTypeData> ViewTypeData;
         public List<ThemeData> ThemeData;
+        public List<ResourceDictionary> ResourceDictionaries;
         public string MainView;
         public string DefaultTheme;
+        public string DefaultLanguage;
+        public string DefaultPlatform;
         public List<string> Views;
         public List<string> Themes;
         public GameObject RootView;
@@ -36,11 +39,13 @@ namespace MarkLight
         public List<Material> Materials;
         public List<string> MaterialPaths;
         public bool DisableAutomaticReload;
+        public bool UpdateXsdSchema;
 
         private static ViewPresenter _instance;
         private Dictionary<string, Type> _viewTypes;
         private Dictionary<string, ViewTypeData> _viewTypeDataDictionary;
         private Dictionary<string, ThemeData> _themeDataDictionary;
+        private Dictionary<string, ResourceDictionary> _resourceDictionaries;
         private Dictionary<string, ValueConverter> _valueConvertersForType;
         private Dictionary<string, ValueConverter> _valueConverters;
         private Dictionary<string, ValueInterpolator> _valueInterpolatorsForType;
@@ -59,6 +64,7 @@ namespace MarkLight
         {
             ViewTypeData = new List<ViewTypeData>();
             ThemeData = new List<ThemeData>();
+            ResourceDictionaries = new List<ResourceDictionary>();
             Views = new List<string>();
             Themes = new List<string>();
             Sprites = new List<Sprite>();
@@ -75,10 +81,24 @@ namespace MarkLight
         #region Methods
 
         /// <summary>
-        /// Called once.
+        /// Called once at startup.
         /// </summary>
         public void Awake()
         {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Called once to initialize views and runtime data.
+        /// </summary>
+        public override void Initialize()
+        {
+            // initialize resource dictionary
+            ResourceDictionary.Language = DefaultLanguage;
+            ResourceDictionary.Platform = DefaultPlatform;
+            ResourceDictionary.Initialize();
+            
+            // initialize all views in the scene
             InitializeViews(RootView);
         }
 
@@ -106,7 +126,10 @@ namespace MarkLight
             rootView.ForThisAndEachChild<View>(x => x.TryPropagateBindings(), true, null, TraversalAlgorithm.BreadthFirst);
             rootView.ForThisAndEachChild<View>(x => x.TryQueueAllChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
 
-            // TriggerChangeHandlers()            
+            // notify dictionary observers
+            ResourceDictionary.NotifyObservers();
+
+            // trigger change handlers
             int pass = 0;
             while (rootView.Find<View>(x => x.HasQueuedChangeHandlers))
             {
@@ -119,7 +142,7 @@ namespace MarkLight
                 // as long as there are change handlers queued, go through all views and trigger them
                 rootView.ForThisAndEachChild<View>(x => x.TryTriggerChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
                 ++pass;
-            }
+            }            
         }
 
         /// <summary>
@@ -150,6 +173,7 @@ namespace MarkLight
         {
             ThemeData.Clear();
             ViewTypeData.Clear();
+            ResourceDictionaries.Clear();
             Sprites.Clear();
             SpritePaths.Clear();
             Fonts.Clear();
@@ -159,9 +183,10 @@ namespace MarkLight
 
             _viewTypeDataDictionary = null;
             _themeDataDictionary = null;
+            _resourceDictionaries = null;
             _spriteDictionary = null;
             _fontDictionary = null;
-            _materialDictionary = null;
+            _materialDictionary = null;            
 
             if (RootView != null)
             {
@@ -177,6 +202,12 @@ namespace MarkLight
             if (_viewTypeDataDictionary == null || !_viewTypeDataDictionary.ContainsKey(viewTypeName))
             {
                 LoadViewTypeDataDictionary();
+            }
+
+            if (!_viewTypeDataDictionary.ContainsKey(viewTypeName))
+            {
+                Debug.LogError(String.Format("[MarkLight] Can't find view type \"{0}\".", viewTypeName));
+                return null;
             }
 
             return _viewTypeDataDictionary[viewTypeName];
@@ -209,6 +240,23 @@ namespace MarkLight
             }
 
             return _themeDataDictionary.Get(themeName);
+        }
+
+        /// <summary>
+        /// Gets resource dictionary.
+        /// </summary>
+        public ResourceDictionary GetResourceDictionary(string dictionaryName)
+        {
+            if (_resourceDictionaries == null)
+            {
+                _resourceDictionaries = new Dictionary<string, ResourceDictionary>();
+                foreach (var resourceDictionary in ResourceDictionaries)
+                {
+                    _resourceDictionaries.Add(resourceDictionary.Name, resourceDictionary);
+                }
+            }
+
+            return _resourceDictionaries.Get(dictionaryName);
         }
 
         /// <summary>

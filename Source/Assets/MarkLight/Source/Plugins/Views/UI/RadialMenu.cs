@@ -318,7 +318,7 @@ namespace MarkLight.Views.UI
                     offsetAnimator.To = new ElementMargin(xOffset + _menuOffset.x, -yOffset + _menuOffset.y, 0, 0);
                     offsetAnimator.Duration = AnimationDuration.IsSet ? AnimationDuration : 0.2f;
                     offsetAnimator.TargetView = child;
-                    _menuAnimators.Add(offsetAnimator);
+                    _menuAnimators.Add(offsetAnimator);                    
 
                     child.OffsetFromParent.DirectValue = new ElementMargin(_menuOffset.x, _menuOffset.y, 0, 0);
                     child.Alignment.DirectValue = ElementAlignment.Center;

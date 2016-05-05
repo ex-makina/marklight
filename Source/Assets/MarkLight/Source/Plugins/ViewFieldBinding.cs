@@ -18,8 +18,8 @@ namespace MarkLight
     {
         #region Fields
 
-        public static Regex BindingRegex = new Regex(@"{(?<field>[A-Za-z0-9#!=\.\[\]]+)(?<format>:[^}]+)?}");
-        public static Regex TransformBindingRegex = new Regex(@"(?<function>\$[A-Za-z0-9]+)\((?<params>[A-Za-z0-9#!=\{\}\.\, ]+)\)");
+        public static Regex BindingRegex = new Regex(@"{(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?}");
+        public static Regex TransformBindingRegex = new Regex(@"(?<function>\$[A-Za-z0-9_]+)\((?<params>[A-Za-z0-9_#!=@\{\}\.\, ]+)\)");
         public string BindingString;
         public string ViewField;
 

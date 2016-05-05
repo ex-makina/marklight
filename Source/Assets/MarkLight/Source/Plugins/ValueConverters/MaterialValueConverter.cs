@@ -71,11 +71,20 @@ namespace MarkLight.ValueConverters
                         // yes. return pre-loaded asset
                         return new ConversionResult(asset);
                     }
-#if UNITY_EDITOR
-                    if (!Application.isPlaying)
+
+                    // if the asset is in a resources folder the load path should be relative to the folder
+                    bool inResourcesFolder = assetPath.Contains("Resources/");
+                    string loadAssetPath = inResourcesFolder ? assetPath.Substring(assetPath.IndexOf("Resources/") + 10) : assetPath;
+
+                    // load asset from asset database
+                    if (!Application.isPlaying || inResourcesFolder)
                     {
-                        // load material from asset database
-                        asset = AssetDatabase.LoadAssetAtPath(assetPath, _type);
+                        // load font from asset database
+#if UNITY_EDITOR 
+                        asset = inResourcesFolder ? Resources.Load(loadAssetPath) : AssetDatabase.LoadAssetAtPath(loadAssetPath, _type);
+#else
+                        asset = Resources.Load(loadAssetPath);
+#endif
                         if (asset == null)
                         {
                             return ConversionFailed(value, String.Format("Asset not found at path \"{0}\".", assetPath));
@@ -84,7 +93,8 @@ namespace MarkLight.ValueConverters
                         ViewPresenter.Instance.AddMaterial(assetPath, asset as Material);
                         return new ConversionResult(asset);
                     }
-#endif
+
+
                     return ConversionFailed(value, String.Format("Pre-loaded asset not found for path \"{0}\".", assetPath));
                 }
                 catch (Exception e)

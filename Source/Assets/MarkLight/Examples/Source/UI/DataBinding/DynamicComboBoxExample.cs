@@ -78,7 +78,7 @@ namespace MarkLight.Examples.UI.DataBinding
         {
             // activate remove button and label description
             CanRemove.Value =  Menus.Count > 1;
-            Label.IsVisible.Value =  true;
+            Label.IsVisible.Value =  true;            
         }
 
         #endregion
