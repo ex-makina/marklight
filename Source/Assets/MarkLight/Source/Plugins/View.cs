@@ -22,6 +22,7 @@ namespace MarkLight
     /// Base class for view models.
     /// </summary>
     /// <d>Base class for all view models in the framework. All view models must be a subclass of this class to be processed and managed the framework. </d>
+    [HideInPresenter]
     public class View : MonoBehaviour
     {
         #region Fields

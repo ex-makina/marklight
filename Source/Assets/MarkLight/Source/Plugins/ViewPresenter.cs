@@ -27,6 +27,8 @@ namespace MarkLight
         public List<ResourceDictionary> ResourceDictionaries;
         public string MainView;
         public string DefaultTheme;
+        public string DefaultLanguage;
+        public string DefaultPlatform;
         public List<string> Views;
         public List<string> Themes;
         public GameObject RootView;
@@ -92,8 +94,10 @@ namespace MarkLight
         public override void Initialize()
         {
             // initialize resource dictionary
+            ResourceDictionary.Language = DefaultLanguage;
+            ResourceDictionary.Platform = DefaultPlatform;
             ResourceDictionary.Initialize();
-
+            
             // initialize all views in the scene
             InitializeViews(RootView);
         }

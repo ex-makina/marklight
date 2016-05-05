@@ -1,13 +1,16 @@
-====  MarkLight v2.1.0  ==========================================================
+====  MarkLight v2.2.0  ==========================================================
 
 Thank you for using MarkLight.
 
-    Check out http://www.marklightforunity.com/ for the latest API docs and tutorials
+    Check out http://www.marklightforunity.com for the latest API docs and tutorials
 
     Subscribe to http://www.reddit.com/r/marklight for conversation around MarkLight
 
 	Leave a rating/review on the Asset Store page:
 	https://www.assetstore.unity3d.com/en/#!/content/37466
+
+	Join MarkLight Slack chat at:
+	https://marklight.herokuapp.com
 
 
 ====  Introduction  ==============================================================
@@ -51,7 +54,7 @@ you read through the Getting Started guide at:
     http://www.marklightforunity.com/docs/tutorials/gettingstarted.html
 
 
-==== How to get intellisense in XUML (highly recommended)  =======================
+====  How to get intellisense in XUML (highly recommended)  ======================
 
 Here are instructions to get intellisense in Visual Studio when editing XUML. 
 
@@ -77,7 +80,7 @@ the schema file by clicking "Generate Schema" on your view presenter.
 <YourView xmlns="MarkLight">
 
 
-==== Serialization errors when importing asset  ==================================
+====  Serialization errors when importing asset  =================================
 
 If you use a non-default asset serialization mode (like Force Text) you might get
 errors while importing the asset. This will show up as console errors with long 
@@ -91,13 +94,22 @@ serialization modes (Edit->Project Settings->Editor) which will cause the editor
 convert the project assets to the right format.
 
 
-==================================================================================
+====  `Linq' does not exist in the namespace `System.Xml'  =======================
 
-You're welcome to give feedback either at the subreddit:
+If you get this error you need to switch platform at File -> Build settings ...
+from Web Player to a platform officially supported (PC, WebGL, Android, iOS, etc).
 
-http://www.reddit.com/r/marklight
 
-Or contact me directly at contact@marklightforunity.com
+====  Connect  ===================================================================
+
+Webpage:     http://www.marklightforunity.com
+Asset store: https://www.assetstore.unity3d.com/en/#!/content/37466
+Reddit:      https://www.reddit.com/r/marklight
+Twitter:     https://twitter.com/MarkUX
+Slack chat:  https://marklight.herokuapp.com
+Unity forum: http://forum.unity3d.com/threads/marklight-markup-extension-framework-for-unity.400789
+Email:       contact@marklightforunity.com
+
 
 Have fun creating great things.
 
