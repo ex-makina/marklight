@@ -390,8 +390,9 @@ namespace MarkLight.Views.UI
         /// </summary>
         public void OnDisable()
         {
-            if (!IsToggleButton)
+            if (!IsToggleButton && !IsDisabled)
             {
+                // reset state to default if view is deactivated
                 SetState(DefaultStateName);
             }
         }

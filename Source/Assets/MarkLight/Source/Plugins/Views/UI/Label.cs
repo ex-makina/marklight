@@ -350,7 +350,7 @@ namespace MarkLight.Views.UI
                     if (!convertResult.Success)
                     {
                         // unable to parse token
-                        Debug.LogError(String.Format("[MarkLight] {0}: Unable to parse text embedded size tag \"[{1}]\". {2}", GameObjectName, tag, convertResult.ErrorMessage));
+                        Utils.LogError("[MarkLight] {0}: Unable to parse text embedded size tag \"[{1}]\". {2}", GameObjectName, tag, convertResult.ErrorMessage);
                         return String.Format("[{0}]", tag);
                     }
 
@@ -371,7 +371,7 @@ namespace MarkLight.Views.UI
                     if (!convertResult.Success)
                     {
                         // unable to parse token
-                        Debug.LogError(String.Format("[MarkLight] {0}: Unable to parse text embedded color tag \"[{1}]\". {2}", GameObjectName, tag, convertResult.ErrorMessage));
+                        Utils.LogError("[MarkLight] {0}: Unable to parse text embedded color tag \"[{1}]\". {2}", GameObjectName, tag, convertResult.ErrorMessage);
                         return String.Format("[{0}]", tag);
                     }
 

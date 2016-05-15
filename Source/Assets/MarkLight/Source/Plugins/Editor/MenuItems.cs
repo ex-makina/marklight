@@ -34,7 +34,7 @@ namespace MarkLight.Editor
                 path = configuration.ViewPaths.FirstOrDefault();
                 if (String.IsNullOrEmpty(path))
                 {
-                    Debug.LogError(String.Format("[MarkLight] Unable to create view. No view folders are configured.", path));
+                    Utils.LogError("[MarkLight] Unable to create view. No view folders are configured.", path);
                 }
                 System.IO.Directory.CreateDirectory(path);
             }
@@ -46,7 +46,7 @@ namespace MarkLight.Editor
                     path = Path.GetDirectoryName(path);
                     if (!Directory.Exists(path))
                     {
-                        Debug.LogError(String.Format("[MarkLight] Unable to create view at path \"{0}\". Directory not found.", path));
+                        Utils.LogError("[MarkLight] Unable to create view at path \"{0}\". Directory not found.", path);
                         return; 
                     }
                 }

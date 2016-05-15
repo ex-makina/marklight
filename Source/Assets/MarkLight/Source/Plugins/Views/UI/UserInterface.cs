@@ -21,5 +21,17 @@ namespace MarkLight.Views.UI
     [HideInPresenter]
     public class UserInterface : UICanvas
     {
+        #region Methods
+
+        /// <summary>
+        /// Initializes the view.
+        /// </summary>
+        public override void Initialize()
+        {
+            LayoutRoot = this;
+            base.Initialize();
+        }
+
+        #endregion
     }
 }

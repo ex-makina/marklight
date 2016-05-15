@@ -74,7 +74,7 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Updates view field animators.
         /// </summary>
-        public void Update()
+        public virtual void Update()
         {
             _menuAnimators.ForEach(x =>
             {
@@ -213,7 +213,7 @@ namespace MarkLight.Views.UI
             var view = this.Find<UIView>(id, false);
             if (view == null)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Unable to activate menu item. Menu item \"{1}\" not found.", GameObjectName, id));
+                Utils.LogError("[MarkLight] {0}: Unable to activate menu item. Menu item \"{1}\" not found.", GameObjectName, id);
                 return;
             }
 
@@ -227,7 +227,7 @@ namespace MarkLight.Views.UI
         {
             if (index >= _menuItems.Count() || index < 0)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Unable to activate menu item. Index out of range.", GameObjectName));
+                Utils.LogError("[MarkLight] {0}: Unable to activate menu item. Index out of range.", GameObjectName);
                 return;
             }
 
@@ -254,7 +254,7 @@ namespace MarkLight.Views.UI
             var view = this.Find<UIView>(id, false);
             if (view == null)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Unable to deactivate menu item. Menu item \"{1}\" not found.", GameObjectName, id));
+                Utils.LogError("[MarkLight] {0}: Unable to deactivate menu item. Menu item \"{1}\" not found.", GameObjectName, id);
                 return;
             }
 
@@ -268,7 +268,7 @@ namespace MarkLight.Views.UI
         {
             if (index >= _menuItems.Count() || index < 0)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Unable to deactivate menu item. Index out of range.", GameObjectName));
+                Utils.LogError("[MarkLight] {0}: Unable to deactivate menu item. Index out of range.", GameObjectName);
                 return;
             }
 

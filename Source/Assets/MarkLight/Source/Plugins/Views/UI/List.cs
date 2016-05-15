@@ -118,6 +118,12 @@ namespace MarkLight.Views.UI
         public _ElementOrientation Orientation;
 
         /// <summary>
+        /// Boolean indicating if list item arrangement should be disabled.
+        /// </summary>
+        /// <d>If set to true the list doesn't automatically arrange one item after another. Used when item arrangement is done elsewhere.</d>
+        public _bool DisableItemArrangement;
+
+        /// <summary>
         /// Indicates if an item is selected.
         /// </summary>
         /// <d>Set to true when a list item is selected.</d>
@@ -198,7 +204,19 @@ namespace MarkLight.Views.UI
         /// Indicates if template is to be shown in the editor.
         /// </summary>
         /// <d>Boolean indicating if template should be shown in the editor.</d>
-        public _bool ShowTemplateInEditor;        
+        public _bool ShowTemplateInEditor;
+
+        /// <summary>
+        /// List item pool size.
+        /// </summary>
+        /// <d>Indicates how many list items should be pooled. Pooled items are already created and ready to be used rather than being created and destroyed on demand. Can be used to increase the performance of dynamic lists.</d>
+        public _int PoolSize;
+
+        /// <summary>
+        /// Max list item pool size.
+        /// </summary>
+        /// <d>Indicates maximum number of list items that should be pooled. If not set it uses initial PoolSize is used as max. Pooled items are already created and ready to be used rather than being created and destroyed on demand. Can be used to increase the performance of dynamic lists.</d>
+        public _int MaxPoolSize;
 
         /// <summary>
         /// List item padding.
@@ -245,6 +263,7 @@ namespace MarkLight.Views.UI
         private List<ListItem> _presentedListItems;
         private ListItem _listItemTemplate;
         private object _selectedItem;
+        private Stack<ListItem> _pooledListItems;                
 
         #endregion
 
@@ -288,6 +307,10 @@ namespace MarkLight.Views.UI
                 }
             }
 #endif
+            if (DisableItemArrangement)
+            {
+                return;
+            }
 
             // arrange items like a group
             float horizontalSpacing = HorizontalSpacing.IsSet ? HorizontalSpacing.Value.Pixels : Spacing.Value.Pixels;
@@ -346,7 +369,7 @@ namespace MarkLight.Views.UI
                 {
                     if (isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("[MarkLight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels or elements.", view.GameObjectName));
+                        Utils.LogWarning("[MarkLight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels or elements.", view.GameObjectName);
                         continue;
                     }
                     else
@@ -359,7 +382,7 @@ namespace MarkLight.Views.UI
                 {
                     if (!isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("[MarkLight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", view.GameObjectName));
+                        Utils.LogWarning("[MarkLight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", view.GameObjectName);
                         continue;
                     }
                     else
@@ -475,7 +498,6 @@ namespace MarkLight.Views.UI
                 view.LayoutChanged();
                 ++childIndex;
             }
-
 
             if (Overflow == OverflowMode.Overflow)
             {
@@ -607,7 +629,7 @@ namespace MarkLight.Views.UI
         {
             if (index >= _presentedListItems.Count)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Unable to select list item. Index out of bounds.", GameObjectName));
+                Utils.LogError("[MarkLight] {0}: Unable to select list item. Index out of bounds.", GameObjectName);
                 return;
             }
 
@@ -627,7 +649,7 @@ namespace MarkLight.Views.UI
 
             if (listItem == null)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Unable to select list item. Item not found.", GameObjectName));
+                Utils.LogError("[MarkLight] {0}: Unable to select list item. Item not found.", GameObjectName);
                 return;
             }
 
@@ -819,7 +841,7 @@ namespace MarkLight.Views.UI
             // make sure we have a template
             if (ListItemTemplate == null)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Unable to generate list from items. Template missing. Add a template by adding a view with IsTemplate=\"True\" to the list.", GameObjectName));
+                Utils.LogError("[MarkLight] {0}: Unable to generate list from items. Template missing. Add a template by adding a view with IsTemplate=\"True\" to the list.", GameObjectName);
                 return;
             }
 
@@ -830,16 +852,18 @@ namespace MarkLight.Views.UI
             if (startIndex < 0 || startIndex > lastIndex || 
                 endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Debug.LogWarning(String.Format("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName));
+                Utils.LogWarning("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName);
                 Rebuild();
                 return;
             }
 
             // insert items
+            //Utils.StartTimer();
             for (int i = startIndex; i <= endIndex; ++i)
             {
                 CreateListItem(i);
             }
+            //Utils.LogTimer();
         }
 
         /// <summary>
@@ -854,7 +878,7 @@ namespace MarkLight.Views.UI
             if (startIndex < 0 || startIndex > lastIndex ||
                 endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Debug.LogWarning(String.Format("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName));
+                Utils.LogWarning("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName);
                 Rebuild();
                 return;
             }
@@ -876,7 +900,7 @@ namespace MarkLight.Views.UI
             bool listMatch = _presentedListItems.Count == Items.Value.Count;
             if (startIndex < 0 || startIndex > lastIndex || endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Debug.LogWarning(String.Format("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName));
+                Utils.LogWarning("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName);
                 Rebuild();
                 return;
             }
@@ -917,7 +941,7 @@ namespace MarkLight.Views.UI
             bool listMatch = _presentedListItems.Count == Items.Value.Count;
             if (startIndex < 0 || startIndex > lastIndex || endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Debug.LogWarning(String.Format("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName));
+                Utils.LogWarning("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName);
                 Rebuild();
                 return;
             }
@@ -955,7 +979,19 @@ namespace MarkLight.Views.UI
         private ListItem CreateListItem(int index)
         {
             object itemData = Items.Value[index];
-            var newItemView = Content.CreateView(ListItemTemplate, index + 1);
+            ListItem newItemView = null;
+            bool isNew = false;
+
+            if (_pooledListItems.Count > 0)
+            {
+                newItemView = _pooledListItems.Pop();
+                newItemView.transform.SetSiblingIndex(index + 1);
+            }
+            else
+            {
+                newItemView = Content.CreateView(ListItemTemplate, index + 1);
+                isNew = true;
+            }
             _presentedListItems.Insert(index, newItemView);
                         
             // set item data
@@ -969,7 +1005,10 @@ namespace MarkLight.Views.UI
             newItemView.Activate();
 
             // initialize view
-            newItemView.InitializeViews();            
+            if (isNew)
+            {
+                newItemView.InitializeViews();
+            }
 
             return newItemView;
         }
@@ -979,7 +1018,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         private void DestroyListItem(int index)
         {
-            var itemView = _presentedListItems[index];
+            var itemView = _presentedListItems[index];            
             DestroyListItem(itemView);
             _presentedListItems.RemoveAt(index);
         }
@@ -992,14 +1031,16 @@ namespace MarkLight.Views.UI
             // deselect the item first
             SetSelected(presentedItem, false);
 
-            presentedItem.IsDestroyed.DirectValue = true;
-            if (Application.isPlaying)
+            if (_pooledListItems.Count < MaxPoolSize.Value)
             {
-                GameObject.Destroy(presentedItem.gameObject);
+                // put item back in pool
+                presentedItem.Deactivate();
+                presentedItem.transform.SetAsLastSibling();
+                _pooledListItems.Push(presentedItem);
             }
             else
             {
-                GameObject.DestroyImmediate(presentedItem.gameObject);
+                presentedItem.Destroy();
             }
         }
 
@@ -1009,7 +1050,8 @@ namespace MarkLight.Views.UI
         public override void Initialize()
         {
             base.Initialize();
-            
+
+            _pooledListItems = new Stack<ListItem>();
             _presentedListItems = new List<ListItem>();
             if (ListItemTemplate != null)
             {
@@ -1024,7 +1066,37 @@ namespace MarkLight.Views.UI
 #endif
             }
 
-            UpdatePresentedListItems();            
+            UpdatePresentedListItems();
+
+            // is pooling to be used?
+            if ((PoolSize.IsSet || MaxPoolSize.IsSet) && ListItemTemplate != null)
+            {
+                // yes. check for existing pooled items and create new ones if missing
+                if (MaxPoolSize.Value < PoolSize.Value)
+                {
+                    MaxPoolSize.Value = PoolSize.Value;
+                }
+
+                foreach (var listItem in Content)
+                {
+                    if (listItem.IsActive || listItem.IsTemplate)
+                        continue;
+
+                    // item is pooled
+                    _pooledListItems.Push(listItem as ListItem);
+                }
+
+                // fill remaining space of pool with views
+                int addCount = PoolSize - _pooledListItems.Count - _presentedListItems.Count;
+                for (int i = 0; i < addCount; ++i)
+                {
+                    var newItemView = Content.CreateView(ListItemTemplate);
+                    newItemView.Deactivate();
+                    newItemView.InitializeViews();
+                    _pooledListItems.Push(newItemView);
+                }
+            }
+
             SelectedItems.DirectValue = new GenericObservableList();
         }
 
@@ -1034,7 +1106,7 @@ namespace MarkLight.Views.UI
         public void UpdatePresentedListItems()
         {
             _presentedListItems.Clear();
-            _presentedListItems.AddRange(Content.GetChildren<ListItem>(x => !x.IsTemplate && !x.IsDestroyed, false));
+            _presentedListItems.AddRange(Content.GetChildren<ListItem>(x => !x.IsTemplate && !x.IsDestroyed && x.IsActive, false));
             UpdateSortIndex();
         }
 

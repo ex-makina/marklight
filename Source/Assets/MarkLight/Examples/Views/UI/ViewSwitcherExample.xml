@@ -1,0 +1,50 @@
+<ViewSwitcherExample xmlns="MarkLight">
+  <UserInterface>
+
+    <ViewSwitcher Id="ContentViewSwitcher" TransitionOut="SlideOut" TransitionIn="SlideIn" 
+                  TransitionOutReverse="SlideOutReverse" TransitionInReverse="SlideInReverse">
+
+      <Region Id="MainMenuScreen">
+        <Group Spacing="10px">
+          <Button Text="Play" Click="Play"/>
+          <Button Text="Character List" IsDisabled="True" />
+          <Button Text="Personal Record"  IsDisabled="True" />
+          <Button Text="Credits" IsDisabled="True"/>
+        </Group>
+      </Region>
+
+      <Region Id="PlayScreen" Offset="1000,0,0,0">
+        <Group Spacing="10px">
+          <Button Text="Online" Click="OnlinePlay"/>
+          <Button Text="Local" IsDisabled="True"/>
+          <Button Text="How to Play" IsDisabled="True"/>
+          <Button Text="Back" Click="Back"/>
+        </Group>
+      </Region>
+
+      <Region Id="OnlineTest" Offset="1000,0,0,0">
+        <Group Spacing="10px">
+          <Label Text="Online Screen"/>
+          <Button Text="Back" Click="Back"/>
+        </Group>
+      </Region>
+
+    </ViewSwitcher>
+
+    <ViewAnimation Id="SlideOut">
+      <Animate Field="Offset" To="-1000,0,0,0" Duration="250ms" />
+    </ViewAnimation>
+    <ViewAnimation Id="SlideIn">
+      <Animate Field="Offset" To="0,0,0,0" Duration="250ms" EasingFunction="QuadraticEaseOut" />
+    </ViewAnimation>
+
+    <ViewAnimation Id="SlideOutReverse">
+      <Animate Field="Offset" To="1000,0,0" Duration="250ms" />
+    </ViewAnimation>
+    <ViewAnimation Id="SlideInReverse">
+      <Animate Field="Offset" To="0,0,0" Duration="250ms" EasingFunction="QuadraticEaseOut" />
+    </ViewAnimation>
+  
+  </UserInterface>
+  <EventSystem />
+</ViewSwitcherExample>

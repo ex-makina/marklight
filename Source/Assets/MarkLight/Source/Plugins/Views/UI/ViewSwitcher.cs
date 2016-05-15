@@ -36,32 +36,58 @@ namespace MarkLight.Views.UI
         public _bool SwitchToDefault;
 
         /// <summary>
+        /// Deactivate views not currently active in view switcher.
+        /// </summary>
+        /// <d>Boolean indicating if views not currently being switched to should be deactivated.</d>
+        public _bool DeactiveViews;
+
+        /// <summary>
         /// Transition in animation ID.
         /// </summary>
         /// <d>ID of view animation to apply on views transitioned to.</d>
-        [ChangeHandler("BehaviorChanged")]
         public _string TransitionIn;
 
         /// <summary>
         /// Transition out animation ID.
         /// </summary>
         /// <d>ID of view animation to apply on views transitioned from.</d>
-        [ChangeHandler("BehaviorChanged")]
         public _string TransitionOut;
+
+        /// <summary>
+        /// Transition in reverse animation ID.
+        /// </summary>
+        /// <d>ID of view animation to apply on views transitioned to when going from a higher indexed view to a lower.</d>
+        public _string TransitionInReverse;
+
+        /// <summary>
+        /// Transition out reverse animation ID.
+        /// </summary>
+        /// <d>ID of view animation to apply on views transitioned from when going from a higher indexed view to a lower.</d>
+        public _string TransitionOutReverse;
 
         /// <summary>
         /// Transition in animation.
         /// </summary>
         /// <d>Reference to the animation applied to views transitioned to.</d>
-        [ChangeHandler("BehaviorChanged")]
         public ViewAnimation TransitionInAnimation;
 
         /// <summary>
         /// Transition out animation.
         /// </summary>
         /// <d>Reference to the animation applied to views transitioned from.</d>
-        [ChangeHandler("BehaviorChanged")]
         public ViewAnimation TransitionOutAnimation;
+
+        /// <summary>
+        /// Transition in reverse animation.
+        /// </summary>
+        /// <d>Reference to the animation applied to views transitioned to when going from a higher indexed view to a lower.</d>
+        public ViewAnimation TransitionInReverseAnimation;
+
+        /// <summary>
+        /// Transition out reverse animation.
+        /// </summary>
+        /// <d>Reference to the animation applied to views transitioned from when going from a higher indexed view to a lower.</d>
+        public ViewAnimation TransitionOutReverseAnimation;
 
         /// <summary>
         /// Active view.
@@ -80,6 +106,7 @@ namespace MarkLight.Views.UI
         {
             base.SetDefaultValues();
             SwitchToDefault.DirectValue = true;
+            DeactiveViews.DirectValue = true;
         }
 
         /// <summary>
@@ -88,6 +115,46 @@ namespace MarkLight.Views.UI
         public override void Initialize()
         {
             base.Initialize();
+            
+            if (!String.IsNullOrEmpty(TransitionIn))
+            {
+                TransitionInAnimation = LayoutRoot.Find<ViewAnimation>(TransitionIn);
+            }
+
+            if (!String.IsNullOrEmpty(TransitionOut))
+            {
+                TransitionOutAnimation = LayoutRoot.Find<ViewAnimation>(TransitionOut);
+                if (TransitionOutAnimation != null)
+                {
+                    TransitionOutAnimation.AnimationCompleted.AddEntry(new ViewActionEntry
+                    {
+                        ParentView = this,
+                        SourceView = TransitionOutAnimation,
+                        ViewActionFieldName = "AnimationCompleted",
+                        ViewActionHandlerName = "TransitionOutCompleted"
+                    });
+                }
+            }
+
+            if (!String.IsNullOrEmpty(TransitionInReverse))
+            {
+                TransitionInReverseAnimation = LayoutRoot.Find<ViewAnimation>(TransitionInReverse);
+            }
+
+            if (!String.IsNullOrEmpty(TransitionOutReverse))
+            {
+                TransitionOutReverseAnimation = LayoutRoot.Find<ViewAnimation>(TransitionOutReverse);
+                if (TransitionOutReverseAnimation != null)
+                {
+                    TransitionOutReverseAnimation.AnimationCompleted.AddEntry(new ViewActionEntry
+                    {
+                        ParentView = this,
+                        SourceView = TransitionOutReverseAnimation,
+                        ViewActionFieldName = "AnimationCompleted",
+                        ViewActionHandlerName = "TransitionOutCompleted"
+                    });
+                }
+            }
 
             if (!StartView.IsSet)
             {
@@ -98,7 +165,10 @@ namespace MarkLight.Views.UI
                 else
                 {
                     // deactive all views
-                    this.ForEachChild<View>(x => x.Deactivate(), false);
+                    if (DeactiveViews)
+                    {
+                        this.ForEachChild<View>(x => x.Deactivate(), false);
+                    }
                 }
             }
             else
@@ -134,17 +204,10 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Switches to another view passing data to it.
         /// </summary>
-        public void SwitchTo(View view, object data, bool animate)
-        {
-            this.ForEachChild<View>(x => SetActive(x, x == view, animate, data), false);
-        }
-
-        /// <summary>
-        /// Switches to another view passing data to it.
-        /// </summary>
         public void SwitchTo(string id, object data, bool animate)
         {
-            this.ForEachChild<View>(x => SetActive(x, String.Equals(x.Id, id, StringComparison.OrdinalIgnoreCase), animate, data), false);
+            var view = this.Find<View>(id, false);
+            SwitchTo(view, data, animate);
         }
 
         /// <summary>
@@ -152,92 +215,123 @@ namespace MarkLight.Views.UI
         /// </summary>
         public void SwitchTo(int index, object data, bool animate)
         {
-            int i = 0;
-            this.ForEachChild<View>(x =>
-            {
-                SetActive(x, index == i, animate, data);
-                ++i;
-            }, false);
+            var view = this.GetChild(index);
+            SwitchTo(view, data, animate);
         }
 
         /// <summary>
-        /// Switches to view.
+        /// Switches to another view passing data to it.
         /// </summary>
-        private void SetActive(View view, bool active, bool animate, object data)
+        public void SwitchTo(View view, object data, bool animate)
         {
-            bool previouslyEnabled = view.IsActive;
-            if (!active && previouslyEnabled && animate)
+            var oldActiveView = ActiveView;
+            ActiveView = view;
+
+            // activate new one
+            if (data != null)
             {
-                if (TransitionOutAnimation)
-                {
-                    TransitionOutAnimation.SetAnimationTarget(view);
-                    TransitionOutAnimation.StartAnimation();
-                }
-                else
-                {
-                    view.Deactivate();
-                }
+                view.Activate(data);
+            }
+            else
+            {
+                view.Activate();
             }
 
-            if (!animate)
+            // animate transition in and out
+            bool transitionOutOld = animate && oldActiveView != null && ActiveView != oldActiveView;
+            bool transitionOutStarted = false;
+
+            if (animate)
             {
-                if (active)
+                bool transitionReverse = false;
+
+                // check if new view comes before old view
+                if (transitionOutOld)
                 {
-                    if (data != null)
+                    foreach (var child in this)
                     {
-                        view.Activate(data);
-                    }
-                    else
-                    {
-                        view.Activate();
+                        if (child == oldActiveView)
+                        {
+                            break;
+                        }
+
+                        if (child == ActiveView)
+                        {
+                            transitionReverse = true;
+                            break;
+                        }
                     }
                 }
-                else
+
+                // set and stop any animations before starting
+                var transitionInAnimation = TransitionInAnimation;
+                if (transitionInAnimation != null)
                 {
-                    view.Deactivate();
+                    transitionInAnimation.StopAnimation();
+                }
+
+                if (transitionReverse && TransitionInReverseAnimation != null)
+                {
+                    transitionInAnimation = TransitionInReverseAnimation;
+                    transitionInAnimation.StopAnimation();
+                }
+
+                var transitionOutAnimation = TransitionOutAnimation;
+                if (transitionOutAnimation != null)
+                {
+                    transitionOutAnimation.StopAnimation();
+                }
+
+                if (transitionReverse && TransitionOutReverseAnimation != null)
+                {
+                    transitionOutAnimation = TransitionOutReverseAnimation;
+                    transitionOutAnimation.StopAnimation();
+                }
+
+                // do we switch from an old view to a new one?
+                if (transitionOutOld && transitionOutAnimation)
+                {
+                    // yes. transition out the old one
+                    transitionOutAnimation.SetAnimationTarget(oldActiveView);
+                    transitionOutAnimation.StartAnimation();
+                    transitionOutStarted = true;
+                }
+
+                // start transition in animation
+                if (transitionInAnimation)
+                {
+                    transitionInAnimation.SetAnimationTarget(view);
+                    transitionInAnimation.StartAnimation();
                 }
             }
 
-            // set animation target and start transition-in animation
-            if (active && animate && !previouslyEnabled)
+            // disable the rest         
+            if (DeactiveViews)
             {
-                if (TransitionInAnimation != null)
+                this.ForEachChild<View>(x =>
                 {
-                    TransitionInAnimation.SetAnimationTarget(view);
-                    TransitionInAnimation.StartAnimation();
-                }
+                    if (x == ActiveView)
+                        return;
 
-                if (data != null)
-                {
-                    view.Activate(data);
-                }
-                else
-                {
-                    view.Activate();
-                }
-            }
+                    if (transitionOutStarted && x == oldActiveView)
+                        return;
 
-            if (active)
-            {
-                ActiveView = view;
+                    x.Deactivate();
+                }, false);
             }
         }
 
         /// <summary>
-        /// Updates the behavior of the view.
+        /// Called when transition out animation is completed.
         /// </summary>
-        public override void BehaviorChanged()
-        {
-            base.BehaviorChanged();
-
-            if (!String.IsNullOrEmpty(TransitionIn))
+        public void TransitionOutCompleted(ViewAnimation animation)
+        {            
+            if (animation.Target != null && DeactiveViews)
             {
-                TransitionInAnimation = LayoutRoot.Find<ViewAnimation>(TransitionIn);
-            }
-
-            if (!String.IsNullOrEmpty(TransitionOut))
-            {
-                TransitionOutAnimation = LayoutRoot.Find<ViewAnimation>(TransitionOut);
+                if (animation.Target != ActiveView)
+                {
+                    animation.Target.Deactivate();
+                }
             }
         }
 

@@ -63,7 +63,7 @@ namespace MarkLight
                             //    Target.TargetView.ViewTypeName, Target.TargetViewFieldPath, value.ToString()));
 
                             // set value
-                            Target.SetValue(value, callstack);
+                            Target.SetValue(value, callstack); 
                         }
                         break;
 
@@ -113,7 +113,7 @@ namespace MarkLight
             {
                 default:
                 case BindingType.SingleBinding:
-                    Debug.LogError(String.Format("[MarkLight] Exception thrown when propagating single binding value from source \"{0}\" to target \"{1}.{2}\": {3}", Sources[0].BindingSourceString, Target.SourceView.ViewTypeName, Target.ViewFieldPath, Utils.GetError(e)));
+                    Utils.LogError("[MarkLight] Exception thrown when propagating single binding value from source \"{0}\" to target \"{1}.{2}\": {3}", Sources[0].BindingSourceString, Target.SourceView.ViewTypeName, Target.ViewFieldPath, Utils.GetError(e));
                     break;
 
                 case BindingType.MultiBindingTransform:
@@ -129,7 +129,7 @@ namespace MarkLight
                         sb.AppendFormat(source.BindingSourceString);
                     }
 
-                    Debug.LogError(String.Format("[MarkLight] Exception thrown when propagating single binding value from sources \"{0}\" to target \"{1}.{2}\": {3}", sb.ToString(), Target.SourceView.ViewTypeName, Target.ViewFieldPath, Utils.GetError(e)));
+                    Utils.LogError("[MarkLight] Exception thrown when propagating single binding value from sources \"{0}\" to target \"{1}.{2}\": {3}", sb.ToString(), Target.SourceView.ViewTypeName, Target.ViewFieldPath, Utils.GetError(e));
                     break;
             }
         }    

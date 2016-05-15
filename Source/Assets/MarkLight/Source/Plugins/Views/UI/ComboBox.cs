@@ -452,14 +452,14 @@ namespace MarkLight.Views.UI
             base.Initialize();
 
 #if UNITY_4_6_0
-            Debug.LogError("[MarkLight] Due to a bug in Unity 4.6.0 (653443) the ComboBox will not work correctly. The bug has been resolved in Unity 4.6.1p1.");
+            Utils.LogError("[MarkLight] Due to a bug in Unity 4.6.0 (653443) the ComboBox will not work correctly. The bug has been resolved in Unity 4.6.1p1.");
 #endif
         }
 
         /// <summary>
         /// Called each frame. Updates the view.
         /// </summary>
-        public void Update()
+        public virtual void Update()
         {
             // if list is open check if user has clicked outside
             if (ComboBoxList.IsActive)

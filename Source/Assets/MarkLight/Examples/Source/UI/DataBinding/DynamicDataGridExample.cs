@@ -60,6 +60,14 @@ namespace MarkLight.Examples.UI.DataBinding
             Highscores.Remove(DataGrid.DataGridList.SelectedItems.Value);
         }
 
+        /// <summary>
+        /// Called when row is selected in the grid.
+        /// </summary>
+        public void ItemSelected()
+        {
+            // var selectedItem = Highscores.SelectedItem;
+        }
+
         #endregion
     }    
 }

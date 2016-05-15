@@ -96,7 +96,7 @@ namespace MarkLight
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(String.Format("[MarkLight] Unable to get theme data. Exception thrown: {0}", Utils.GetError(e)));
+                    Utils.LogError("[MarkLight] Unable to get theme data. Exception thrown: {0}", Utils.GetError(e));
                 }
             }
 
