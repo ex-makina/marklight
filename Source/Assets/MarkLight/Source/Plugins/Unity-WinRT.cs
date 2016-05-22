@@ -143,14 +143,16 @@ public sealed class AppDomain
       {
          if (file.FileType == ".dll" || file.FileType == ".exe")
          {
-try{
-            var name = new AssemblyName() { Name = Path.GetFileNameWithoutExtension(file.Name) };
-            Assembly asm = Assembly.Load(name);
-            assemblies.Add(asm);
-}
-catch(Exception ex){
-UnityEngine.Debug.LogError("Couldn't load Assembly: "+file.Name);
-}
+            try
+            {
+                var name = new AssemblyName() { Name = Path.GetFileNameWithoutExtension(file.Name) };
+                Assembly asm = Assembly.Load(name);
+                assemblies.Add(asm);
+            }
+            catch
+            {
+                Debug.LogError("Couldn't load Assembly: " + file.Name);
+            }
          }
       }
 

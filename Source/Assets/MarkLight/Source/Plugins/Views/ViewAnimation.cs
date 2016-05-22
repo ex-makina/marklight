@@ -200,6 +200,7 @@ namespace MarkLight.Views
         /// </summary>
         public virtual void SetAnimationTarget(View view)
         {
+            Target = view;
             this.ForEachChild<ViewAnimation>(x => x.SetAnimationTarget(view), false);
         }
 

@@ -72,7 +72,7 @@ namespace MarkLight
             }
             catch (Exception e)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Exception thrown when triggering change handler \"{1}\": {2}", ParentView.GameObjectName, ChangeHandlerName, Utils.GetError(e)));
+                Utils.LogError("[MarkLight] {0}: Exception thrown when triggering change handler \"{1}\": {2}", ParentView.GameObjectName, ChangeHandlerName, Utils.GetError(e));
             }
         }
 

@@ -142,7 +142,7 @@ namespace MarkLight.Views.UI
                 {
                     if (isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("[MarkLight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels or elements.", view.GameObjectName));
+                        Utils.LogWarning("[MarkLight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels or elements.", view.GameObjectName);
                         continue;
                     }
                     else
@@ -155,7 +155,7 @@ namespace MarkLight.Views.UI
                 {
                     if (!isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("[MarkLight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", view.GameObjectName));
+                        Utils.LogWarning("[MarkLight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", view.GameObjectName);
                         continue;
                     }
                     else
@@ -202,7 +202,7 @@ namespace MarkLight.Views.UI
                 }
 
                 // update child layout
-                view.LayoutChanged();
+                view.RectTransformChanged();
                 ++childIndex;
             }
 

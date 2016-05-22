@@ -598,7 +598,7 @@ namespace MarkLight.Views.UI
             IsOpen.DirectValue = true;
 
 #if UNITY_4_6_0
-            Debug.LogError("[MarkLight] Due to a bug in Unity 4.6.0 (653443) the Window will not work correctly. The bug has been resolved in Unity 4.6.1p1.");
+            Utils.LogError("[MarkLight] Due to a bug in Unity 4.6.0 (653443) the Window will not work correctly. The bug has been resolved in Unity 4.6.1p1.");
 #endif
         }
 
@@ -612,15 +612,10 @@ namespace MarkLight.Views.UI
                 return;
             }
 
-            // get canvas
-            UnityEngine.Canvas canvas = LayoutRoot.Canvas;
-
-            // calculate window offset
-            Vector2 pos;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, eventData.position, canvas.worldCamera, out pos);
-            Vector2 mouseScreenPosition = canvas.transform.TransformPoint(pos);
-            _initialWindowOffset.x = (mouseScreenPosition.x - transform.position.x) - WindowRegion.Offset.Value.Left.Pixels;
-            _initialWindowOffset.y = -(mouseScreenPosition.y - transform.position.y) - WindowRegion.Offset.Value.Top.Pixels;
+            // calculate initial window offset
+            Vector2 pos = GetLocalPoint(eventData.position);
+            _initialWindowOffset.x = pos.x - WindowRegion.Offset.Value.Left.Pixels;
+            _initialWindowOffset.y = -pos.y - WindowRegion.Offset.Value.Top.Pixels;
         }
 
         /// <summary>
@@ -632,23 +627,14 @@ namespace MarkLight.Views.UI
             {
                 return;
             }
-
-            // calculate the position of the window based on offset from initial click position
-            Vector2 offset;
-
-            // get canvas
-            UnityEngine.Canvas canvas = LayoutRoot.Canvas;
-
+            
             // calculate window offset
-            Vector2 pos;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, eventData.position, canvas.worldCamera, out pos);
-            Vector2 mouseScreenPosition = canvas.transform.TransformPoint(pos);
-            offset.x = mouseScreenPosition.x - transform.position.x;
-            offset.y = -(mouseScreenPosition.y - transform.position.y);
-
-            // set window offset
+            Vector2 pos = GetLocalPoint(eventData.position);
+            Vector2 offset = new Vector2(pos.x, -pos.y);
+            
+            // calculate the position of the window based on offset from initial click position
             WindowRegion.Offset.Value = new ElementMargin(offset.x - _initialWindowOffset.x, offset.y - _initialWindowOffset.y);
-            //Debug.Log("Setting Window Offset = " + Offset.Value.Left.Pixels + ", " + Offset.Value.Right.Pixels);
+            
         }
 
         /// <summary>

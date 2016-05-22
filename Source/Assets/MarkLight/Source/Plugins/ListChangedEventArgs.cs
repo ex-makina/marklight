@@ -17,10 +17,12 @@ namespace MarkLight
         public int StartIndex;
         public int EndIndex;
         public string FieldPath;
+        public ElementAlignment? Alignment;
+        public ElementMargin Offset;
     }
 
     /// <summary>
-    /// Enum indicating what type of list changed has occurred.
+    /// Enum indicating type of list change action initiated.
     /// </summary>
     public enum ListChangeAction
     {
@@ -55,8 +57,13 @@ namespace MarkLight
         Modify = 5,
 
         /// <summary>
-        /// Item selected in list
+        /// Item selected in list.
         /// </summary>
-        Select = 6
+        Select = 6,
+
+        /// <summary>
+        /// Item scrolled to.
+        /// </summary>
+        ScrollTo = 7
     }
 }

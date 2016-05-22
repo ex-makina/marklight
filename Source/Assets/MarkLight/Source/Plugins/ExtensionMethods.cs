@@ -29,6 +29,11 @@ namespace MarkLight
                     {
                         bool skipChild = false;
                         var childView = child.GetComponent<View>();
+                        if (childView == null)
+                        {
+                            continue;
+                        }
+
                         if (parent != null)
                         {
                             if (childView.Parent != parent)
@@ -62,6 +67,11 @@ namespace MarkLight
                     {
                         bool skipChild = false;
                         var childView = child.GetComponent<View>();
+                        if (childView == null)
+                        {
+                            continue;
+                        }
+
                         if (parent != null)
                         {
                             if (childView.Parent != parent.gameObject)
@@ -99,6 +109,11 @@ namespace MarkLight
                     foreach (Transform child in view.gameObject.transform)
                     {
                         var childView = child.GetComponent<View>();
+                        if (childView == null)
+                        {
+                            continue;
+                        }
+
                         if (recursive)
                         {
                             childView.DoUntil<T>(action, recursive, parent, traversalAlgorithm);
@@ -129,6 +144,11 @@ namespace MarkLight
                     foreach (Transform child in view.gameObject.transform)
                     {
                         var childView = child.GetComponent<View>();
+                        if (childView == null)
+                        {
+                            continue;
+                        }
+
                         if (recursive)
                         {
                             childStack.Push(childView);
@@ -399,6 +419,37 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Gets child at index.
+        /// </summary>
+        public static View GetChild(this View view, int index, bool countOnlyActive = false)
+        {
+            if (!countOnlyActive)
+            {
+                var child = view.gameObject.transform.GetChild(index);
+                return child.GetComponent<View>();
+            }
+
+            int i = 0;
+            foreach (Transform child in view.gameObject.transform)
+            {
+                var childView = child.GetComponent<View>();
+                if (childView == null || !childView.IsActive)
+                {
+                    continue;
+                }
+
+                if (i == index)
+                {
+                    return childView;
+                }
+
+                ++i;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Destroys a view.
         /// </summary>
         public static void Destroy(this View view, bool immediate = false)
@@ -412,6 +463,21 @@ namespace MarkLight
             {
                 GameObject.DestroyImmediate(view.gameObject);
             }
+        }
+
+        /// <summary>
+        /// Destroy a view or moves it back into view pool.
+        /// </summary>
+        public static void Destroy(this View view, ViewPool viewPool, bool immediate = false)
+        {
+            if (viewPool == null || viewPool.IsFull)
+            {
+                view.Destroy(immediate);
+                return;
+            }
+
+            // move view into view pool
+            viewPool.InsertView(view);            
         }
 
         /// <summary>
@@ -448,7 +514,7 @@ namespace MarkLight
             // check if from the same type
             if (variable.GetType() != value.GetType())
             {
-                Debug.LogError("[MarkLight] The checked flag is not from the same type as the checked variable.");
+                Utils.LogError("[MarkLight] The checked flag is not from the same type as the checked variable.");
                 return false;
             }
 
@@ -595,6 +661,25 @@ namespace MarkLight
             foreach (var item in items)
             {
                 hashSet.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Converts panel scrollbar visibility to unity scrollrect scrollbar visibility.
+        /// </summary>
+        public static UnityEngine.UI.ScrollRect.ScrollbarVisibility ToScrollRectVisibility(this PanelScrollbarVisibility visibility)
+        {
+            switch (visibility)
+            {
+                case PanelScrollbarVisibility.Permanent:
+                    return UnityEngine.UI.ScrollRect.ScrollbarVisibility.Permanent;
+                default:
+                case PanelScrollbarVisibility.AutoHide:
+                case PanelScrollbarVisibility.Hidden:
+                case PanelScrollbarVisibility.Remove:
+                    return UnityEngine.UI.ScrollRect.ScrollbarVisibility.AutoHide;
+                case PanelScrollbarVisibility.AutoHideAndExpandViewport:
+                    return UnityEngine.UI.ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;               
             }
         }
 

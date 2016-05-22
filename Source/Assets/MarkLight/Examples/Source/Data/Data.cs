@@ -38,5 +38,14 @@ namespace MarkLight.Examples.Data
         public string Description;
         public Color Color;
     }
+
+    /// <summary>
+    /// Card.
+    /// </summary>
+    public class Card
+    {
+        public Color Color;
+        public string Name;
+    }
 }
 

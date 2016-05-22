@@ -170,6 +170,13 @@ namespace MarkLight.Views.UI
         #region ListMask
 
         /// <summary>
+        /// Indicates if a list mask is to be used.
+        /// </summary>
+        /// <d>Boolean indicating if a list mask is to be used.</d>
+        [MapTo("DataGridList.UseListMask")]
+        public _bool UseListMask;
+
+        /// <summary>
         /// The width of the list mask image.
         /// </summary>
         /// <d>Specifies the width of the list mask image either in pixels or percents.</d>

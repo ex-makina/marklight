@@ -199,6 +199,13 @@ namespace MarkLight.Views.UI
         #region TabListMask
 
         /// <summary>
+        /// Indicates if a list mask is to be used.
+        /// </summary>
+        /// <d>Boolean indicating if a list mask is to be used.</d>
+        [MapTo("TabHeaderList.UseListMask")]
+        public _bool TabListUseListMask;
+
+        /// <summary>
         /// The width of the list mask image.
         /// </summary>
         /// <d>Specifies the width of the list mask image either in pixels or percents.</d>
@@ -525,7 +532,7 @@ namespace MarkLight.Views.UI
         {
             if (index >= _presentedTabs.Count)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Unable to select tab. Index out of bounds.", GameObjectName));
+                Utils.LogError("[MarkLight] {0}: Unable to select tab. Index out of bounds.", GameObjectName);
                 return;
             }
 
@@ -545,7 +552,7 @@ namespace MarkLight.Views.UI
 
             if (tabItem == null)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Unable to select tab. Item not found.", GameObjectName));
+                Utils.LogError("[MarkLight] {0}: Unable to select tab. Item not found.", GameObjectName);
                 return;
             }
 
@@ -696,7 +703,7 @@ namespace MarkLight.Views.UI
             // make sure we have a template
             if (TabItemTemplate == null)
             {
-                Debug.LogError(String.Format("[MarkLight] {0}: Unable to generate tabs from items. Template missing. Add a template by adding a Tab view with IsTemplate=\"True\" to the TabPanel.", GameObjectName));
+                Utils.LogError("[MarkLight] {0}: Unable to generate tabs from items. Template missing. Add a template by adding a Tab view with IsTemplate=\"True\" to the TabPanel.", GameObjectName);
                 return;
             }
 
@@ -707,7 +714,7 @@ namespace MarkLight.Views.UI
             if (startIndex < 0 || startIndex > lastIndex ||
                 endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Debug.LogWarning(String.Format("[MarkLight] {0}: Tab list mismatch. Rebuilding tabs.", ViewTypeName));
+                Utils.LogWarning("[MarkLight] {0}: Tab list mismatch. Rebuilding tabs.", ViewTypeName);
                 Rebuild();
                 return;
             }
@@ -731,7 +738,7 @@ namespace MarkLight.Views.UI
             if (startIndex < 0 || startIndex > lastIndex ||
                 endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Debug.LogWarning(String.Format("[MarkLight] {0}: Tab list mismatch. Rebuilding tabs.", GameObjectName));
+                Utils.LogWarning("[MarkLight] {0}: Tab list mismatch. Rebuilding tabs.", GameObjectName);
                 Rebuild();
                 return;
             }

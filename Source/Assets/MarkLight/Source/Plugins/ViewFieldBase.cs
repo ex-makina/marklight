@@ -16,6 +16,7 @@ namespace MarkLight
 
         public View ParentView;
         public string ViewFieldPath;
+        public bool IsMapped;
         public bool _isSet;
 
         #endregion

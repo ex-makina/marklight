@@ -212,6 +212,27 @@ namespace MarkLight.Views.UI
         #region ComboBoxList
 
         /// <summary>
+        /// Indicates if the combo box list is scrollable.
+        /// </summary>
+        /// <d>Boolean indicating if the combo box list is scrollable. The height of the scrollable list can be set by the ListHeight field.</d>
+        [MapTo("ComboBoxList.IsScrollable")]
+        public _bool IsScrollable;
+
+        /// <summary>
+        /// Scroll delta distance for disabling interaction.
+        /// </summary>
+        /// <d>If set any interaction with child views (clicks, etc) is disabled when the specified distance has been scrolled. This is used e.g. to disable clicks while scrolling a selectable list of items.</d>
+        [MapTo("ComboBoxList.DisableInteractionScrollDelta")]
+        public _float DisableInteractionScrollDelta;
+
+        /// <summary>
+        /// Indicates if items are selected on mouse up.
+        /// </summary>
+        /// <d>Boolean indicating if items are selected on mouse up rather than mouse down (default).</d>
+        [MapTo("ComboBoxList.SelectOnMouseUp")]
+        public _bool SelectOnMouseUp;
+
+        /// <summary>
         /// User-defined list data.
         /// </summary>
         /// <d>Can be bound to an generic ObservableList to dynamically generate combo box items based on a template.</d>
@@ -263,7 +284,7 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Combo box list image height.
         /// </summary>
-        /// <d>Specifies the height of the combo box list image either in pixels or percents.</d>
+        /// <d>Specifies the height of the combo box list image either in pixels or percents. Used when IsScrollable is True to control the height of the scrollable viewport.</d>
         [MapTo("ComboBoxList.Height")]
         public _ElementSize ListHeight;
 
@@ -324,6 +345,13 @@ namespace MarkLight.Views.UI
         public _ElementSortDirection ListSortDirection;
 
         #region ListMask
+
+        /// <summary>
+        /// Indicates if a list mask is to be used.
+        /// </summary>
+        /// <d>Boolean indicating if a list mask is to be used.</d>
+        [MapTo("ComboBoxList.UseListMask")]
+        public _bool UseListMask;
 
         /// <summary>
         /// The width of the list mask image.
@@ -451,29 +479,34 @@ namespace MarkLight.Views.UI
         {
             base.Initialize();
 
+            // if list is scrollable we need to force select on mouse up and set scroll delta for the combo box to be usable
+            if (IsScrollable)
+            {
+                if (!DisableInteractionScrollDelta.IsSet)
+                {
+                    DisableInteractionScrollDelta.Value = 1f;
+                }
+                SelectOnMouseUp.Value = true;
+            }
+
+
 #if UNITY_4_6_0
-            Debug.LogError("[MarkLight] Due to a bug in Unity 4.6.0 (653443) the ComboBox will not work correctly. The bug has been resolved in Unity 4.6.1p1.");
+            Utils.LogError("[MarkLight] Due to a bug in Unity 4.6.0 (653443) the ComboBox will not work correctly. The bug has been resolved in Unity 4.6.1p1.");
 #endif
         }
 
         /// <summary>
         /// Called each frame. Updates the view.
         /// </summary>
-        public void Update()
+        public virtual void Update()
         {
             // if list is open check if user has clicked outside
             if (ComboBoxList.IsActive)
             {
-                if (Input.GetMouseButtonUp(0))
+                if (Input.GetMouseButtonDown(0))
                 {
-                    // get mouse screen position
-                    Vector2 mouseScreenPosition = ComboBoxListCanvas.Canvas.GetMouseScreenPosition(Input.mousePosition);
-
-                    // get rect of combo box
-                    Rect rect = new Rect(RectTransform.position.x - ActualWidth / 2f, RectTransform.position.y - ActualHeight / 2f, ActualWidth, ActualHeight);
-
-                    // check if mouse pointer outside the combo box
-                    if (!rect.Contains(mouseScreenPosition))
+                    if (!ComboBoxButton.ContainsMouse(Input.mousePosition) &&
+                        !ComboBoxList.ContainsMouse(Input.mousePosition))
                     {
                         ComboBoxList.Deactivate();
                         ComboBoxButton.ToggleValue.Value = false;

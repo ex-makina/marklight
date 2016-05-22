@@ -134,6 +134,8 @@ namespace MarkLight.Editor
             var temporaryRootView = ViewData.CreateView<View>(layoutRoot, layoutRoot);
             var enums = new HashSet<Type>();
 
+            Utils.SuppressLogging = true;
+
             // generate XSD schema based on view type data
             foreach (var viewType in ViewPresenter.Instance.ViewTypeData)
             {
@@ -172,6 +174,8 @@ namespace MarkLight.Editor
 
                 sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
             }
+
+            Utils.SuppressLogging = false;
 
             // destroy temporary root view
             GameObject.DestroyImmediate(temporaryRootView.gameObject);

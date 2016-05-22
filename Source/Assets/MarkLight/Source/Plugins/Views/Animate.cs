@@ -166,7 +166,7 @@ namespace MarkLight.Views
         /// <summary>
         /// Updates the animation each frame.
         /// </summary>
-        public void Update()
+        public virtual void Update()
         {
             if (Application.isPlaying && _viewFieldAnimator != null)
             {

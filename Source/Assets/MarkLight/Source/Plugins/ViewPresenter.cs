@@ -163,7 +163,7 @@ namespace MarkLight
                 }
             }
 
-            Debug.LogError(String.Format("[MarkLight] Error initializing views. Stack overflow when triggering change handlers. Make sure your change handlers doesn't trigger each other in a loop. The following change handlers were still triggered after {0} passes:{1}{2}", pass, Environment.NewLine, sb.ToString()));
+            Utils.LogError("[MarkLight] Error initializing views. Stack overflow when triggering change handlers. Make sure your change handlers doesn't trigger each other in a loop. The following change handlers were still triggered after {0} passes:{1}{2}", pass, Environment.NewLine, sb.ToString());
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace MarkLight
 
             if (!_viewTypeDataDictionary.ContainsKey(viewTypeName))
             {
-                Debug.LogError(String.Format("[MarkLight] Can't find view type \"{0}\".", viewTypeName));
+                Utils.LogError("[MarkLight] Can't find view type \"{0}\".", viewTypeName);
                 return null;
             }
 

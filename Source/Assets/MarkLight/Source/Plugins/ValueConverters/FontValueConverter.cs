@@ -74,7 +74,16 @@ namespace MarkLight.ValueConverters
 
                     // if the asset is in a resources folder the load path should be relative to the folder
                     bool inResourcesFolder = assetPath.Contains("Resources/");
-                    string loadAssetPath = inResourcesFolder ? assetPath.Substring(assetPath.IndexOf("Resources/") + 10) : assetPath;
+                    string loadAssetPath = assetPath;
+                    if (inResourcesFolder)
+                    {                        
+                        loadAssetPath = loadAssetPath.Substring(assetPath.IndexOf("Resources/") + 10);
+                        string extension = System.IO.Path.GetExtension(assetPath);
+                        if (extension.Length > 0)
+                        {
+                            loadAssetPath = loadAssetPath.Substring(0, loadAssetPath.Length - extension.Length);
+                        }
+                    }   
 
                     // load asset from asset database
                     if (!Application.isPlaying || inResourcesFolder)

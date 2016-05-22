@@ -1,7 +1,25 @@
-﻿v2.2.1
+﻿v2.3.0
+- Two more examples added: AdvancedLists and ViewSwitcher
+- Embedded scroll functionality to List view activated through IsScrollable field
+- Scrollable ComboBox through IsScrollable and ListHeight fields
+- Added ScrollTo method to ObservableList for scrolling to items in the list
+- Minimizing of redundant objects in the hierarchy, added fields to remove certain unused objects (such as list mask)
+- Content in the Panel is no longer inside a Frame by default
+- ShowVerticalScrollbar and ShowHorizontalScrollbar replaced by HorizontalScrollbarVisibility and VerticalScrollbarVisibility enum
+- Added CanReselect field to List that allows items to be selected even if they already are selected, used by ComboBox to allow same item to be selected in the drop-down
+- Fixed bugs in Slider, RadialMenu, ComboBox and Window where mouse position calculation logic not working correctly in scaled canvases
+- Added UseListMask boolean to List which removes the list mask object from the hierarchy if set to False (default)
+- View pooling functionality to improve performance when dynamically creating items
+- The List view can be configured to use view pooling for improved performance when creating list items
+- Fixed bug where views without view models didn't show up in the view presenter list
+- Fixed bug where BaseDirectory is not used when bindings values propagate
+- ViewSwitcher now supports reversed animations useful when you want different transitions previous->next and next->previous
+- Fixed bug with view switcher not working correctly with both transition in and out animations and when switching fast
+- Added DisableItemArrangement bool to List view for the option to disable default list item grouping layout
 - Fixed so XSD schema for resource dictionaries are generated
-- Fixed bugg where buttons stayed in highlighted state when they were deactivated when pressed
-- Fixed bugg where static transformation method "Format" had incorrect signature
+- Fixed bug where buttons stayed in highlighted state when they were deactivated when pressed
+- Fixed bug where static transformation method "Format" had incorrect signature
+- Performance improvements in how layout changes propagates in groups and lists
 
 v2.2.0
 - Static methods can be used as transformation methods in multi bindings using the notation: $ViewType.StaticMethod(...)

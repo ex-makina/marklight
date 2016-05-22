@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema id="MarkLight" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="MarkLight" xmlns="MarkLight" attributeFormDefault="unqualified" elementFormDefault="qualified">
 
+  <xs:element name="Animate" type="Animate" />
+  <xs:complexType name="Animate">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="EasingFunction" type="EnumEasingFunctionType" />
+    <xs:attribute name="AutoReset" type="xs:string" />
+    <xs:attribute name="AutoReverse" type="xs:string" />
+    <xs:attribute name="Field" type="xs:string" />
+    <xs:attribute name="From" type="xs:string" />
+    <xs:attribute name="To" type="xs:string" />
+    <xs:attribute name="ReverseSpeed" type="xs:string" />
+    <xs:attribute name="Duration" type="xs:string" />
+    <xs:attribute name="StartOffset" type="xs:string" />
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="AnimationStarted" type="xs:string" />
+    <xs:attribute name="AnimationReversed" type="xs:string" />
+    <xs:attribute name="AnimationCompleted" type="xs:string" />
+    <xs:attribute name="AnimationStopped" type="xs:string" />
+    <xs:attribute name="AnimationPaused" type="xs:string" />
+    <xs:attribute name="AnimationResumed" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
   <xs:element name="ContentPlaceholder" type="ContentPlaceholder" />
   <xs:complexType name="ContentPlaceholder">
     <xs:sequence>
@@ -27,8 +68,8 @@
     <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
-  <xs:element name="UserInterface" type="UserInterface" />
-  <xs:complexType name="UserInterface">
+  <xs:element name="Cube" type="Cube" />
+  <xs:complexType name="Cube">
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
@@ -38,50 +79,9 @@
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="RenderMode" type="EnumRenderMode" />
-    <xs:attribute name="PixelPerfect" type="xs:string" />
-    <xs:attribute name="SortingOrder" type="xs:string" />
-    <xs:attribute name="RenderCamera" type="xs:string" />
-    <xs:attribute name="PlaneDistance" type="xs:string" />
-    <xs:attribute name="SortingLayerId" type="xs:string" />
-    <xs:attribute name="SortingLayerName" type="xs:string" />
-    <xs:attribute name="OrderInLayer" type="xs:string" />
-    <xs:attribute name="OverrideSorting" type="xs:string" />
-    <xs:attribute name="OverridePixelPerfect" type="xs:string" />
-    <xs:attribute name="UIScaleMode" type="EnumScaleMode" />
-    <xs:attribute name="ScaleFactor" type="xs:string" />
-    <xs:attribute name="ReferencePixelsPerUnit" type="xs:string" />
-    <xs:attribute name="DynamicPixelsPerUnit" type="xs:string" />
-    <xs:attribute name="IgnoreReversedGraphics" type="xs:string" />
-    <xs:attribute name="BlockingObjects" type="EnumBlockingObjects" />
-    <xs:attribute name="Width" type="xs:string" />
-    <xs:attribute name="Height" type="xs:string" />
-    <xs:attribute name="OverrideWidth" type="xs:string" />
-    <xs:attribute name="OverrideHeight" type="xs:string" />
-    <xs:attribute name="Alignment" type="EnumElementAlignment" />
-    <xs:attribute name="Margin" type="xs:string" />
-    <xs:attribute name="Offset" type="xs:string" />
-    <xs:attribute name="OffsetFromParent" type="xs:string" />
-    <xs:attribute name="Pivot" type="xs:string" />
-    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
-    <xs:attribute name="Alpha" type="xs:string" />
-    <xs:attribute name="IsVisible" type="xs:string" />
-    <xs:attribute name="SortIndex" type="xs:string" />
-    <xs:attribute name="UpdateRectTransform" type="xs:string" />
-    <xs:attribute name="UpdateBackground" type="xs:string" />
-    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillMethod" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
-    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
-    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
-    <xs:attribute name="BackgroundImage" type="xs:string" />
-    <xs:attribute name="BackgroundImageType" type="xs:string" />
-    <xs:attribute name="BackgroundMaterial" type="xs:string" />
-    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
-    <xs:attribute name="BackgroundColor" type="xs:string" />
+    <xs:attribute name="Mesh" type="xs:string" />
+    <xs:attribute name="SharedMesh" type="xs:string" />
+    <xs:attribute name="AdditionalVertexStreams" type="xs:string" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="IsActive" type="xs:string" />
     <xs:attribute name="HideFlags" type="EnumHideFlags" />
@@ -97,8 +97,8 @@
     <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
-  <xs:element name="ViewSwitcher" type="ViewSwitcher" />
-  <xs:complexType name="ViewSwitcher">
+  <xs:element name="EventSystem" type="EventSystem" />
+  <xs:complexType name="EventSystem">
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
@@ -108,38 +108,136 @@
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="StartView" type="xs:string" />
-    <xs:attribute name="SwitchToDefault" type="xs:string" />
-    <xs:attribute name="TransitionIn" type="xs:string" />
-    <xs:attribute name="TransitionOut" type="xs:string" />
-    <xs:attribute name="Width" type="xs:string" />
-    <xs:attribute name="Height" type="xs:string" />
-    <xs:attribute name="OverrideWidth" type="xs:string" />
-    <xs:attribute name="OverrideHeight" type="xs:string" />
-    <xs:attribute name="Alignment" type="EnumElementAlignment" />
-    <xs:attribute name="Margin" type="xs:string" />
-    <xs:attribute name="Offset" type="xs:string" />
-    <xs:attribute name="OffsetFromParent" type="xs:string" />
-    <xs:attribute name="Pivot" type="xs:string" />
-    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
-    <xs:attribute name="Alpha" type="xs:string" />
-    <xs:attribute name="IsVisible" type="xs:string" />
-    <xs:attribute name="SortIndex" type="xs:string" />
-    <xs:attribute name="UpdateRectTransform" type="xs:string" />
-    <xs:attribute name="UpdateBackground" type="xs:string" />
-    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillMethod" type="EnumFillMethod" />
-    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
-    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
-    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
-    <xs:attribute name="BackgroundImage" type="xs:string" />
-    <xs:attribute name="BackgroundImageType" type="EnumType" />
-    <xs:attribute name="BackgroundMaterial" type="xs:string" />
-    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
-    <xs:attribute name="BackgroundColor" type="xs:string" />
+    <xs:attribute name="FirstSelectedGameObject" type="xs:string" />
+    <xs:attribute name="CurrentSelectedGameObject" type="xs:string" />
+    <xs:attribute name="PixelDragThreshold" type="xs:string" />
+    <xs:attribute name="SendNavigationEvents" type="xs:string" />
+    <xs:attribute name="HorizontalAxis" type="xs:string" />
+    <xs:attribute name="VerticalAxis" type="xs:string" />
+    <xs:attribute name="SubmitButton" type="xs:string" />
+    <xs:attribute name="CancelButton" type="xs:string" />
+    <xs:attribute name="InputActionsPerSecond" type="xs:string" />
+    <xs:attribute name="AllowActivationOnMobileDevice" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:element name="StateAnimation" type="StateAnimation" />
+  <xs:complexType name="StateAnimation">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="From" type="xs:string" />
+    <xs:attribute name="To" type="xs:string" />
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="AnimationStarted" type="xs:string" />
+    <xs:attribute name="AnimationReversed" type="xs:string" />
+    <xs:attribute name="AnimationCompleted" type="xs:string" />
+    <xs:attribute name="AnimationStopped" type="xs:string" />
+    <xs:attribute name="AnimationPaused" type="xs:string" />
+    <xs:attribute name="AnimationResumed" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:element name="View" type="View" />
+  <xs:complexType name="View">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:element name="ViewAnimation" type="ViewAnimation" />
+  <xs:complexType name="ViewAnimation">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="AnimationStarted" type="xs:string" />
+    <xs:attribute name="AnimationReversed" type="xs:string" />
+    <xs:attribute name="AnimationCompleted" type="xs:string" />
+    <xs:attribute name="AnimationStopped" type="xs:string" />
+    <xs:attribute name="AnimationPaused" type="xs:string" />
+    <xs:attribute name="AnimationResumed" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:element name="ViewPoolContainer" type="ViewPoolContainer" />
+  <xs:complexType name="ViewPoolContainer">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="PoolSize" type="xs:string" />
+    <xs:attribute name="MaxPoolSize" type="xs:string" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="IsActive" type="xs:string" />
     <xs:attribute name="HideFlags" type="EnumHideFlags" />
@@ -223,81 +321,6 @@
     <xs:attribute name="IsTemplate" type="xs:string" />
     <xs:attribute name="IsDestroyed" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="StateAnimation" type="StateAnimation" />
-  <xs:complexType name="StateAnimation">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="From" type="xs:string" />
-    <xs:attribute name="To" type="xs:string" />
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="AnimationStarted" type="xs:string" />
-    <xs:attribute name="AnimationReversed" type="xs:string" />
-    <xs:attribute name="AnimationCompleted" type="xs:string" />
-    <xs:attribute name="AnimationStopped" type="xs:string" />
-    <xs:attribute name="AnimationPaused" type="xs:string" />
-    <xs:attribute name="AnimationResumed" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="Animate" type="Animate" />
-  <xs:complexType name="Animate">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="EasingFunction" type="EnumEasingFunctionType" />
-    <xs:attribute name="AutoReset" type="xs:string" />
-    <xs:attribute name="AutoReverse" type="xs:string" />
-    <xs:attribute name="Field" type="xs:string" />
-    <xs:attribute name="From" type="xs:string" />
-    <xs:attribute name="To" type="xs:string" />
-    <xs:attribute name="ReverseSpeed" type="xs:string" />
-    <xs:attribute name="Duration" type="xs:string" />
-    <xs:attribute name="StartOffset" type="xs:string" />
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="AnimationStarted" type="xs:string" />
-    <xs:attribute name="AnimationReversed" type="xs:string" />
-    <xs:attribute name="AnimationCompleted" type="xs:string" />
-    <xs:attribute name="AnimationStopped" type="xs:string" />
-    <xs:attribute name="AnimationPaused" type="xs:string" />
-    <xs:attribute name="AnimationResumed" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
     <xs:anyAttribute processContents="skip" />
@@ -436,164 +459,6 @@
     <xs:attribute name="IsTemplate" type="xs:string" />
     <xs:attribute name="IsDestroyed" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="EventSystem" type="EventSystem" />
-  <xs:complexType name="EventSystem">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="FirstSelectedGameObject" type="xs:string" />
-    <xs:attribute name="CurrentSelectedGameObject" type="xs:string" />
-    <xs:attribute name="PixelDragThreshold" type="xs:string" />
-    <xs:attribute name="SendNavigationEvents" type="xs:string" />
-    <xs:attribute name="HorizontalAxis" type="xs:string" />
-    <xs:attribute name="VerticalAxis" type="xs:string" />
-    <xs:attribute name="SubmitButton" type="xs:string" />
-    <xs:attribute name="CancelButton" type="xs:string" />
-    <xs:attribute name="InputActionsPerSecond" type="xs:string" />
-    <xs:attribute name="AllowActivationOnMobileDevice" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="TestView" type="TestView" />
-  <xs:complexType name="TestView">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="ProductLine" type="xs:string" />
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="ActiveSkill" type="xs:string" />
-    <xs:attribute name="ItemCount" type="xs:string" />
-    <xs:attribute name="Language" type="xs:string" />
-    <xs:attribute name="Platform" type="xs:string" />
-    <xs:attribute name="DynamicImagePath" type="xs:string" />
-    <xs:attribute name="SpecialNewAmount" type="xs:string" />
-    <xs:attribute name="Test" type="xs:string" />
-    <xs:attribute name="IsPlayerList" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="Cube" type="Cube" />
-  <xs:complexType name="Cube">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="Mesh" type="xs:string" />
-    <xs:attribute name="SharedMesh" type="xs:string" />
-    <xs:attribute name="AdditionalVertexStreams" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="View" type="View" />
-  <xs:complexType name="View">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="ViewAnimation" type="ViewAnimation" />
-  <xs:complexType name="ViewAnimation">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="AnimationStarted" type="xs:string" />
-    <xs:attribute name="AnimationReversed" type="xs:string" />
-    <xs:attribute name="AnimationCompleted" type="xs:string" />
-    <xs:attribute name="AnimationStopped" type="xs:string" />
-    <xs:attribute name="AnimationPaused" type="xs:string" />
-    <xs:attribute name="AnimationResumed" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
     <xs:anyAttribute processContents="skip" />
@@ -1009,6 +874,309 @@
     <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
+  <xs:element name="ScrollRect" type="ScrollRect" />
+  <xs:complexType name="ScrollRect">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="CanScrollHorizontally" type="xs:string" />
+    <xs:attribute name="CanScrollVertically" type="xs:string" />
+    <xs:attribute name="DecelerationRate" type="xs:string" />
+    <xs:attribute name="Elasticity" type="xs:string" />
+    <xs:attribute name="HorizontalNormalizedPosition" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbar" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarSpacing" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarVisibility" type="EnumScrollbarVisibility" />
+    <xs:attribute name="HasInertia" type="xs:string" />
+    <xs:attribute name="MovementType" type="EnumMovementType" />
+    <xs:attribute name="NormalizedPosition" type="xs:string" />
+    <xs:attribute name="ScrollContent" type="xs:string" />
+    <xs:attribute name="ScrollSensitivity" type="xs:string" />
+    <xs:attribute name="ScrollVelocity" type="xs:string" />
+    <xs:attribute name="VerticalNormalizedPosition" type="xs:string" />
+    <xs:attribute name="VerticalScrollbar" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarSpacing" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarVisibility" type="EnumScrollbarVisibility" />
+    <xs:attribute name="DisableInteractionScrollDelta" type="xs:string" />
+    <xs:attribute name="Viewport" type="xs:string" />
+    <xs:attribute name="ContentAlignment" type="EnumElementAlignment" />
+    <xs:attribute name="UpdateNormalizedPosition" type="xs:string" />
+    <xs:attribute name="Width" type="xs:string" />
+    <xs:attribute name="Height" type="xs:string" />
+    <xs:attribute name="OverrideWidth" type="xs:string" />
+    <xs:attribute name="OverrideHeight" type="xs:string" />
+    <xs:attribute name="Alignment" type="EnumElementAlignment" />
+    <xs:attribute name="Margin" type="xs:string" />
+    <xs:attribute name="Offset" type="xs:string" />
+    <xs:attribute name="OffsetFromParent" type="xs:string" />
+    <xs:attribute name="Pivot" type="xs:string" />
+    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
+    <xs:attribute name="Alpha" type="xs:string" />
+    <xs:attribute name="IsVisible" type="xs:string" />
+    <xs:attribute name="SortIndex" type="xs:string" />
+    <xs:attribute name="UpdateRectTransform" type="xs:string" />
+    <xs:attribute name="UpdateBackground" type="xs:string" />
+    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillMethod" type="EnumFillMethod" />
+    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
+    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
+    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
+    <xs:attribute name="BackgroundImage" type="xs:string" />
+    <xs:attribute name="BackgroundImageType" type="EnumType" />
+    <xs:attribute name="BackgroundMaterial" type="xs:string" />
+    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundColor" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="BeginDrag" type="xs:string" />
+    <xs:attribute name="EndDrag" type="xs:string" />
+    <xs:attribute name="Drag" type="xs:string" />
+    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:element name="Region" type="Region" />
+  <xs:complexType name="Region">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="Width" type="xs:string" />
+    <xs:attribute name="Height" type="xs:string" />
+    <xs:attribute name="OverrideWidth" type="xs:string" />
+    <xs:attribute name="OverrideHeight" type="xs:string" />
+    <xs:attribute name="Alignment" type="EnumElementAlignment" />
+    <xs:attribute name="Margin" type="xs:string" />
+    <xs:attribute name="Offset" type="xs:string" />
+    <xs:attribute name="OffsetFromParent" type="xs:string" />
+    <xs:attribute name="Pivot" type="xs:string" />
+    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
+    <xs:attribute name="Alpha" type="xs:string" />
+    <xs:attribute name="IsVisible" type="xs:string" />
+    <xs:attribute name="SortIndex" type="xs:string" />
+    <xs:attribute name="UpdateRectTransform" type="xs:string" />
+    <xs:attribute name="UpdateBackground" type="xs:string" />
+    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillMethod" type="EnumFillMethod" />
+    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
+    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
+    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
+    <xs:attribute name="BackgroundImage" type="xs:string" />
+    <xs:attribute name="BackgroundImageType" type="EnumType" />
+    <xs:attribute name="BackgroundMaterial" type="xs:string" />
+    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundColor" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:element name="Scrollbar" type="Scrollbar" />
+  <xs:complexType name="Scrollbar">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="Orientation" type="EnumElementOrientation" />
+    <xs:attribute name="Breadth" type="xs:string" />
+    <xs:attribute name="ScrollDirection" type="EnumDirection" />
+    <xs:attribute name="NumberOfSteps" type="xs:string" />
+    <xs:attribute name="HandleSize" type="xs:string" />
+    <xs:attribute name="Value" type="xs:string" />
+    <xs:attribute name="HandleImage" type="xs:string" />
+    <xs:attribute name="HandleImageType" type="EnumType" />
+    <xs:attribute name="HandleMaterial" type="xs:string" />
+    <xs:attribute name="HandleColor" type="xs:string" />
+    <xs:attribute name="Width" type="xs:string" />
+    <xs:attribute name="Height" type="xs:string" />
+    <xs:attribute name="OverrideWidth" type="xs:string" />
+    <xs:attribute name="OverrideHeight" type="xs:string" />
+    <xs:attribute name="Alignment" type="EnumElementAlignment" />
+    <xs:attribute name="Margin" type="xs:string" />
+    <xs:attribute name="Offset" type="xs:string" />
+    <xs:attribute name="OffsetFromParent" type="xs:string" />
+    <xs:attribute name="Pivot" type="xs:string" />
+    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
+    <xs:attribute name="Alpha" type="xs:string" />
+    <xs:attribute name="IsVisible" type="xs:string" />
+    <xs:attribute name="SortIndex" type="xs:string" />
+    <xs:attribute name="UpdateRectTransform" type="xs:string" />
+    <xs:attribute name="UpdateBackground" type="xs:string" />
+    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillMethod" type="EnumFillMethod" />
+    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
+    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
+    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
+    <xs:attribute name="BackgroundImage" type="xs:string" />
+    <xs:attribute name="BackgroundImageType" type="EnumType" />
+    <xs:attribute name="BackgroundMaterial" type="xs:string" />
+    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundColor" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:element name="Panel" type="Panel" />
+  <xs:complexType name="Panel">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarOrientation" type="EnumElementOrientation" />
+    <xs:attribute name="HorizontalScrollbarBreadth" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarScrollDirection" type="EnumDirection" />
+    <xs:attribute name="HorizontalScrollbarNumberOfSteps" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleSize" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarValue" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarImage" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarImageType" type="EnumType" />
+    <xs:attribute name="HorizontalScrollbarMaterial" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarColor" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleImage" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleImageType" type="EnumType" />
+    <xs:attribute name="HorizontalScrollbarHandleMaterial" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarOrientation" type="EnumElementOrientation" />
+    <xs:attribute name="VerticalScrollbarBreadth" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarScrollDirection" type="EnumDirection" />
+    <xs:attribute name="VerticalScrollbarNumberOfSteps" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleSize" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarValue" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarImage" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarImageType" type="EnumType" />
+    <xs:attribute name="VerticalScrollbarMaterial" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleImage" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleImageType" type="EnumType" />
+    <xs:attribute name="VerticalScrollbarHandleMaterial" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleColor" type="xs:string" />
+    <xs:attribute name="CanScrollHorizontally" type="xs:string" />
+    <xs:attribute name="CanScrollVertically" type="xs:string" />
+    <xs:attribute name="DecelerationRate" type="xs:string" />
+    <xs:attribute name="Elasticity" type="xs:string" />
+    <xs:attribute name="HorizontalNormalizedPosition" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarSpacing" type="xs:string" />
+    <xs:attribute name="HasInertia" type="xs:string" />
+    <xs:attribute name="MovementType" type="EnumMovementType" />
+    <xs:attribute name="NormalizedPosition" type="xs:string" />
+    <xs:attribute name="ScrollSensitivity" type="xs:string" />
+    <xs:attribute name="ScrollVelocity" type="xs:string" />
+    <xs:attribute name="VerticalNormalizedPosition" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarSpacing" type="xs:string" />
+    <xs:attribute name="DisableInteractionScrollDelta" type="xs:string" />
+    <xs:attribute name="Viewport" type="xs:string" />
+    <xs:attribute name="ContentAlignment" type="EnumElementAlignment" />
+    <xs:attribute name="HorizontalScrollbarVisibility" type="EnumPanelScrollbarVisibility" />
+    <xs:attribute name="VerticalScrollbarVisibility" type="EnumPanelScrollbarVisibility" />
+    <xs:attribute name="AddMaskMargin" type="xs:string" />
+    <xs:attribute name="Width" type="xs:string" />
+    <xs:attribute name="Height" type="xs:string" />
+    <xs:attribute name="OverrideWidth" type="xs:string" />
+    <xs:attribute name="OverrideHeight" type="xs:string" />
+    <xs:attribute name="Alignment" type="EnumElementAlignment" />
+    <xs:attribute name="Margin" type="xs:string" />
+    <xs:attribute name="Offset" type="xs:string" />
+    <xs:attribute name="OffsetFromParent" type="xs:string" />
+    <xs:attribute name="Pivot" type="xs:string" />
+    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
+    <xs:attribute name="Alpha" type="xs:string" />
+    <xs:attribute name="IsVisible" type="xs:string" />
+    <xs:attribute name="SortIndex" type="xs:string" />
+    <xs:attribute name="UpdateRectTransform" type="xs:string" />
+    <xs:attribute name="UpdateBackground" type="xs:string" />
+    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillMethod" type="EnumFillMethod" />
+    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
+    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
+    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
+    <xs:attribute name="BackgroundImage" type="xs:string" />
+    <xs:attribute name="BackgroundImageType" type="EnumType" />
+    <xs:attribute name="BackgroundMaterial" type="xs:string" />
+    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundColor" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="EndDrag" type="xs:string" />
+    <xs:attribute name="BeginDrag" type="xs:string" />
+    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
+    <xs:attribute name="Drag" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
   <xs:element name="List" type="List" />
   <xs:complexType name="List">
     <xs:sequence>
@@ -1020,22 +1188,72 @@
     <xs:attribute name="Theme" type="xs:string" />
     <xs:attribute name="BaseDirectory" type="xs:string" />
     <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="UseListMask" type="xs:string" />
     <xs:attribute name="ListMaskWidth" type="xs:string" />
     <xs:attribute name="ListMaskHeight" type="xs:string" />
     <xs:attribute name="ListMaskOffset" type="xs:string" />
     <xs:attribute name="ListMaskImage" type="xs:string" />
-    <xs:attribute name="ListMaskImageType" type="EnumType" />
+    <xs:attribute name="ListMaskImageType" type="xs:string" />
     <xs:attribute name="ListMaskMaterial" type="xs:string" />
     <xs:attribute name="ListMaskColor" type="xs:string" />
-    <xs:attribute name="ListMaskAlignment" type="EnumElementAlignment" />
+    <xs:attribute name="ListMaskAlignment" type="xs:string" />
     <xs:attribute name="ListMaskShowGraphic" type="xs:string" />
     <xs:attribute name="ContentMargin" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarOrientation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBreadth" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarScrollDirection" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarNumberOfSteps" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleSize" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarValue" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarImage" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarImageType" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarMaterial" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarColor" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleImage" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleImageType" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleMaterial" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarOrientation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBreadth" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarScrollDirection" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarNumberOfSteps" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleSize" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarValue" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarImage" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarImageType" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarMaterial" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleImage" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleImageType" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleMaterial" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleColor" type="xs:string" />
+    <xs:attribute name="CanScrollHorizontally" type="xs:string" />
+    <xs:attribute name="CanScrollVertically" type="xs:string" />
+    <xs:attribute name="DecelerationRate" type="xs:string" />
+    <xs:attribute name="Elasticity" type="xs:string" />
+    <xs:attribute name="HorizontalNormalizedPosition" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarSpacing" type="xs:string" />
+    <xs:attribute name="HasInertia" type="xs:string" />
+    <xs:attribute name="MovementType" type="xs:string" />
+    <xs:attribute name="NormalizedPosition" type="xs:string" />
+    <xs:attribute name="ScrollSensitivity" type="xs:string" />
+    <xs:attribute name="ScrollVelocity" type="xs:string" />
+    <xs:attribute name="VerticalNormalizedPosition" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarSpacing" type="xs:string" />
+    <xs:attribute name="DisableInteractionScrollDelta" type="xs:string" />
+    <xs:attribute name="AddMaskMargin" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarVisibility" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarVisibility" type="xs:string" />
+    <xs:attribute name="ScrollableContentAlignment" type="xs:string" />
+    <xs:attribute name="IsScrollable" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="Orientation" type="EnumElementOrientation" />
+    <xs:attribute name="DisableItemArrangement" type="xs:string" />
     <xs:attribute name="IsItemSelected" type="xs:string" />
     <xs:attribute name="CanDeselect" type="xs:string" />
     <xs:attribute name="CanMultiSelect" type="xs:string" />
     <xs:attribute name="CanSelect" type="xs:string" />
+    <xs:attribute name="CanReselect" type="xs:string" />
     <xs:attribute name="DeselectAfterSelect" type="xs:string" />
     <xs:attribute name="Overflow" type="EnumOverflowMode" />
     <xs:attribute name="Spacing" type="xs:string" />
@@ -1045,6 +1263,8 @@
     <xs:attribute name="SortDirection" type="EnumElementSortDirection" />
     <xs:attribute name="SelectOnMouseUp" type="xs:string" />
     <xs:attribute name="ShowTemplateInEditor" type="xs:string" />
+    <xs:attribute name="PoolSize" type="xs:string" />
+    <xs:attribute name="MaxPoolSize" type="xs:string" />
     <xs:attribute name="Padding" type="xs:string" />
     <xs:attribute name="SelectedItem" type="xs:string" />
     <xs:attribute name="SelectedItems" type="xs:string" />
@@ -1130,6 +1350,9 @@
     <xs:attribute name="ButtonOutlineColor" type="xs:string" />
     <xs:attribute name="ButtonOutlineDistance" type="xs:string" />
     <xs:attribute name="ButtonAdjustToText" type="EnumAdjustToText" />
+    <xs:attribute name="IsScrollable" type="xs:string" />
+    <xs:attribute name="DisableInteractionScrollDelta" type="xs:string" />
+    <xs:attribute name="SelectOnMouseUp" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="SelectedItem" type="xs:string" />
     <xs:attribute name="ListImage" type="xs:string" />
@@ -1146,14 +1369,15 @@
     <xs:attribute name="ListContentAlignment" type="EnumElementAlignment" />
     <xs:attribute name="ListContentMargin" type="xs:string" />
     <xs:attribute name="ListSortDirection" type="EnumElementSortDirection" />
+    <xs:attribute name="UseListMask" type="xs:string" />
     <xs:attribute name="ListMaskWidth" type="xs:string" />
     <xs:attribute name="ListMaskHeight" type="xs:string" />
     <xs:attribute name="ListMaskOffset" type="xs:string" />
     <xs:attribute name="ListMaskImage" type="xs:string" />
-    <xs:attribute name="ListMaskImageType" type="EnumType" />
+    <xs:attribute name="ListMaskImageType" type="xs:string" />
     <xs:attribute name="ListMaskMaterial" type="xs:string" />
     <xs:attribute name="ListMaskColor" type="xs:string" />
-    <xs:attribute name="ListMaskAlignment" type="EnumElementAlignment" />
+    <xs:attribute name="ListMaskAlignment" type="xs:string" />
     <xs:attribute name="ListMaskShowGraphic" type="xs:string" />
     <xs:attribute name="CanvasSortingOrder" type="xs:string" />
     <xs:attribute name="CanvasOverrideSorting" type="xs:string" />
@@ -1314,14 +1538,15 @@
     <xs:attribute name="ListContentAlignment" type="EnumElementAlignment" />
     <xs:attribute name="ListContentMargin" type="xs:string" />
     <xs:attribute name="ListSortDirection" type="EnumElementSortDirection" />
+    <xs:attribute name="UseListMask" type="xs:string" />
     <xs:attribute name="ListMaskWidth" type="xs:string" />
     <xs:attribute name="ListMaskHeight" type="xs:string" />
     <xs:attribute name="ListMaskOffset" type="xs:string" />
     <xs:attribute name="ListMaskImage" type="xs:string" />
-    <xs:attribute name="ListMaskImageType" type="EnumType" />
+    <xs:attribute name="ListMaskImageType" type="xs:string" />
     <xs:attribute name="ListMaskMaterial" type="xs:string" />
     <xs:attribute name="ListMaskColor" type="xs:string" />
-    <xs:attribute name="ListMaskAlignment" type="EnumElementAlignment" />
+    <xs:attribute name="ListMaskAlignment" type="xs:string" />
     <xs:attribute name="ListMaskShowGraphic" type="xs:string" />
     <xs:attribute name="ColumnTextMargin" type="xs:string" />
     <xs:attribute name="ColumnTextAlignment" type="EnumElementAlignment" />
@@ -1367,62 +1592,8 @@
     <xs:attribute name="IsDestroyed" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="ItemDeselected" type="xs:string" />
-    <xs:attribute name="ListChanged" type="xs:string" />
     <xs:attribute name="ItemSelected" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="Region" type="Region" />
-  <xs:complexType name="Region">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="Width" type="xs:string" />
-    <xs:attribute name="Height" type="xs:string" />
-    <xs:attribute name="OverrideWidth" type="xs:string" />
-    <xs:attribute name="OverrideHeight" type="xs:string" />
-    <xs:attribute name="Alignment" type="EnumElementAlignment" />
-    <xs:attribute name="Margin" type="xs:string" />
-    <xs:attribute name="Offset" type="xs:string" />
-    <xs:attribute name="OffsetFromParent" type="xs:string" />
-    <xs:attribute name="Pivot" type="xs:string" />
-    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
-    <xs:attribute name="Alpha" type="xs:string" />
-    <xs:attribute name="IsVisible" type="xs:string" />
-    <xs:attribute name="SortIndex" type="xs:string" />
-    <xs:attribute name="UpdateRectTransform" type="xs:string" />
-    <xs:attribute name="UpdateBackground" type="xs:string" />
-    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillMethod" type="EnumFillMethod" />
-    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
-    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
-    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
-    <xs:attribute name="BackgroundImage" type="xs:string" />
-    <xs:attribute name="BackgroundImageType" type="EnumType" />
-    <xs:attribute name="BackgroundMaterial" type="xs:string" />
-    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
-    <xs:attribute name="BackgroundColor" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ListChanged" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
     <xs:anyAttribute processContents="skip" />
@@ -1788,255 +1959,6 @@
     <xs:attribute name="MouseExit" type="xs:string" />
     <xs:attribute name="MouseDown" type="xs:string" />
     <xs:attribute name="MouseUp" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="ScrollRect" type="ScrollRect" />
-  <xs:complexType name="ScrollRect">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="CanScrollHorizontally" type="xs:string" />
-    <xs:attribute name="CanScrollVertically" type="xs:string" />
-    <xs:attribute name="DecelerationRate" type="xs:string" />
-    <xs:attribute name="Elasticity" type="xs:string" />
-    <xs:attribute name="HorizontalNormalizedPosition" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbar" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarSpacing" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarVisibility" type="EnumScrollbarVisibility" />
-    <xs:attribute name="HasInertia" type="xs:string" />
-    <xs:attribute name="MovementType" type="EnumMovementType" />
-    <xs:attribute name="NormalizedPosition" type="xs:string" />
-    <xs:attribute name="ScrollContent" type="xs:string" />
-    <xs:attribute name="ScrollSensitivity" type="xs:string" />
-    <xs:attribute name="ScrollVelocity" type="xs:string" />
-    <xs:attribute name="VerticalNormalizedPosition" type="xs:string" />
-    <xs:attribute name="VerticalScrollbar" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarSpacing" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarVisibility" type="EnumScrollbarVisibility" />
-    <xs:attribute name="DisableInteractionScrollDelta" type="xs:string" />
-    <xs:attribute name="Viewport" type="xs:string" />
-    <xs:attribute name="Width" type="xs:string" />
-    <xs:attribute name="Height" type="xs:string" />
-    <xs:attribute name="OverrideWidth" type="xs:string" />
-    <xs:attribute name="OverrideHeight" type="xs:string" />
-    <xs:attribute name="Alignment" type="EnumElementAlignment" />
-    <xs:attribute name="Margin" type="xs:string" />
-    <xs:attribute name="Offset" type="xs:string" />
-    <xs:attribute name="OffsetFromParent" type="xs:string" />
-    <xs:attribute name="Pivot" type="xs:string" />
-    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
-    <xs:attribute name="Alpha" type="xs:string" />
-    <xs:attribute name="IsVisible" type="xs:string" />
-    <xs:attribute name="SortIndex" type="xs:string" />
-    <xs:attribute name="UpdateRectTransform" type="xs:string" />
-    <xs:attribute name="UpdateBackground" type="xs:string" />
-    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillMethod" type="EnumFillMethod" />
-    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
-    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
-    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
-    <xs:attribute name="BackgroundImage" type="xs:string" />
-    <xs:attribute name="BackgroundImageType" type="EnumType" />
-    <xs:attribute name="BackgroundMaterial" type="xs:string" />
-    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
-    <xs:attribute name="BackgroundColor" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="BeginDrag" type="xs:string" />
-    <xs:attribute name="EndDrag" type="xs:string" />
-    <xs:attribute name="Drag" type="xs:string" />
-    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="Scrollbar" type="Scrollbar" />
-  <xs:complexType name="Scrollbar">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="Orientation" type="EnumElementOrientation" />
-    <xs:attribute name="Breadth" type="xs:string" />
-    <xs:attribute name="ScrollDirection" type="EnumDirection" />
-    <xs:attribute name="NumberOfSteps" type="xs:string" />
-    <xs:attribute name="HandleSize" type="xs:string" />
-    <xs:attribute name="Value" type="xs:string" />
-    <xs:attribute name="HandleImage" type="xs:string" />
-    <xs:attribute name="HandleImageType" type="EnumType" />
-    <xs:attribute name="HandleMaterial" type="xs:string" />
-    <xs:attribute name="HandleColor" type="xs:string" />
-    <xs:attribute name="Width" type="xs:string" />
-    <xs:attribute name="Height" type="xs:string" />
-    <xs:attribute name="OverrideWidth" type="xs:string" />
-    <xs:attribute name="OverrideHeight" type="xs:string" />
-    <xs:attribute name="Alignment" type="EnumElementAlignment" />
-    <xs:attribute name="Margin" type="xs:string" />
-    <xs:attribute name="Offset" type="xs:string" />
-    <xs:attribute name="OffsetFromParent" type="xs:string" />
-    <xs:attribute name="Pivot" type="xs:string" />
-    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
-    <xs:attribute name="Alpha" type="xs:string" />
-    <xs:attribute name="IsVisible" type="xs:string" />
-    <xs:attribute name="SortIndex" type="xs:string" />
-    <xs:attribute name="UpdateRectTransform" type="xs:string" />
-    <xs:attribute name="UpdateBackground" type="xs:string" />
-    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillMethod" type="EnumFillMethod" />
-    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
-    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
-    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
-    <xs:attribute name="BackgroundImage" type="xs:string" />
-    <xs:attribute name="BackgroundImageType" type="EnumType" />
-    <xs:attribute name="BackgroundMaterial" type="xs:string" />
-    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
-    <xs:attribute name="BackgroundColor" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="Activated" type="xs:string" />
-    <xs:attribute name="Deactivated" type="xs:string" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:element name="Panel" type="Panel" />
-  <xs:complexType name="Panel">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="xs:string" />
-    <xs:attribute name="BasedOn" type="xs:string" />
-    <xs:attribute name="Theme" type="xs:string" />
-    <xs:attribute name="BaseDirectory" type="xs:string" />
-    <xs:attribute name="UnitSize" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarOrientation" type="EnumElementOrientation" />
-    <xs:attribute name="HorizontalScrollbarBreadth" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarScrollDirection" type="EnumDirection" />
-    <xs:attribute name="HorizontalScrollbarNumberOfSteps" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarHandleSize" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarValue" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarImage" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarImageType" type="EnumType" />
-    <xs:attribute name="HorizontalScrollbarMaterial" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarColor" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarHandleImage" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarHandleImageType" type="EnumType" />
-    <xs:attribute name="HorizontalScrollbarHandleMaterial" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarHandleColor" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarOrientation" type="EnumElementOrientation" />
-    <xs:attribute name="VerticalScrollbarBreadth" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarScrollDirection" type="EnumDirection" />
-    <xs:attribute name="VerticalScrollbarNumberOfSteps" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarHandleSize" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarValue" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarImage" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarImageType" type="EnumType" />
-    <xs:attribute name="VerticalScrollbarMaterial" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarColor" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarHandleImage" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarHandleImageType" type="EnumType" />
-    <xs:attribute name="VerticalScrollbarHandleMaterial" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarHandleColor" type="xs:string" />
-    <xs:attribute name="CanScrollHorizontally" type="xs:string" />
-    <xs:attribute name="CanScrollVertically" type="xs:string" />
-    <xs:attribute name="DecelerationRate" type="xs:string" />
-    <xs:attribute name="Elasticity" type="xs:string" />
-    <xs:attribute name="HorizontalNormalizedPosition" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarSpacing" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarVisibility" type="EnumScrollbarVisibility" />
-    <xs:attribute name="HasInertia" type="xs:string" />
-    <xs:attribute name="MovementType" type="EnumMovementType" />
-    <xs:attribute name="NormalizedPosition" type="xs:string" />
-    <xs:attribute name="ScrollSensitivity" type="xs:string" />
-    <xs:attribute name="ScrollVelocity" type="xs:string" />
-    <xs:attribute name="VerticalNormalizedPosition" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarSpacing" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarVisibility" type="EnumScrollbarVisibility" />
-    <xs:attribute name="DisableInteractionScrollDelta" type="xs:string" />
-    <xs:attribute name="Viewport" type="xs:string" />
-    <xs:attribute name="ShowHorizontalScrollbar" type="xs:string" />
-    <xs:attribute name="ShowVerticalScrollbar" type="xs:string" />
-    <xs:attribute name="ContentMargin" type="xs:string" />
-    <xs:attribute name="ContentAlignment" type="EnumElementAlignment" />
-    <xs:attribute name="Width" type="xs:string" />
-    <xs:attribute name="Height" type="xs:string" />
-    <xs:attribute name="OverrideWidth" type="xs:string" />
-    <xs:attribute name="OverrideHeight" type="xs:string" />
-    <xs:attribute name="Alignment" type="EnumElementAlignment" />
-    <xs:attribute name="Margin" type="xs:string" />
-    <xs:attribute name="Offset" type="xs:string" />
-    <xs:attribute name="OffsetFromParent" type="xs:string" />
-    <xs:attribute name="Pivot" type="xs:string" />
-    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
-    <xs:attribute name="Alpha" type="xs:string" />
-    <xs:attribute name="IsVisible" type="xs:string" />
-    <xs:attribute name="SortIndex" type="xs:string" />
-    <xs:attribute name="UpdateRectTransform" type="xs:string" />
-    <xs:attribute name="UpdateBackground" type="xs:string" />
-    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
-    <xs:attribute name="BackgroundImageFillMethod" type="EnumFillMethod" />
-    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
-    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
-    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
-    <xs:attribute name="BackgroundImage" type="xs:string" />
-    <xs:attribute name="BackgroundImageType" type="EnumType" />
-    <xs:attribute name="BackgroundMaterial" type="xs:string" />
-    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
-    <xs:attribute name="BackgroundColor" type="xs:string" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="HideFlags" type="EnumHideFlags" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
-    <xs:attribute name="IsTemplate" type="xs:string" />
-    <xs:attribute name="IsDestroyed" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="EndDrag" type="xs:string" />
-    <xs:attribute name="BeginDrag" type="xs:string" />
-    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
-    <xs:attribute name="Drag" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
     <xs:anyAttribute processContents="skip" />
@@ -2536,6 +2458,67 @@
     <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
+  <xs:element name="ViewSwitcher" type="ViewSwitcher" />
+  <xs:complexType name="ViewSwitcher">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="StartView" type="xs:string" />
+    <xs:attribute name="SwitchToDefault" type="xs:string" />
+    <xs:attribute name="DeactiveViews" type="xs:string" />
+    <xs:attribute name="TransitionIn" type="xs:string" />
+    <xs:attribute name="TransitionOut" type="xs:string" />
+    <xs:attribute name="TransitionInReverse" type="xs:string" />
+    <xs:attribute name="TransitionOutReverse" type="xs:string" />
+    <xs:attribute name="Width" type="xs:string" />
+    <xs:attribute name="Height" type="xs:string" />
+    <xs:attribute name="OverrideWidth" type="xs:string" />
+    <xs:attribute name="OverrideHeight" type="xs:string" />
+    <xs:attribute name="Alignment" type="EnumElementAlignment" />
+    <xs:attribute name="Margin" type="xs:string" />
+    <xs:attribute name="Offset" type="xs:string" />
+    <xs:attribute name="OffsetFromParent" type="xs:string" />
+    <xs:attribute name="Pivot" type="xs:string" />
+    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
+    <xs:attribute name="Alpha" type="xs:string" />
+    <xs:attribute name="IsVisible" type="xs:string" />
+    <xs:attribute name="SortIndex" type="xs:string" />
+    <xs:attribute name="UpdateRectTransform" type="xs:string" />
+    <xs:attribute name="UpdateBackground" type="xs:string" />
+    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillMethod" type="EnumFillMethod" />
+    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
+    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
+    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
+    <xs:attribute name="BackgroundImage" type="xs:string" />
+    <xs:attribute name="BackgroundImageType" type="EnumType" />
+    <xs:attribute name="BackgroundMaterial" type="xs:string" />
+    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundColor" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
   <xs:element name="TabPanel" type="TabPanel" />
   <xs:complexType name="TabPanel">
     <xs:sequence>
@@ -2571,14 +2554,15 @@
     <xs:attribute name="TabListContentAlignment" type="EnumElementAlignment" />
     <xs:attribute name="TabListContentMargin" type="xs:string" />
     <xs:attribute name="TabListSortDirection" type="EnumElementSortDirection" />
+    <xs:attribute name="TabListUseListMask" type="xs:string" />
     <xs:attribute name="TabListMaskWidth" type="xs:string" />
     <xs:attribute name="TabListMaskHeight" type="xs:string" />
     <xs:attribute name="TabListMaskOffset" type="xs:string" />
     <xs:attribute name="TabListMaskImage" type="xs:string" />
-    <xs:attribute name="TabListMaskImageType" type="EnumType" />
+    <xs:attribute name="TabListMaskImageType" type="xs:string" />
     <xs:attribute name="TabListMaskMaterial" type="xs:string" />
     <xs:attribute name="TabListMaskColor" type="xs:string" />
-    <xs:attribute name="TabListMaskAlignment" type="EnumElementAlignment" />
+    <xs:attribute name="TabListMaskAlignment" type="xs:string" />
     <xs:attribute name="TabListMaskShowGraphic" type="xs:string" />
     <xs:attribute name="CanSelect" type="xs:string" />
     <xs:attribute name="AutoAdjustContentMargin" type="xs:string" />
@@ -2665,6 +2649,76 @@
     <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
     <xs:attribute name="BackgroundImage" type="xs:string" />
     <xs:attribute name="BackgroundImageType" type="EnumType" />
+    <xs:attribute name="BackgroundMaterial" type="xs:string" />
+    <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundColor" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:element name="UserInterface" type="UserInterface" />
+  <xs:complexType name="UserInterface">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="RenderMode" type="EnumRenderMode" />
+    <xs:attribute name="PixelPerfect" type="xs:string" />
+    <xs:attribute name="SortingOrder" type="xs:string" />
+    <xs:attribute name="RenderCamera" type="xs:string" />
+    <xs:attribute name="PlaneDistance" type="xs:string" />
+    <xs:attribute name="SortingLayerId" type="xs:string" />
+    <xs:attribute name="SortingLayerName" type="xs:string" />
+    <xs:attribute name="OrderInLayer" type="xs:string" />
+    <xs:attribute name="OverrideSorting" type="xs:string" />
+    <xs:attribute name="OverridePixelPerfect" type="xs:string" />
+    <xs:attribute name="UIScaleMode" type="EnumScaleMode" />
+    <xs:attribute name="ScaleFactor" type="xs:string" />
+    <xs:attribute name="ReferencePixelsPerUnit" type="xs:string" />
+    <xs:attribute name="DynamicPixelsPerUnit" type="xs:string" />
+    <xs:attribute name="IgnoreReversedGraphics" type="xs:string" />
+    <xs:attribute name="BlockingObjects" type="EnumBlockingObjects" />
+    <xs:attribute name="Width" type="xs:string" />
+    <xs:attribute name="Height" type="xs:string" />
+    <xs:attribute name="OverrideWidth" type="xs:string" />
+    <xs:attribute name="OverrideHeight" type="xs:string" />
+    <xs:attribute name="Alignment" type="EnumElementAlignment" />
+    <xs:attribute name="Margin" type="xs:string" />
+    <xs:attribute name="Offset" type="xs:string" />
+    <xs:attribute name="OffsetFromParent" type="xs:string" />
+    <xs:attribute name="Pivot" type="xs:string" />
+    <xs:attribute name="RaycastBlockMode" type="EnumRaycastBlockMode" />
+    <xs:attribute name="Alpha" type="xs:string" />
+    <xs:attribute name="IsVisible" type="xs:string" />
+    <xs:attribute name="SortIndex" type="xs:string" />
+    <xs:attribute name="UpdateRectTransform" type="xs:string" />
+    <xs:attribute name="UpdateBackground" type="xs:string" />
+    <xs:attribute name="BackgroundImageEventAlphaThreshold" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillAmount" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillCenter" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillClockwise" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillMethod" type="xs:string" />
+    <xs:attribute name="BackgroundImageFillOrigin" type="xs:string" />
+    <xs:attribute name="BackgroundImageOverrideSprite" type="xs:string" />
+    <xs:attribute name="BackgroundImagePreserveAspect" type="xs:string" />
+    <xs:attribute name="BackgroundImage" type="xs:string" />
+    <xs:attribute name="BackgroundImageType" type="xs:string" />
     <xs:attribute name="BackgroundMaterial" type="xs:string" />
     <xs:attribute name="BackgroundImageMaskable" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
@@ -2821,6 +2875,33 @@
     <xs:attribute name="IsDestroyed" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="CloseButtonClick" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:element name="AdvancedLists" type="AdvancedLists" />
+  <xs:complexType name="AdvancedLists">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Cards" type="xs:string" />
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
     <xs:anyAttribute processContents="skip" />
@@ -3671,117 +3752,31 @@
     <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
-  <xs:simpleType name="EnumHideFlags">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="None" />
-      <xs:enumeration value="HideInHierarchy" />
-      <xs:enumeration value="HideInInspector" />
-      <xs:enumeration value="DontSaveInEditor" />
-      <xs:enumeration value="NotEditable" />
-      <xs:enumeration value="DontSaveInBuild" />
-      <xs:enumeration value="DontUnloadUnusedAsset" />
-      <xs:enumeration value="DontSave" />
-      <xs:enumeration value="HideAndDontSave" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumRenderMode">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="ScreenSpaceOverlay" />
-      <xs:enumeration value="ScreenSpaceCamera" />
-      <xs:enumeration value="WorldSpace" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumScaleMode">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="ConstantPixelSize" />
-      <xs:enumeration value="ScaleWithScreenSize" />
-      <xs:enumeration value="ConstantPhysicalSize" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumBlockingObjects">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="None" />
-      <xs:enumeration value="TwoD" />
-      <xs:enumeration value="ThreeD" />
-      <xs:enumeration value="All" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumElementAlignment">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Center" />
-      <xs:enumeration value="Left" />
-      <xs:enumeration value="Top" />
-      <xs:enumeration value="TopLeft" />
-      <xs:enumeration value="Right" />
-      <xs:enumeration value="TopRight" />
-      <xs:enumeration value="Bottom" />
-      <xs:enumeration value="BottomLeft" />
-      <xs:enumeration value="BottomRight" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumRaycastBlockMode">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Default" />
-      <xs:enumeration value="Always" />
-      <xs:enumeration value="Never" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumFillMethod">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Horizontal" />
-      <xs:enumeration value="Vertical" />
-      <xs:enumeration value="Radial90" />
-      <xs:enumeration value="Radial180" />
-      <xs:enumeration value="Radial360" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Simple" />
-      <xs:enumeration value="Sliced" />
-      <xs:enumeration value="Tiled" />
-      <xs:enumeration value="Filled" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumFontStyle">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Normal" />
-      <xs:enumeration value="Bold" />
-      <xs:enumeration value="Italic" />
-      <xs:enumeration value="BoldAndItalic" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumHorizontalWrapMode">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Wrap" />
-      <xs:enumeration value="Overflow" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumVerticalWrapMode">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Truncate" />
-      <xs:enumeration value="Overflow" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumAdjustToText">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="None" />
-      <xs:enumeration value="Width" />
-      <xs:enumeration value="Height" />
-      <xs:enumeration value="WidthAndHeight" />
-    </xs:restriction>
-  </xs:simpleType>
+  <xs:element name="ViewSwitcherExample" type="ViewSwitcherExample" />
+  <xs:complexType name="ViewSwitcherExample">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
 
   <xs:simpleType name="EnumEasingFunctionType">
     <xs:restriction base="xs:string">
@@ -3819,6 +3814,93 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="EnumHideFlags">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="HideInHierarchy" />
+      <xs:enumeration value="HideInInspector" />
+      <xs:enumeration value="DontSaveInEditor" />
+      <xs:enumeration value="NotEditable" />
+      <xs:enumeration value="DontSaveInBuild" />
+      <xs:enumeration value="DontUnloadUnusedAsset" />
+      <xs:enumeration value="DontSave" />
+      <xs:enumeration value="HideAndDontSave" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumFontStyle">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal" />
+      <xs:enumeration value="Bold" />
+      <xs:enumeration value="Italic" />
+      <xs:enumeration value="BoldAndItalic" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumHorizontalWrapMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Wrap" />
+      <xs:enumeration value="Overflow" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumVerticalWrapMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Truncate" />
+      <xs:enumeration value="Overflow" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumElementAlignment">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Center" />
+      <xs:enumeration value="Left" />
+      <xs:enumeration value="Top" />
+      <xs:enumeration value="TopLeft" />
+      <xs:enumeration value="Right" />
+      <xs:enumeration value="TopRight" />
+      <xs:enumeration value="Bottom" />
+      <xs:enumeration value="BottomLeft" />
+      <xs:enumeration value="BottomRight" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumAdjustToText">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Width" />
+      <xs:enumeration value="Height" />
+      <xs:enumeration value="WidthAndHeight" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumRaycastBlockMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Default" />
+      <xs:enumeration value="Always" />
+      <xs:enumeration value="Never" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumFillMethod">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Horizontal" />
+      <xs:enumeration value="Vertical" />
+      <xs:enumeration value="Radial90" />
+      <xs:enumeration value="Radial180" />
+      <xs:enumeration value="Radial360" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Simple" />
+      <xs:enumeration value="Sliced" />
+      <xs:enumeration value="Tiled" />
+      <xs:enumeration value="Filled" />
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="EnumElementOrientation">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Vertical" />
@@ -3830,6 +3912,67 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Ascending" />
       <xs:enumeration value="Descending" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumRenderMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ScreenSpaceOverlay" />
+      <xs:enumeration value="ScreenSpaceCamera" />
+      <xs:enumeration value="WorldSpace" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumScaleMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ConstantPixelSize" />
+      <xs:enumeration value="ScaleWithScreenSize" />
+      <xs:enumeration value="ConstantPhysicalSize" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumBlockingObjects">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="TwoD" />
+      <xs:enumeration value="ThreeD" />
+      <xs:enumeration value="All" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumScrollbarVisibility">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Permanent" />
+      <xs:enumeration value="AutoHide" />
+      <xs:enumeration value="AutoHideAndExpandViewport" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumMovementType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unrestricted" />
+      <xs:enumeration value="Elastic" />
+      <xs:enumeration value="Clamped" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumDirection">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LeftToRight" />
+      <xs:enumeration value="RightToLeft" />
+      <xs:enumeration value="BottomToTop" />
+      <xs:enumeration value="TopToBottom" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EnumPanelScrollbarVisibility">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Visible" />
+      <xs:enumeration value="Permanent" />
+      <xs:enumeration value="AutoHide" />
+      <xs:enumeration value="AutoHideAndExpandViewport" />
+      <xs:enumeration value="Hidden" />
+      <xs:enumeration value="Remove" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -3893,31 +4036,6 @@
       <xs:enumeration value="SingleLine" />
       <xs:enumeration value="MultiLineSubmit" />
       <xs:enumeration value="MultiLineNewline" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumScrollbarVisibility">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Permanent" />
-      <xs:enumeration value="AutoHide" />
-      <xs:enumeration value="AutoHideAndExpandViewport" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumMovementType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Unrestricted" />
-      <xs:enumeration value="Elastic" />
-      <xs:enumeration value="Clamped" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="EnumDirection">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="LeftToRight" />
-      <xs:enumeration value="RightToLeft" />
-      <xs:enumeration value="BottomToTop" />
-      <xs:enumeration value="TopToBottom" />
     </xs:restriction>
   </xs:simpleType>
 
