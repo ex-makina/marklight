@@ -287,15 +287,6 @@ namespace MarkLight.Views.UI
         [MapTo("ScrollRect.HorizontalScrollbarSpacing")]
         public _float HorizontalScrollbarSpacing;
 
-#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1
-        /// <summary>
-        /// Indicates horizontal scrollbar visiblity mode.
-        /// </summary>
-        /// <d>Indicates horizontal scrollbar visiblity mode.</d>
-        [MapTo("ScrollRect.HorizontalScrollbarVisibility")]
-        public _ScrollbarVisibility HorizontalScrollbarVisibility;
-#endif
-
         /// <summary>
         /// Indicates if scroll has intertia.
         /// </summary>
@@ -345,15 +336,6 @@ namespace MarkLight.Views.UI
         [MapTo("ScrollRect.VerticalScrollbarSpacing")]
         public _float VerticalScrollbarSpacing;
 
-#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1
-        /// <summary>
-        /// Indicates vertical scrollbar visiblity mode.
-        /// </summary>
-        /// <d>Indicates vertical scrollbar visiblity mode.</d>
-        [MapTo("ScrollRect.VerticalScrollbarVisibility")]
-        public _ScrollbarVisibility VerticalScrollbarVisibility;
-#endif
-
         /// <summary>
         /// Scroll delta distance for disabling interaction.
         /// </summary>
@@ -369,6 +351,13 @@ namespace MarkLight.Views.UI
         public _RectTransformComponent Viewport;
 
         /// <summary>
+        /// Panel content alignment.
+        /// </summary>
+        /// <d>Panel content alignment. Also controls the initial position of the scrollbars.</d>
+        [MapTo("ScrollRect.ContentAlignment")]
+        public _ElementAlignment ContentAlignment;
+
+        /// <summary>
         /// Scrollable content.
         /// </summary>
         /// <d>Contains the panel's scrollable content.</d>
@@ -377,45 +366,25 @@ namespace MarkLight.Views.UI
         #endregion
 
         /// <summary>
-        /// Show horizontal scrollbar.
+        /// Indicates how the horizontal scrollbar should be shown.
         /// </summary>
-        /// <d>Boolean indicating if the horizontal scrollbar should be shown.</d>
-        [ChangeHandler("BehaviorChanged")]
-        public _bool ShowHorizontalScrollbar;
+        /// <d>Enum indicating how the horizontal scrollbar should be shown.</d>
+        [ChangeHandler("ScrollbarVisibilityChanged")]
+        public _PanelScrollbarVisibility HorizontalScrollbarVisibility;
 
         /// <summary>
-        /// Show vertical scrollbar.
+        /// Indicates how the vertical scrollbar should be shown.
         /// </summary>
-        /// <d>Boolean indicating if the vertical scrollbar should be shown.</d>
-        [ChangeHandler("BehaviorChanged")]
-        public _bool ShowVerticalScrollbar;
+        /// <d>Enum indicating how the vertical scrollbar should be shown.</d>
+        [ChangeHandler("ScrollbarVisibilityChanged")]
+        public _PanelScrollbarVisibility VerticalScrollbarVisibility;
 
         /// <summary>
-        /// Panel content margin.
+        /// Indicates if mask margin should be added.
         /// </summary>
-        /// <d>Margin of the panel content.</d>
-        [MapTo("PanelRegion.Margin")]
-        public _ElementMargin ContentMargin;
+        /// <d>Boolean indicating if margin should be added to the content mask to make room for the scrollbars.</d>
+        public _bool AddMaskMargin;
 
-        /// <summary>
-        /// Region containing the panel content and scrollbars.
-        /// </summary>        
-        /// <d>Region containing the panel content and scrollbars.</d>
-        public Region PanelRegion;
-
-        /// <summary>
-        /// Panel content alignment.
-        /// </summary>
-        /// <d>Panel content alignment. Also controls the initial position of the scrollbars.</d>
-        [MapTo("ScrollContent.Alignment")]
-        public _ElementAlignment ContentAlignment;
-
-        /// <summary>
-        /// Frame containing the panel content.
-        /// </summary>
-        /// <d>Frame containing the panel content but not the scrollbars.</d>
-        public Frame ScrollContent;
-       
         /// <summary>
         /// Mask containing the panel content.
         /// </summary>
@@ -435,32 +404,59 @@ namespace MarkLight.Views.UI
 
             ScrollRect.ScrollRectComponent.vertical = true;
             ScrollRect.ScrollRectComponent.horizontal = true;
-            ShowHorizontalScrollbar.DirectValue = true;
-            ShowVerticalScrollbar.DirectValue = true;
+            AddMaskMargin.DirectValue = true;
         }
 
         /// <summary>
         /// Called when the behavior of the view has been changed.
         /// </summary>
-        public override void BehaviorChanged()
+        public virtual void ScrollbarVisibilityChanged()
         {
-            float horizontalScrollbarBreadth = ShowHorizontalScrollbar ? HorizontalScrollbar.Breadth.Value.Pixels : 0;
-            float verticalScrollbarBreadth = ShowVerticalScrollbar ? VerticalScrollbar.Breadth.Value.Pixels : 0;
+            // should horizontal scrollbar be destroyed?
+            if (HorizontalScrollbar != null && HorizontalScrollbarVisibility.Value == PanelScrollbarVisibility.Remove)
+            {
+                // yes.
+                HorizontalScrollbar.Destroy();
+                HorizontalScrollbar = null;
+            }
+
+            // should vertical scrollbar be destroyed?
+            if (VerticalScrollbar != null && VerticalScrollbarVisibility.Value == PanelScrollbarVisibility.Remove)
+            {
+                // yes.
+                VerticalScrollbar.Destroy();
+                VerticalScrollbar = null;
+            }
+
+            bool horizontalShown = HorizontalScrollbarVisibility.Value != PanelScrollbarVisibility.Hidden && HorizontalScrollbar != null;
+            bool verticalShown = VerticalScrollbarVisibility.Value != PanelScrollbarVisibility.Hidden && VerticalScrollbar != null;
+            float horizontalScrollbarBreadth = horizontalShown ? HorizontalScrollbar.Breadth.Value.Pixels : 0;
+            float verticalScrollbarBreadth = verticalShown ? VerticalScrollbar.Breadth.Value.Pixels : 0;
 
             // set margins of the mask and scrollbars based on the breadth of scrollbars
-            ScrollbarMask.Margin.Value = new ElementMargin(0, 0, verticalScrollbarBreadth, horizontalScrollbarBreadth);
-            HorizontalScrollbar.Margin.Value = new ElementMargin(0, 0, verticalScrollbarBreadth, 0);
-            VerticalScrollbar.Margin.Value = new ElementMargin(0, 0, 0, horizontalScrollbarBreadth);
+            if (AddMaskMargin)
+            {
+                ScrollbarMask.Margin.Value = new ElementMargin(0, 0, verticalScrollbarBreadth, horizontalScrollbarBreadth);
+            }
 
-            // enable/disable scrollbars
-            HorizontalScrollbar.IsActive.Value = ShowHorizontalScrollbar.Value;
-            VerticalScrollbar.IsActive.Value = ShowVerticalScrollbar.Value;
-            ScrollRect.HorizontalScrollbar.Value = ShowHorizontalScrollbar ? HorizontalScrollbar.ScrollbarComponent : null;
-            ScrollRect.VerticalScrollbar.Value = ShowVerticalScrollbar ? VerticalScrollbar.ScrollbarComponent : null;
+            if (HorizontalScrollbar != null)
+            {
+                HorizontalScrollbar.Margin.Value = new ElementMargin(0, 0, verticalScrollbarBreadth, 0);
+                HorizontalScrollbar.IsActive.Value = horizontalShown;
+                ScrollRect.HorizontalScrollbarVisibility.Value = HorizontalScrollbarVisibility.Value.ToScrollRectVisibility();
+            }
+
+            if (VerticalScrollbar != null)
+            {
+                VerticalScrollbar.Margin.Value = new ElementMargin(0, 0, 0, horizontalScrollbarBreadth);
+                VerticalScrollbar.IsActive.Value = verticalShown;
+                ScrollRect.VerticalScrollbarVisibility.Value = HorizontalScrollbarVisibility.Value.ToScrollRectVisibility();
+            }
             
-            base.BehaviorChanged();
+            ScrollRect.HorizontalScrollbar.Value = horizontalShown ? HorizontalScrollbar.ScrollbarComponent : null;
+            ScrollRect.VerticalScrollbar.Value = verticalShown ? VerticalScrollbar.ScrollbarComponent : null;
         }
-
+        
         #endregion
     }
 }

@@ -55,7 +55,7 @@ namespace MarkLight.Views.UI
         /// Horizontal normalized position.
         /// </summary>
         /// <d>Value between 0-1 indicating the position of the scrollable content.</d>
-        [MapTo("ScrollRectComponent.horizontalNormalizedPosition")]
+        [ChangeHandler("NormalizedPositionChanged", TriggerImmediately = true)]
         public _float HorizontalNormalizedPosition;
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace MarkLight.Views.UI
         /// Normalized position of the scroll.
         /// </summary>
         /// <d>The scroll position as a Vector2 between (0,0) and (1,1) with (0,0) being the lower left corner.</d>
-        [MapTo("ScrollRectComponent.normalizedPosition")]
+        [ChangeHandler("NormalizedPositionChanged", TriggerImmediately = true)]
         public _Vector2 NormalizedPosition;
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace MarkLight.Views.UI
         /// Vertical normalized position.
         /// </summary>
         /// <d>Value between 0-1 indicating the position of the scrollable content.</d>
-        [MapTo("ScrollRectComponent.verticalNormalizedPosition")]
+        [ChangeHandler("NormalizedPositionChanged", TriggerImmediately = true)]
         public _float VerticalNormalizedPosition;
 
         /// <summary>
@@ -167,6 +167,20 @@ namespace MarkLight.Views.UI
         public _RectTransformComponent Viewport;
 
         /// <summary>
+        /// Scrollable content alignment.
+        /// </summary>
+        /// <d>Scrollable content alignment. Also controls the initial position of the scrollbars.</d>
+        [ChangeHandler("LayoutChanged")]
+        public _ElementAlignment ContentAlignment;
+
+        /// <summary>
+        /// Indicates if normalized position should be updated from NormalizedPosition field.
+        /// </summary>
+        /// <d>When NormalizedPosition is changed from the outside UpdateNormalizedPosition is set to true so that the scroll rect updates from the field instead of the other way around.</d>
+        [ChangeHandler("NormalizedPositionChanged", TriggerImmediately = true)]
+        public _bool UpdateNormalizedPosition;
+
+        /// <summary>
         /// ScrollRect component.
         /// </summary>
         /// <d>Component responsible for handling scrollable content.</d>
@@ -195,8 +209,9 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Triggered as the user initiates a potential drag over the slider.</d>
         public ViewAction InitializePotentialDrag;
-        
+
         private bool _hasDisabledInteraction;
+        private int _updateNormalizedPositionCount;
 
         #endregion
 
@@ -228,21 +243,90 @@ namespace MarkLight.Views.UI
         /// Called when the layout of the view has been changed.
         /// </summary>
         public override void LayoutChanged()
-        {            
+        {
+            var child = this.Find<UIView>(false);
+            if (child == null)
+                return;
+
+            // set scrollrect content to first child
             if (ScrollRectComponent.content == null)
             {
-                // set scrollrect content to first child
-                var child = this.Find<UIView>(false);
-                if (child != null)
-                {
-                    ScrollRectComponent.content = child.RectTransform;
-                }
+                ScrollRectComponent.content = child.RectTransform;
+            }
+
+            if (ContentAlignment.IsSet)
+            {
+                child.Alignment.DirectValue = ContentAlignment.Value;
             }
 
             // workaround for panel blocking drag events in child views
             UnblockDragEvents();
-
             base.LayoutChanged();
+        }
+
+        /// <summary>
+        /// Called each frame and updates the scroll rect.
+        /// </summary>
+        public virtual void Update()
+        {
+            // keep track of current normalized position
+            if (!UpdateNormalizedPosition)
+            {
+                // set normalized position
+                NormalizedPosition.DirectValue = ScrollRectComponent.normalizedPosition;
+                HorizontalNormalizedPosition.DirectValue = ScrollRectComponent.normalizedPosition.x;
+                VerticalNormalizedPosition.DirectValue = ScrollRectComponent.normalizedPosition.y;
+                return;
+            }
+
+            // we get here if we want to change the normalized position from outside           
+            if (ScrollRectComponent.normalizedPosition != NormalizedPosition.Value)
+            {
+                ScrollRectComponent.normalizedPosition = NormalizedPosition.Value;
+            }
+
+            // workaround for issue where scroll rect resets its normalized position when the content
+            // updates its rect transform, keep updating for a few frames to restore reset position
+            ++_updateNormalizedPositionCount;
+            if (_updateNormalizedPositionCount > 3)
+            {                
+                UpdateNormalizedPosition.DirectValue = false;
+            }            
+        }
+
+        /// <summary>
+        /// Called when the normalized position of the scroll rect has changed.
+        /// </summary>
+        public void NormalizedPositionChanged()
+        {
+            Vector2 normalizedPosition = Vector2.zero;
+            if (NormalizedPosition.IsSet)
+            {
+                normalizedPosition = NormalizedPosition.Value;
+                UpdateNormalizedPosition.DirectValue = true;
+            }
+
+            if (HorizontalNormalizedPosition.IsSet || VerticalNormalizedPosition.IsSet)
+            {
+                if (HorizontalNormalizedPosition.IsSet)
+                {
+                    normalizedPosition.x = HorizontalNormalizedPosition.Value;
+                }
+
+                if (VerticalNormalizedPosition.IsSet)
+                {
+                    normalizedPosition.y = VerticalNormalizedPosition.Value;
+                }
+
+                NormalizedPosition.DirectValue = normalizedPosition;
+                UpdateNormalizedPosition.DirectValue = true;
+            }
+
+            if (UpdateNormalizedPosition)
+            {
+                ScrollRectComponent.normalizedPosition = NormalizedPosition.Value;
+                _updateNormalizedPositionCount = 0;
+            }
         }
 
         /// <summary>
@@ -331,8 +415,8 @@ namespace MarkLight.Views.UI
         public void ScrollRectEndDrag(PointerEventData eventData)
         {
             if (!DisableInteractionScrollDelta.IsSet)
-                return;                        
-            
+                return;
+
             // unblock raycasts
             if (_hasDisabledInteraction)
             {
@@ -346,6 +430,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         public void ScrollRectDrag(PointerEventData eventData)
         {
+            UpdateNormalizedPosition.DirectValue = false;
             if (!DisableInteractionScrollDelta.IsSet || _hasDisabledInteraction)
                 return;
 

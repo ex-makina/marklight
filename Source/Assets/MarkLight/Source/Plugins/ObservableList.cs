@@ -677,6 +677,29 @@ namespace MarkLight
             return item != null ? IndexOf((T)item) : -1;
         }
 
+        /// <summary>
+        /// Scrolls to item.
+        /// </summary>
+        public void ScrollTo(T item, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
+            int index = _list.IndexOf(item);
+            if (index >= 0)
+            {
+                ScrollTo(index, alignment, offset);
+            }
+        }
+
+        /// <summary>
+        /// Scrolls to item.
+        /// </summary>
+        public void ScrollTo(int index, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
+            if (ListChanged != null)
+            {
+                ListChanged(this, new ListChangedEventArgs { ListChangeAction = ListChangeAction.ScrollTo, StartIndex = index, EndIndex = index, Alignment = alignment, Offset = offset });
+            }
+        }
+
         #endregion
 
         #region Properties

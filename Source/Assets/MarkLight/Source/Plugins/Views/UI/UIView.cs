@@ -69,14 +69,14 @@ namespace MarkLight.Views.UI
         /// View offset.
         /// </summary>
         /// <d>Determines the offset of the content region relative to the view's position.</d>
-        [ChangeHandler("LayoutChanged")]
+        [ChangeHandler("OffsetChanged")]
         public _ElementMargin Offset;
 
         /// <summary>
         /// View offset from parent.
         /// </summary>
         /// <d>Used by parent views to adjust the positioning of its children without affecting the internal offset of the children.</d>
-        [ChangeHandler("LayoutChanged")]
+        [ChangeHandler("OffsetChanged")]
         public _ElementMargin OffsetFromParent;
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
-        /// Called when a field affecting the layout of the view has changed.
+        /// Called when a field affecting the layout of the view (size and anchors) has changed.
         /// </summary>
         public override void LayoutChanged()
         {
@@ -285,6 +285,25 @@ namespace MarkLight.Views.UI
             if (!UpdateRectTransform) 
                 return; // rect transform is updated elsewhere
 
+            RectTransformChanged();            
+        }
+
+        /// <summary>
+        /// Called when the offset of the view has changed.
+        /// </summary>
+        public virtual void OffsetChanged()
+        {
+            if (!UpdateRectTransform)
+                return; // rect transform is updated elsewhere
+
+            RectTransformChanged();
+        }
+
+        /// <summary>
+        /// Called when fields affecting the rect transform of the view has changed.
+        /// </summary>
+        public virtual void RectTransformChanged()
+        {
             // update rectTransform
             // horizontal alignment and positioning
             var width = OverrideWidth.IsSet ? OverrideWidth : Width;
@@ -437,6 +456,52 @@ namespace MarkLight.Views.UI
             }
         }
 
+        /// <summary>
+        /// Gets local point in view from screen point (e.g. mouse position).
+        /// </summary>
+        public Vector2 GetLocalPoint(Vector2 screenPoint)
+        {
+            // get root canvas
+            UnityEngine.Canvas canvas = LayoutRoot.Canvas;
+
+            // for screen space overlay the camera should be null
+            Camera worldCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+
+            // get local position of screen point
+            Vector2 pos;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(RectTransform, screenPoint, worldCamera, out pos);
+            return pos;
+        }
+
+        /// <summary>
+        /// Tests if mouse is over this view. 
+        /// </summary>
+        public bool ContainsMouse(Vector3 mousePosition, bool testChildren = false, bool ignoreFullScreenViews = false)
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(this.RectTransform, mousePosition)
+                && (!ignoreFullScreenViews || !IsFullScreen)
+                && gameObject.activeInHierarchy
+                && Alpha.Value > 0.99f)
+            {
+                return true;
+            }
+
+            if (testChildren)
+            {
+                foreach (var child in this)
+                {
+                    UIView view = child as UIView;
+                    if (view == null)
+                        continue;
+                                            
+                    if (view.ContainsMouse(mousePosition, testChildren, ignoreFullScreenViews))
+                        return true;                    
+                }
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region Properties
@@ -480,6 +545,17 @@ namespace MarkLight.Views.UI
                 }
 
                 return _canvasGroup;
+            }
+        }
+
+        /// <summary>
+        /// Gets boolean indicating if view takes up the entire screen.
+        /// </summary>
+        public bool IsFullScreen
+        {
+            get
+            {
+                return RectTransform.rect.width >= Screen.width && RectTransform.rect.height >= Screen.height;
             }
         }
 

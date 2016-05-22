@@ -202,7 +202,7 @@ namespace MarkLight.Views.UI
                 }
 
                 // update child layout
-                view.LayoutChanged();
+                view.RectTransformChanged();
                 ++childIndex;
             }
 

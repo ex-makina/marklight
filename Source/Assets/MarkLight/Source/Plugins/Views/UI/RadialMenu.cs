@@ -121,15 +121,10 @@ namespace MarkLight.Views.UI
         /// </summary>
         public void OpenAt(Vector2 mouseScreenPositionIn, bool animate = true)
         {
-            // get canvas
-            UnityEngine.Canvas canvas = LayoutRoot.Canvas;
-
             // calculate menu offset
-            Vector2 pos;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, mouseScreenPositionIn, canvas.worldCamera, out pos);
-            Vector2 mouseScreenPosition = canvas.transform.TransformPoint(pos);
-            _menuOffset.x = mouseScreenPosition.x - transform.position.x;
-            _menuOffset.y = -(mouseScreenPosition.y - transform.position.y);
+            Vector2 pos = GetLocalPoint(mouseScreenPositionIn);
+            _menuOffset.x = pos.x;
+            _menuOffset.y = -pos.y;
             UpdateMenu();
 
             Open(animate);

@@ -95,7 +95,7 @@
     CloseButtonOffset="0,30,30,0" CloseButtonWidth="16" CloseButtonHeight="16"
     TitleAlignment="Top" TitleOffset="0,15,0,0" />
 
-  <List BackgroundImage="Sprites/ListBox.psd" BackgroundImageType="Sliced" BackgroundColor="White" ListMaskImage="Sprites/ListBoxMask.psd" ListMaskImageType="Sliced" ListMaskColor="#ffffff" />
+  <List BackgroundImage="Sprites/ListBox.psd" BackgroundImageType="Sliced" BackgroundColor="White" UseListMask="True" ListMaskImage="Sprites/ListBoxMask.psd" ListMaskImageType="Sliced" ListMaskColor="#ffffff" />
   <ListItem Breadth="65" TextMargin="25,0,0,0" TextAlignment="Left" BackgroundColor="White"
             Selected-BackgroundColor="#dbd7e3" Pressed-BackgroundColor="#dbd7e3"
             Font="Fonts/Lato-Light.ttf" FontStyle="Normal" FontSize="24" FontColor="#8f86a3"

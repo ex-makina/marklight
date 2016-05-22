@@ -13,6 +13,7 @@ namespace MarkLight
     /// <summary>
     /// Pools views for fast creation.
     /// </summary>
+    [HideInPresenter]
     public class ViewPoolContainer : View
     {
         #region Fields

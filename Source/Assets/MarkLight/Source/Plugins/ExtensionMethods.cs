@@ -664,6 +664,25 @@ namespace MarkLight
             }
         }
 
+        /// <summary>
+        /// Converts panel scrollbar visibility to unity scrollrect scrollbar visibility.
+        /// </summary>
+        public static UnityEngine.UI.ScrollRect.ScrollbarVisibility ToScrollRectVisibility(this PanelScrollbarVisibility visibility)
+        {
+            switch (visibility)
+            {
+                case PanelScrollbarVisibility.Permanent:
+                    return UnityEngine.UI.ScrollRect.ScrollbarVisibility.Permanent;
+                default:
+                case PanelScrollbarVisibility.AutoHide:
+                case PanelScrollbarVisibility.Hidden:
+                case PanelScrollbarVisibility.Remove:
+                    return UnityEngine.UI.ScrollRect.ScrollbarVisibility.AutoHide;
+                case PanelScrollbarVisibility.AutoHideAndExpandViewport:
+                    return UnityEngine.UI.ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;               
+            }
+        }
+
         #endregion
     }
 }

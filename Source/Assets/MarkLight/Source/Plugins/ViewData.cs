@@ -594,6 +594,7 @@ namespace MarkLight
                 dependencyFieldInfo.SetValue(view, dependencyFieldInstance);
                 dependencyFieldInstance.ParentView = view;
                 dependencyFieldInstance.ViewFieldPath = dependencyField;
+                dependencyFieldInstance.IsMapped = !String.Equals(viewTypeData.GetMappedViewField(dependencyField), dependencyField);
             }
 
             // parse child XUML and for each child create views and set their values

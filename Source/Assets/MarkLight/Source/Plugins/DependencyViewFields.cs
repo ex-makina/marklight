@@ -175,6 +175,12 @@ namespace MarkLight
 #endif
 
     [Serializable]
+    public class _PanelScrollbarVisibility : ViewField<PanelScrollbarVisibility>
+    {
+        public static implicit operator PanelScrollbarVisibility(_PanelScrollbarVisibility value) { return value.Value; }
+    }
+
+    [Serializable]
     public class _ScrollRectMovementType : ViewField<UnityEngine.UI.ScrollRect.MovementType>
     {
         public static implicit operator UnityEngine.UI.ScrollRect.MovementType(_ScrollRectMovementType value) { return value.Value; }

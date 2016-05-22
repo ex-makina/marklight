@@ -27,7 +27,7 @@ namespace MarkLight
         {
             get
             {
-                if (ParentView != null)
+                if (ParentView != null && IsMapped)
                 {
                     return (T)ParentView.GetValue(ViewFieldPath);
                 }
@@ -55,7 +55,7 @@ namespace MarkLight
         {
             set
             {
-                if (ParentView != null)
+                if (ParentView != null && IsMapped)
                 {
                     ParentView.SetValue(ViewFieldPath, value, true, null, null, false);
                 }

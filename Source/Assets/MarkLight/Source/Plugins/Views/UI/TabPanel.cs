@@ -199,6 +199,13 @@ namespace MarkLight.Views.UI
         #region TabListMask
 
         /// <summary>
+        /// Indicates if a list mask is to be used.
+        /// </summary>
+        /// <d>Boolean indicating if a list mask is to be used.</d>
+        [MapTo("TabHeaderList.UseListMask")]
+        public _bool TabListUseListMask;
+
+        /// <summary>
         /// The width of the list mask image.
         /// </summary>
         /// <d>Specifies the width of the list mask image either in pixels or percents.</d>

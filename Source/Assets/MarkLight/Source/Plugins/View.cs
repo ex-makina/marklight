@@ -1660,6 +1660,30 @@ namespace MarkLight
             return GetEnumerator();
         }
 
+        /// <summary>
+        /// Destroys the view and moves its content to a new parent.
+        /// </summary>
+        public void DestroyAndMoveContent(View newParent)
+        {
+            // move content
+            MoveContent(newParent);
+
+            // destroy
+            this.Destroy();
+        }
+
+        /// <summary>
+        /// Moves the view's content to a new parent.
+        /// </summary>
+        public void MoveContent(View newParent)
+        {
+            var children = Content.GetChildren<View>(false);
+            foreach (var child in children)
+            {
+                child.MoveTo(newParent);
+            }
+        }
+
         #endregion
 
         #region Properties
