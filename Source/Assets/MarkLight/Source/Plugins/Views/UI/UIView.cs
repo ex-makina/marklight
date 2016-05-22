@@ -478,7 +478,12 @@ namespace MarkLight.Views.UI
         /// </summary>
         public bool ContainsMouse(Vector3 mousePosition, bool testChildren = false, bool ignoreFullScreenViews = false)
         {
-            if (RectTransformUtility.RectangleContainsScreenPoint(this.RectTransform, mousePosition)
+            // get root canvas
+            UnityEngine.Canvas canvas = LayoutRoot.Canvas;
+
+            // for screen space overlay the camera should be null
+            Camera worldCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+            if (RectTransformUtility.RectangleContainsScreenPoint(this.RectTransform, mousePosition, worldCamera)
                 && (!ignoreFullScreenViews || !IsFullScreen)
                 && gameObject.activeInHierarchy
                 && Alpha.Value > 0.99f)

@@ -249,7 +249,7 @@ namespace MarkLight
             }, recursive, parent, traversalAlgorithm);
             return result;
         }
-        
+
         /// <summary>
         /// Returns first view of type T found.
         /// </summary>
@@ -268,8 +268,8 @@ namespace MarkLight
             {
                 return null;
             }
-            
-            return view.Find<T>(predicate, recursive, parent, traversalAlgorithm);            
+
+            return view.Find<T>(predicate, recursive, parent, traversalAlgorithm);
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace MarkLight
             if (parent == null)
             {
                 return null;
-            }                        
+            }
             else if (parent is T && predicate(parent as T))
             {
                 return parent as T;
@@ -318,7 +318,7 @@ namespace MarkLight
         /// Returns first ascendant of type T found.
         /// </summary>
         public static T FindParent<T>(this View view) where T : View
-        {           
+        {
             return view.FindParent<T>(x => true);
         }
 
@@ -376,7 +376,7 @@ namespace MarkLight
             {
                 action(thisView);
             }
-            view.ForEachParent<T>(action);            
+            view.ForEachParent<T>(action);
         }
 
         /// <summary>
@@ -477,7 +477,7 @@ namespace MarkLight
             }
 
             // move view into view pool
-            viewPool.InsertView(view);            
+            viewPool.InsertView(view);
         }
 
         /// <summary>
@@ -596,9 +596,9 @@ namespace MarkLight
             var fieldInfo = type.GetField(field, bindingFlags);
             if (fieldInfo != null)
                 return fieldInfo;
-            
+
             var propertyInfo = type.GetProperty(field, bindingFlags);
-            return propertyInfo;            
+            return propertyInfo;
         }
 
         /// <summary>
@@ -664,6 +664,7 @@ namespace MarkLight
             }
         }
 
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1
         /// <summary>
         /// Converts panel scrollbar visibility to unity scrollrect scrollbar visibility.
         /// </summary>
@@ -679,9 +680,10 @@ namespace MarkLight
                 case PanelScrollbarVisibility.Remove:
                     return UnityEngine.UI.ScrollRect.ScrollbarVisibility.AutoHide;
                 case PanelScrollbarVisibility.AutoHideAndExpandViewport:
-                    return UnityEngine.UI.ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;               
+                    return UnityEngine.UI.ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;
             }
         }
+#endif
 
         #endregion
     }

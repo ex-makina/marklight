@@ -443,14 +443,18 @@ namespace MarkLight.Views.UI
             {
                 HorizontalScrollbar.Margin.Value = new ElementMargin(0, 0, verticalScrollbarBreadth, 0);
                 HorizontalScrollbar.IsActive.Value = horizontalShown;
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1
                 ScrollRect.HorizontalScrollbarVisibility.Value = HorizontalScrollbarVisibility.Value.ToScrollRectVisibility();
+#endif
             }
 
             if (VerticalScrollbar != null)
             {
                 VerticalScrollbar.Margin.Value = new ElementMargin(0, 0, 0, horizontalScrollbarBreadth);
                 VerticalScrollbar.IsActive.Value = verticalShown;
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1
                 ScrollRect.VerticalScrollbarVisibility.Value = HorizontalScrollbarVisibility.Value.ToScrollRectVisibility();
+#endif
             }
             
             ScrollRect.HorizontalScrollbar.Value = horizontalShown ? HorizontalScrollbar.ScrollbarComponent : null;
