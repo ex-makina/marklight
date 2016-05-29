@@ -17,9 +17,8 @@ namespace MarkLight
         #region Fields
 
         public string BaseDirectory;
-        public Vector2 UnitSize;
+        public Vector3 UnitSize;
         public static ValueConverterContext Empty = new ValueConverterContext();
-        private static ValueConverterContext _defaultContext;
 
         #endregion
 
@@ -55,14 +54,11 @@ namespace MarkLight
         {
             get
             {
-                if (_defaultContext == null)
+                return new ValueConverterContext
                 {
-                    _defaultContext = new ValueConverterContext();
-                    _defaultContext.BaseDirectory = ViewPresenter.Instance.BaseDirectory;
-                    _defaultContext.UnitSize = ViewPresenter.Instance.UnitSize;
-                }
-
-                return _defaultContext;
+                    BaseDirectory = ViewPresenter.Instance.BaseDirectory,
+                    UnitSize = ViewPresenter.Instance.UnitSize
+                };
             }
         }
 

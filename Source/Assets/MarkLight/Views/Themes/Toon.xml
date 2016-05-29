@@ -68,7 +68,8 @@
             Selected-BackgroundColor="#dbd7e3" Pressed-BackgroundColor="#dbd7e3"
             Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontStyle="Normal" FontSize="22" FontColor="#8f86a3"            
             Selected-FontColor="#000000" Pressed-FontColor="White"
-            Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
+            Disabled-FontStyle="Italic" Disabled-FontColor="Gray80"
+            Alternate-BackgroundColor="Gray95" />
 
   <TabPanel TabContentColor="#ffffff" TabContentImage="Sprites/TabContent.psd" TabContentImageType="Sliced" TabListContentMargin="0" 
             TabListColor="Clear" TabListMaskImage="" TabListMaskShowGraphic="False" TabListSpacing="-5" TabListOffset="10,2,0,0"

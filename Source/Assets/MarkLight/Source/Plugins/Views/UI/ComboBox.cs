@@ -20,6 +20,7 @@ namespace MarkLight.Views.UI
     /// <d>Presents a static or dynamic list of items in a drop-down.</d>
     [MapViewField("ItemSelected", "ComboBoxList.ItemSelected")]
     [HideInPresenter]
+    [CacheView]
     public class ComboBox : UIView
     {
         #region Fields
@@ -555,7 +556,7 @@ namespace MarkLight.Views.UI
         {
             // close list and set selected item text
             ComboBoxButton.ToggleValue.Value = false;
-            ComboBoxButton.Text.Value = actionData.ItemView != null? actionData.ItemView.Text : String.Empty;
+            ComboBoxButton.Text.Value = actionData.ItemView != null? actionData.ItemView.Text.Value : String.Empty;
             ComboBoxList.Deactivate();
         }
 

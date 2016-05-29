@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Displays a selectable list item. Has the states: Default, Disabled, Highlighted, Pressed and Selected.</d>
     [HideInPresenter]
+    [CacheView]
     public class ListItem : UIView
     {
         #region Fields
@@ -144,6 +145,13 @@ namespace MarkLight.Views.UI
         /// <d>If set to true the item enters the "Disabled" state and can't be interacted with.</d>
         [ChangeHandler("IsDisabledChanged")]
         public _bool IsDisabled;
+
+        /// <summary>
+        /// Indicates if this item is an alternate item.
+        /// </summary>
+        /// <d>Boolean indicating if the tiem is an alternate item which uses the "Alternate" state instead of the "Default" state.</d>
+        [ChangeHandler("IsAlternateChanged", TriggerImmediately = true)]
+        public _bool IsAlternate;
 
         /// <summary>
         /// List item text padding.
@@ -296,6 +304,9 @@ namespace MarkLight.Views.UI
         public override void Initialize()
         {
             base.Initialize();
+
+            // TODO check if item has alt-row states and is so use them 
+
         }
 
         /// <summary>
@@ -346,7 +357,7 @@ namespace MarkLight.Views.UI
             if (IsSelected)
                 return;
 
-            SetState(DefaultStateName);
+            SetState(DefaultItemStyle);
         }
 
         /// <summary>
@@ -389,7 +400,7 @@ namespace MarkLight.Views.UI
             }
             else
             {
-                SetState(DefaultStateName);
+                SetState(DefaultItemStyle);
             }
         }
 
@@ -407,7 +418,7 @@ namespace MarkLight.Views.UI
             }
             else
             {
-                SetState(DefaultStateName);
+                SetState(DefaultItemStyle);
             }
         }
 
@@ -429,7 +440,7 @@ namespace MarkLight.Views.UI
             }
             else
             {
-                SetState(IsSelected ? "Selected" : DefaultStateName);
+                SetState(IsSelected ? "Selected" : DefaultItemStyle);
 
                 // enable list item actions
                 Click.IsDisabled = false;
@@ -438,6 +449,17 @@ namespace MarkLight.Views.UI
                 MouseDown.IsDisabled = false;
                 MouseUp.IsDisabled = false;
             }
+        }
+
+        /// <summary>
+        /// Called when IsAlternate changed.
+        /// </summary>
+        public virtual void IsAlternateChanged()
+        {
+            if (IsSelected)
+                return;
+
+            SetState(DefaultItemStyle);
         }
 
         /// <summary>
@@ -463,7 +485,7 @@ namespace MarkLight.Views.UI
         {
             get
             {
-                if (!_parentList)
+                if (_parentList == null)
                 {
                     _parentList = this.FindParent<List>();
                 }
@@ -473,6 +495,17 @@ namespace MarkLight.Views.UI
             set
             {
                 _parentList = value;
+            }
+        }
+
+        /// <summary>
+        /// Returns default item style.
+        /// </summary>
+        public string DefaultItemStyle
+        {
+            get
+            {
+                return IsAlternate ? "Alternate" : "Default";
             }
         }
 

@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Represents a root UICanvas containing a user interface in the scene.</d>
     [HideInPresenter]
+    [CacheView]
     public class UserInterface : UICanvas
     {
         #region Methods

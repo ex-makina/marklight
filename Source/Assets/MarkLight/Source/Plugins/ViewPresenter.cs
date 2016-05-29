@@ -32,6 +32,7 @@ namespace MarkLight
         public List<string> Views;
         public List<string> Themes;
         public GameObject RootView;
+        public GameObject TemplateRoot;
         public List<Sprite> Sprites;
         public List<string> SpritePaths;
         public List<Font> Fonts;
@@ -42,6 +43,7 @@ namespace MarkLight
         public bool UpdateXsdSchema;
 
         private static ViewPresenter _instance;
+        private static string _currentScene;
         private Dictionary<string, Type> _viewTypes;
         private Dictionary<string, ViewTypeData> _viewTypeDataDictionary;
         private Dictionary<string, ThemeData> _themeDataDictionary;
@@ -131,7 +133,7 @@ namespace MarkLight
 
             // trigger change handlers
             int pass = 0;
-            while (rootView.Find<View>(x => x.HasQueuedChangeHandlers))
+            while (rootView.Find<View>(x => x.HasQueuedChangeHandlers) != null)
             {
                 if (pass >= 1000)
                 {
@@ -191,6 +193,11 @@ namespace MarkLight
             if (RootView != null)
             {
                 GameObject.DestroyImmediate(RootView);
+            }
+
+            if (TemplateRoot != null)
+            {
+                GameObject.DestroyImmediate(TemplateRoot);
             }
         }
 
@@ -487,9 +494,12 @@ namespace MarkLight
         {
             get
             {
-                if (_instance == null)
+                var sceneName = Utils.GetActiveSceneName();
+                if (_instance == null || sceneName != _currentScene)
                 {
                     _instance = UnityEngine.Object.FindObjectOfType(typeof(ViewPresenter)) as ViewPresenter;
+                    _currentScene = sceneName;
+                    return _instance;
                 }
 
                 return _instance;

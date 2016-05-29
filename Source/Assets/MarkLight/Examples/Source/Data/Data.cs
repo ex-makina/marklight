@@ -46,6 +46,26 @@ namespace MarkLight.Examples.Data
     {
         public Color Color;
         public string Name;
+        public string ImagePath;
+        public int CardRank;
+        public CardSuit CardSuit;
+
+        public string GetTemplateId()
+        {
+            return String.Format("{0}{1}", CardSuit, CardRank);
+        }
+    }
+
+    /// <summary>
+    /// Defines card suit.
+    /// </summary>
+    public enum CardSuit
+    {
+        Undefined = 0,
+        Clubs = 1,
+        Diamonds = 2,
+        Spades = 3,
+        Hearts = 4
     }
 }
 

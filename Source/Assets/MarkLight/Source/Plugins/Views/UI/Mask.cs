@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>A view that masks any content using the background image and color as mask.</d>
     [HideInPresenter]
+    [CacheView]
     public class Mask : UIView
     {
         #region Fields

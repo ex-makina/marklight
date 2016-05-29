@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>The group is used to spacially arrange child views next to each other either horizontally or vertically.</d>
     [HideInPresenter]
+    [CacheView]
     public class Group : UIView
     {
         #region Fields

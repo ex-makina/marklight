@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Presents a one-of-many selection option. If multiple radio buttons shares the same parent only one is selected at a time.</d>
     [HideInPresenter]
+    [CacheView]
     public class RadioButton : UIView
     {
         #region Fields

@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>The row view displays the content of a row in the data grid.</d>
     [HideInPresenter]
+    [CacheView]
     public class Row : ListItem
     {
         #region Fields
@@ -143,7 +144,7 @@ namespace MarkLight.Views.UI
         {
             get
             {
-                if (!_parentDataGrid)
+                if (_parentDataGrid == null)
                 {
                     _parentDataGrid = this.FindParent<DataGrid>();
                 }

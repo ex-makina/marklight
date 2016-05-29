@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Displays text that can be pressed. Has the states: Default, Highlighted, Pressed and Disabled.</d>
     [HideInPresenter]
+    [CacheView]
     public class HyperLink : Label
     {
         #region Fields

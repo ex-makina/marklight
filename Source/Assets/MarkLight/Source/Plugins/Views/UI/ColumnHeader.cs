@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>The column header displays the contents of a header cell in the data grid.</d>
     [HideInPresenter]
+    [CacheView]
     public class ColumnHeader : Column
     {
         #region Fields

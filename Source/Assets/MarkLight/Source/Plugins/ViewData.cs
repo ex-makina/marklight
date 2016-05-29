@@ -70,6 +70,12 @@ namespace MarkLight
                 GameObject.DestroyImmediate(viewPresenter.RootView);
             }
 
+            // destroy template root
+            if (viewPresenter.TemplateRoot != null)
+            {
+                GameObject.DestroyImmediate(viewPresenter.TemplateRoot);
+            }
+
             // destroy any remaining objects under the view-presenter that should not be there
             if (viewPresenter.transform.childCount > 0)
             {
@@ -190,6 +196,9 @@ namespace MarkLight
 
             // set if view is internal
             viewTypeData.HideInPresenter = type.GetCustomAttributes(typeof(HideInPresenter), false).Any();
+
+            // set if view should be cached
+            viewTypeData.CacheView = type.GetCustomAttributes(typeof(CacheView), false).Any();
 
             // set view action fields
             var viewActionType = typeof(ViewAction);
@@ -507,9 +516,10 @@ namespace MarkLight
             //      CreateView(contentView)
             //      SetViewValues(contentView)
             //   SetViewValues(view)       
-            //   SetThemeValues(view)     
+            //   SetThemeValues(view)
 
             // TODO store away and re-use view templates
+            // 
 
             // use default theme if no theme is specified
             if (String.IsNullOrEmpty(theme))
@@ -663,6 +673,8 @@ namespace MarkLight
 
             // set internal view values that appear inside the root element of the XUML file
             SetViewValues(view, viewTypeData.XumlElement, view, context);
+
+            // TODO cache view as a template if it isn't already 
 
             // set theme values
             var themeData = GetThemeData(theme);

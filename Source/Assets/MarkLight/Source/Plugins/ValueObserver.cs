@@ -31,8 +31,9 @@ namespace MarkLight
         /// <summary>
         /// Notifies the value observer.
         /// </summary>
-        public virtual void Notify(HashSet<ViewFieldData> callstack)
+        public virtual bool Notify(HashSet<ViewFieldData> callstack)
         {
+            return true;
         }
 
         #endregion

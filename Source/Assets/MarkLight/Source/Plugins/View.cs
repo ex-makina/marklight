@@ -1147,6 +1147,15 @@ namespace MarkLight
             QueueChangeHandler("LayoutChanged");
 
             // inform parents of update
+            NotifyLayoutChanged();
+        }
+
+        /// <summary>
+        /// Notifies the parents that the layout of this view has changed.
+        /// </summary>
+        public void NotifyLayoutChanged()
+        {
+            // inform parents of update
             this.ForEachParent<View>(x => x.QueueChangeHandler("ChildLayoutChanged"));
         }
 
@@ -1196,6 +1205,8 @@ namespace MarkLight
             {
                 Deactivated.Trigger();
             }
+
+            NotifyLayoutChanged();
         }
 
         /// <summary>

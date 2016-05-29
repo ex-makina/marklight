@@ -23,6 +23,7 @@ namespace MarkLight.Views.UI
     [MapViewField("BeginDrag", "ScrollRect.BeginDrag")]
     [MapViewField("EndDrag", "ScrollRect.EndDrag")]
     [HideInPresenter]
+    [CacheView]
     public class Panel : UIView
     {
         #region Fields

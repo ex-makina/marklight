@@ -43,12 +43,18 @@ namespace MarkLight
         /// <summary>
         /// Notifies the binding value observer that value has changed.
         /// </summary>
-        public override void Notify(HashSet<ViewFieldData> callstack)
+        public override bool Notify(HashSet<ViewFieldData> callstack)
         {
             try
             {
                 base.Notify(callstack);
                 bool hasValue;
+
+                // check if target has been destroyed
+                if (Target.SourceView == null)
+                {
+                    return false; 
+                }
 
                 //Debug.Log(String.Format("Source(s) updated. Updating target field: {0}", Target.ViewFieldPath));
                 switch (BindingType)
@@ -102,6 +108,8 @@ namespace MarkLight
             {
                 PrintBindingError(e);
             }
+
+            return true;
         }
 
         /// <summary>

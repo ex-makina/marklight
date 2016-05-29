@@ -21,6 +21,7 @@ namespace MarkLight.Views.UI
     /// <d>Presents (read-only) text. Can adjust its size to text. Can display rich text with BBCode style syntax.</d>
     [ExcludeComponent("ImageComponent")]
     [HideInPresenter]
+    [CacheView]
     public class Label : UIView
     {
         #region Fields

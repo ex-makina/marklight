@@ -1,5 +1,5 @@
 <DataGridExample xmlns="MarkLight">
-  <DataGrid Width="500">
+  <DataGrid Width="500" AlternateRows="True">
     <RowHeader>
       <ColumnHeader Width="125" Text="Header 1" />
       <ColumnHeader Width="125" Text="Header 2" />
@@ -25,6 +25,11 @@
           <Label Text="Custom Content" AdjustToText="Width" FontColor="Black" />
         </Group>
       </Column>
+    </Row>
+    <Row>
+      <Column Text="Alpha" />
+      <Column Text="Beta" />
+      <Column Text="Delta" />
     </Row>
   </DataGrid>
 </DataGridExample>

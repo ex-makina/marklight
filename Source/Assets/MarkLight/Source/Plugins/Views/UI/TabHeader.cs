@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Displays the content of a tab header in the tab panel. Has the states: Default, Disabled, Highlighted, Pressed and Selected.</d>
     [HideInPresenter]
+    [CacheView]
     public class TabHeader : ListItem
     {
         #region Fields

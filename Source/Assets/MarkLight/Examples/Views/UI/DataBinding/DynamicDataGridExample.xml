@@ -5,7 +5,7 @@
       <Button Text="Remove" Click="Remove" IsDisabled="{=!DataGrid.DataGridList.IsItemSelected}" Width="120" />
     </Group>
 
-    <DataGrid Id="DataGrid" Width="500" Items="{Highscores}" ItemSelected="ItemSelected">
+    <DataGrid Id="DataGrid" Width="500" Items="{Highscores}" ItemSelected="ItemSelected" IsScrollable="True" ListHeight="300">
       <RowHeader>
         <ColumnHeader Width="*" Text="Player" />
         <ColumnHeader Width="*" Text="Score" />

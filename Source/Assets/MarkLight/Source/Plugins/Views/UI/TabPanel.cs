@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Arranges content in a series of tabs that can be switched between. Tabs can be oriented horizontallt/vertically and aligned topleft/bottom/etc. Tabs can be generated from a template and bound list data.</d>
     [HideInPresenter]
+    [CacheView]
     public class TabPanel : UIView
     {
         #region Fields
@@ -594,6 +595,10 @@ namespace MarkLight.Views.UI
                 _selectedItem = tab.Item.Value;
                 SelectedItem.Value = tab.Item.Value;
                 SelectedTab = tab;
+                if (Items != null)
+                {
+                    Items.SetSelected(_selectedItem);
+                }
 
                 // trigger item selected action
                 if (TabSelected.HasEntries)
@@ -900,7 +905,7 @@ namespace MarkLight.Views.UI
         {
             get
             {
-                if (!_tabItemTemplate)
+                if (_tabItemTemplate == null)
                 {
                     _tabItemTemplate = TabSwitcher.Find<Tab>(x => x.IsTemplate, false);
                 }

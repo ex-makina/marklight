@@ -164,6 +164,31 @@ namespace MarkLight
             Log("Time elapsed: {0}", Stopwatch.ElapsedMilliseconds);
         }
 
+        /// <summary>
+        /// Gets the name of the currently active sccene.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetActiveSceneName()
+        {
+            return Application.loadedLevelName;
+        }
+
+        /// <summary>
+        /// Gets bool inidcating if the number is odd.
+        /// </summary>
+        public static bool IsOdd(int value)
+        {
+            return value % 2 != 0;
+        }
+
+        /// <summary>
+        /// Gets bool inidcating if the number is even.
+        /// </summary>
+        public static bool IsEven(int value)
+        {
+            return value % 2 == 0;
+        }
+
         #endregion
     }
 }

@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Provides functionality for switching between views (presenting one view at a time). Can apply animations to views being switched to/from.</d>
     [HideInPresenter]
+    [CacheView]
     public class ViewSwitcher : UIView
     {
         #region Fields
@@ -289,7 +290,7 @@ namespace MarkLight.Views.UI
                 }
 
                 // do we switch from an old view to a new one?
-                if (transitionOutOld && transitionOutAnimation)
+                if (transitionOutOld && transitionOutAnimation != null)
                 {
                     // yes. transition out the old one
                     transitionOutAnimation.SetAnimationTarget(oldActiveView);
@@ -298,7 +299,7 @@ namespace MarkLight.Views.UI
                 }
 
                 // start transition in animation
-                if (transitionInAnimation)
+                if (transitionInAnimation != null)
                 {
                     transitionInAnimation.SetAnimationTarget(view);
                     transitionInAnimation.StartAnimation();

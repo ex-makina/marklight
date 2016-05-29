@@ -14,6 +14,7 @@ namespace MarkLight
     /// Pools views for fast creation.
     /// </summary>
     [HideInPresenter]
+    [CacheView]
     public class ViewPoolContainer : View
     {
         #region Fields

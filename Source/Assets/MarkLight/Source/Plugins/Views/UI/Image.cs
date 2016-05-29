@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Used to display an image. Contains additional mappings to the image component.</d>
     [HideInPresenter]
+    [CacheView]
     public class Image : UIView
     {
         #region Fields

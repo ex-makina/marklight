@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Displays scrollable content.</d>
     [HideInPresenter]
+    [CacheView]
     public class ScrollRect : UIView
     {
         #region Fields
@@ -257,6 +258,7 @@ namespace MarkLight.Views.UI
             if (ContentAlignment.IsSet)
             {
                 child.Alignment.DirectValue = ContentAlignment.Value;
+                child.Pivot.DirectValue = ContentAlignment.Value.ToPivot();
             }
 
             // workaround for panel blocking drag events in child views

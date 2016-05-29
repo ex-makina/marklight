@@ -20,7 +20,7 @@ namespace MarkLight
         #region Fields
 
         public string Name;
-        public string Xuml;        
+        public string Xuml;
         public List<Resource> Resources;
 
         public static string Language;

@@ -197,9 +197,25 @@ namespace MarkLight
             if (_valueObservers == null)
                 return;
 
+            List<ValueObserver> removedObservers = null;
             foreach (var valueObserver in _valueObservers)
             {
-                valueObserver.Notify(callstack);
+                // notify observer
+                bool isRemoved = !valueObserver.Notify(callstack);
+                if (isRemoved)
+                {
+                    if (removedObservers == null)
+                    {
+                        removedObservers = new List<ValueObserver>();
+                    }
+
+                    removedObservers.Add(valueObserver);
+                }
+            }
+
+            if (removedObservers != null)
+            {
+                removedObservers.ForEach(x => _valueObservers.Remove(x));
             }
         }
 
@@ -211,12 +227,27 @@ namespace MarkLight
             if (_valueObservers == null)
                 return;
 
+            List<ValueObserver> removedObservers = null;
             foreach (var valueObserver in _valueObservers)
             {
                 if (valueObserver is BindingValueObserver)
                 {
-                    valueObserver.Notify(callstack);
+                    bool isRemoved = !valueObserver.Notify(callstack);
+                    if (isRemoved)
+                    {
+                        if (removedObservers == null)
+                        {
+                            removedObservers = new List<ValueObserver>();
+                        }
+
+                        removedObservers.Add(valueObserver);
+                    }
                 }
+            }
+
+            if (removedObservers != null)
+            {
+                removedObservers.ForEach(x => _valueObservers.Remove(x));
             }
         }
 
@@ -374,7 +405,7 @@ namespace MarkLight
                         continue;
                     }
 
-                    memberInfo = ViewFieldType.GetFieldInfo("_value"); // set internal dependency view field directly
+                    memberInfo = ViewFieldType.GetProperty("InternalValue"); // set internal dependency view field value
                     ViewFieldPathInfo.MemberInfo.Add(memberInfo);
                     ViewFieldType = memberInfo.GetFieldType();
                     IsViewFieldBaseType = isLastField;

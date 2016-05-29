@@ -13,13 +13,14 @@ using UnityEngine.EventSystems;
 namespace MarkLight.Examples.UI
 {
     /// <summary>
-    /// Examples demonstrating the view switcher.
+    /// Example showing dynamic list of cards in a scrollable wrapped list featuring multiple templates.
     /// </summary>
-    public class AdvancedLists : View
+    public class PlayingCardsExample : View
     {
         #region Fields
 
         public ObservableList<Card> Cards;
+        private System.Random _random = new System.Random();
 
         #endregion
 
@@ -34,11 +35,10 @@ namespace MarkLight.Examples.UI
 
             Cards = new ObservableList<Card>();
 
-            // generate 30 random cards
-            for (int i = 1; i <= 32; ++i)
+            // generate random cards            
+            for (int i = 1; i <= 22; ++i)
             {
-                Color color = Utils.GetRandomColor();
-                Cards.Add(new Card { Color = color, Name = "Card " + i });
+                Add();
             }
         }
 
@@ -46,9 +46,9 @@ namespace MarkLight.Examples.UI
         /// Adds new card to the list.
         /// </summary>
         public void Add()
-        {
-            var card = new Card { Color = Utils.GetRandomColor(), Name = "Card" };
-            Cards.Add(card);            
+        {            
+            var card = new Card { CardRank = _random.Next(14), CardSuit = (CardSuit)_random.Next(1, 4) };
+            Cards.Add(card);
         }
 
         /// <summary>
@@ -64,25 +64,9 @@ namespace MarkLight.Examples.UI
         /// </summary>
         public void ScrollTo()
         {
-            Cards.ScrollTo(Cards.SelectedItem);
-        }
-
-        /// <summary>
-        /// Scroll to card in list.
-        /// </summary>
-        public void ScrollToCenter()
-        {
             Cards.ScrollTo(Cards.SelectedItem, ElementAlignment.Center);
         }
-
-        /// <summary>
-        /// Scroll to card in list.
-        /// </summary>
-        public void ScrollToTop()
-        {
-            Cards.ScrollTo(Cards.SelectedItem, ElementAlignment.Top);
-        }
-
+        
         #endregion
     }
 }

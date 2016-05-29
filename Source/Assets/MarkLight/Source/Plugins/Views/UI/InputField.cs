@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Interactable input field enabling user to type single or multi-line text.</d>
     [HideInPresenter]
+    [CacheView]
     public class InputField : UIView
     {
         #region Fields

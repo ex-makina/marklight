@@ -17,6 +17,7 @@ namespace MarkLight.Views
     /// Special view that acts as a placeholder for where view content should be placed.
     /// </summary>
     [HideInPresenter]
+    [CacheView]
     public class ContentPlaceholder : View
     {
         #region Fields

@@ -1168,9 +1168,9 @@
     <xs:attribute name="IsTemplate" type="xs:string" />
     <xs:attribute name="IsDestroyed" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="EndDrag" type="xs:string" />
     <xs:attribute name="BeginDrag" type="xs:string" />
     <xs:attribute name="InitializePotentialDrag" type="xs:string" />
+    <xs:attribute name="EndDrag" type="xs:string" />
     <xs:attribute name="Drag" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
@@ -1521,6 +1521,7 @@
     <xs:attribute name="UnitSize" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="SelectedItem" type="xs:string" />
+    <xs:attribute name="IsScrollable" type="xs:string" />
     <xs:attribute name="CanDeselect" type="xs:string" />
     <xs:attribute name="CanMultiSelect" type="xs:string" />
     <xs:attribute name="CanSelect" type="xs:string" />
@@ -1591,9 +1592,9 @@
     <xs:attribute name="IsTemplate" type="xs:string" />
     <xs:attribute name="IsDestroyed" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ListChanged" type="xs:string" />
     <xs:attribute name="ItemDeselected" type="xs:string" />
     <xs:attribute name="ItemSelected" type="xs:string" />
-    <xs:attribute name="ListChanged" type="xs:string" />
     <xs:attribute name="Activated" type="xs:string" />
     <xs:attribute name="Deactivated" type="xs:string" />
     <xs:anyAttribute processContents="skip" />
@@ -2880,8 +2881,35 @@
     <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
-  <xs:element name="AdvancedLists" type="AdvancedLists" />
-  <xs:complexType name="AdvancedLists">
+  <xs:element name="AdvancedListExample" type="AdvancedListExample" />
+  <xs:complexType name="AdvancedListExample">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="Cards" type="xs:string" />
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="xs:string" />
+    <xs:attribute name="BasedOn" type="xs:string" />
+    <xs:attribute name="Theme" type="xs:string" />
+    <xs:attribute name="BaseDirectory" type="xs:string" />
+    <xs:attribute name="UnitSize" type="xs:string" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="HideFlags" type="EnumHideFlags" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Item" type="xs:string" />
+    <xs:attribute name="IsTemplate" type="xs:string" />
+    <xs:attribute name="IsDestroyed" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="Activated" type="xs:string" />
+    <xs:attribute name="Deactivated" type="xs:string" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:element name="LayoutExample" type="LayoutExample" />
+  <xs:complexType name="LayoutExample">
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>

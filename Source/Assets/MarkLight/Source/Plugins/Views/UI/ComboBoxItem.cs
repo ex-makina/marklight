@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>The combo box item displays the content of a ComboBox drop-down list item.</d>
     [HideInPresenter]
+    [CacheView]
     public class ComboBoxItem : ListItem
     {
     }

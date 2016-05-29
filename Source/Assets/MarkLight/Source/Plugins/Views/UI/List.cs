@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>The list view presents a selectable list of items. It can either contain a static list of ListItem views or one ListItem with IsTemplate="True". If bound to list data through the Items field the list uses the template to generate a dynamic list of ListItems.</d>
     [HideInPresenter]
+    [CacheView]
     public class List : UIView
     {
         #region Fields
@@ -446,6 +447,12 @@ namespace MarkLight.Views.UI
         public _ElementAlignment ScrollableContentAlignment;
 
         /// <summary>
+        /// Indicates if the items should alternate in style.
+        /// </summary>
+        /// <d>Boolean indicating if the ListItem style should alternate between "Default" and "Alternate".</d>
+        public _bool AlternateItems;
+
+        /// <summary>
         /// Indicates if the list is scrollable.
         /// </summary>
         /// <d>Boolean indicating if the list is to be scrollable.</d>
@@ -629,7 +636,7 @@ namespace MarkLight.Views.UI
 
         private IObservableList _oldItems;
         private List<ListItem> _presentedListItems;
-        private ListItem _listItemTemplate;
+        private List<ListItem> _listItemTemplates;
         private object _selectedItem;
         private Stack<ListItem> _pooledListItems;
         private bool _updateWidth;
@@ -691,14 +698,14 @@ namespace MarkLight.Views.UI
         {
 #if UNITY_EDITOR
             // if ShowTemplateInEditor is set and we are in editor the template may be visible
-            if (ShowTemplateInEditor && Application.isEditor)
-            {
-                // hide template if we have any items to present
-                if (ListItemTemplate != null && _presentedListItems.Count > 0)
-                {
-                    ListItemTemplate.Deactivate();
-                }
-            }
+            //if (ShowTemplateInEditor && Application.isEditor) // TODO re-implement
+            //{
+            //    // hide template if we have any items to present
+            //    if (ListItemTemplates != null && _presentedListItems.Count > 0)
+            //    {
+            //        ListItemTemplates.Deactivate();
+            //    }
+            //}
 #endif
             if (DisableItemArrangement)
             {
@@ -1237,7 +1244,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         public virtual void ItemsChanged()
         {
-            if (ListItemTemplate == null)
+            if (ListItemTemplates.Count <= 0)
                 return; // static list 
 
             Rebuild();
@@ -1402,14 +1409,15 @@ namespace MarkLight.Views.UI
         /// </summary>
         public void UpdateSortIndex()
         {
-            int index = 1;
-            Content.ForEachChild<UIView>(x =>
+            int index = 0;
+            Content.ForEachChild<ListItem>(x =>
             {
                 if (!x.IsLive)
                     return;
 
                 int itemIndex = Items.Value != null ? Items.Value.GetIndex(x.Item.Value) : index;
                 x.SortIndex.DirectValue = itemIndex;
+                x.IsAlternate.Value = AlternateItems.Value && Utils.IsOdd(itemIndex);
                 ++index;
             }, false);
         }
@@ -1469,7 +1477,7 @@ namespace MarkLight.Views.UI
                 return;
 
             // make sure we have a template
-            if (ListItemTemplate == null)
+            if (ListItemTemplates.Count <= 0)
             {
                 Utils.LogError("[MarkLight] {0}: Unable to generate list from items. Template missing. Add a template by adding a view with IsTemplate=\"True\" to the list.", GameObjectName);
                 return;
@@ -1619,7 +1627,7 @@ namespace MarkLight.Views.UI
             }
             else
             {
-                newItemView = Content.CreateView(ListItemTemplate, index + 1);
+                newItemView = Content.CreateView(GetListItemTemplate(itemData), index + 1);
                 isNew = true;
             }
             _presentedListItems.Insert(index, newItemView);
@@ -1642,7 +1650,35 @@ namespace MarkLight.Views.UI
 
             return newItemView;
         }
-        
+
+        /// <summary>
+        /// Gets template based on item data.
+        /// </summary>
+        private ListItem GetListItemTemplate(object itemData)
+        {
+            if (ListItemTemplates.Count <= 0)
+            {
+                Utils.LogError("[MarkLight] {0}: Unable to generate list from items. Template missing. Add a template by adding a view with IsTemplate=\"True\" to the list.", GameObjectName);
+                return null;
+            }
+
+            if (ListItemTemplates.Count == 1 || itemData == null)
+            {
+                return ListItemTemplates[0];
+            }
+
+            // get method GetTemplateId from list item
+            Type type = itemData.GetType();
+            var method = type.GetMethod("GetTemplateId", BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+            if (method == null)
+            {
+                return ListItemTemplates[0]; 
+            }
+
+            string templateId = method.IsStatic ? method.Invoke(null, null) as string : method.Invoke(itemData, null) as string;
+            return ListItemTemplates.FirstOrDefault(x => String.Equals(x.Id, templateId, StringComparison.OrdinalIgnoreCase)) ?? ListItemTemplates[0];
+        }
+
         /// <summary>
         /// Destroys a list item.
         /// </summary>
@@ -1708,49 +1744,54 @@ namespace MarkLight.Views.UI
 
             _pooledListItems = new Stack<ListItem>();
             _presentedListItems = new List<ListItem>();
-            if (ListItemTemplate != null)
+            if (ListItemTemplates.Count > 0)
             {
-#if UNITY_EDITOR
-                // deactivate if ShowTemplateInEditor is false or we are outside the editor
-                if (!ShowTemplateInEditor || !Application.isEditor)
-                {
-                    ListItemTemplate.Deactivate();
-                }
-#else
-                ListItemTemplate.Deactivate();
-#endif
+                ListItemTemplates.ForEach(x => x.Deactivate());
             }
+
+//            if (ListItemTemplates != null) // TODO re-implement showing template
+//            {
+//#if UNITY_EDITOR
+//                // deactivate if ShowTemplateInEditor is false or we are outside the editor
+//                if (!ShowTemplateInEditor || !Application.isEditor)
+//                {
+//                    ListItemTemplates.Deactivate();
+//                }
+//#else
+//                ListItemTemplate.Deactivate();
+//#endif
+//            }
 
             UpdatePresentedListItems();
 
-            // is pooling to be used?
-            if ((PoolSize.IsSet || MaxPoolSize.IsSet) && ListItemTemplate != null)
-            {
-                // yes. check for existing pooled items and create new ones if missing
-                if (MaxPoolSize.Value < PoolSize.Value)
-                {
-                    MaxPoolSize.Value = PoolSize.Value;
-                }
+            // is pooling to be used? // TODO re-implement enable pooling
+            //if ((PoolSize.IsSet || MaxPoolSize.IsSet) && ListItemTemplates != null)
+            //{
+            //    // yes. check for existing pooled items and create new ones if missing
+            //    if (MaxPoolSize.Value < PoolSize.Value)
+            //    {
+            //        MaxPoolSize.Value = PoolSize.Value;
+            //    }
 
-                foreach (var listItem in Content)
-                {
-                    if (listItem.IsActive || listItem.IsTemplate)
-                        continue;
+            //    foreach (var listItem in Content)
+            //    {
+            //        if (listItem.IsActive || listItem.IsTemplate)
+            //            continue;
 
-                    // item is pooled
-                    _pooledListItems.Push(listItem as ListItem);
-                }
+            //        // item is pooled
+            //        _pooledListItems.Push(listItem as ListItem);
+            //    }
 
-                // fill remaining space of pool with views
-                int addCount = PoolSize - _pooledListItems.Count - _presentedListItems.Count;
-                for (int i = 0; i < addCount; ++i)
-                {
-                    var newItemView = Content.CreateView(ListItemTemplate);
-                    newItemView.Deactivate();
-                    newItemView.InitializeViews();
-                    _pooledListItems.Push(newItemView);
-                }
-            }
+            //    // fill remaining space of pool with views
+            //    int addCount = PoolSize - _pooledListItems.Count - _presentedListItems.Count;
+            //    for (int i = 0; i < addCount; ++i)
+            //    {
+            //        var newItemView = Content.CreateView(ListItemTemplates);
+            //        newItemView.Deactivate();
+            //        newItemView.InitializeViews();
+            //        _pooledListItems.Push(newItemView);
+            //    }
+            //}
 
             SelectedItems.DirectValue = new GenericObservableList();
         }
@@ -1772,16 +1813,16 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Returns list item template.
         /// </summary>
-        public ListItem ListItemTemplate
+        public List<ListItem> ListItemTemplates
         {
             get
             {
-                if (!_listItemTemplate)
+                if (_listItemTemplates == null)
                 {
-                    _listItemTemplate = Content.Find<ListItem>(x => x.IsTemplate, false);
+                    _listItemTemplates = Content.GetChildren<ListItem>(x => x.IsTemplate, false);
                 }
 
-                return _listItemTemplate;
+                return _listItemTemplates;
             }
         }
 

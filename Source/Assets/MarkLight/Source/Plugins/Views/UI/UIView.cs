@@ -19,6 +19,7 @@ namespace MarkLight.Views.UI
     /// </summary>    
     /// <d>Base class for UI views. Has fields for doing layout such as Width, Height, Margin, Alignment, Offset, etc. and fields for rendering a background image.</d>
     [HideInPresenter]
+    [CacheView]
     public class UIView : View
     {
         #region Fields
@@ -304,6 +305,9 @@ namespace MarkLight.Views.UI
         /// </summary>
         public virtual void RectTransformChanged()
         {
+            if (!UpdateRectTransform)
+                return; // rect transform is updated elsewhere
+
             // update rectTransform
             // horizontal alignment and positioning
             var width = OverrideWidth.IsSet ? OverrideWidth : Width;

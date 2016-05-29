@@ -20,6 +20,7 @@ namespace MarkLight.Views.UI
     /// <d>The canvas view is used to render UI components and controls things like draw sort order, scaling and render mode. In order for UIViews to be rendered and positioned correctly they must be put under a parent UICanvas or a subclass of (like UserInterface).</d>
     [ExcludeComponent("ImageComponent")]
     [HideInPresenter]
+    [CacheView]
     public class UICanvas : UIView
     {
         #region Fields
@@ -133,6 +134,20 @@ namespace MarkLight.Views.UI
         /// <d>Pixels per unit to use for dynamically generated bitmaps such as text.</d>
         [MapTo("CanvasScaler.dynamicPixelsPerUnit")]
         public _float DynamicPixelsPerUnit;
+        
+        /// <summary>
+        /// Reference resolution.
+        /// </summary>
+        /// <d>The resolution the UI layout is designed for. If the screen resolution is larger, the UI will be scaled up, and if it’s smaller, the UI will be scaled down.</d>
+        [MapTo("CanvasScaler.referenceResolution")]
+        public _Vector2 ReferenceResolution;
+
+        /// <summary>
+        /// Match width or height or in between.
+        /// </summary>
+        /// <d>Scale the canvas area with the width as reference (0), the height as reference (1), or something in between (e.g. 0.75).</d>
+        [MapTo("CanvasScaler.matchWidthOrHeight")]
+        public _float MatchWidthOrHeight;
 
         /// <summary>
         /// Canvas scaler component.

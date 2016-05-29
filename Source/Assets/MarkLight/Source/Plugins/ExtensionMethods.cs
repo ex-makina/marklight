@@ -393,6 +393,11 @@ namespace MarkLight
         public static List<T> GetChildren<T>(this View view, Func<T, bool> predicate = null, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View
         {
             var children = new List<T>();
+            if (predicate == null)
+            {
+                predicate = x => true;
+            }
+
             view.ForEachChild<T>(x =>
             {
                 if (predicate(x))
@@ -684,6 +689,35 @@ namespace MarkLight
             }
         }
 #endif
+
+        /// <summary>
+        /// Converts content alignment to pivot.
+        /// </summary>
+        public static Vector2 ToPivot(this ElementAlignment alignment)
+        {
+            switch (alignment)
+            {
+                default:
+                case ElementAlignment.Center:
+                    return new Vector2(0.5f, 0.5f);
+                case ElementAlignment.Left:
+                    return new Vector2(0, 0.5f);
+                case ElementAlignment.Top:
+                    return new Vector2(0.5f, 1);
+                case ElementAlignment.Right:
+                    return new Vector2(1, 0.5f);
+                case ElementAlignment.Bottom:
+                    return new Vector2(0.5f, 0);
+                case ElementAlignment.TopLeft:
+                    return new Vector2(0, 1);
+                case ElementAlignment.TopRight:
+                    return new Vector2(1, 1);
+                case ElementAlignment.BottomLeft:
+                    return new Vector2(0, 0);
+                case ElementAlignment.BottomRight:
+                    return new Vector2(1, 0);
+            }
+        }
 
         #endregion
     }

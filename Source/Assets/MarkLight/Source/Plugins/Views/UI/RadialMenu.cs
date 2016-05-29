@@ -20,6 +20,7 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Arranges content in a circle. Can be opened/closed with optional animation. Radius and angles can be adjusted.</d>
     [HideInPresenter]
+    [CacheView]
     public class RadialMenu : UIView
     {
         #region Fields
