@@ -18,7 +18,6 @@ namespace MarkLight.Views
     /// Cube.
     /// </summary>
     [HideInPresenter]
-    [CacheView]
     public class Cube : View
     {
         #region Fields

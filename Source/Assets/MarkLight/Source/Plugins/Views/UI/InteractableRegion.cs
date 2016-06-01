@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Interactable region used to intercept and handle user interactions such as clicks and drags.</d>
     [HideInPresenter]
-    [CacheView]
     public class InteractableRegion : UIView
     {
         #region Fields

@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Represents a tab in the tab panel.</d>
     [HideInPresenter]
-    [CacheView]
     public class Tab : UIView
     {
         #region Fields

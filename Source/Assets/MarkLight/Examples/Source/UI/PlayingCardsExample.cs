@@ -47,7 +47,7 @@ namespace MarkLight.Examples.UI
         /// </summary>
         public void Add()
         {            
-            var card = new Card { CardRank = _random.Next(14), CardSuit = (CardSuit)_random.Next(1, 4) };
+            var card = new Card { CardRank = _random.Next(11, 15), CardSuit = (CardSuit)_random.Next(1, 4) };
             Cards.Add(card);
         }
 

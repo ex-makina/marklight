@@ -22,7 +22,6 @@ namespace MarkLight.Views.UI
     [MapViewField("ItemDeselected", "DataGridList.ItemDeselected")]
     [MapViewField("ListChanged", "DataGridList.ListChanged")]
     [HideInPresenter]
-    [CacheView]
     public class DataGrid : UIView
     {
         #region Fields

@@ -35,7 +35,6 @@ namespace MarkLight
         public bool PermanentMark;
         public bool TemporaryMark;
         public bool HideInPresenter;
-        public bool CacheView;
 
         [NonSerialized]
         private XElement _xumlElement;

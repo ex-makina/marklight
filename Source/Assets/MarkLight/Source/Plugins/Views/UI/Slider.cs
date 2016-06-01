@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Slider with a handle that can be moved with the mouse. Can be oriented horizontally or vertically.</d>
     [HideInPresenter]
-    [CacheView]
     public class Slider : UIView
     {
         #region Fields

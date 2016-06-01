@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>The row header view displays the content of a header row in the data grid.</d>
     [HideInPresenter]
-    [CacheView]
     public class RowHeader : UIView
     {
         #region Fields

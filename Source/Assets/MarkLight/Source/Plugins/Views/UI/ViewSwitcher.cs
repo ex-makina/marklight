@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Provides functionality for switching between views (presenting one view at a time). Can apply animations to views being switched to/from.</d>
     [HideInPresenter]
-    [CacheView]
     public class ViewSwitcher : UIView
     {
         #region Fields

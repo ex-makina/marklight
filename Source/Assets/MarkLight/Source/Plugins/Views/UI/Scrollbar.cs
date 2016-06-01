@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>A scrollbar with a draggable handle.</d>
     [HideInPresenter]
-    [CacheView]
     public class Scrollbar : UIView
     {
         #region Fields

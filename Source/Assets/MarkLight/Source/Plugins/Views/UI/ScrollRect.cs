@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Displays scrollable content.</d>
     [HideInPresenter]
-    [CacheView]
     public class ScrollRect : UIView
     {
         #region Fields

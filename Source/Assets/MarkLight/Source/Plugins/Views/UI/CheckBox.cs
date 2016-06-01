@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>A check box consisting of a box that can be ticked and a text label. Has the states: Default, Checked and Disabled.</d>
     [HideInPresenter]
-    [CacheView]
     public class CheckBox : UIView
     {
         #region Fields

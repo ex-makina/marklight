@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Displays a selectable list item. Has the states: Default, Disabled, Highlighted, Pressed and Selected.</d>
     [HideInPresenter]
-    [CacheView]
     public class ListItem : UIView
     {
         #region Fields

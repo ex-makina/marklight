@@ -16,7 +16,6 @@ namespace MarkLight.Views
     /// Animates views.
     /// </summary>
     [HideInPresenter]
-    [CacheView]
     public class StateAnimation : ViewAnimation
     {
         #region Fields

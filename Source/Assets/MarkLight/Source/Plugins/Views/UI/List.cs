@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>The list view presents a selectable list of items. It can either contain a static list of ListItem views or one ListItem with IsTemplate="True". If bound to list data through the Items field the list uses the template to generate a dynamic list of ListItems.</d>
     [HideInPresenter]
-    [CacheView]
     public class List : UIView
     {
         #region Fields

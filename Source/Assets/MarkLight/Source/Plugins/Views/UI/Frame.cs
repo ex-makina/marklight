@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>The frame resizes itself to its content by default.</d>
     [HideInPresenter]
-    [CacheView]
     public class Frame : UIView
     {
         #region Fields

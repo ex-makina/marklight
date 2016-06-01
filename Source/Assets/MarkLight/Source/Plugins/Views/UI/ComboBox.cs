@@ -20,7 +20,6 @@ namespace MarkLight.Views.UI
     /// <d>Presents a static or dynamic list of items in a drop-down.</d>
     [MapViewField("ItemSelected", "ComboBoxList.ItemSelected")]
     [HideInPresenter]
-    [CacheView]
     public class ComboBox : UIView
     {
         #region Fields

@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>Arranges content in a series of tabs that can be switched between. Tabs can be oriented horizontallt/vertically and aligned topleft/bottom/etc. Tabs can be generated from a template and bound list data.</d>
     [HideInPresenter]
-    [CacheView]
     public class TabPanel : UIView
     {
         #region Fields

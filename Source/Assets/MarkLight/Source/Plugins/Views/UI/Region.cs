@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>View used primarily to section off a region of space in order to spacially arrange child views.</d>
     [HideInPresenter]
-    [CacheView]
     public class Region : UIView
     {
     }

@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>The button view is a clickable region with text. Has the states: Default, Highlighted, Pressed and Disabled. The button can be set to toggle through IsToggleButton and to adjust its size to its text through the AdjustToText field.</d>
     [HideInPresenter]
-    [CacheView]
     public class Button : UIView
     {
         #region Fields

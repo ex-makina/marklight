@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>    
     /// <d>Base class for UI views. Has fields for doing layout such as Width, Height, Margin, Alignment, Offset, etc. and fields for rendering a background image.</d>
     [HideInPresenter]
-    [CacheView]
     public class UIView : View
     {
         #region Fields

@@ -197,9 +197,6 @@ namespace MarkLight
             // set if view is internal
             viewTypeData.HideInPresenter = type.GetCustomAttributes(typeof(HideInPresenter), false).Any();
 
-            // set if view should be cached
-            viewTypeData.CacheView = type.GetCustomAttributes(typeof(CacheView), false).Any();
-
             // set view action fields
             var viewActionType = typeof(ViewAction);
             var actionFields = type.GetFields().Where(x => x.FieldType == viewActionType).Select(y => y.Name);

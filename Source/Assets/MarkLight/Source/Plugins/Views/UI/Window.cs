@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     [MapViewField("CloseButtonClick", "CloseButton.Click")]
     [HideInPresenter]
-    [CacheView]
     public class Window : UICanvas
     {
         #region Fields

@@ -52,7 +52,11 @@ namespace MarkLight.Examples.Data
 
         public string GetTemplateId()
         {
-            return String.Format("{0}{1}", CardSuit, CardRank);
+            // return template id for card
+            int cardRank = CardRank - 10; // only support 4 cards in this example
+            cardRank.Clamp(1, 4);
+
+            return String.Format("Card{0}", cardRank);
         }
     }
 

@@ -20,7 +20,6 @@ namespace MarkLight.Views.UI
     /// <d>The canvas view is used to render UI components and controls things like draw sort order, scaling and render mode. In order for UIViews to be rendered and positioned correctly they must be put under a parent UICanvas or a subclass of (like UserInterface).</d>
     [ExcludeComponent("ImageComponent")]
     [HideInPresenter]
-    [CacheView]
     public class UICanvas : UIView
     {
         #region Fields

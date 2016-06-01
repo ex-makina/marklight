@@ -19,7 +19,6 @@ namespace MarkLight.Views.UI
     /// </summary>
     /// <d>The column view displays the content of a cell in the data grid.</d>
     [HideInPresenter]
-    [CacheView]
     public class Column : UIView
     {
         #region Fields
