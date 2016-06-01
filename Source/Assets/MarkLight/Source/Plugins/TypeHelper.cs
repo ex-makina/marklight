@@ -18,7 +18,13 @@ namespace MarkLight
     /// </summary>
     public static class TypeHelper
     {
-        #region Methods
+        #region Fields
+
+        private static List<Type> _scriptAssemblyTypes;
+
+        #endregion
+
+        #region Methods                
 
         /// <summary>
         /// Gets all types derived from specified base type.
@@ -26,24 +32,61 @@ namespace MarkLight
         public static IEnumerable<Type> FindDerivedTypes(Type baseType)
         {
             var derivedTypes = new List<Type>();
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            if (_scriptAssemblyTypes != null)
             {
-                foreach (var type in assembly.GetLoadableTypes())
+                foreach (var type in _scriptAssemblyTypes)
                 {
-                    try
+                    if (baseType.IsAssignableFrom(type))
                     {
-                        if (baseType.IsAssignableFrom(type))
-                        {
-                            derivedTypes.Add(type);
-                        }
+                        derivedTypes.Add(type);
                     }
-                    catch
-                    { 
+                }
+                return derivedTypes;
+            }            
+
+            // look in assembly csharp only
+            var scriptAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.GetName().Name == "Assembly-CSharp");
+            if (scriptAssembly != null)
+            {
+                _scriptAssemblyTypes = scriptAssembly.GetLoadableTypes().ToList();
+                foreach (var type in _scriptAssemblyTypes)
+                {
+                    if (baseType.IsAssignableFrom(type))
+                    {
+                        derivedTypes.Add(type);
+                    }
+                }
+            }
+            else
+            {
+                // look in all assemblies
+                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    foreach (var type in assembly.GetLoadableTypes())
+                    {
+                        try
+                        {
+                            if (baseType.IsAssignableFrom(type))
+                            {
+                                derivedTypes.Add(type);
+                            }
+                        }
+                        catch
+                        {
+                        }
                     }
                 }
             }
 
             return derivedTypes;
+        }
+
+        /// <summary>
+        /// Gets derived types from a list of types.
+        /// </summary>
+        private static IEnumerable<Type> GetDerivedTypes(Type baseType, List<Type> _scriptAssemblyTypes)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -73,7 +116,7 @@ namespace MarkLight
         {
             return Activator.CreateInstance(type);
         }
-        
+
         #endregion
     }
 }

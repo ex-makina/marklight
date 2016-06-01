@@ -70,12 +70,6 @@ namespace MarkLight
                 GameObject.DestroyImmediate(viewPresenter.RootView);
             }
 
-            // destroy template root
-            if (viewPresenter.TemplateRoot != null)
-            {
-                GameObject.DestroyImmediate(viewPresenter.TemplateRoot);
-            }
-
             // destroy any remaining objects under the view-presenter that should not be there
             if (viewPresenter.transform.childCount > 0)
             {
@@ -589,14 +583,14 @@ namespace MarkLight
             // set view action fields
             foreach (var viewActionField in viewTypeData.ViewActionFields)
             {
-                var viewActionFieldInfo = viewType.GetField(viewActionField);
+                var viewActionFieldInfo = viewTypeData.GetViewField(viewActionField);
                 viewActionFieldInfo.SetValue(view, new ViewAction(viewActionField));
             }
 
             // set dependency fields            
             foreach (var dependencyField in viewTypeData.DependencyFields)
             {
-                var dependencyFieldInfo = viewType.GetField(dependencyField);
+                var dependencyFieldInfo = viewTypeData.GetViewField(dependencyField);
                 var dependencyFieldInstance = TypeHelper.CreateInstance(dependencyFieldInfo.FieldType) as ViewFieldBase;
                 dependencyFieldInfo.SetValue(view, dependencyFieldInstance);
                 dependencyFieldInstance.ParentView = view;

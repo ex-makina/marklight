@@ -32,7 +32,6 @@ namespace MarkLight
         public List<string> Views;
         public List<string> Themes;
         public GameObject RootView;
-        public GameObject TemplateRoot;
         public List<Sprite> Sprites;
         public List<string> SpritePaths;
         public List<Font> Fonts;
@@ -193,11 +192,6 @@ namespace MarkLight
             if (RootView != null)
             {
                 GameObject.DestroyImmediate(RootView);
-            }
-
-            if (TemplateRoot != null)
-            {
-                GameObject.DestroyImmediate(TemplateRoot);
             }
         }
 

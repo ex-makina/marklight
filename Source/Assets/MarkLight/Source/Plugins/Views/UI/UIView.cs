@@ -236,7 +236,7 @@ namespace MarkLight.Views.UI
         /// Layout root.
         /// </summary>
         /// <d>A reference to the layout root of the UI views.</d>
-        public UserInterface LayoutRoot;
+        protected UserInterface _layoutRoot;
         
         protected CanvasGroup _canvasGroup;
 
@@ -443,23 +443,6 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
-        /// Called once to initialize the view.
-        /// </summary>
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            if (LayoutRoot == null)
-            {
-                LayoutRoot = this.FindParent<UserInterface>();
-                if (LayoutRoot == null)
-                {
-                    Utils.LogError("[MarkLight] {0}: LayoutRoot missing. All UIViews needs to be placed under a UserInterface root canvas.", GameObjectName);
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets local point in view from screen point (e.g. mouse position).
         /// </summary>
         public Vector2 GetLocalPoint(Vector2 screenPoint)
@@ -564,6 +547,30 @@ namespace MarkLight.Views.UI
             get
             {
                 return RectTransform.rect.width >= Screen.width && RectTransform.rect.height >= Screen.height;
+            }
+        }
+
+        /// <summary>
+        /// Gets layout root canvas.
+        /// </summary>
+        public UserInterface LayoutRoot
+        {
+            get
+            {
+                if (_layoutRoot == null)
+                {
+                    _layoutRoot = this.FindParent<UserInterface>();
+                    if (_layoutRoot == null)
+                    {
+                        Utils.LogError("[MarkLight] {0}: LayoutRoot missing. All UIViews needs to be placed under a UserInterface root canvas.", GameObjectName);
+                    }
+                }
+
+                return _layoutRoot;
+            }
+            set
+            {
+                _layoutRoot = value;
             }
         }
 
