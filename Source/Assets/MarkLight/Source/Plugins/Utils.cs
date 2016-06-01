@@ -18,7 +18,8 @@ namespace MarkLight
 
         public static bool SuppressLogging = false;
         public static System.Diagnostics.Stopwatch Stopwatch;
-        private static System.Random _random;
+        public static string ErrorMessage = string.Empty;
+        private static System.Random _random;        
 
         #endregion
 
@@ -162,15 +163,6 @@ namespace MarkLight
         public static void LogTimer()
         {
             Log("Time elapsed: {0}", Stopwatch.ElapsedMilliseconds);
-        }
-
-        /// <summary>
-        /// Gets the name of the currently active sccene.
-        /// </summary>
-        /// <returns></returns>
-        public static string GetActiveSceneName()
-        {
-            return Application.loadedLevelName;
         }
 
         /// <summary>

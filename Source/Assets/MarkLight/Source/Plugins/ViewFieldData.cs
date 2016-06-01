@@ -22,14 +22,11 @@ namespace MarkLight
         public View TargetView;
         public string TargetViewFieldPath;
         public bool TargetViewSet;
-        public ValueConverter ValueConverter;
         public bool IsOwner;
         public bool IsViewFieldBaseType;
         public ViewFieldPathInfo ViewFieldPathInfo;
-        public string ViewFieldTypeName;
-        public Type ViewFieldType;
+
         public bool ViewFieldPathParsed;
-        public string ParseError;
         public bool SevereParseError;
         public bool PropagateFirst;
 
@@ -74,7 +71,7 @@ namespace MarkLight
                     if (SevereParseError)
                     {
                         // severe parse error means the path is incorrect
-                        Utils.LogError("[MarkLight] {0}: Unable to assign value \"{1}\". {2}", SourceView.GameObjectName, inValue, ParseError);
+                        Utils.LogError("[MarkLight] {0}: Unable to assign value \"{1}\". {2}", SourceView.GameObjectName, inValue, Utils.ErrorMessage);
                     }
 
                     // unsevere parse errors can be expected, e.g. value along path is null
@@ -283,7 +280,7 @@ namespace MarkLight
             fieldData.SourceView = sourceView;
             fieldData.IsOwner = true;
             fieldData.ViewFieldPathInfo = new ViewFieldPathInfo();
-            fieldData.ViewFieldTypeName = sourceView.ViewTypeName;
+            fieldData.ViewFieldPathInfo.ViewFieldTypeName = sourceView.ViewTypeName;
 
             Type viewType = typeof(View);
             var viewFields = viewFieldPath.Split('.');
@@ -349,13 +346,22 @@ namespace MarkLight
         public bool ParseViewFieldPath()
         {
             SevereParseError = false;
+
+            var viewTypeData = SourceView.ViewTypeData;
+            var viewFieldPath = viewTypeData.GetViewFieldPathInfo(ViewFieldPath);
+            if (viewFieldPath != null)
+            {
+                ViewFieldPathInfo = viewFieldPath;
+                ViewFieldPathParsed = true;
+                return true;
+            }
+                        
             ViewFieldPathParsed = false;
             ViewFieldPathInfo.MemberInfo.Clear();
             ViewFieldPathInfo.Dependencies.Clear();
 
             // if we get here we are the owner of the field and need to parse the path
-            var viewTypeData = ViewData.GetViewTypeData(SourceView.ViewTypeName);
-            ValueConverter = viewTypeData.GetViewFieldValueConverter(ViewFieldPath);
+            ViewFieldPathInfo.ValueConverter = viewTypeData.GetViewFieldValueConverter(ViewFieldPath);
 
             //Type viewFieldType = SourceView.GetType();
             var viewFields = ViewFieldPath.Split('.');
@@ -387,40 +393,40 @@ namespace MarkLight
                 if (memberInfo == null)
                 {
                     SevereParseError = true;
-                    ParseError = String.Format("Unable to parse view field path \"{0}\". Couldn't find member with the name \"{1}\".", ViewFieldPath, viewField);
+                    Utils.ErrorMessage = String.Format("Unable to parse view field path \"{0}\". Couldn't find member with the name \"{1}\".", ViewFieldPath, viewField);
                     return false;
                 }
 
                 ViewFieldPathInfo.MemberInfo.Add(memberInfo);
-                ViewFieldType = memberInfo.GetFieldType();
+                ViewFieldPathInfo.ViewFieldType = memberInfo.GetFieldType();
 
                 // handle special ViewFieldBase types
-                if (viewFieldBaseType.IsAssignableFrom(ViewFieldType))
+                if (viewFieldBaseType.IsAssignableFrom(ViewFieldPathInfo.ViewFieldType))
                 {
                     viewFieldObject = memberInfo.GetFieldValue(viewFieldObject);
                     if (viewFieldObject == null)
                     {
-                        ParseError = String.Format("Unable to parse view field path \"{0}\". Field/property with the name \"{1}\" was null.", ViewFieldPath, viewField);
+                        Utils.ErrorMessage = String.Format("Unable to parse view field path \"{0}\". Field/property with the name \"{1}\" was null.", ViewFieldPath, viewField);
                         parseSuccess = false;
                         continue;
                     }
 
-                    memberInfo = ViewFieldType.GetProperty("InternalValue"); // set internal dependency view field value
+                    memberInfo = ViewFieldPathInfo.ViewFieldType.GetProperty("InternalValue"); // set internal dependency view field value
                     ViewFieldPathInfo.MemberInfo.Add(memberInfo);
-                    ViewFieldType = memberInfo.GetFieldType();
+                    ViewFieldPathInfo.ViewFieldType = memberInfo.GetFieldType();
                     IsViewFieldBaseType = isLastField;
                 }
 
                 if (isLastField)
                 {
-                    ViewFieldType = memberInfo.GetFieldType();
-                    ViewFieldTypeName = ViewFieldType.Name;
-                    ValueConverter = ValueConverter ?? ViewData.GetValueConverterForType(ViewFieldTypeName);
+                    ViewFieldPathInfo.ViewFieldType = memberInfo.GetFieldType();
+                    ViewFieldPathInfo.ViewFieldTypeName = ViewFieldPathInfo.ViewFieldType.Name;
+                    ViewFieldPathInfo.ValueConverter = ValueConverter ?? ViewData.GetValueConverterForType(ViewFieldTypeName);
 
                     // handle special case if converter is null and field type is enum
-                    if (ValueConverter == null && ViewFieldType.IsEnum())
+                    if (ValueConverter == null && ViewFieldPathInfo.ViewFieldType.IsEnum())
                     {
-                        ValueConverter = new EnumValueConverter(ViewFieldType);
+                        ViewFieldPathInfo.ValueConverter = new EnumValueConverter(ViewFieldPathInfo.ViewFieldType);
                     }
                 }
                 else
@@ -430,13 +436,18 @@ namespace MarkLight
 
                 if (viewFieldObject == null)
                 {
-                    ParseError = String.Format("Unable to parse view field path \"{0}\". Field/property with the name \"{1}\" was null.", ViewFieldPath, viewField);
+                    Utils.ErrorMessage = String.Format("Unable to parse view field path \"{0}\". Field/property with the name \"{1}\" was null.", ViewFieldPath, viewField);
                     parseSuccess = false;
                     continue;
                 }
             }
 
             ViewFieldPathParsed = parseSuccess;
+            if (parseSuccess)
+            {
+                viewTypeData.AddViewFieldPathInfo(ViewFieldPath, ViewFieldPathInfo);
+            }
+
             return parseSuccess;
         }
 
@@ -466,6 +477,44 @@ namespace MarkLight
             _isSetInitialized = true;
             _isSet = SourceView.GetIsSetFieldValue(ViewFieldPath);
             return _isSet;
+        }
+
+        #endregion
+
+
+        #region Properties
+
+        /// <summary>
+        /// Gets view field value converter.
+        /// </summary>
+        public ValueConverter ValueConverter
+        {
+            get
+            {
+                return ViewFieldPathInfo != null ? ViewFieldPathInfo.ValueConverter : null;
+            }
+        }
+
+        /// <summary>
+        /// Gets view field type name.
+        /// </summary>
+        public string ViewFieldTypeName
+        {
+            get
+            {
+                return ViewFieldPathInfo != null ? ViewFieldPathInfo.ViewFieldTypeName : null;
+            }
+        }
+
+        /// <summary>
+        /// Gets view field type.
+        /// </summary>
+        public Type ViewFieldType
+        {
+            get
+            {
+                return ViewFieldPathInfo != null ? ViewFieldPathInfo.ViewFieldType : null;
+            }
         }
 
         #endregion

@@ -544,7 +544,15 @@ namespace MarkLight
         /// </summary>
         public static TValue Get<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key)
         {
-            return dict.ContainsKey(key) ? dict[key] : default(TValue);
+            TValue value;
+            if (!dict.TryGetValue(key, out value))
+            {
+                return default(TValue);
+            }
+            else
+            {
+                return value;
+            }
         }
 
         /// <summary>

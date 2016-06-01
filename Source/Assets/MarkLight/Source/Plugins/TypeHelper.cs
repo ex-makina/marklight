@@ -45,16 +45,13 @@ namespace MarkLight
             }            
 
             // look in assembly csharp only
-            var scriptAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.GetName().Name == "Assembly-CSharp");
-            if (scriptAssembly != null)
+            var scriptAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.GetName().Name.StartsWith("Assembly-CSharp")).ToList();
+            if (scriptAssemblies.Count > 0)
             {
-                _scriptAssemblyTypes = scriptAssembly.GetLoadableTypes().ToList();
-                foreach (var type in _scriptAssemblyTypes)
+                _scriptAssemblyTypes = new List<Type>();
+                foreach (var assembly in scriptAssemblies)
                 {
-                    if (baseType.IsAssignableFrom(type))
-                    {
-                        derivedTypes.Add(type);
-                    }
+                    _scriptAssemblyTypes.AddRange(assembly.GetLoadableTypes().ToList());                    
                 }
             }
             else

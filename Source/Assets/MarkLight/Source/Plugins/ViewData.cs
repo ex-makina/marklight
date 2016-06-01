@@ -28,6 +28,7 @@ namespace MarkLight
         /// </summary>
         public static void GenerateViews()
         {
+            ViewPresenter.UpdateInstance();
             var viewPresenter = ViewPresenter.Instance;
 
             viewPresenter.Views.Clear();
@@ -510,7 +511,6 @@ namespace MarkLight
             //   SetThemeValues(view)
 
             // TODO store away and re-use view templates
-            // 
 
             // use default theme if no theme is specified
             if (String.IsNullOrEmpty(theme))
@@ -664,8 +664,6 @@ namespace MarkLight
 
             // set internal view values that appear inside the root element of the XUML file
             SetViewValues(view, viewTypeData.XumlElement, view, context);
-
-            // TODO cache view as a template if it isn't already 
 
             // set theme values
             var themeData = GetThemeData(theme);

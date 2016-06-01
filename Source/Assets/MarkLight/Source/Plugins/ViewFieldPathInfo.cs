@@ -19,6 +19,9 @@ namespace MarkLight
 
         public List<MemberInfo> MemberInfo;
         public HashSet<string> Dependencies;
+        public ValueConverter ValueConverter;
+        public string ViewFieldTypeName;
+        public Type ViewFieldType;
 
         #endregion
 

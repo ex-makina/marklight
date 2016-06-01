@@ -210,6 +210,7 @@ namespace MarkLight
         public static string DefaultStateName = "Default";
         public static string AnyStateName = "Any";
 
+        private ViewTypeData _viewTypeData;
         private Dictionary<string, ViewFieldData> _viewFieldData;
         private Dictionary<string, Dictionary<string, ViewFieldStateValue>> _stateValues;
         private Dictionary<string, Dictionary<string, StateAnimation>> _stateAnimations;
@@ -297,9 +298,10 @@ namespace MarkLight
                 if (defaultStateValues != null)
                 {
                     // update default state value
-                    if (defaultStateValues.ContainsKey(viewField))
+                    ViewFieldStateValue defaultStateValue;
+                    if (defaultStateValues.TryGetValue(viewField, out defaultStateValue))
                     {
-                        defaultStateValues[viewField].SetValue(value, viewFieldData.ValueConverter.ConvertToString(value));
+                        defaultStateValue.SetValue(value, viewFieldData.ValueConverter.ConvertToString(value));
                     }
                 }
             }
@@ -1122,6 +1124,8 @@ namespace MarkLight
         internal void QueueChangeHandler(string name)
         {
             _changeHandlers.Add(name);
+
+            // TODO optimize by caching this info in ViewTypeData
             if (!_changeHandlerMethods.ContainsKey(name))
             {
                 _changeHandlerMethods.Add(name, GetType().GetMethod(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic));
@@ -1763,6 +1767,22 @@ namespace MarkLight
             get
             {
                 return _viewFieldData;
+            }
+        }
+
+        /// <summary>
+        /// Gets view type data.
+        /// </summary>
+        public ViewTypeData ViewTypeData
+        {
+            get
+            {
+                if (_viewTypeData == null)
+                {
+                    _viewTypeData = ViewData.GetViewTypeData(ViewTypeName);
+                }
+
+                return _viewTypeData;
             }
         }
 
