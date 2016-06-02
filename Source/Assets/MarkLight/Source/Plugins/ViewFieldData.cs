@@ -17,16 +17,11 @@ namespace MarkLight
     {
         #region Fields
 
-        public string ViewFieldPath;
-        public string TargetViewFieldPath;
-
         public View SourceView;
         public View TargetView;        
         public bool TargetViewSet;
-        public bool IsViewFieldBaseType;
         public ViewFieldPathInfo ViewFieldPathInfo;
 
-        public bool ViewFieldPathParsed;
         public bool SevereParseError;
         public bool PropagateFirst;
 
@@ -62,7 +57,7 @@ namespace MarkLight
             }
 
             // check if path has been parsed
-            if (!ViewFieldPathParsed)
+            if (!IsPathParsed)
             {
                 // attempt to parse path
                 if (!ParseViewFieldPath())
@@ -159,7 +154,7 @@ namespace MarkLight
             else
             {
                 // check if path has been parsed
-                if (!ViewFieldPathParsed)
+                if (!IsPathParsed)
                 {
                     // attempt to parse path
                     if (!ParseViewFieldPath())
@@ -273,10 +268,8 @@ namespace MarkLight
             if (String.IsNullOrEmpty(viewFieldPath) || sourceView == null)
                 return null;
 
-            ViewFieldData fieldData = new ViewFieldData();
-            fieldData.ViewFieldPath = viewFieldPath;
+            ViewFieldData fieldData = new ViewFieldData();            
             fieldData.TargetView = sourceView;
-            fieldData.TargetViewFieldPath = viewFieldPath;
             fieldData.SourceView = sourceView;
 
             var viewTypeData = sourceView.ViewTypeData;
@@ -290,6 +283,8 @@ namespace MarkLight
             {
                 fieldData.ViewFieldPathInfo = new ViewFieldPathInfo();
                 fieldData.ViewFieldPathInfo.ViewFieldTypeName = sourceView.ViewTypeName;
+                fieldData.ViewFieldPathInfo.ViewFieldPath = viewFieldPath;
+                fieldData.ViewFieldPathInfo.TargetViewFieldPath = viewFieldPath;
             }
 
             Type viewType = typeof(View);
@@ -306,10 +301,12 @@ namespace MarkLight
                 if (fieldInfo != null && viewType.IsAssignableFrom(fieldInfo.FieldType))
                 {
                     // yes. set target view and return
+                    fieldData.ViewFieldPathInfo.TargetViewFieldPath = String.Join(".", viewFields.Skip(1).ToArray());
                     fieldData.ViewFieldPathInfo.MemberInfo.Add(fieldInfo);
                     fieldData.ViewFieldPathInfo.IsMapped = true;
-                    fieldData.TargetViewSet = false;
-                    fieldData.TargetViewFieldPath = String.Join(".", viewFields.Skip(1).ToArray());
+                    fieldData.ViewFieldPathInfo.IsPathParsed = true;
+                    fieldData.TargetViewSet = false;                    
+                    //viewTypeData.AddViewFieldPathInfo(viewFieldPath, fieldData.ViewFieldPathInfo);
                     return fieldData;
                 }
 
@@ -318,10 +315,12 @@ namespace MarkLight
                 if (propertyInfo != null && viewType.IsAssignableFrom(propertyInfo.PropertyType))
                 {
                     // yes. set target view and return
+                    fieldData.ViewFieldPathInfo.TargetViewFieldPath = String.Join(".", viewFields.Skip(1).ToArray());
                     fieldData.ViewFieldPathInfo.MemberInfo.Add(propertyInfo);
                     fieldData.ViewFieldPathInfo.IsMapped = true;
-                    fieldData.TargetViewSet = false;
-                    fieldData.TargetViewFieldPath = String.Join(".", viewFields.Skip(1).ToArray());
+                    fieldData.ViewFieldPathInfo.IsPathParsed = true;
+                    fieldData.TargetViewSet = false;                    
+                    //viewTypeData.AddViewFieldPathInfo(viewFieldPath, fieldData.ViewFieldPathInfo);
                     return fieldData;
                 }
 
@@ -337,10 +336,10 @@ namespace MarkLight
                     }
 
                     // view found
+                    fieldData.ViewFieldPathInfo.TargetViewFieldPath = String.Join(".", viewFields.Skip(1).ToArray());
                     fieldData.ViewFieldPathInfo.IsMapped = true;
                     fieldData.TargetViewSet = true;
                     fieldData.TargetView = result;
-                    fieldData.TargetViewFieldPath = String.Join(".", viewFields.Skip(1).ToArray());
                     return fieldData;
                 }
             }
@@ -357,16 +356,16 @@ namespace MarkLight
         {
             SevereParseError = false;
 
+            // TODO I think if we are here we can assume we don't have a view field path info
             var viewTypeData = SourceView.ViewTypeData;
-            var viewFieldPath = viewTypeData.GetViewFieldPathInfo(ViewFieldPath);
+            var viewFieldPath = viewTypeData.GetViewFieldPathInfo(ViewFieldPath); 
             if (viewFieldPath != null)
             {
                 ViewFieldPathInfo = viewFieldPath;
-                ViewFieldPathParsed = true;
                 return true;
             }
-                        
-            ViewFieldPathParsed = false;
+
+            ViewFieldPathInfo.IsPathParsed = false;
             ViewFieldPathInfo.MemberInfo.Clear();
             ViewFieldPathInfo.Dependencies.Clear();
 
@@ -424,7 +423,6 @@ namespace MarkLight
                     memberInfo = ViewFieldPathInfo.ViewFieldType.GetProperty("InternalValue"); // set internal dependency view field value
                     ViewFieldPathInfo.MemberInfo.Add(memberInfo);
                     ViewFieldPathInfo.ViewFieldType = memberInfo.GetFieldType();
-                    IsViewFieldBaseType = isLastField;
                 }
 
                 if (isLastField)
@@ -452,7 +450,7 @@ namespace MarkLight
                 }
             }
 
-            ViewFieldPathParsed = parseSuccess;
+            ViewFieldPathInfo.IsPathParsed = parseSuccess;
             if (parseSuccess)
             {
                 viewTypeData.AddViewFieldPathInfo(ViewFieldPath, ViewFieldPathInfo);
@@ -524,6 +522,39 @@ namespace MarkLight
             get
             {
                 return ViewFieldPathInfo.ViewFieldType;
+            }
+        }
+
+        /// <summary>
+        /// Gets view field path.
+        /// </summary>
+        public string ViewFieldPath
+        {
+            get
+            {
+                return ViewFieldPathInfo.ViewFieldPath;
+            }
+        }
+
+        /// <summary>
+        /// Gets target view field path.
+        /// </summary>
+        public string TargetViewFieldPath
+        {
+            get
+            {
+                return ViewFieldPathInfo.TargetViewFieldPath;
+            }
+        }
+
+        /// <summary>
+        /// Gets boolean indicating if path has been parsed.
+        /// </summary>
+        public bool IsPathParsed
+        {
+            get
+            {
+                return ViewFieldPathInfo.IsPathParsed;
             }
         }
 

@@ -6,5 +6,5 @@
   </Region>
 
   <List Id="TabHeaderList" Orientation="Horizontal" Alignment="TopLeft" ItemSelected="TabHeaderSelected">
-  </List>  
+  </List>
 </TabPanel>

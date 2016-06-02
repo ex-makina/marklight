@@ -3,9 +3,11 @@
     <Group Orientation="Horizontal" Spacing="50" ContentAlignment="Top">     
       <TabPanel Id="TabPanel" Width="500" Height="400">
         <Tab Text="Tab 1">
+          <TabHeader />
           <Label Text="Tab 1" AdjustToText="Width"/>
         </Tab>
         <Tab Text="Tab 2">
+          <TabHeader />
           <Label Text="Tab 2" AdjustToText="Width" />
         </Tab>
         <Tab>

@@ -53,6 +53,14 @@ namespace MarkLight
                 {
                     _scriptAssemblyTypes.AddRange(assembly.GetLoadableTypes().ToList());                    
                 }
+
+                foreach (var type in _scriptAssemblyTypes)
+                {
+                    if (baseType.IsAssignableFrom(type))
+                    {
+                        derivedTypes.Add(type);
+                    }
+                }
             }
             else
             {

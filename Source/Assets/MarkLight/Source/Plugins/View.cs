@@ -1468,7 +1468,7 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Initializes this view and all children. Used if the view is created dynamically and need to be called once to propertly initialize the view.
+        /// Initializes this view and all children. Used if the view is created dynamically and need to be called once to properly initialize the view.
         /// </summary>
         public void InitializeViews()
         {

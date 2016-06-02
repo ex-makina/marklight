@@ -11,6 +11,7 @@ using System.IO;
 using MarkLight.Views.UI;
 using MarkLight.Animation;
 using MarkLight.ValueConverters;
+using System.Diagnostics;
 #endregion
 
 namespace MarkLight
@@ -125,6 +126,10 @@ namespace MarkLight
                 return;                
             }
 
+            // TODO log initialization performance
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             rootView.ForThisAndEachChild<View>(x => x.TryInitializeInternalDefaultValues());
             rootView.ForThisAndEachChild<View>(x => x.TryInitializeInternal());
             rootView.ForThisAndEachChild<View>(x => x.TryInitialize(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
@@ -135,19 +140,29 @@ namespace MarkLight
             ResourceDictionary.NotifyObservers();
 
             // trigger change handlers
-            int pass = 0;
-            while (rootView.Find<View>(x => x.HasQueuedChangeHandlers) != null)
+            if (!Application.isPlaying)
             {
-                if (pass >= 1000)
+                int pass = 0;
+                while (rootView.Find<View>(x => x.HasQueuedChangeHandlers) != null)
                 {
-                    PrintTriggeredChangeHandlerOverflowError(pass, rootView);
-                    break;
-                }
+                    if (pass >= 1000)
+                    {
+                        PrintTriggeredChangeHandlerOverflowError(pass, rootView);
+                        break;
+                    }
 
-                // as long as there are change handlers queued, go through all views and trigger them
-                rootView.ForThisAndEachChild<View>(x => x.TryTriggerChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
-                ++pass;
-            }            
+                    // as long as there are change handlers queued, go through all views and trigger them
+                    rootView.ForThisAndEachChild<View>(x => x.TryTriggerChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
+                    ++pass;
+                }
+            }
+
+            // TODO log initialization performance
+            sw.Stop();
+            if (rootView == RootView)
+            {
+                Utils.Log("Initialization time: {0}", sw.ElapsedMilliseconds);
+            }
         }
 
         /// <summary>

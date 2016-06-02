@@ -865,6 +865,7 @@ namespace MarkLight.Views.UI
             {
                 // move tab header to list
                 tabHeader.MoveTo(TabHeaderList.Content, index >= 0 ? index + 1 : -1);
+                TabHeaderList.QueueChangeHandler("LayoutChanged");
             }
 
             // make sure tab bindings are propagated to header

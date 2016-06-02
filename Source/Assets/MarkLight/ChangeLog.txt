@@ -1,5 +1,5 @@
 ﻿v2.4.0
-- Optimized performance in various places
+- Optimized performance when loading and initializing views
 - Added PlayingCards example
 - Added bool AlternateItems to List and AlternateRows to DataGrid for enabling alternating row styles (alternating between "Default" and "Alternate" state)
 - Fixed issue with exceptions thrown when bindings referencing destroyed objects (e.g. bindings to removed list items)
