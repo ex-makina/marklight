@@ -18,11 +18,11 @@ namespace MarkLight
         #region Fields
 
         public string ViewFieldPath;
-        public View SourceView;
-        public View TargetView;
         public string TargetViewFieldPath;
+
+        public View SourceView;
+        public View TargetView;        
         public bool TargetViewSet;
-        public bool IsOwner;
         public bool IsViewFieldBaseType;
         public ViewFieldPathInfo ViewFieldPathInfo;
 
@@ -278,9 +278,19 @@ namespace MarkLight
             fieldData.TargetView = sourceView;
             fieldData.TargetViewFieldPath = viewFieldPath;
             fieldData.SourceView = sourceView;
-            fieldData.IsOwner = true;
-            fieldData.ViewFieldPathInfo = new ViewFieldPathInfo();
-            fieldData.ViewFieldPathInfo.ViewFieldTypeName = sourceView.ViewTypeName;
+
+            var viewTypeData = sourceView.ViewTypeData;
+            var viewFieldPathInfo = viewTypeData.GetViewFieldPathInfo(viewFieldPath);
+            if (viewFieldPathInfo != null)
+            {
+                fieldData.ViewFieldPathInfo = viewFieldPathInfo;
+                return fieldData;
+            }
+            else
+            {
+                fieldData.ViewFieldPathInfo = new ViewFieldPathInfo();
+                fieldData.ViewFieldPathInfo.ViewFieldTypeName = sourceView.ViewTypeName;
+            }
 
             Type viewType = typeof(View);
             var viewFields = viewFieldPath.Split('.');
@@ -297,7 +307,7 @@ namespace MarkLight
                 {
                     // yes. set target view and return
                     fieldData.ViewFieldPathInfo.MemberInfo.Add(fieldInfo);
-                    fieldData.IsOwner = false;
+                    fieldData.ViewFieldPathInfo.IsMapped = true;
                     fieldData.TargetViewSet = false;
                     fieldData.TargetViewFieldPath = String.Join(".", viewFields.Skip(1).ToArray());
                     return fieldData;
@@ -309,7 +319,7 @@ namespace MarkLight
                 {
                     // yes. set target view and return
                     fieldData.ViewFieldPathInfo.MemberInfo.Add(propertyInfo);
-                    fieldData.IsOwner = false;
+                    fieldData.ViewFieldPathInfo.IsMapped = true;
                     fieldData.TargetViewSet = false;
                     fieldData.TargetViewFieldPath = String.Join(".", viewFields.Skip(1).ToArray());
                     return fieldData;
@@ -327,7 +337,7 @@ namespace MarkLight
                     }
 
                     // view found
-                    fieldData.IsOwner = false;
+                    fieldData.ViewFieldPathInfo.IsMapped = true;
                     fieldData.TargetViewSet = true;
                     fieldData.TargetView = result;
                     fieldData.TargetViewFieldPath = String.Join(".", viewFields.Skip(1).ToArray());
@@ -491,7 +501,7 @@ namespace MarkLight
         {
             get
             {
-                return ViewFieldPathInfo != null ? ViewFieldPathInfo.ValueConverter : null;
+                return ViewFieldPathInfo.ValueConverter;
             }
         }
 
@@ -502,7 +512,7 @@ namespace MarkLight
         {
             get
             {
-                return ViewFieldPathInfo != null ? ViewFieldPathInfo.ViewFieldTypeName : null;
+                return ViewFieldPathInfo.ViewFieldTypeName;
             }
         }
 
@@ -513,7 +523,18 @@ namespace MarkLight
         {
             get
             {
-                return ViewFieldPathInfo != null ? ViewFieldPathInfo.ViewFieldType : null;
+                return ViewFieldPathInfo.ViewFieldType;
+            }
+        }
+
+        /// <summary>
+        /// Returns boolean indicating if this view field is the owner of the value (not mapped to another view).
+        /// </summary>
+        public bool IsOwner
+        {
+            get
+            {
+                return !ViewFieldPathInfo.IsMapped;
             }
         }
 

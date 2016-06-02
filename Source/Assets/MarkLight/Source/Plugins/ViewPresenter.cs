@@ -23,7 +23,7 @@ namespace MarkLight
     {
         #region Fields
 
-        public List<ViewTypeData> ViewTypeData;
+        public List<ViewTypeData> ViewTypeDataList;
         public List<ThemeData> ThemeData;
         public List<ResourceDictionary> ResourceDictionaries;
         public string MainView;
@@ -65,7 +65,7 @@ namespace MarkLight
         /// </summary>
         public ViewPresenter()
         {
-            ViewTypeData = new List<ViewTypeData>();
+            ViewTypeDataList = new List<ViewTypeData>();
             ThemeData = new List<ThemeData>();
             ResourceDictionaries = new List<ResourceDictionary>();
             Views = new List<string>();
@@ -177,7 +177,7 @@ namespace MarkLight
         public void Clear()
         {
             ThemeData.Clear();
-            ViewTypeData.Clear();
+            ViewTypeDataList.Clear();
             ResourceDictionaries.Clear();
             Sprites.Clear();
             SpritePaths.Clear();
@@ -226,7 +226,7 @@ namespace MarkLight
         private void LoadViewTypeDataDictionary()
         {
             _viewTypeDataDictionary = new Dictionary<string, ViewTypeData>();
-            foreach (var viewTypeData in ViewTypeData)
+            foreach (var viewTypeData in ViewTypeDataList)
             {
                 _viewTypeDataDictionary.Add(viewTypeData.ViewName, viewTypeData);
             }

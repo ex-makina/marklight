@@ -22,6 +22,7 @@ namespace MarkLight
         public ValueConverter ValueConverter;
         public string ViewFieldTypeName;
         public Type ViewFieldType;
+        public bool IsMapped;
 
         #endregion
 

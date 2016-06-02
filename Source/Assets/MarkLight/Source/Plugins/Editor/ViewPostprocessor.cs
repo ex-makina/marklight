@@ -61,6 +61,8 @@ namespace MarkLight.Editor
         /// </summary>
         public static void ProcessViewAssets()
         {
+            ViewPresenter.UpdateInstance();
+
             // don't process XUML assets while playing or when there is no view presenter in the scene
             if (Application.isPlaying || ViewPresenter.Instance == null)
             {
@@ -78,6 +80,8 @@ namespace MarkLight.Editor
                 }
             }
 
+            Utils.StartTimer(); // TODO perf
+
             // load XUML assets
             ViewData.LoadAllXuml(viewAssets);
             
@@ -89,6 +93,7 @@ namespace MarkLight.Editor
             }
 
             Debug.Log("[MarkLight] Views processed. " + DateTime.Now.ToString());
+            Utils.LogTimer(); // TODO perf
         }
 
         /// <summary>
@@ -137,7 +142,7 @@ namespace MarkLight.Editor
             Utils.SuppressLogging = true;
 
             // generate XSD schema based on view type data
-            foreach (var viewType in ViewPresenter.Instance.ViewTypeData)
+            foreach (var viewType in ViewPresenter.Instance.ViewTypeDataList)
             {
                 sb.AppendLine();
                 sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", viewType.ViewName, Environment.NewLine);
