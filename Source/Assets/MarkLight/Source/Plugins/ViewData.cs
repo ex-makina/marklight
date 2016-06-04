@@ -591,7 +591,7 @@ namespace MarkLight
             foreach (var dependencyField in viewTypeData.DependencyFields)
             {
                 var dependencyFieldInfo = viewTypeData.GetViewField(dependencyField);
-                var dependencyFieldInstance = TypeHelper.CreateInstance(dependencyFieldInfo.FieldType) as ViewFieldBase;
+                var dependencyFieldInstance = TypeHelper.CreateViewField(dependencyFieldInfo.FieldType);
                 dependencyFieldInfo.SetValue(view, dependencyFieldInstance);
                 dependencyFieldInstance.ParentView = view;
                 dependencyFieldInstance.ViewFieldPath = dependencyField;

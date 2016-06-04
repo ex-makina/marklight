@@ -43,9 +43,10 @@ namespace MarkLight
         /// </summary>
         public static bool ValueHasBindings(string value)
         {
-            if (value.Contains('{'))
+            int startBracketIndex = value.IndexOf('{');
+            if (startBracketIndex >= 0)
             {
-                return BindingRegex.IsMatch(value) || TransformBindingRegex.IsMatch(value);
+                return value.IndexOf('}') > startBracketIndex;  //BindingRegex.IsMatch(value) || TransformBindingRegex.IsMatch(value);
             }
             else
             {

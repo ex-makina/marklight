@@ -306,7 +306,7 @@ namespace MarkLight
                     fieldData.ViewFieldPathInfo.IsMapped = true;
                     fieldData.ViewFieldPathInfo.IsPathParsed = true;
                     fieldData.TargetViewSet = false;                    
-                    //viewTypeData.AddViewFieldPathInfo(viewFieldPath, fieldData.ViewFieldPathInfo);
+                    viewTypeData.AddViewFieldPathInfo(viewFieldPath, fieldData.ViewFieldPathInfo);
                     return fieldData;
                 }
 
@@ -320,7 +320,7 @@ namespace MarkLight
                     fieldData.ViewFieldPathInfo.IsMapped = true;
                     fieldData.ViewFieldPathInfo.IsPathParsed = true;
                     fieldData.TargetViewSet = false;                    
-                    //viewTypeData.AddViewFieldPathInfo(viewFieldPath, fieldData.ViewFieldPathInfo);
+                    viewTypeData.AddViewFieldPathInfo(viewFieldPath, fieldData.ViewFieldPathInfo);
                     return fieldData;
                 }
 
