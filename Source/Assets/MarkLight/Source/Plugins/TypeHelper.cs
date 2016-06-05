@@ -109,7 +109,7 @@ namespace MarkLight
             }            
 
             // look in assembly csharp only
-            var scriptAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.GetName().Name.StartsWith("Assembly-CSharp")).ToList();
+            var scriptAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.GetName().Name.StartsWith("Assembly-")).ToList();
             if (scriptAssemblies.Count > 0)
             {
                 _scriptAssemblyTypes = new List<Type>();
