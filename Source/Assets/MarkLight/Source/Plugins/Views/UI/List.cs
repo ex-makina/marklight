@@ -210,7 +210,7 @@ namespace MarkLight.Views.UI
         /// <d>Horizontal scrollbar handle image color.</d>
         [MapTo("ListPanel.HorizontalScrollbarHandleColor")]
         public _Color HorizontalScrollbarHandleColor;
-        
+
         #endregion
 
         #region VerticalScrollbar
@@ -477,7 +477,7 @@ namespace MarkLight.Views.UI
         /// <d>Can be bound to an generic ObservableList to dynamically generate ListItems based on a template.</d>
         [ChangeHandler("ItemsChanged")]
         public _IObservableList Items;
-       
+
         /// <summary>
         /// Orientation of the list.
         /// </summary>
@@ -593,6 +593,12 @@ namespace MarkLight.Views.UI
         public _int MaxPoolSize;
 
         /// <summary>
+        /// Indicates if list should use virtualization.
+        /// </summary>
+        /// <d>Boolean indicating if list should use virtualization where only visible list items are presented in the visual hierarchy.</d>
+        public _bool UseVirtualization;
+
+        /// <summary>
         /// List item padding.
         /// </summary>
         /// <d>Adds padding to the list.</d>
@@ -637,9 +643,10 @@ namespace MarkLight.Views.UI
         private List<ListItem> _presentedListItems;
         private List<ListItem> _listItemTemplates;
         private object _selectedItem;
-        private Stack<ListItem> _pooledListItems;
         private bool _updateWidth;
         private bool _updateHeight;
+        private Dictionary<View, ViewPool> _viewPools;
+        private VirtualizedItems _virtualizedItems;
 
         #endregion
 
@@ -659,7 +666,8 @@ namespace MarkLight.Views.UI
             if (_updateWidth && ActualWidth > 0)
             {
                 QueueChangeHandler("LayoutChanged");
-                _updateWidth = false;            }
+                _updateWidth = false;
+            }
 
             if (_updateHeight && ActualHeight > 0)
             {
@@ -712,7 +720,7 @@ namespace MarkLight.Views.UI
             }
 
             if (ListPanel != null)
-            {                
+            {
                 AdjustScrollableLayout();
             }
 
@@ -760,7 +768,7 @@ namespace MarkLight.Views.UI
             float yOffset = 0;
             float maxColumnWidth = 0;
             float maxRowHeight = 0;
-            
+
             for (int i = 0; i < childCount; ++i)
             {
                 var view = children[i];
@@ -794,7 +802,7 @@ namespace MarkLight.Views.UI
                         percentageHeight = true;
                     }
                 }
-                                                                
+
                 if (Overflow == OverflowMode.Overflow)
                 {
                     // set offsets and alignment
@@ -933,7 +941,7 @@ namespace MarkLight.Views.UI
                 else if (ScrollContent != null)
                 {
                     // adjust width of scrollable area to size
-                    ScrollContent.Width.DirectValue = percentageWidth ? new ElementSize(1, ElementSizeUnit.Percents) : 
+                    ScrollContent.Width.DirectValue = percentageWidth ? new ElementSize(1, ElementSizeUnit.Percents) :
                         new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels);
                     updateScrollContent = true;
                 }
@@ -967,7 +975,7 @@ namespace MarkLight.Views.UI
                 }
             }
             else
-            {           
+            {
                 // adjust size to content
                 if (isHorizontal)
                 {
@@ -975,9 +983,9 @@ namespace MarkLight.Views.UI
                         ListMaskMargin.Bottom.Pixels + Padding.Value.Top.Pixels + Padding.Value.Bottom.Pixels;
 
                     if (ScrollContent != null)
-                    {                        
+                    {
                         ScrollContent.Height.DirectValue = ElementSize.FromPixels(maxHeight);
-                        updateScrollContent = true;                        
+                        updateScrollContent = true;
                     }
                     else
                     {
@@ -1099,7 +1107,7 @@ namespace MarkLight.Views.UI
         {
             if (listItem == null || (triggeredByClick && !CanSelect))
                 return;
-                        
+
             // is item already selected?
             if (listItem.IsSelected)
             {
@@ -1141,9 +1149,9 @@ namespace MarkLight.Views.UI
                 if (DeselectAfterSelect)
                 {
                     // yes.
-                    SetSelected(listItem, false); 
+                    SetSelected(listItem, false);
                 }
-            }            
+            }
         }
 
         /// <summary>
@@ -1193,7 +1201,7 @@ namespace MarkLight.Views.UI
             {
                 // item selected
                 _selectedItem = listItem.Item.Value;
-                SelectedItem.Value = _selectedItem;                
+                SelectedItem.Value = _selectedItem;
                 IsItemSelected.Value = true;
                 if (Items.Value != null)
                 {
@@ -1255,7 +1263,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         private void OnListChanged(object sender, ListChangedEventArgs e)
         {
-            bool layoutChanged = false;            
+            bool layoutChanged = false;
 
             // update list of items
             if (e.ListChangeAction == ListChangeAction.Clear)
@@ -1486,7 +1494,7 @@ namespace MarkLight.Views.UI
             int lastIndex = Items.Value.Count - 1;
             int insertCount = (endIndex - startIndex) + 1;
             bool listMatch = _presentedListItems.Count == (Items.Value.Count - insertCount);
-            if (startIndex < 0 || startIndex > lastIndex || 
+            if (startIndex < 0 || startIndex > lastIndex ||
                 endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
                 Utils.LogWarning("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName);
@@ -1495,12 +1503,12 @@ namespace MarkLight.Views.UI
             }
 
             // insert items
-            //Utils.StartTimer();
+            Utils.StartTimer();
             for (int i = startIndex; i <= endIndex; ++i)
             {
                 CreateListItem(i);
             }
-            //Utils.LogTimer();
+            Utils.LogTimer();
         }
 
         /// <summary>
@@ -1598,7 +1606,7 @@ namespace MarkLight.Views.UI
             object newItemData = Items.Value[index];
             var listItem = _presentedListItems[index];
             var oldItemData = listItem.Item.Value;
-            
+
             listItem.ForThisAndEachChild<UIView>(x =>
             {
                 // TODO can be made faster if a HasItemBinding flag is implemented, also we can stop traversing the tree if another item is set
@@ -1616,21 +1624,12 @@ namespace MarkLight.Views.UI
         private ListItem CreateListItem(int index)
         {
             object itemData = Items.Value[index];
-            ListItem newItemView = null;
-            bool isNew = false;
 
-            if (_pooledListItems.Count > 0)
-            {
-                newItemView = _pooledListItems.Pop();
-                newItemView.transform.SetSiblingIndex(index + 1);
-            }
-            else
-            {
-                newItemView = Content.CreateView(GetListItemTemplate(itemData), index + 1);
-                isNew = true;
-            }
+            var template = GetListItemTemplate(itemData);
+            var newItemView = Content.CreateView(GetListItemTemplate(itemData), index + 1, _viewPools.Get(template));
+            newItemView.Template = template;
             _presentedListItems.Insert(index, newItemView);
-                        
+
             // set item data
             newItemView.ForThisAndEachChild<UIView>(x =>
             {
@@ -1642,11 +1641,7 @@ namespace MarkLight.Views.UI
             newItemView.Activate();
 
             // initialize view
-            if (isNew)
-            {
-                newItemView.InitializeViews();
-            }
-
+            newItemView.InitializeViews();
             return newItemView;
         }
 
@@ -1671,7 +1666,7 @@ namespace MarkLight.Views.UI
             var method = type.GetMethod("GetTemplateId", BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
             if (method == null)
             {
-                return ListItemTemplates[0]; 
+                return ListItemTemplates[0];
             }
 
             string templateId = method.IsStatic ? method.Invoke(null, null) as string : method.Invoke(itemData, null) as string;
@@ -1683,7 +1678,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         private void DestroyListItem(int index)
         {
-            var itemView = _presentedListItems[index];            
+            var itemView = _presentedListItems[index];
             DestroyListItem(itemView);
             _presentedListItems.RemoveAt(index);
         }
@@ -1696,17 +1691,33 @@ namespace MarkLight.Views.UI
             // deselect the item first
             SetSelected(presentedItem, false);
 
-            if (_pooledListItems.Count < MaxPoolSize.Value)
+            var viewPool = presentedItem.Template != null ? _viewPools.Get(presentedItem.Template) : null;
+            presentedItem.Destroy(viewPool);
+        }
+
+        /// <summary>
+        /// Creates a container for virtualized items which will be presented on demand. Used to improve performance.
+        /// </summary>
+        public VirtualizedItems GetVirtualizedItems()
+        {
+            if (LayoutRoot == null)
+                return null;
+
+            // does a virtualized items container exist for this view?
+            var virtualizedItemsContainer = LayoutRoot.Find<VirtualizedItemsContainer>(x => x.Owner == this, false);
+            if (virtualizedItemsContainer == null)
             {
-                // put item back in pool
-                presentedItem.Deactivate();
-                presentedItem.transform.SetAsLastSibling();
-                _pooledListItems.Push(presentedItem);
+                // no. create a new one 
+                virtualizedItemsContainer = LayoutRoot.CreateView<VirtualizedItemsContainer>();
+                virtualizedItemsContainer.IsActive.DirectValue = false;
+                virtualizedItemsContainer.Id = GameObjectName;
+                virtualizedItemsContainer.Owner = this;
+                virtualizedItemsContainer.HideFlags.Value = UnityEngine.HideFlags.DontSave;
+                //virtualizedItemsContainer.HideFlags.Value = UnityEngine.HideFlags.HideAndDontSave; // TODO hide and only create during runtime
+                virtualizedItemsContainer.InitializeViews();
             }
-            else
-            {
-                presentedItem.Destroy();
-            }
+
+            return new VirtualizedItems(virtualizedItemsContainer);
         }
 
         /// <summary>
@@ -1718,6 +1729,7 @@ namespace MarkLight.Views.UI
 
             _updateWidth = Width.Value.Unit == ElementSizeUnit.Percents;
             _updateHeight = Height.Value.Unit == ElementSizeUnit.Percents;
+            SelectedItems.DirectValue = new GenericObservableList();
 
             // remove panel if not used
             if (ListPanel != null && !IsScrollable)
@@ -1726,7 +1738,7 @@ namespace MarkLight.Views.UI
                 ListPanel.DestroyAndMoveContent(Content);
                 ScrollContent.DestroyAndMoveContent(Content);
                 ListPanel = null;
-                ScrollContent = null;                
+                ScrollContent = null;
             }
 
             // remove list mask if not used
@@ -1741,58 +1753,94 @@ namespace MarkLight.Views.UI
                 ListMask = null;
             }
 
-            _pooledListItems = new Stack<ListItem>();
             _presentedListItems = new List<ListItem>();
             if (ListItemTemplates.Count > 0)
             {
                 ListItemTemplates.ForEach(x => x.Deactivate());
             }
 
-//            if (ListItemTemplates != null) // TODO re-implement showing template
-//            {
-//#if UNITY_EDITOR
-//                // deactivate if ShowTemplateInEditor is false or we are outside the editor
-//                if (!ShowTemplateInEditor || !Application.isEditor)
-//                {
-//                    ListItemTemplates.Deactivate();
-//                }
-//#else
-//                ListItemTemplate.Deactivate();
-//#endif
-//            }
+            // set up virtualization
+            UseVirtualization.DirectValue = InitializeVirtualization();            
+
+            //            if (ListItemTemplates != null) // TODO re-implement showing template
+            //            {
+            //#if UNITY_EDITOR
+            //                // deactivate if ShowTemplateInEditor is false or we are outside the editor
+            //                if (!ShowTemplateInEditor || !Application.isEditor)
+            //                {
+            //                    ListItemTemplates.Deactivate();
+            //                }
+            //#else
+            //                ListItemTemplate.Deactivate();
+            //#endif
+            //            }
 
             UpdatePresentedListItems();
 
-            // is pooling to be used? // TODO re-implement enable pooling
-            //if ((PoolSize.IsSet || MaxPoolSize.IsSet) && ListItemTemplates != null)
-            //{
-            //    // yes. check for existing pooled items and create new ones if missing
-            //    if (MaxPoolSize.Value < PoolSize.Value)
-            //    {
-            //        MaxPoolSize.Value = PoolSize.Value;
-            //    }
+            if (ListItemTemplates.Count > 0)
+            {
+                //  get view pools for item templates
+                _viewPools = new Dictionary<View, ViewPool>();
+                foreach (var template in ListItemTemplates)
+                {
+                    // should pooling be used for this template?
+                    if (!PoolSize.IsSet && !template.PoolSize.IsSet)
+                        continue; // no.
 
-            //    foreach (var listItem in Content)
-            //    {
-            //        if (listItem.IsActive || listItem.IsTemplate)
-            //            continue;
+                    int poolSize = template.PoolSize.IsSet ? template.PoolSize : PoolSize;
+                    int maxPoolSize = template.MaxPoolSize.IsSet ? template.MaxPoolSize : MaxPoolSize;
 
-            //        // item is pooled
-            //        _pooledListItems.Push(listItem as ListItem);
-            //    }
+                    var viewPool = LayoutRoot.GetViewPool(template.GameObjectName, template, poolSize, maxPoolSize);
+                    _viewPools.Add(template, viewPool);
+                }
+            }
+        }
 
-            //    // fill remaining space of pool with views
-            //    int addCount = PoolSize - _pooledListItems.Count - _presentedListItems.Count;
-            //    for (int i = 0; i < addCount; ++i)
-            //    {
-            //        var newItemView = Content.CreateView(ListItemTemplates);
-            //        newItemView.Deactivate();
-            //        newItemView.InitializeViews();
-            //        _pooledListItems.Push(newItemView);
-            //    }
-            //}
+        /// <summary>
+        /// Called once at initialization to set the list up for virtualization.
+        /// </summary>
+        private bool InitializeVirtualization()
+        {
+            if (!UseVirtualization)
+                return false;
 
-            SelectedItems.DirectValue = new GenericObservableList();
+            // verify things are correctly set up for virtualization
+            if (Overflow.Value == OverflowMode.Wrap || IsScrollable == false)
+            {
+                Utils.LogWarning("[MarkLight] {0}: Can't virtualize list because IsScrollable is false or Overflow is set to Wrap.", GameObjectName);
+                return false;
+            }
+
+            // check if templates are set and that they have the same height/width
+            if (ListItemTemplates.Count <= 0)
+            {
+                Utils.LogWarning("[MarkLight] {0}: Can't virtualize list because no item template found. Only dynamic lists can be virtualized.", GameObjectName);
+                return false;
+            }
+
+            // get template item width/height size
+            float size = Orientation.Value == ElementOrientation.Horizontal ? ListItemTemplates[0].Width.Value.Pixels : ListItemTemplates[0].Height.Value.Pixels;
+            if (size <= 0)
+            {
+                Utils.LogWarning("[MarkLight] {0}: Can't virtualize list because item template doesn't have a set width/height.", GameObjectName);
+                return false;
+            }
+
+            if (ListItemTemplates.Count > 1)
+            {
+                // make sure all templates are the same size
+                for (int i = 1; i < ListItemTemplates.Count; ++i)
+                {
+                    float templateSize = Orientation.Value == ElementOrientation.Horizontal ? ListItemTemplates[i].Width.Value.Pixels : ListItemTemplates[i].Height.Value.Pixels;
+                    if (templateSize != size)
+                    {
+                        Utils.LogWarning("[MarkLight] {0}: Can't virtualize list because list item templates doesn't have the same width/height.", GameObjectName);
+                    }
+                }
+            }
+
+            _virtualizedItems = GetVirtualizedItems();
+            return true;
         }
 
         /// <summary>

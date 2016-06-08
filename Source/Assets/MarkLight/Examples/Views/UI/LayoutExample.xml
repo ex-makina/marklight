@@ -8,7 +8,7 @@
       <Region Margin="0,50,0,0" BackgroundColor="White">
 
         <!-- Left Menu -->
-        <Region Alignment="Left" Width="350px" BackgroundColor="DarkViolet">
+        <Region Alignment="Left" Width="350px" BackgroundColor="Maroon">
 
         </Region>
 

@@ -71,6 +71,12 @@ namespace MarkLight
                 GameObject.DestroyImmediate(viewPresenter.RootView);
             }
 
+            // destroy view cache root
+            if (viewPresenter.ViewCacheRoot != null)
+            {
+                GameObject.DestroyImmediate(viewPresenter.ViewCacheRoot);
+            }
+
             // destroy any remaining objects under the view-presenter that should not be there
             if (viewPresenter.transform.childCount > 0)
             {
@@ -81,6 +87,10 @@ namespace MarkLight
                     GameObject.DestroyImmediate(go);
                 }
             }
+
+            // create new view cache root
+            viewPresenter.ViewCacheRoot = new GameObject("ViewCacheRoot");
+            viewPresenter.ViewCacheRoot.transform.SetParent(viewPresenter.transform, false);
 
             // create main view
             if (!String.IsNullOrEmpty(viewPresenter.MainView))
@@ -292,8 +302,10 @@ namespace MarkLight
                 !viewTypeData.ComponentFields.Contains(x.Name) &&
                 !viewTypeData.ViewActionFields.Contains(x.Name) &&
                 !viewTypeData.DependencyFields.Contains(x.Name) &&
+#if !UNITY_WINRT || UNITY_WINRT_10_0 || UNITY_EDITOR
                 x.GetSetMethod() != null &&
                 x.GetGetMethod() != null &&
+#endif
                 x.Name != "enabled" &&
                 x.Name != "useGUILayout" &&
                 x.Name != "tag" &&
@@ -896,6 +908,6 @@ namespace MarkLight
             }
         }
 
-        #endregion
+#endregion
     }
 }

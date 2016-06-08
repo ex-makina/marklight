@@ -15,6 +15,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
+using MarkLight.Views.UI;
 #endregion
 
 namespace MarkLight
@@ -221,6 +222,7 @@ namespace MarkLight
         private Dictionary<string, string> _expressionViewField;
         private List<ViewAction> _eventSystemViewActions;
         private bool _isDefaultState;
+        private bool _isInitialized;
         private string _previousState;
         private StateAnimation _stateAnimation;        
 
@@ -829,6 +831,7 @@ namespace MarkLight
             }
 
             InitEventSystemTriggers();
+            IsInitialized = true;
         }
 
         /// <summary>
@@ -1403,11 +1406,11 @@ namespace MarkLight
         /// </summary>
         public ViewPool GetViewPool(string name, View template, int poolSize, int maxPoolSize)
         {
-            // check for a parent view pool container
-            var viewPoolContainer = this.Find<ViewPoolContainer>(name, false);
+            // does a view pool container exist for this template?
+            var viewPoolContainer = this.Find<ViewPoolContainer>(x => x.Id == name && x.Template == template, false);
             if (viewPoolContainer == null)
             {
-                // create a new one 
+                // no. create a new one 
                 viewPoolContainer = CreateView<ViewPoolContainer>();
                 viewPoolContainer.Id = name;
                 viewPoolContainer.PoolSize.DirectValue = poolSize;
@@ -1415,11 +1418,11 @@ namespace MarkLight
                 viewPoolContainer.IsActive.DirectValue = false;
                 viewPoolContainer.Template = template;
                 viewPoolContainer.InitializeViews();
-                // viewPoolContainer.HideFlags.Value = UnityEngine.HideFlags.HideAndDontSave; // TODO enable to only create during runtime?
+                // viewPoolContainer.HideFlags.Value = UnityEngine.HideFlags.HideAndDontSave; // TODO enable to only create during runtime
             }            
             else
             {
-                // update pool size
+                // yes. just update pool size
                 viewPoolContainer.PoolSize.Value = poolSize;
                 viewPoolContainer.MaxPoolSize.Value = maxPoolSize;
                 viewPoolContainer.Template = template;
@@ -1783,6 +1786,21 @@ namespace MarkLight
                 }
 
                 return _viewTypeData;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets bool indicating if the view has been initialized.
+        /// </summary>
+        public bool IsInitialized
+        {
+            get
+            {
+                return _isInitialized;
+            }
+            set
+            {
+                _isInitialized = value;
             }
         }
 

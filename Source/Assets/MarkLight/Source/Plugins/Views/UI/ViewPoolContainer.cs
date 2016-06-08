@@ -1,4 +1,5 @@
 ﻿#region Using Statements
+using MarkLight.Views.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 #endregion
 
-namespace MarkLight
+namespace MarkLight.Views.UI
 {
     /// <summary>
     /// Pools views for fast creation.
     /// </summary>
     [HideInPresenter]
-    public class ViewPoolContainer : View
+    public class ViewPoolContainer : UIView
     {
         #region Fields
 

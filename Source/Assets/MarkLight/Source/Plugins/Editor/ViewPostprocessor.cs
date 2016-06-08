@@ -126,6 +126,12 @@ namespace MarkLight.Editor
         /// </summary>
         public static void GenerateXsdSchema()
         {
+            if (ViewPresenter.Instance == null)
+            {
+                Utils.LogError("[MarkLight] Unable to generate XSD schema. View presenter can't be found in scene. Make sure the view presenter is enabled.");
+                return;
+            }
+
             var sb = new StringBuilder();
             sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             sb.AppendLine("<xs:schema id=\"MarkLight\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"MarkLight\" xmlns=\"MarkLight\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\">");

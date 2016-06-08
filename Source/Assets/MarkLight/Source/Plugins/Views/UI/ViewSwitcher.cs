@@ -160,7 +160,10 @@ namespace MarkLight.Views.UI
             {
                 if (SwitchToDefault)
                 {
-                    SwitchTo(0, false);
+                    if (ChildCount > 0)
+                    {
+                        SwitchTo(0, false);
+                    }
                 }
                 else
                 {

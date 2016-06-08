@@ -50,8 +50,8 @@
             Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a"
             Disabled-FontStyle="Italic" Disabled-FontColor="Gray60"
             Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#000000"
-            Alternate-BackgroundColor="Gray95" />
-
+            Alternate-BackgroundColor="Gray95" /> 
+  
   <TabPanel TabContentColor="#3b414e" TabListContentMargin="0" TabListColor="Clear" />
   <TabHeader Breadth="50" TextPadding="20,10,20,10" TextAlignment="Center" BackgroundColor="#262b35"
              Selected-BackgroundColor="#3b414e" Highlighted-BackgroundColor="#262b35" Pressed-BackgroundColor="#3b414e"

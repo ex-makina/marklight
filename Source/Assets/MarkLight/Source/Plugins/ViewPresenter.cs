@@ -34,6 +34,7 @@ namespace MarkLight
         public List<string> Views;
         public List<string> Themes;
         public GameObject RootView;
+        public GameObject ViewCacheRoot;
         public List<Sprite> Sprites;
         public List<string> SpritePaths;
         public List<Font> Fonts;
@@ -111,17 +112,20 @@ namespace MarkLight
         /// <summary>
         /// Initializes the views. Called once on root view at the start of the scene. Need to be called on any views created dynamically.
         /// </summary>
-        public void InitializeViews(View rootView)
+        public void InitializeViews(GameObject rootView)
         {
-            InitializeViews(rootView.gameObject);
+            if (rootView == null)
+                return;
+
+            InitializeViews(rootView.GetComponent<View>());
         }
 
         /// <summary>
         /// Initializes the views. Called once on root view at the start of the scene. Need to be called on any views created dynamically.
         /// </summary>
-        public void InitializeViews(GameObject rootView)
+        public void InitializeViews(View rootView)
         {
-            if (rootView == null)
+            if (rootView == null || rootView.IsInitialized)
             {
                 return;                
             }
@@ -159,7 +163,7 @@ namespace MarkLight
 
             // TODO log initialization performance
             sw.Stop();
-            if (rootView == RootView)
+            if (rootView.gameObject == RootView)
             {
                 Utils.Log("Initialization time: {0}", sw.ElapsedMilliseconds);
             }
@@ -168,7 +172,7 @@ namespace MarkLight
         /// <summary>
         /// Prints triggered change handler overflow error message.
         /// </summary>
-        private void PrintTriggeredChangeHandlerOverflowError(int pass, GameObject rootView)
+        private void PrintTriggeredChangeHandlerOverflowError(int pass, View rootView)
         {
             var sb = new StringBuilder();
             var triggeredViews = rootView.GetChildren<View>(x => x.HasQueuedChangeHandlers);
@@ -212,6 +216,11 @@ namespace MarkLight
             if (RootView != null)
             {
                 GameObject.DestroyImmediate(RootView);
+            }
+
+            if (ViewCacheRoot != null)
+            {
+                GameObject.DestroyImmediate(ViewCacheRoot);
             }
         }
 

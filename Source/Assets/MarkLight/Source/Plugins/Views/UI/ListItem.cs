@@ -173,6 +173,24 @@ namespace MarkLight.Views.UI
         [ChangeHandler("LayoutsChanged")]
         public _ElementSize Breadth;
 
+        /// <summary>
+        /// List item pool size.
+        /// </summary>
+        /// <d>Indicates how many list items should be pooled. Pooled items are already created and ready to be used rather than being created and destroyed on demand. Can be used to increase the performance of dynamic lists.</d>
+        public _int PoolSize;
+
+        /// <summary>
+        /// Max list item pool size.
+        /// </summary>
+        /// <d>Indicates maximum number of list items that should be pooled. If not set it uses initial PoolSize is used as max. Pooled items are already created and ready to be used rather than being created and destroyed on demand. Can be used to increase the performance of dynamic lists.</d>
+        public _int MaxPoolSize;
+
+        /// <summary>
+        /// Template used to create view.
+        /// </summary>
+        /// <d>Reference to the template used to create the view. Used to identify the list item type.</d>
+        public View Template;
+
         [NotSetFromXuml]
         [ChangeHandler("IsSelectedChanged", TriggerImmediately = true)]
         public _bool IsSelected;        
