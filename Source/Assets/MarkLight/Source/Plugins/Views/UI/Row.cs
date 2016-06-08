@@ -143,7 +143,7 @@ namespace MarkLight.Views.UI
         {
             get
             {
-                if (!_parentDataGrid)
+                if (_parentDataGrid == null)
                 {
                     _parentDataGrid = this.FindParent<DataGrid>();
                 }

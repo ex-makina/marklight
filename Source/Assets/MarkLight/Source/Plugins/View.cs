@@ -15,6 +15,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
+using MarkLight.Views.UI;
 #endregion
 
 namespace MarkLight
@@ -210,6 +211,7 @@ namespace MarkLight
         public static string DefaultStateName = "Default";
         public static string AnyStateName = "Any";
 
+        private ViewTypeData _viewTypeData;
         private Dictionary<string, ViewFieldData> _viewFieldData;
         private Dictionary<string, Dictionary<string, ViewFieldStateValue>> _stateValues;
         private Dictionary<string, Dictionary<string, StateAnimation>> _stateAnimations;
@@ -220,6 +222,7 @@ namespace MarkLight
         private Dictionary<string, string> _expressionViewField;
         private List<ViewAction> _eventSystemViewActions;
         private bool _isDefaultState;
+        private bool _isInitialized;
         private string _previousState;
         private StateAnimation _stateAnimation;        
 
@@ -297,9 +300,10 @@ namespace MarkLight
                 if (defaultStateValues != null)
                 {
                     // update default state value
-                    if (defaultStateValues.ContainsKey(viewField))
+                    ViewFieldStateValue defaultStateValue;
+                    if (defaultStateValues.TryGetValue(viewField, out defaultStateValue))
                     {
-                        defaultStateValues[viewField].SetValue(value, viewFieldData.ValueConverter.ConvertToString(value));
+                        defaultStateValue.SetValue(value, viewFieldData.ValueConverter.ConvertToString(value));
                     }
                 }
             }
@@ -827,6 +831,7 @@ namespace MarkLight
             }
 
             InitEventSystemTriggers();
+            IsInitialized = true;
         }
 
         /// <summary>
@@ -1122,6 +1127,8 @@ namespace MarkLight
         internal void QueueChangeHandler(string name)
         {
             _changeHandlers.Add(name);
+
+            // TODO optimize by caching this info in ViewTypeData
             if (!_changeHandlerMethods.ContainsKey(name))
             {
                 _changeHandlerMethods.Add(name, GetType().GetMethod(name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic));
@@ -1146,6 +1153,15 @@ namespace MarkLight
         {
             QueueChangeHandler("LayoutChanged");
 
+            // inform parents of update
+            NotifyLayoutChanged();
+        }
+
+        /// <summary>
+        /// Notifies the parents that the layout of this view has changed.
+        /// </summary>
+        public void NotifyLayoutChanged()
+        {
             // inform parents of update
             this.ForEachParent<View>(x => x.QueueChangeHandler("ChildLayoutChanged"));
         }
@@ -1196,6 +1212,8 @@ namespace MarkLight
             {
                 Deactivated.Trigger();
             }
+
+            NotifyLayoutChanged();
         }
 
         /// <summary>
@@ -1388,23 +1406,24 @@ namespace MarkLight
         /// </summary>
         public ViewPool GetViewPool(string name, View template, int poolSize, int maxPoolSize)
         {
-            // check for a parent view pool container
-            var viewPoolContainer = this.Find<ViewPoolContainer>(name, false);
+            // does a view pool container exist for this template?
+            var viewPoolContainer = this.Find<ViewPoolContainer>(x => x.Id == name && x.Template == template, false);
             if (viewPoolContainer == null)
             {
-                // create a new one 
+                // no. create a new one 
                 viewPoolContainer = CreateView<ViewPoolContainer>();
                 viewPoolContainer.Id = name;
                 viewPoolContainer.PoolSize.DirectValue = poolSize;
                 viewPoolContainer.MaxPoolSize.DirectValue = maxPoolSize;
                 viewPoolContainer.IsActive.DirectValue = false;
                 viewPoolContainer.Template = template;
-                viewPoolContainer.InitializeViews();
-                // viewPoolContainer.HideFlags.Value = UnityEngine.HideFlags.HideAndDontSave; // TODO enable to only create during runtime?
+                viewPoolContainer.HideFlags.Value = UnityEngine.HideFlags.HideInHierarchy;
+                // viewPoolContainer.HideFlags.Value = UnityEngine.HideFlags.HideAndDontSave; // TODO enable to only create during runtime
+                viewPoolContainer.InitializeViews();                                
             }            
             else
             {
-                // update pool size
+                // yes. just update pool size
                 viewPoolContainer.PoolSize.Value = poolSize;
                 viewPoolContainer.MaxPoolSize.Value = maxPoolSize;
                 viewPoolContainer.Template = template;
@@ -1453,7 +1472,7 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Initializes this view and all children. Used if the view is created dynamically and need to be called once to propertly initialize the view.
+        /// Initializes this view and all children. Used if the view is created dynamically and need to be called once to properly initialize the view.
         /// </summary>
         public void InitializeViews()
         {
@@ -1752,6 +1771,37 @@ namespace MarkLight
             get
             {
                 return _viewFieldData;
+            }
+        }
+
+        /// <summary>
+        /// Gets view type data.
+        /// </summary>
+        public ViewTypeData ViewTypeData
+        {
+            get
+            {
+                if (_viewTypeData == null)
+                {
+                    _viewTypeData = ViewData.GetViewTypeData(ViewTypeName);
+                }
+
+                return _viewTypeData;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets bool indicating if the view has been initialized.
+        /// </summary>
+        public bool IsInitialized
+        {
+            get
+            {
+                return _isInitialized;
+            }
+            set
+            {
+                _isInitialized = value;
             }
         }
 

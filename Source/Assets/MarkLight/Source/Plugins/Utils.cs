@@ -18,7 +18,8 @@ namespace MarkLight
 
         public static bool SuppressLogging = false;
         public static System.Diagnostics.Stopwatch Stopwatch;
-        private static System.Random _random;
+        public static string ErrorMessage = string.Empty;
+        private static System.Random _random;        
 
         #endregion
 
@@ -162,6 +163,22 @@ namespace MarkLight
         public static void LogTimer()
         {
             Log("Time elapsed: {0}", Stopwatch.ElapsedMilliseconds);
+        }
+
+        /// <summary>
+        /// Gets bool inidcating if the number is odd.
+        /// </summary>
+        public static bool IsOdd(int value)
+        {
+            return value % 2 != 0;
+        }
+
+        /// <summary>
+        /// Gets bool inidcating if the number is even.
+        /// </summary>
+        public static bool IsEven(int value)
+        {
+            return value % 2 == 0;
         }
 
         #endregion

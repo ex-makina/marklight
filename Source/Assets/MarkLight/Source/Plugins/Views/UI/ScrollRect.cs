@@ -257,6 +257,7 @@ namespace MarkLight.Views.UI
             if (ContentAlignment.IsSet)
             {
                 child.Alignment.DirectValue = ContentAlignment.Value;
+                child.Pivot.DirectValue = ContentAlignment.Value.ToPivot();
             }
 
             // workaround for panel blocking drag events in child views
@@ -332,81 +333,89 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Workaround for draggable child views blocking drag events.
         /// </summary>
-        private void UnblockDragEvents()
+        public void UnblockDragEvents()
         {
             this.ForEachChild<View>(x =>
             {
-                var eventTrigger = x.GetComponent<EventTrigger>();
+                UnblockDragEvents(x);
+            });
+        }
 
-                if (eventTrigger == null)
-                    return;
+        /// <summary>
+        /// Unblocks drag events on view.
+        /// </summary>
+        public void UnblockDragEvents(View view)
+        {
+            var eventTrigger = view.GetComponent<EventTrigger>();
+
+            if (eventTrigger == null)
+                return;
 
 #if UNITY_4_6 || UNITY_5_0
-                var triggers = eventTrigger.delegates;
+            var triggers = eventTrigger.delegates;
 #else
-                var triggers = eventTrigger.triggers;
-#endif      
+            var triggers = eventTrigger.triggers;
+#endif
 
-                if (triggers == null)
-                    return;
+            if (triggers == null)
+                return;
 
-                // check if view has drag event entries
-                bool hasDragEntries = false;
-                foreach (var entry in triggers)
+            // check if view has drag event entries
+            bool hasDragEntries = false;
+            foreach (var entry in triggers)
+            {
+                if (entry.eventID == EventTriggerType.BeginDrag ||
+                    entry.eventID == EventTriggerType.EndDrag ||
+                    entry.eventID == EventTriggerType.Drag ||
+                    entry.eventID == EventTriggerType.InitializePotentialDrag)
                 {
-                    if (entry.eventID == EventTriggerType.BeginDrag ||
-                        entry.eventID == EventTriggerType.EndDrag ||
-                        entry.eventID == EventTriggerType.Drag ||
-                        entry.eventID == EventTriggerType.InitializePotentialDrag)
-                    {
-                        hasDragEntries = true;
-                    }
+                    hasDragEntries = true;
                 }
+            }
 
-                // unblock drag events if the view doesn't handle drag events
-                if (!hasDragEntries)
+            // unblock drag events if the view doesn't handle drag events
+            if (!hasDragEntries)
+            {
+                // unblock initialize potential drag 
+                var initializePotentialDragEntry = new EventTrigger.Entry();
+                initializePotentialDragEntry.eventID = EventTriggerType.InitializePotentialDrag;
+                initializePotentialDragEntry.callback = new EventTrigger.TriggerEvent();
+                initializePotentialDragEntry.callback.AddListener(eventData =>
                 {
-                    // unblock initialize potential drag 
-                    var initializePotentialDragEntry = new EventTrigger.Entry();
-                    initializePotentialDragEntry.eventID = EventTriggerType.InitializePotentialDrag;
-                    initializePotentialDragEntry.callback = new EventTrigger.TriggerEvent();
-                    initializePotentialDragEntry.callback.AddListener(eventData =>
-                    {
-                        SendMessage("OnInitializePotentialDrag", eventData);
-                    });
-                    triggers.Add(initializePotentialDragEntry);
+                    SendMessage("OnInitializePotentialDrag", eventData);
+                });
+                triggers.Add(initializePotentialDragEntry);
 
-                    // unblock begin drag
-                    var beginDragEntry = new EventTrigger.Entry();
-                    beginDragEntry.eventID = EventTriggerType.BeginDrag;
-                    beginDragEntry.callback = new EventTrigger.TriggerEvent();
-                    beginDragEntry.callback.AddListener(eventData =>
-                    {
-                        SendMessage("OnBeginDrag", eventData);
-                    });
-                    triggers.Add(beginDragEntry);
+                // unblock begin drag
+                var beginDragEntry = new EventTrigger.Entry();
+                beginDragEntry.eventID = EventTriggerType.BeginDrag;
+                beginDragEntry.callback = new EventTrigger.TriggerEvent();
+                beginDragEntry.callback.AddListener(eventData =>
+                {
+                    SendMessage("OnBeginDrag", eventData);
+                });
+                triggers.Add(beginDragEntry);
 
-                    // drag
-                    var dragEntry = new EventTrigger.Entry();
-                    dragEntry.eventID = EventTriggerType.Drag;
-                    dragEntry.callback = new EventTrigger.TriggerEvent();
-                    dragEntry.callback.AddListener(eventData =>
-                    {
-                        SendMessage("OnDrag", eventData);
-                    });
-                    triggers.Add(dragEntry);
+                // drag
+                var dragEntry = new EventTrigger.Entry();
+                dragEntry.eventID = EventTriggerType.Drag;
+                dragEntry.callback = new EventTrigger.TriggerEvent();
+                dragEntry.callback.AddListener(eventData =>
+                {
+                    SendMessage("OnDrag", eventData);
+                });
+                triggers.Add(dragEntry);
 
-                    // end drag
-                    var endDragEntry = new EventTrigger.Entry();
-                    endDragEntry.eventID = EventTriggerType.EndDrag;
-                    endDragEntry.callback = new EventTrigger.TriggerEvent();
-                    endDragEntry.callback.AddListener(eventData =>
-                    {
-                        SendMessage("OnEndDrag", eventData);
-                    });
-                    triggers.Add(endDragEntry);
-                }
-            });
+                // end drag
+                var endDragEntry = new EventTrigger.Entry();
+                endDragEntry.eventID = EventTriggerType.EndDrag;
+                endDragEntry.callback = new EventTrigger.TriggerEvent();
+                endDragEntry.callback.AddListener(eventData =>
+                {
+                    SendMessage("OnEndDrag", eventData);
+                });
+                triggers.Add(endDragEntry);
+            }
         }
 
         /// <summary>

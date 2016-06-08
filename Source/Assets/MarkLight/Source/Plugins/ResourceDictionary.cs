@@ -20,7 +20,7 @@ namespace MarkLight
         #region Fields
 
         public string Name;
-        public string Xuml;        
+        public string Xuml;
         public List<Resource> Resources;
 
         public static string Language;
@@ -102,12 +102,12 @@ namespace MarkLight
         {
             hasValue = false;
             var fullResourceKey = GetFullResourceKey(dictionaryName, resourceKey);
-            if (!_resourceLookupDictionary.ContainsKey(fullResourceKey))
+
+            List<Resource> resources;
+            if (!_resourceLookupDictionary.TryGetValue(fullResourceKey, out resources))
             {
                 return null;
             }
-
-            var resources = _resourceLookupDictionary[fullResourceKey];
 
             // resource  that best matches dictionary configuration
             int maxMatch = 0;

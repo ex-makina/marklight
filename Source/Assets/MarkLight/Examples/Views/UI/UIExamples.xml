@@ -3,60 +3,81 @@
     <Region BackgroundColor="#a6bbca">
       <TabPanel Style="Menu" Margin="10,10,10,10">
         <Tab Text="Buttons &amp; Input">
+          <TabHeader Style="Menu" />
+          
           <TabPanel Style="SubMenu" TabListOrientation="Horizontal" Margin="5">
             <Tab Text="Buttons">
+              <TabHeader Style="SubMenu" />
               <ButtonsExample Style="Reset" />
             </Tab>
             <Tab Text="ComboBox">
+              <TabHeader Style="SubMenu" />
               <ComboBoxExample Style="Reset" />
             </Tab>
             <Tab Text="InputField">
+              <TabHeader Style="SubMenu" />
               <InputFieldExample Style="Reset" />
             </Tab>
             <Tab Text="RadialMenu">
+              <TabHeader Style="SubMenu" />
               <RadialMenuExample Style="Reset" />
             </Tab>
             <Tab Text="Slider">
+              <TabHeader Style="SubMenu" />
               <SliderExample Style="Reset" />
             </Tab>
           </TabPanel>
         </Tab>
 
         <Tab Text="Layout &amp; Lists">
+          <TabHeader Style="Menu" />
+
           <TabPanel Style="SubMenu" TabListOrientation="Horizontal" Margin="5">
             <Tab Text="DataGrid">
+              <TabHeader Style="SubMenu" />
               <DataGridExample Style="Reset" />
             </Tab>
             <Tab Text="Group">
+              <TabHeader Style="SubMenu" />
               <GroupExample Style="Reset" />
             </Tab>
             <Tab Text="List">
+              <TabHeader Style="SubMenu" />
               <ListExample Style="Reset" />
             </Tab>
             <Tab Text="TabPanel">
+              <TabHeader Style="SubMenu" />
               <TabPanelExample Style="Reset" />
             </Tab>
             <Tab Text="Panel">
+              <TabHeader Style="SubMenu" />
               <PanelExample Style="Reset" />
             </Tab>
             <Tab Text="Window">
+              <TabHeader Style="SubMenu" />
               <WindowExample Style="Reset" />
             </Tab>
           </TabPanel>
         </Tab>
 
         <Tab Text="Data Binding">
+          <TabHeader Style="Menu" />
+          
           <TabPanel Style="SubMenu" TabListOrientation="Horizontal" Margin="5">
             <Tab Text="ComboBox">
+              <TabHeader Style="SubMenu" />
               <DynamicComboBoxExample Style="Reset" />
             </Tab>
             <Tab Text="DataGrid">
+              <TabHeader Style="SubMenu" />
               <DynamicDataGridExample Style="Reset" />
             </Tab>
             <Tab Text="List">
+              <TabHeader Style="SubMenu" />
               <DynamicListExample Style="Reset" />
             </Tab>
             <Tab Text="TabPanel">
+              <TabHeader Style="SubMenu" />
               <DynamicTabPanelExample Style="Reset" />
             </Tab>
           </TabPanel>

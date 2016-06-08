@@ -594,6 +594,10 @@ namespace MarkLight.Views.UI
                 _selectedItem = tab.Item.Value;
                 SelectedItem.Value = tab.Item.Value;
                 SelectedTab = tab;
+                if (Items != null)
+                {
+                    Items.SetSelected(_selectedItem);
+                }
 
                 // trigger item selected action
                 if (TabSelected.HasEntries)
@@ -861,6 +865,7 @@ namespace MarkLight.Views.UI
             {
                 // move tab header to list
                 tabHeader.MoveTo(TabHeaderList.Content, index >= 0 ? index + 1 : -1);
+                TabHeaderList.QueueChangeHandler("LayoutChanged");
             }
 
             // make sure tab bindings are propagated to header
@@ -900,7 +905,7 @@ namespace MarkLight.Views.UI
         {
             get
             {
-                if (!_tabItemTemplate)
+                if (_tabItemTemplate == null)
                 {
                     _tabItemTemplate = TabSwitcher.Find<Tab>(x => x.IsTemplate, false);
                 }

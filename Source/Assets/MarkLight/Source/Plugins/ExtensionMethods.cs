@@ -249,7 +249,7 @@ namespace MarkLight
             }, recursive, parent, traversalAlgorithm);
             return result;
         }
-        
+
         /// <summary>
         /// Returns first view of type T found.
         /// </summary>
@@ -268,8 +268,8 @@ namespace MarkLight
             {
                 return null;
             }
-            
-            return view.Find<T>(predicate, recursive, parent, traversalAlgorithm);            
+
+            return view.Find<T>(predicate, recursive, parent, traversalAlgorithm);
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace MarkLight
             if (parent == null)
             {
                 return null;
-            }                        
+            }
             else if (parent is T && predicate(parent as T))
             {
                 return parent as T;
@@ -318,7 +318,7 @@ namespace MarkLight
         /// Returns first ascendant of type T found.
         /// </summary>
         public static T FindParent<T>(this View view) where T : View
-        {           
+        {
             return view.FindParent<T>(x => true);
         }
 
@@ -376,7 +376,7 @@ namespace MarkLight
             {
                 action(thisView);
             }
-            view.ForEachParent<T>(action);            
+            view.ForEachParent<T>(action);
         }
 
         /// <summary>
@@ -393,6 +393,11 @@ namespace MarkLight
         public static List<T> GetChildren<T>(this View view, Func<T, bool> predicate = null, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View
         {
             var children = new List<T>();
+            if (predicate == null)
+            {
+                predicate = x => true;
+            }
+
             view.ForEachChild<T>(x =>
             {
                 if (predicate(x))
@@ -477,7 +482,7 @@ namespace MarkLight
             }
 
             // move view into view pool
-            viewPool.InsertView(view);            
+            viewPool.InsertView(view);
         }
 
         /// <summary>
@@ -539,7 +544,15 @@ namespace MarkLight
         /// </summary>
         public static TValue Get<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key)
         {
-            return dict.ContainsKey(key) ? dict[key] : default(TValue);
+            TValue value;
+            if (!dict.TryGetValue(key, out value))
+            {
+                return default(TValue);
+            }
+            else
+            {
+                return value;
+            }
         }
 
         /// <summary>
@@ -596,9 +609,9 @@ namespace MarkLight
             var fieldInfo = type.GetField(field, bindingFlags);
             if (fieldInfo != null)
                 return fieldInfo;
-            
+
             var propertyInfo = type.GetProperty(field, bindingFlags);
-            return propertyInfo;            
+            return propertyInfo;
         }
 
         /// <summary>
@@ -664,6 +677,7 @@ namespace MarkLight
             }
         }
 
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1
         /// <summary>
         /// Converts panel scrollbar visibility to unity scrollrect scrollbar visibility.
         /// </summary>
@@ -679,7 +693,37 @@ namespace MarkLight
                 case PanelScrollbarVisibility.Remove:
                     return UnityEngine.UI.ScrollRect.ScrollbarVisibility.AutoHide;
                 case PanelScrollbarVisibility.AutoHideAndExpandViewport:
-                    return UnityEngine.UI.ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;               
+                    return UnityEngine.UI.ScrollRect.ScrollbarVisibility.AutoHideAndExpandViewport;
+            }
+        }
+#endif
+
+        /// <summary>
+        /// Converts content alignment to pivot.
+        /// </summary>
+        public static Vector2 ToPivot(this ElementAlignment alignment)
+        {
+            switch (alignment)
+            {
+                default:
+                case ElementAlignment.Center:
+                    return new Vector2(0.5f, 0.5f);
+                case ElementAlignment.Left:
+                    return new Vector2(0, 0.5f);
+                case ElementAlignment.Top:
+                    return new Vector2(0.5f, 1);
+                case ElementAlignment.Right:
+                    return new Vector2(1, 0.5f);
+                case ElementAlignment.Bottom:
+                    return new Vector2(0.5f, 0);
+                case ElementAlignment.TopLeft:
+                    return new Vector2(0, 1);
+                case ElementAlignment.TopRight:
+                    return new Vector2(1, 1);
+                case ElementAlignment.BottomLeft:
+                    return new Vector2(0, 0);
+                case ElementAlignment.BottomRight:
+                    return new Vector2(1, 0);
             }
         }
 

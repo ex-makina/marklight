@@ -14,7 +14,7 @@ namespace MarkLight
     {
         #region Fields
 
-        public T _value;
+        public T _internalValue;
 
         #endregion
 
@@ -32,7 +32,7 @@ namespace MarkLight
                     return (T)ParentView.GetValue(ViewFieldPath);
                 }
 
-                return _value;
+                return _internalValue;
             }
             set
             {
@@ -42,9 +42,9 @@ namespace MarkLight
                 }
                 else
                 {
-                    _value = value;
+                    InternalValue = value;
                     _isSet = true;
-                }
+                }                
             }
         }
 
@@ -61,7 +61,7 @@ namespace MarkLight
                 }
                 else
                 {
-                    _value = value;
+                    _internalValue = value;
                     _isSet = true;
                 }
             }
@@ -82,6 +82,22 @@ namespace MarkLight
                 {
                     return _isSet;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets internal value without considering mappings and without notifying observers.
+        /// </summary>
+        public T InternalValue
+        {
+            get
+            {
+                return _internalValue;
+            }
+            set
+            {
+                _internalValue = value;
+                TriggerValueSet();
             }
         }
 

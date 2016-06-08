@@ -48,7 +48,7 @@ namespace MarkLight
         /// <summary>
         /// Notifies the change handler value observer that value has changed.
         /// </summary>
-        public override void Notify(HashSet<ViewFieldData> callstack)
+        public override bool Notify(HashSet<ViewFieldData> callstack)
         {
             if (TriggerImmediately)
             {
@@ -58,6 +58,8 @@ namespace MarkLight
             {
                 ParentView.QueueChangeHandler(ChangeHandlerName);
             }
+
+            return true;
         }
 
         /// <summary>

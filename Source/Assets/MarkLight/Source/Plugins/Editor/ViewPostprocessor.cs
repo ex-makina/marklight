@@ -35,7 +35,7 @@ namespace MarkLight.Editor
             }
 
             // check if any views have been added, moved, updated or deleted
-            var configuration = Configuration.Instance;            
+            var configuration = Configuration.Instance;
             bool viewAssetsUpdated = false;
             foreach (var path in importedAssets.Concat(deletedAssets).Concat(movedAssets).Concat(movedFromAssetPaths))
             {
@@ -61,6 +61,8 @@ namespace MarkLight.Editor
         /// </summary>
         public static void ProcessViewAssets()
         {
+            ViewPresenter.UpdateInstance();
+
             // don't process XUML assets while playing or when there is no view presenter in the scene
             if (Application.isPlaying || ViewPresenter.Instance == null)
             {
@@ -78,9 +80,12 @@ namespace MarkLight.Editor
                 }
             }
 
+            // uncomment to log load performance
+            //var sw = System.Diagnostics.Stopwatch.StartNew();
+
             // load XUML assets
             ViewData.LoadAllXuml(viewAssets);
-            
+
             // update xsd schema
             if (ViewPresenter.Instance.UpdateXsdSchema)
             {
@@ -88,7 +93,9 @@ namespace MarkLight.Editor
                 GenerateXsdSchema();
             }
 
-            Debug.Log("[MarkLight] Views processed. " + DateTime.Now.ToString());
+            // uncomment to log load performance
+            //Utils.Log("Total view processing time: {0}", sw.ElapsedMilliseconds);
+            Utils.Log("[MarkLight] Views processed. {0}", DateTime.Now);
         }
 
         /// <summary>
@@ -121,6 +128,12 @@ namespace MarkLight.Editor
         /// </summary>
         public static void GenerateXsdSchema()
         {
+            if (ViewPresenter.Instance == null)
+            {
+                Utils.LogError("[MarkLight] Unable to generate XSD schema. View presenter can't be found in scene. Make sure the view presenter is enabled.");
+                return;
+            }
+
             var sb = new StringBuilder();
             sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             sb.AppendLine("<xs:schema id=\"MarkLight\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"MarkLight\" xmlns=\"MarkLight\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\">");
@@ -137,15 +150,15 @@ namespace MarkLight.Editor
             Utils.SuppressLogging = true;
 
             // generate XSD schema based on view type data
-            foreach (var viewType in ViewPresenter.Instance.ViewTypeData)
+            foreach (var viewType in ViewPresenter.Instance.ViewTypeDataList)
             {
                 sb.AppendLine();
                 sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", viewType.ViewName, Environment.NewLine);
                 sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", viewType.ViewName, Environment.NewLine);
                 sb.AppendFormat("    <xs:sequence>{0}", Environment.NewLine);
                 sb.AppendFormat("      <xs:any processContents=\"lax\" minOccurs=\"0\" maxOccurs=\"unbounded\" />{0}", Environment.NewLine);
-                sb.AppendFormat("    </xs:sequence>{0}", Environment.NewLine);        
-                        
+                sb.AppendFormat("    </xs:sequence>{0}", Environment.NewLine);
+
                 // instantiate view to get detailed information about each view field
                 var view = ViewData.CreateView(viewType.ViewName, temporaryRootView, temporaryRootView);
                 view.InitializeViews();
@@ -155,7 +168,7 @@ namespace MarkLight.Editor
                 viewFields.AddRange(viewType.MapViewFields.Select(x => x.From));
                 viewFields.AddRange(viewType.ViewActionFields);
                 viewFields = viewFields.Distinct().ToList();
-                
+
                 // create attributes
                 foreach (var viewField in viewFields)
                 {
@@ -185,7 +198,7 @@ namespace MarkLight.Editor
             {
                 sb.AppendLine();
                 sb.AppendFormat("  <xs:simpleType name=\"{0}\">{1}", "Enum" + enumType.Name, Environment.NewLine);
-                sb.AppendFormat("    <xs:restriction base=\"xs:string\">{0}", Environment.NewLine);                
+                sb.AppendFormat("    <xs:restriction base=\"xs:string\">{0}", Environment.NewLine);
 
                 foreach (var enumTypeName in Enum.GetNames(enumType))
                 {
@@ -205,7 +218,7 @@ namespace MarkLight.Editor
             sb.AppendFormat("    </xs:sequence>{0}", Environment.NewLine);
             sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "BaseDirectory", "xs:string", Environment.NewLine);
             sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "Name", "xs:string", Environment.NewLine);
-            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "UnitSize", "xs:string", Environment.NewLine);            
+            sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", "UnitSize", "xs:string", Environment.NewLine);
             sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
 
             // add resource dictionary element

@@ -146,6 +146,13 @@ namespace MarkLight.Views.UI
         public _bool IsDisabled;
 
         /// <summary>
+        /// Indicates if this item is an alternate item.
+        /// </summary>
+        /// <d>Boolean indicating if the tiem is an alternate item which uses the "Alternate" state instead of the "Default" state.</d>
+        [ChangeHandler("IsAlternateChanged", TriggerImmediately = true)]
+        public _bool IsAlternate;
+
+        /// <summary>
         /// List item text padding.
         /// </summary>
         /// <d>Padding added to list item text when AdjustToText is set.</d>
@@ -165,6 +172,24 @@ namespace MarkLight.Views.UI
         /// <d>Specifies the list item breadth. Used as the default item height when Height isn't set.</d>
         [ChangeHandler("LayoutsChanged")]
         public _ElementSize Breadth;
+
+        /// <summary>
+        /// List item pool size.
+        /// </summary>
+        /// <d>Indicates how many list items should be pooled. Pooled items are already created and ready to be used rather than being created and destroyed on demand. Can be used to increase the performance of dynamic lists.</d>
+        public _int PoolSize;
+
+        /// <summary>
+        /// Max list item pool size.
+        /// </summary>
+        /// <d>Indicates maximum number of list items that should be pooled. If not set it uses initial PoolSize is used as max. Pooled items are already created and ready to be used rather than being created and destroyed on demand. Can be used to increase the performance of dynamic lists.</d>
+        public _int MaxPoolSize;
+
+        /// <summary>
+        /// Template used to create view.
+        /// </summary>
+        /// <d>Reference to the template used to create the view. Used to identify the list item type.</d>
+        public View Template;
 
         [NotSetFromXuml]
         [ChangeHandler("IsSelectedChanged", TriggerImmediately = true)]
@@ -291,14 +316,6 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
-        /// Initializes the view.
-        /// </summary>
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
-        /// <summary>
         /// Called when mouse is clicked.
         /// </summary>
         public void ListItemMouseClick()
@@ -346,7 +363,7 @@ namespace MarkLight.Views.UI
             if (IsSelected)
                 return;
 
-            SetState(DefaultStateName);
+            SetState(DefaultItemStyle);
         }
 
         /// <summary>
@@ -389,7 +406,7 @@ namespace MarkLight.Views.UI
             }
             else
             {
-                SetState(DefaultStateName);
+                SetState(DefaultItemStyle);
             }
         }
 
@@ -407,7 +424,7 @@ namespace MarkLight.Views.UI
             }
             else
             {
-                SetState(DefaultStateName);
+                SetState(DefaultItemStyle);
             }
         }
 
@@ -429,7 +446,7 @@ namespace MarkLight.Views.UI
             }
             else
             {
-                SetState(IsSelected ? "Selected" : DefaultStateName);
+                SetState(IsSelected ? "Selected" : DefaultItemStyle);
 
                 // enable list item actions
                 Click.IsDisabled = false;
@@ -438,6 +455,17 @@ namespace MarkLight.Views.UI
                 MouseDown.IsDisabled = false;
                 MouseUp.IsDisabled = false;
             }
+        }
+
+        /// <summary>
+        /// Called when IsAlternate changed.
+        /// </summary>
+        public virtual void IsAlternateChanged()
+        {
+            if (IsSelected)
+                return;
+
+            SetState(DefaultItemStyle);
         }
 
         /// <summary>
@@ -463,7 +491,7 @@ namespace MarkLight.Views.UI
         {
             get
             {
-                if (!_parentList)
+                if (_parentList == null)
                 {
                     _parentList = this.FindParent<List>();
                 }
@@ -473,6 +501,17 @@ namespace MarkLight.Views.UI
             set
             {
                 _parentList = value;
+            }
+        }
+
+        /// <summary>
+        /// Returns default item style.
+        /// </summary>
+        public string DefaultItemStyle
+        {
+            get
+            {
+                return IsAlternate ? "Alternate" : "Default";
             }
         }
 

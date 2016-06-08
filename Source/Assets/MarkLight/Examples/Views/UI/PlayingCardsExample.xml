@@ -1,0 +1,32 @@
+<PlayingCardsExample xmlns="MarkLight">
+  <UserInterface>
+    
+    <Group Orientation="Vertical" ContentAlignment="Left" Spacing="10">
+      <Group Orientation="Horizontal" Spacing="15px">
+        <Button Text="Add" Click="Add" AdjustToText="Width" TextPadding="20,10,20,10" />
+        <Button Text="Remove" Click="Remove" IsDisabled="{=!FlowList.IsItemSelected}" AdjustToText="Width" TextPadding="20,10,20,10" />
+        <Button Text="Scroll To" Click="ScrollTo" IsDisabled="{=!FlowList.IsItemSelected}" AdjustToText="Width" TextPadding="20,10,20,10" />
+      </Group>
+
+      <!-- displays a scrollable wrapped list of cards using multiple templates -->
+      <List Items="{Cards}" Id="FlowList" Overflow="Wrap" Spacing="5" Orientation="Horizontal" Width="600" Height="400" IsScrollable="True">
+        <ListItem Id="Card1" IsTemplate="True" Width="125" Height="181">
+          <Image Sprite="Assets/MarkLight/Examples/Sprites/Cards/jack_of_clubs.png" Margin="3" />
+        </ListItem>
+        <ListItem Id="Card2" IsTemplate="True" Width="125" Height="181">
+          <Image Sprite="Assets/MarkLight/Examples/Sprites/Cards/queen_of_diamonds.png" Margin="3" />
+        </ListItem>
+        <ListItem Id="Card3" IsTemplate="True" Width="125" Height="181">
+          <Image Sprite="Assets/MarkLight/Examples/Sprites/Cards/king_of_spades.png" Margin="3" />
+        </ListItem>
+        <ListItem Id="Card4" IsTemplate="True" Width="125" Height="181">
+          <Image Sprite="Assets/MarkLight/Examples/Sprites/Cards/ace_of_hearts.png" Margin="3" />
+        </ListItem>
+      </List>
+      
+      <Label Text="{FlowList.SelectedItem.Name}" AdjustToText="Width" />
+    </Group>
+
+  </UserInterface>
+  <EventSystem />
+</PlayingCardsExample>

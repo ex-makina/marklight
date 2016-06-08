@@ -10,6 +10,11 @@ using System.Text;
 using System.IO;
 using MarkLight.Views.UI;
 using MarkLight.Animation;
+using MarkLight.ValueConverters;
+using System.Diagnostics;
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2 && !UNITY_5_3_1 && !UNITY_5_3_2 && !UNITY_5_3_3
+using UnityEngine.SceneManagement;
+#endif
 #endregion
 
 namespace MarkLight
@@ -22,7 +27,7 @@ namespace MarkLight
     {
         #region Fields
 
-        public List<ViewTypeData> ViewTypeData;
+        public List<ViewTypeData> ViewTypeDataList;
         public List<ThemeData> ThemeData;
         public List<ResourceDictionary> ResourceDictionaries;
         public string MainView;
@@ -42,6 +47,8 @@ namespace MarkLight
         public bool UpdateXsdSchema;
 
         private static ViewPresenter _instance;
+        private static string _currentScene;
+        private Dictionary<string, ValueConverter> _cachedValueConverters;
         private Dictionary<string, Type> _viewTypes;
         private Dictionary<string, ViewTypeData> _viewTypeDataDictionary;
         private Dictionary<string, ThemeData> _themeDataDictionary;
@@ -62,7 +69,7 @@ namespace MarkLight
         /// </summary>
         public ViewPresenter()
         {
-            ViewTypeData = new List<ViewTypeData>();
+            ViewTypeDataList = new List<ViewTypeData>();
             ThemeData = new List<ThemeData>();
             ResourceDictionaries = new List<ResourceDictionary>();
             Views = new List<string>();
@@ -93,21 +100,15 @@ namespace MarkLight
         /// </summary>
         public override void Initialize()
         {
+            UpdateInstance();
+
             // initialize resource dictionary
             ResourceDictionary.Language = DefaultLanguage;
             ResourceDictionary.Platform = DefaultPlatform;
             ResourceDictionary.Initialize();
-            
+
             // initialize all views in the scene
             InitializeViews(RootView);
-        }
-
-        /// <summary>
-        /// Initializes the views. Called once on root view at the start of the scene. Need to be called on any views created dynamically.
-        /// </summary>
-        public void InitializeViews(View rootView)
-        {
-            InitializeViews(rootView.gameObject);
         }
 
         /// <summary>
@@ -116,9 +117,24 @@ namespace MarkLight
         public void InitializeViews(GameObject rootView)
         {
             if (rootView == null)
+                return;
+
+            InitializeViews(rootView.GetComponent<View>());
+        }
+
+        /// <summary>
+        /// Initializes the views. Called once on root view at the start of the scene. Need to be called on any views created dynamically.
+        /// </summary>
+        public void InitializeViews(View rootView)
+        {
+            if (rootView == null || rootView.IsInitialized)
             {
-                return;                
+                return;
             }
+
+            // uncomment to log initialization performance
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
 
             rootView.ForThisAndEachChild<View>(x => x.TryInitializeInternalDefaultValues());
             rootView.ForThisAndEachChild<View>(x => x.TryInitializeInternal());
@@ -131,7 +147,7 @@ namespace MarkLight
 
             // trigger change handlers
             int pass = 0;
-            while (rootView.Find<View>(x => x.HasQueuedChangeHandlers))
+            while (rootView.Find<View>(x => x.HasQueuedChangeHandlers) != null)
             {
                 if (pass >= 1000)
                 {
@@ -142,18 +158,25 @@ namespace MarkLight
                 // as long as there are change handlers queued, go through all views and trigger them
                 rootView.ForThisAndEachChild<View>(x => x.TryTriggerChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
                 ++pass;
-            }            
+            }
+
+            // uncomment to log initialization performance
+            //sw.Stop();
+            //if (rootView.gameObject == RootView)
+            //{
+            //    Utils.Log("Initialization time: {0}", sw.ElapsedMilliseconds);
+            //}
         }
 
         /// <summary>
         /// Prints triggered change handler overflow error message.
         /// </summary>
-        private void PrintTriggeredChangeHandlerOverflowError(int pass, GameObject rootView)
+        private void PrintTriggeredChangeHandlerOverflowError(int pass, View rootView)
         {
             var sb = new StringBuilder();
             var triggeredViews = rootView.GetChildren<View>(x => x.HasQueuedChangeHandlers);
             foreach (var triggeredView in triggeredViews)
-            {                
+            {
                 sb.AppendFormat("{0}: ", triggeredView.GameObjectName);
                 sb.AppendLine();
                 foreach (var triggeredChangeHandler in triggeredView.QueuedChangeHandlers)
@@ -172,7 +195,7 @@ namespace MarkLight
         public void Clear()
         {
             ThemeData.Clear();
-            ViewTypeData.Clear();
+            ViewTypeDataList.Clear();
             ResourceDictionaries.Clear();
             Sprites.Clear();
             SpritePaths.Clear();
@@ -186,7 +209,8 @@ namespace MarkLight
             _resourceDictionaries = null;
             _spriteDictionary = null;
             _fontDictionary = null;
-            _materialDictionary = null;            
+            _materialDictionary = null;
+            _viewTypes = null;
 
             if (RootView != null)
             {
@@ -199,18 +223,19 @@ namespace MarkLight
         /// </summary>
         public ViewTypeData GetViewTypeData(string viewTypeName)
         {
-            if (_viewTypeDataDictionary == null || !_viewTypeDataDictionary.ContainsKey(viewTypeName))
+            if (_viewTypeDataDictionary == null)
             {
                 LoadViewTypeDataDictionary();
             }
 
-            if (!_viewTypeDataDictionary.ContainsKey(viewTypeName))
+            ViewTypeData viewTypeData;
+            if (!_viewTypeDataDictionary.TryGetValue(viewTypeName, out viewTypeData))
             {
                 Utils.LogError("[MarkLight] Can't find view type \"{0}\".", viewTypeName);
                 return null;
             }
 
-            return _viewTypeDataDictionary[viewTypeName];
+            return viewTypeData;
         }
 
         /// <summary>
@@ -219,7 +244,7 @@ namespace MarkLight
         private void LoadViewTypeDataDictionary()
         {
             _viewTypeDataDictionary = new Dictionary<string, ViewTypeData>();
-            foreach (var viewTypeData in ViewTypeData)
+            foreach (var viewTypeData in ViewTypeDataList)
             {
                 _viewTypeDataDictionary.Add(viewTypeData.ViewName, viewTypeData);
             }
@@ -273,7 +298,7 @@ namespace MarkLight
                 }
             }
 
-            return _spriteDictionary.Get(assetPath);            
+            return _spriteDictionary.Get(assetPath);
         }
 
         /// <summary>
@@ -347,8 +372,8 @@ namespace MarkLight
 
             SpritePaths.Add(assetPath);
             Sprites.Add(asset);
-            
-            if (_spriteDictionary != null && 
+
+            if (_spriteDictionary != null &&
                 !_spriteDictionary.ContainsKey(assetPath))
             {
                 _spriteDictionary.Add(assetPath, asset);
@@ -416,8 +441,30 @@ namespace MarkLight
             if (_valueConvertersForType == null)
             {
                 _valueConvertersForType = new Dictionary<string, ValueConverter>();
+
+                // cache standard converters to improve load performance
+                _valueConvertersForType.Add("Object", new ValueConverter());
+                _valueConvertersForType.Add("Single", new FloatValueConverter());
+                _valueConvertersForType.Add("Int32", new IntValueConverter());
+                _valueConvertersForType.Add("Boolean", new BoolValueConverter());
+                _valueConvertersForType.Add("Color", new ColorValueConverter());
+                _valueConvertersForType.Add("ElementSize", new ElementSizeValueConverter());
+                _valueConvertersForType.Add("Enum", new EnumValueConverter());
+                _valueConvertersForType.Add("Font", new FontValueConverter());
+                _valueConvertersForType.Add("ElementMargin", new MarginValueConverter());
+                _valueConvertersForType.Add("Material", new MaterialValueConverter());
+                _valueConvertersForType.Add("Quaternion", new QuaternionValueConverter());
+                _valueConvertersForType.Add("Sprite", new SpriteValueConverter());
+                _valueConvertersForType.Add("String", new StringValueConverter());
+                _valueConvertersForType.Add("Vector2", new Vector2ValueConverter());
+                _valueConvertersForType.Add("Vector3", new Vector3ValueConverter());
+                _valueConvertersForType.Add("Vector4", new Vector4ValueConverter());
+
                 foreach (var valueConverterType in TypeHelper.FindDerivedTypes(typeof(ValueConverter)))
                 {
+                    if (CachedValueConverters.ContainsKey(valueConverterType.Name))
+                        continue;
+
                     var valueConverter = TypeHelper.CreateInstance(valueConverterType) as ValueConverter;
                     if (valueConverter.Type != null)
                     {
@@ -441,8 +488,18 @@ namespace MarkLight
             if (_valueConverters == null)
             {
                 _valueConverters = new Dictionary<string, ValueConverter>();
+
+                // cache standard converters to improve load performance
+                foreach (var cachedConverter in CachedValueConverters)
+                {
+                    _valueConverters.Add(cachedConverter.Key, cachedConverter.Value);
+                }
+
                 foreach (var valueConverterType in TypeHelper.FindDerivedTypes(typeof(ValueConverter)))
                 {
+                    if (_valueConverters.ContainsKey(valueConverterType.Name))
+                        continue;
+
                     var valueConverter = TypeHelper.CreateInstance(valueConverterType) as ValueConverter;
                     _valueConverters.Add(valueConverterType.Name, valueConverter);
                 }
@@ -476,9 +533,26 @@ namespace MarkLight
             return _valueInterpolatorsForType.Get(viewFieldType);
         }
 
-        #endregion
+        /// <summary>
+        /// Refreshes and updates the view presenter instance.
+        /// </summary>
+        public static void UpdateInstance()
+        {
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2 && !UNITY_5_3_1 && !UNITY_5_3_2 && !UNITY_5_3_3
+            var sceneName = SceneManager.GetActiveScene().name;
+#else
+            var sceneName = Application.loadedLevelName;
+#endif
+            if (_instance == null || sceneName != _currentScene)
+            {
+                _instance = UnityEngine.Object.FindObjectOfType(typeof(ViewPresenter)) as ViewPresenter;
+                _currentScene = sceneName;
+            }
+        }
 
-        #region Properties
+#endregion
+
+#region Properties
 
         /// <summary>
         /// Gets global presentation engine instance.
@@ -489,13 +563,42 @@ namespace MarkLight
             {
                 if (_instance == null)
                 {
-                    _instance = UnityEngine.Object.FindObjectOfType(typeof(ViewPresenter)) as ViewPresenter;
+                    UpdateInstance();
                 }
 
                 return _instance;
             }
         }
 
-        #endregion
+        private Dictionary<string, ValueConverter> CachedValueConverters
+        {
+            get
+            {
+                if (_cachedValueConverters == null)
+                {
+                    _cachedValueConverters = new Dictionary<string, ValueConverter>();
+                    _cachedValueConverters.Add("ValueConverter", new ValueConverter());
+                    _cachedValueConverters.Add("FloatValueConverter", new FloatValueConverter());
+                    _cachedValueConverters.Add("IntValueConverter", new IntValueConverter());
+                    _cachedValueConverters.Add("BoolValueConverter", new BoolValueConverter());
+                    _cachedValueConverters.Add("ColorValueConverter", new ColorValueConverter());
+                    _cachedValueConverters.Add("ElementSizeValueConverter", new ElementSizeValueConverter());
+                    _cachedValueConverters.Add("EnumValueConverter", new EnumValueConverter());
+                    _cachedValueConverters.Add("FontValueConverter", new FontValueConverter());
+                    _cachedValueConverters.Add("MarginValueConverter", new MarginValueConverter());
+                    _cachedValueConverters.Add("MaterialValueConverter", new MaterialValueConverter());
+                    _cachedValueConverters.Add("QuaternionValueConverter", new QuaternionValueConverter());
+                    _cachedValueConverters.Add("SpriteValueConverter", new SpriteValueConverter());
+                    _cachedValueConverters.Add("StringValueConverter", new StringValueConverter());
+                    _cachedValueConverters.Add("Vector2ValueConverter", new Vector2ValueConverter());
+                    _cachedValueConverters.Add("Vector3ValueConverter", new Vector3ValueConverter());
+                    _cachedValueConverters.Add("Vector4ValueConverter", new Vector4ValueConverter());
+                }
+
+                return _cachedValueConverters;
+            }
+        }
+
+#endregion
     }
 }

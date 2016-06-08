@@ -17,7 +17,6 @@ namespace MarkLight.Views
     /// <summary>
     /// Cube.
     /// </summary>
-    /// <d></d>
     [HideInPresenter]
     public class Cube : View
     {

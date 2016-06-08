@@ -555,7 +555,7 @@ namespace MarkLight.Views.UI
         {
             // close list and set selected item text
             ComboBoxButton.ToggleValue.Value = false;
-            ComboBoxButton.Text.Value = actionData.ItemView != null? actionData.ItemView.Text : String.Empty;
+            ComboBoxButton.Text.Value = actionData.ItemView != null? actionData.ItemView.Text.Value : String.Empty;
             ComboBoxList.Deactivate();
         }
 

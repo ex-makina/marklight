@@ -101,6 +101,7 @@
             Font="Fonts/Lato-Light.ttf" FontStyle="Normal" FontSize="24" FontColor="#8f86a3"
             Selected-FontColor="#000000" Pressed-FontColor="#000000"
             Disabled-FontStyle="Italic" Disabled-FontColor="Gray80"
+            Alternate-BackgroundColor="Gray95" 
             />
   
   <TabPanel TabContentColor="#ffffff" TabListContentMargin="0" TabListColor="Clear" TabListMaskImage="" TabListMaskShowGraphic="False" />  

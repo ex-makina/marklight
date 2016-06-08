@@ -160,7 +160,10 @@ namespace MarkLight.Views.UI
             {
                 if (SwitchToDefault)
                 {
-                    SwitchTo(0, false);
+                    if (ChildCount > 0)
+                    {
+                        SwitchTo(0, false);
+                    }
                 }
                 else
                 {
@@ -289,7 +292,7 @@ namespace MarkLight.Views.UI
                 }
 
                 // do we switch from an old view to a new one?
-                if (transitionOutOld && transitionOutAnimation)
+                if (transitionOutOld && transitionOutAnimation != null)
                 {
                     // yes. transition out the old one
                     transitionOutAnimation.SetAnimationTarget(oldActiveView);
@@ -298,7 +301,7 @@ namespace MarkLight.Views.UI
                 }
 
                 // start transition in animation
-                if (transitionInAnimation)
+                if (transitionInAnimation != null)
                 {
                     transitionInAnimation.SetAnimationTarget(view);
                     transitionInAnimation.StartAnimation();

@@ -1,4 +1,22 @@
-﻿v2.3.0
+﻿v2.4.0
+- List can use virtualization (only present items visible in viewport) through the UseVirtualization bool
+- Fixed UWP 8.1 compatibility issues
+- Multiple list templates supported 
+- Optimized performance when loading and initializing views
+- Added PlayingCards example that demonstrates a scrollable wrapped list using multiple templates
+- Added bool AlternateItems to List and AlternateRows to DataGrid for enabling alternating row styles (alternating between "Default" and "Alternate" state)
+- Fixed issue with exceptions thrown when bindings referencing destroyed objects (e.g. bindings to removed list items)
+- Fixed so content in a ScrollRect can be aligned through ContentAlignment field (e.g. to the top) even if its smaller than the scroll rect size
+- Scrollable list content alignment can be aligned through ScrollableContentAlignment field
+- Fixed bug where UpdateRectTransform was ignored by lists and groups
+- Fixed bug where changes in IsActive didn't notify parents of layout update
+- Added event "ValueSet" on dependency view fields that is triggered whenever the value is set
+- Fixed bug where TabPanel doesn't update selected item when tab is selected
+- Fixed bug where UnitSize z-axis (uz) was ignored 
+- Fixed bug where UnitSize and BaseDirectory wasn't updated immediately when changed on the view presenter
+- Added IsScrollable field to DataGrid
+
+v2.3.0
 - Two more examples added: AdvancedLists and ViewSwitcher
 - Embedded scroll functionality to List view activated through IsScrollable field
 - Scrollable ComboBox through IsScrollable and ListHeight fields

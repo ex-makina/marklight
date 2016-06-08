@@ -28,21 +28,22 @@ namespace MarkLight
         /// </summary>
         public static void GenerateViews()
         {
+            ViewPresenter.UpdateInstance();
             var viewPresenter = ViewPresenter.Instance;
 
             viewPresenter.Views.Clear();
-            viewPresenter.Views.AddRange(viewPresenter.ViewTypeData.Where(y => !y.HideInPresenter).Select(x => x.ViewName).OrderBy(x => x));
+            viewPresenter.Views.AddRange(viewPresenter.ViewTypeDataList.Where(y => !y.HideInPresenter).Select(x => x.ViewName).OrderBy(x => x));
 
             viewPresenter.Themes.Clear();
             viewPresenter.Themes.AddRange(viewPresenter.ThemeData.Select(x => x.ThemeName).OrderBy(x => x));
 
             // validate views and check for cyclical dependencies
-            foreach (var viewType in viewPresenter.ViewTypeData)
+            foreach (var viewType in viewPresenter.ViewTypeDataList)
             {
                 viewType.Dependencies.Clear();
                 foreach (var dependencyName in viewType.DependencyNames)
                 {
-                    var dependency = viewPresenter.ViewTypeData.Where(x => String.Equals(x.ViewName, dependencyName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                    var dependency = viewPresenter.ViewTypeDataList.Where(x => String.Equals(x.ViewName, dependencyName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
                     if (dependency == null)
                     {
                         Utils.LogError("[MarkLight] {0}: View contains the child view \"{1}\" that could not be found.", viewType.ViewName, dependencyName);
@@ -56,7 +57,7 @@ namespace MarkLight
             // sort view type data by dependencies
             try
             {
-                viewPresenter.ViewTypeData = SortByDependency(viewPresenter.ViewTypeData);
+                viewPresenter.ViewTypeDataList = SortByDependency(viewPresenter.ViewTypeDataList);
             }
             catch (Exception e)
             {
@@ -163,10 +164,10 @@ namespace MarkLight
         private static void LoadViewXuml(XElement xumlElement, string xuml)
         {
             var viewPresenter = ViewPresenter.Instance;
-            viewPresenter.ViewTypeData.RemoveAll(x => String.Equals(x.ViewName, xumlElement.Name.LocalName, StringComparison.OrdinalIgnoreCase));
+            viewPresenter.ViewTypeDataList.RemoveAll(x => String.Equals(x.ViewName, xumlElement.Name.LocalName, StringComparison.OrdinalIgnoreCase));
 
             var viewTypeData = new ViewTypeData();
-            viewPresenter.ViewTypeData.Add(viewTypeData);
+            viewPresenter.ViewTypeDataList.Add(viewTypeData);
 
             viewTypeData.Xuml = xuml;
             viewTypeData.XumlElement = xumlElement;
@@ -291,8 +292,10 @@ namespace MarkLight
                 !viewTypeData.ComponentFields.Contains(x.Name) &&
                 !viewTypeData.ViewActionFields.Contains(x.Name) &&
                 !viewTypeData.DependencyFields.Contains(x.Name) &&
+#if !UNITY_WINRT || UNITY_WINRT_10_0 || UNITY_EDITOR
                 x.GetSetMethod() != null &&
                 x.GetGetMethod() != null &&
+#endif
                 x.Name != "enabled" &&
                 x.Name != "useGUILayout" &&
                 x.Name != "tag" &&
@@ -507,7 +510,7 @@ namespace MarkLight
             //      CreateView(contentView)
             //      SetViewValues(contentView)
             //   SetViewValues(view)       
-            //   SetThemeValues(view)     
+            //   SetThemeValues(view)
 
             // TODO store away and re-use view templates
 
@@ -582,15 +585,15 @@ namespace MarkLight
             // set view action fields
             foreach (var viewActionField in viewTypeData.ViewActionFields)
             {
-                var viewActionFieldInfo = viewType.GetField(viewActionField);
+                var viewActionFieldInfo = viewTypeData.GetViewField(viewActionField);
                 viewActionFieldInfo.SetValue(view, new ViewAction(viewActionField));
             }
 
             // set dependency fields            
             foreach (var dependencyField in viewTypeData.DependencyFields)
             {
-                var dependencyFieldInfo = viewType.GetField(dependencyField);
-                var dependencyFieldInstance = TypeHelper.CreateInstance(dependencyFieldInfo.FieldType) as ViewFieldBase;
+                var dependencyFieldInfo = viewTypeData.GetViewField(dependencyField);
+                var dependencyFieldInstance = TypeHelper.CreateViewField(dependencyFieldInfo.FieldType);
                 dependencyFieldInfo.SetValue(view, dependencyFieldInstance);
                 dependencyFieldInstance.ParentView = view;
                 dependencyFieldInstance.ViewFieldPath = dependencyField;
@@ -895,6 +898,6 @@ namespace MarkLight
             }
         }
 
-        #endregion
+#endregion
     }
 }

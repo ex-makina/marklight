@@ -1,0 +1,40 @@
+<LayoutExample xmlns="MarkLight">
+  <UserInterface>
+    <Region>
+      <!-- Top Menu -->
+      <Region Height="50" BackgroundColor="Black" Alignment="Top" />
+
+      <!-- Main Region -->
+      <Region Margin="0,50,0,0" BackgroundColor="White">
+
+        <!-- Left Menu -->
+        <Region Alignment="Left" Width="350px" BackgroundColor="Maroon">
+
+        </Region>
+
+        <!-- Right Content Area -->
+        <Region Margin="350,0,0,0" BackgroundColor="Blue">
+          <List Items="{Highscores}" IsScrollable="True" BackgroundColor="White" Height="100%" Alignment="Top" ScrollableContentAlignment="Top" AlternateItems="True">
+            <ListItem IsTemplate="True">
+              <Region Margin="2">
+                <Region Width="50%" Alignment="Left">
+                  <Label Text="{#Item.Player.FirstName}" FontStyle="Bold" FontColor="Black" />
+                </Region>
+                <Region Width="50%" Alignment="Right">
+                  <Label Text="{GlobalScore}" FontColor="Black" />
+                </Region>
+              </Region>
+            </ListItem>
+          </List>
+        </Region>
+
+        <Group Orientation="Horizontal" Spacing="10" Alignment="Top">
+          <Button Text="Score" Click="ChangeScore" />
+          <Button Text="Remove" Click="Remove" />
+        </Group>
+
+      </Region>
+    </Region>
+  </UserInterface>
+  <EventSystem />
+</LayoutExample>

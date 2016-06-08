@@ -17,8 +17,15 @@ namespace MarkLight
     {
         #region Fields
 
+        public string ViewFieldPath;
+        public string TargetViewFieldPath;
         public List<MemberInfo> MemberInfo;
         public HashSet<string> Dependencies;
+        public ValueConverter ValueConverter;
+        public string ViewFieldTypeName;
+        public Type ViewFieldType;
+        public bool IsMapped;
+        public bool IsPathParsed;
 
         #endregion
 

@@ -51,6 +51,12 @@ namespace MarkLight
         [NonSerialized]
         private Dictionary<string, ViewFieldChangeHandler> _viewFieldChangeHandlers;
 
+        [NonSerialized]
+        private Dictionary<string, FieldInfo> _viewFields;
+
+        [NonSerialized]
+        private Dictionary<string, ViewFieldPathInfo> _viewFieldPathInfo;
+
         #endregion        
 
         #region Constructor
@@ -137,6 +143,45 @@ namespace MarkLight
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Returns view field.
+        /// </summary>
+        public FieldInfo GetViewField(string field)
+        {
+            if (_viewFields == null)
+            {
+                _viewFields = new Dictionary<string, FieldInfo>();
+                var viewType = ViewData.GetViewType(ViewName);                
+                foreach (var viewField in viewType.GetFields())
+                {
+                    _viewFields.Add(viewField.Name, viewField);                    
+                }
+            }
+
+            return _viewFields.Get(field);
+        }
+
+        /// <summary>
+        /// Gets view field path info for the field.
+        /// </summary>
+        public ViewFieldPathInfo GetViewFieldPathInfo(string viewFieldPath)
+        {
+            return _viewFieldPathInfo != null ? _viewFieldPathInfo.Get(viewFieldPath) : null;
+        }
+
+        /// <summary>
+        /// Adds view field path info.
+        /// </summary>
+        public void AddViewFieldPathInfo(string viewFieldPath, ViewFieldPathInfo viewFieldPathInfo)
+        {
+            if (_viewFieldPathInfo == null)
+            {
+                _viewFieldPathInfo = new Dictionary<string, ViewFieldPathInfo>();
+            }
+
+            _viewFieldPathInfo.Add(viewFieldPath, viewFieldPathInfo);
         }
 
         #endregion
