@@ -19,6 +19,7 @@ namespace MarkLight
         #region Fields
 
         public VirtualizedItemsContainer VirtualizedItemsContainer;
+        public ElementOrientation Orientation;
 
         #endregion
 
@@ -29,7 +30,7 @@ namespace MarkLight
         /// </summary>
         public VirtualizedItems(VirtualizedItemsContainer virtualizedItemsContainer)
         {
-            this.VirtualizedItemsContainer = virtualizedItemsContainer;
+            VirtualizedItemsContainer = virtualizedItemsContainer;
         }
 
         #endregion
@@ -37,19 +38,50 @@ namespace MarkLight
         #region Methods
 
         /// <summary>
-        /// Inserts a view into the view pool.
+        /// Inserts a view into the virtualized container.
         /// </summary>
-        public void InsertView(View view)
+        public void InsertView(ListItem view)
         {
             view.MoveTo(VirtualizedItemsContainer);
         }
 
         /// <summary>
-        /// Gets first available view in the pool.
+        /// Gets items that are in the given range.
         /// </summary>
-        public View GetView()
+        public List<ListItem> GetItemsInRange(float min, float max)
         {
-            return VirtualizedItemsContainer.GetChild(0);
+            var items = new List<ListItem>();
+            VirtualizedItemsContainer.ForEachChild<ListItem>(x =>
+            {
+                // see if item falls within the range
+                if (IsInRange(x, min, max))
+                {
+                    items.Add(x);
+                }
+            }, false);
+
+            return items;
+        }
+
+        /// <summary>
+        /// Gets boolean indicating if list item is in the specified range.
+        /// </summary>
+        public bool IsInRange(ListItem item, float min, float max)
+        {
+            if (Orientation == ElementOrientation.Vertical)
+            {
+                float itemMin = item.OffsetFromParent.Value.Top.Pixels;
+                float itemMax = itemMin + item.Height.Value.Pixels;
+
+                return itemMax >= min && itemMin <= max;
+            }
+            else
+            {
+                float itemMin = item.OffsetFromParent.Value.Left.Pixels;
+                float itemMax = itemMin + item.Width.Value.Pixels;
+
+                return itemMax >= min && itemMin <= max;
+            }
         }
 
         #endregion

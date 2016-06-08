@@ -65,7 +65,9 @@ namespace MarkLight
                 { typeof(_TouchScreenKeyboardType), () => new _TouchScreenKeyboardType() },
                 { typeof(_InputFieldLineType), () => new _InputFieldLineType() },
                 { typeof(_ScrollbarDirection), () => new _ScrollbarDirection() },
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1
                 { typeof(_ScrollbarVisibility), () => new _ScrollbarVisibility() },
+#endif
                 { typeof(_PanelScrollbarVisibility), () => new _PanelScrollbarVisibility() },
                 { typeof(_ScrollRectMovementType), () => new _ScrollRectMovementType() },
                 { typeof(_RectTransformComponent), () => new _RectTransformComponent() },

@@ -316,17 +316,6 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
-        /// Initializes the view.
-        /// </summary>
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            // TODO check if item has alt-row states and is so use them 
-
-        }
-
-        /// <summary>
         /// Called when mouse is clicked.
         /// </summary>
         public void ListItemMouseClick()

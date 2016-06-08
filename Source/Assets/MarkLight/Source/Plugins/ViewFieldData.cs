@@ -356,7 +356,6 @@ namespace MarkLight
         {
             SevereParseError = false;
 
-            // TODO I think if we are here we can assume we don't have a view field path info
             var viewTypeData = SourceView.ViewTypeData;
             var viewFieldPath = viewTypeData.GetViewFieldPathInfo(ViewFieldPath); 
             if (viewFieldPath != null)

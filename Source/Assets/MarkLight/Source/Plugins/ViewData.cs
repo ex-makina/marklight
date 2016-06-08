@@ -71,12 +71,6 @@ namespace MarkLight
                 GameObject.DestroyImmediate(viewPresenter.RootView);
             }
 
-            // destroy view cache root
-            if (viewPresenter.ViewCacheRoot != null)
-            {
-                GameObject.DestroyImmediate(viewPresenter.ViewCacheRoot);
-            }
-
             // destroy any remaining objects under the view-presenter that should not be there
             if (viewPresenter.transform.childCount > 0)
             {
@@ -87,10 +81,6 @@ namespace MarkLight
                     GameObject.DestroyImmediate(go);
                 }
             }
-
-            // create new view cache root
-            viewPresenter.ViewCacheRoot = new GameObject("ViewCacheRoot");
-            viewPresenter.ViewCacheRoot.transform.SetParent(viewPresenter.transform, false);
 
             // create main view
             if (!String.IsNullOrEmpty(viewPresenter.MainView))

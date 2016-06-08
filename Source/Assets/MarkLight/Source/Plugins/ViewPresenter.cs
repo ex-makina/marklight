@@ -12,6 +12,9 @@ using MarkLight.Views.UI;
 using MarkLight.Animation;
 using MarkLight.ValueConverters;
 using System.Diagnostics;
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2 && !UNITY_5_3_1 && !UNITY_5_3_2 && !UNITY_5_3_3
+using UnityEngine.SceneManagement;
+#endif
 #endregion
 
 namespace MarkLight
@@ -34,7 +37,6 @@ namespace MarkLight
         public List<string> Views;
         public List<string> Themes;
         public GameObject RootView;
-        public GameObject ViewCacheRoot;
         public List<Sprite> Sprites;
         public List<string> SpritePaths;
         public List<Font> Fonts;
@@ -104,7 +106,7 @@ namespace MarkLight
             ResourceDictionary.Language = DefaultLanguage;
             ResourceDictionary.Platform = DefaultPlatform;
             ResourceDictionary.Initialize();
-            
+
             // initialize all views in the scene
             InitializeViews(RootView);
         }
@@ -127,12 +129,12 @@ namespace MarkLight
         {
             if (rootView == null || rootView.IsInitialized)
             {
-                return;                
+                return;
             }
 
-            // TODO log initialization performance
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            // uncomment to log initialization performance
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
 
             rootView.ForThisAndEachChild<View>(x => x.TryInitializeInternalDefaultValues());
             rootView.ForThisAndEachChild<View>(x => x.TryInitializeInternal());
@@ -144,29 +146,26 @@ namespace MarkLight
             ResourceDictionary.NotifyObservers();
 
             // trigger change handlers
-            if (!Application.isPlaying)
+            int pass = 0;
+            while (rootView.Find<View>(x => x.HasQueuedChangeHandlers) != null)
             {
-                int pass = 0;
-                while (rootView.Find<View>(x => x.HasQueuedChangeHandlers) != null)
+                if (pass >= 1000)
                 {
-                    if (pass >= 1000)
-                    {
-                        PrintTriggeredChangeHandlerOverflowError(pass, rootView);
-                        break;
-                    }
-
-                    // as long as there are change handlers queued, go through all views and trigger them
-                    rootView.ForThisAndEachChild<View>(x => x.TryTriggerChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
-                    ++pass;
+                    PrintTriggeredChangeHandlerOverflowError(pass, rootView);
+                    break;
                 }
+
+                // as long as there are change handlers queued, go through all views and trigger them
+                rootView.ForThisAndEachChild<View>(x => x.TryTriggerChangeHandlers(), true, null, TraversalAlgorithm.ReverseBreadthFirst);
+                ++pass;
             }
 
-            // TODO log initialization performance
-            sw.Stop();
-            if (rootView.gameObject == RootView)
-            {
-                Utils.Log("Initialization time: {0}", sw.ElapsedMilliseconds);
-            }
+            // uncomment to log initialization performance
+            //sw.Stop();
+            //if (rootView.gameObject == RootView)
+            //{
+            //    Utils.Log("Initialization time: {0}", sw.ElapsedMilliseconds);
+            //}
         }
 
         /// <summary>
@@ -177,7 +176,7 @@ namespace MarkLight
             var sb = new StringBuilder();
             var triggeredViews = rootView.GetChildren<View>(x => x.HasQueuedChangeHandlers);
             foreach (var triggeredView in triggeredViews)
-            {                
+            {
                 sb.AppendFormat("{0}: ", triggeredView.GameObjectName);
                 sb.AppendLine();
                 foreach (var triggeredChangeHandler in triggeredView.QueuedChangeHandlers)
@@ -216,11 +215,6 @@ namespace MarkLight
             if (RootView != null)
             {
                 GameObject.DestroyImmediate(RootView);
-            }
-
-            if (ViewCacheRoot != null)
-            {
-                GameObject.DestroyImmediate(ViewCacheRoot);
             }
         }
 
@@ -304,7 +298,7 @@ namespace MarkLight
                 }
             }
 
-            return _spriteDictionary.Get(assetPath);            
+            return _spriteDictionary.Get(assetPath);
         }
 
         /// <summary>
@@ -378,8 +372,8 @@ namespace MarkLight
 
             SpritePaths.Add(assetPath);
             Sprites.Add(asset);
-            
-            if (_spriteDictionary != null && 
+
+            if (_spriteDictionary != null &&
                 !_spriteDictionary.ContainsKey(assetPath))
             {
                 _spriteDictionary.Add(assetPath, asset);
@@ -500,7 +494,7 @@ namespace MarkLight
                 {
                     _valueConverters.Add(cachedConverter.Key, cachedConverter.Value);
                 }
-   
+
                 foreach (var valueConverterType in TypeHelper.FindDerivedTypes(typeof(ValueConverter)))
                 {
                     if (_valueConverters.ContainsKey(valueConverterType.Name))
@@ -544,7 +538,11 @@ namespace MarkLight
         /// </summary>
         public static void UpdateInstance()
         {
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2 && !UNITY_5_3_1 && !UNITY_5_3_2 && !UNITY_5_3_3
+            var sceneName = SceneManager.GetActiveScene().name;
+#else
             var sceneName = Application.loadedLevelName;
+#endif
             if (_instance == null || sceneName != _currentScene)
             {
                 _instance = UnityEngine.Object.FindObjectOfType(typeof(ViewPresenter)) as ViewPresenter;
@@ -552,9 +550,9 @@ namespace MarkLight
             }
         }
 
-        #endregion
+#endregion
 
-        #region Properties
+#region Properties
 
         /// <summary>
         /// Gets global presentation engine instance.
@@ -601,6 +599,6 @@ namespace MarkLight
             }
         }
 
-        #endregion
+#endregion
     }
 }

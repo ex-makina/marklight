@@ -1417,8 +1417,9 @@ namespace MarkLight
                 viewPoolContainer.MaxPoolSize.DirectValue = maxPoolSize;
                 viewPoolContainer.IsActive.DirectValue = false;
                 viewPoolContainer.Template = template;
-                viewPoolContainer.InitializeViews();
+                viewPoolContainer.HideFlags.Value = UnityEngine.HideFlags.HideInHierarchy;
                 // viewPoolContainer.HideFlags.Value = UnityEngine.HideFlags.HideAndDontSave; // TODO enable to only create during runtime
+                viewPoolContainer.InitializeViews();                                
             }            
             else
             {

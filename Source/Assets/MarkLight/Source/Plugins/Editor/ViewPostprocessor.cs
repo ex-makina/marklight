@@ -80,7 +80,8 @@ namespace MarkLight.Editor
                 }
             }
 
-            var sw = System.Diagnostics.Stopwatch.StartNew(); // TODO perf
+            // uncomment to log load performance
+            //var sw = System.Diagnostics.Stopwatch.StartNew();
 
             // load XUML assets
             ViewData.LoadAllXuml(viewAssets);
@@ -92,7 +93,8 @@ namespace MarkLight.Editor
                 GenerateXsdSchema();
             }
 
-            Utils.Log("Total view processing time: {0}", sw.ElapsedMilliseconds); // TODO perf
+            // uncomment to log load performance
+            //Utils.Log("Total view processing time: {0}", sw.ElapsedMilliseconds);
             Utils.Log("[MarkLight] Views processed. {0}", DateTime.Now);
         }
 
