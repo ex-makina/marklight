@@ -29,6 +29,7 @@ namespace MarkLight
         public List<string> FieldsNotSetFromXuml;
         public List<string> ExcludedComponentFields;
         public List<string> ViewFields;
+        public List<string> GenericViewFields;
         public List<MapViewFieldData> MapViewFields;
         public List<ViewFieldConverterData> ViewFieldConverters;
         public List<ViewFieldChangeHandler> ViewFieldChangeHandlers;
@@ -41,6 +42,9 @@ namespace MarkLight
 
         [NonSerialized]
         private List<ViewTypeData> _dependencies;
+
+        [NonSerialized]
+        private HashSet<string> _genericViewFields;
 
         [NonSerialized]
         private Dictionary<string, MapViewFieldData> _mappedViewFields;
@@ -71,6 +75,7 @@ namespace MarkLight
             DependencyFields = new List<string>();
             ComponentFields = new List<string>();
             ReferenceFields = new List<string>();
+            GenericViewFields = new List<string>();
             FieldsNotSetFromXuml = new List<string>();
             ExcludedComponentFields = new List<string>();
             ViewFields = new List<string>();
@@ -182,6 +187,23 @@ namespace MarkLight
             }
 
             _viewFieldPathInfo.Add(viewFieldPath, viewFieldPathInfo);
+        }
+
+        /// <summary>
+        /// Gets boolean indicating if the view field is generic.
+        /// </summary>
+        public bool IsGenericViewField(string viewField)
+        {
+            if (_genericViewFields == null)
+            {
+                _genericViewFields = new HashSet<string>();
+                foreach (var genericViewField in GenericViewFields)
+                {
+                    _genericViewFields.Add(genericViewField);
+                }
+            }
+
+            return _genericViewFields.Contains(viewField);
         }
 
         #endregion

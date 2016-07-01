@@ -30,7 +30,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the title region.</d>
         [MapTo("TitleRegion.BackgroundImage")]
-        public _Sprite TitleRegionImage;
+        public _UISprite TitleRegionImage;
 
         /// <summary>
         /// Title region image type.
@@ -225,7 +225,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the content region.</d>
         [MapTo("ContentRegion.BackgroundImage")]
-        public _Sprite ContentRegionImage;
+        public _UISprite ContentRegionImage;
 
         /// <summary>
         /// Content region image type.
@@ -298,7 +298,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the close button.</d>
         [MapTo("CloseButton.BackgroundImage")]
-        public _Sprite CloseButtonImage;
+        public _UISprite CloseButtonImage;
 
         /// <summary>
         /// Close button image type.
@@ -490,7 +490,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the window region.</d>
         [MapTo("WindowRegion.BackgroundImage")]
-        public _Sprite WindowImage;
+        public _UISprite WindowImage;
 
         /// <summary>
         /// Window region image type.

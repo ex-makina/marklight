@@ -45,7 +45,7 @@ namespace MarkLight
                 { typeof(_ElementMargin), () => new _ElementMargin() },
                 { typeof(_Material), () => new _Material() },
                 { typeof(_Quaternion), () => new _Quaternion() },
-                { typeof(_Sprite), () => new _Sprite() },
+                { typeof(_UISprite), () => new _UISprite() },
                 { typeof(_Vector2), () => new _Vector2() },
                 { typeof(_Vector3), () => new _Vector3() },
                 { typeof(_Vector4), () => new _Vector4() },

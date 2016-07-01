@@ -149,6 +149,7 @@ namespace MarkLight
         /// Item data.
         /// </summary>
         /// <d>Provides a mechanism to bind to dynamic list data. The item is set, e.g. by the List view on the child views it generates for its dynamic list data. The Item points to the list item data the view is associated with.</d>
+        [GenericViewField]
         public _object Item;
 
         /// <summary>
@@ -180,6 +181,12 @@ namespace MarkLight
         /// </summary>
         [NotSetFromXuml]
         public _bool IsDynamic;
+
+        /// <summary>
+        /// Indicates if the view propagates child layout changes.
+        /// </summary>
+        /// <d>Boolean indicating if view propagates child layout changes. Generally set to true whenever a view adjusts its size to child layout changes.</d>
+        public _bool PropagateChildLayoutChanges;
 
         /// <summary>
         /// The name of the view's type.
@@ -1144,6 +1151,7 @@ namespace MarkLight
             GameObject = gameObject;
             State.DirectValue = DefaultStateName;
             IsActive.DirectValue = true;
+            PropagateChildLayoutChanges.DirectValue = false;
         }
 
         /// <summary>
@@ -1163,7 +1171,14 @@ namespace MarkLight
         public void NotifyLayoutChanged()
         {
             // inform parents of update
-            this.ForEachParent<View>(x => x.QueueChangeHandler("ChildLayoutChanged"));
+            if (LayoutParent != null)
+            {
+                LayoutParent.QueueChangeHandler("ChildLayoutChanged");
+                if (LayoutParent.PropagateChildLayoutChanges)
+                {
+                    LayoutParent.NotifyLayoutChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -1174,11 +1189,22 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Called when a child view has been added or removed.
+        /// </summary>
+        public virtual void ChildrenChanged()
+        {
+            this.ForEachParent<View>(x => x.ChildrenChanged());
+        }
+
+        /// <summary>
         /// Called when a field affecting the layout of the view has changed.
         /// </summary>
         public virtual void LayoutChanged()
-        {            
-            //Debug.Log(ViewTypeName + ": LayoutChanged called");
+        {
+            //if (Application.isPlaying)
+            //    Debug.Log(ViewTypeName + ": LayoutChanged called"); // TODO remove
+
+            //Utils.Log("LayoutChanged");
         }
 
         /// <summary>
@@ -1310,7 +1336,7 @@ namespace MarkLight
         /// <summary>
         /// Activates the view.
         /// </summary>
-        public void Activate()
+        public virtual void Activate()
         {
             IsActive.Value = true;
         }
@@ -1318,7 +1344,7 @@ namespace MarkLight
         /// <summary>
         /// Activates the view and sends data to it.
         /// </summary>
-        public void Activate(object data)
+        public virtual void Activate(object data)
         {
             IsActive.DirectValue = true;
             gameObject.SetActive(true);
@@ -1390,6 +1416,7 @@ namespace MarkLight
 
             view.IsTemplate.DirectValue = false;
             view.IsDynamic.DirectValue = true;
+            //view.LayoutParent = layoutParent;
             return view;
         }
 
@@ -1460,7 +1487,7 @@ namespace MarkLight
         /// <summary>
         /// Moves the view to another view.
         /// </summary>
-        public void MoveTo(View target, int childIndex = -1)
+        public void MoveTo(View target, int childIndex = -1, bool updateLayoutParent = true)
         {
             transform.SetParent(target.transform, false);
             if (childIndex >= 0)
@@ -1468,7 +1495,12 @@ namespace MarkLight
                 transform.SetSiblingIndex(childIndex);
             }
 
-            SetValue(() => LayoutParent, target);
+            if (updateLayoutParent)
+            {
+                SetValue(() => LayoutParent, target);
+            }
+
+            target.ChildrenChanged();
         }
 
         /// <summary>
@@ -1701,6 +1733,14 @@ namespace MarkLight
             {
                 child.MoveTo(newParent);
             }
+        }
+
+        /// <summary>
+        /// Called when UI sprite has been loaded or unloaded.
+        /// </summary>
+        public virtual void OnSpriteChanged(UISprite sprite)
+        {
+            //Utils.Log("Notifying Observer {0} that sprite {1} IsLoaded = {2}", GameObjectName, sprite.Path, sprite.IsLoaded);
         }
 
         #endregion

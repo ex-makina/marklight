@@ -37,8 +37,7 @@ namespace MarkLight
         public List<string> Views;
         public List<string> Themes;
         public GameObject RootView;
-        public List<Sprite> Sprites;
-        public List<string> SpritePaths;
+        public List<UISprite> Sprites;
         public List<Font> Fonts;
         public List<string> FontPaths;
         public List<Material> Materials;
@@ -56,7 +55,7 @@ namespace MarkLight
         private Dictionary<string, ValueConverter> _valueConvertersForType;
         private Dictionary<string, ValueConverter> _valueConverters;
         private Dictionary<string, ValueInterpolator> _valueInterpolatorsForType;
-        private Dictionary<string, Sprite> _spriteDictionary;
+        private Dictionary<string, UISprite> _spriteDictionary;
         private Dictionary<string, Font> _fontDictionary;
         private Dictionary<string, Material> _materialDictionary;
 
@@ -74,8 +73,7 @@ namespace MarkLight
             ResourceDictionaries = new List<ResourceDictionary>();
             Views = new List<string>();
             Themes = new List<string>();
-            Sprites = new List<Sprite>();
-            SpritePaths = new List<string>();
+            Sprites = new List<UISprite>();
             Fonts = new List<Font>();
             FontPaths = new List<string>();
             Materials = new List<Material>();
@@ -198,7 +196,6 @@ namespace MarkLight
             ViewTypeDataList.Clear();
             ResourceDictionaries.Clear();
             Sprites.Clear();
-            SpritePaths.Clear();
             Fonts.Clear();
             FontPaths.Clear();
             Materials.Clear();
@@ -287,14 +284,14 @@ namespace MarkLight
         /// <summary>
         /// Gets pre-loaded sprite from asset path.
         /// </summary>
-        public Sprite GetSprite(string assetPath)
+        public UISprite GetSprite(string assetPath)
         {
             if (_spriteDictionary == null)
             {
-                _spriteDictionary = new Dictionary<string, Sprite>();
-                for (int i = 0; i < Sprites.Count; ++i)
+                _spriteDictionary = new Dictionary<string, UISprite>();
+                foreach (var sprite in Sprites)
                 {
-                    _spriteDictionary.Add(SpritePaths[i], Sprites[i]);
+                    _spriteDictionary.Add(sprite.Path, sprite);
                 }
             }
 
@@ -302,12 +299,11 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Gets asset path from sprite.
+        /// Gets pre-loaded UI sprite from sprite reference.
         /// </summary>
-        public string GetSpriteAssetPath(Sprite sprite)
+        public UISprite GetSprite(Sprite sprite)
         {
-            int index = Sprites.IndexOf(sprite);
-            return SpritePaths[index];
+            return Sprites.FirstOrDefault(x => x.Sprite == sprite);
         }
 
         /// <summary>
@@ -365,18 +361,18 @@ namespace MarkLight
         /// <summary>
         /// Adds sprite to list of loaded sprites.
         /// </summary>
-        public void AddSprite(string assetPath, Sprite asset)
+        public void AddSprite(UISprite sprite)
         {
-            if (SpritePaths.Contains(assetPath))
-                return;
-
-            SpritePaths.Add(assetPath);
-            Sprites.Add(asset);
-
-            if (_spriteDictionary != null &&
-                !_spriteDictionary.ContainsKey(assetPath))
+            if (Sprites.Any(x => x.Path == sprite.Path))
             {
-                _spriteDictionary.Add(assetPath, asset);
+                Utils.LogError("[MarkLight] Duplicate sprite \"{0}\" added.", sprite.Path);
+                return;
+            }
+            
+            Sprites.Add(sprite);
+            if (_spriteDictionary != null && !_spriteDictionary.ContainsKey(sprite.Path))
+            {
+                _spriteDictionary.Add(sprite.Path, sprite);
             }
         }
 
@@ -454,7 +450,7 @@ namespace MarkLight
                 _valueConvertersForType.Add("ElementMargin", new MarginValueConverter());
                 _valueConvertersForType.Add("Material", new MaterialValueConverter());
                 _valueConvertersForType.Add("Quaternion", new QuaternionValueConverter());
-                _valueConvertersForType.Add("Sprite", new SpriteValueConverter());
+                _valueConvertersForType.Add("UISprite", new UISpriteValueConverter());
                 _valueConvertersForType.Add("String", new StringValueConverter());
                 _valueConvertersForType.Add("Vector2", new Vector2ValueConverter());
                 _valueConvertersForType.Add("Vector3", new Vector3ValueConverter());
@@ -534,6 +530,41 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Loads UI sprite at path.
+        /// </summary>
+        public UISprite LoadSprite(string path, Sprite sprite)
+        {
+            var uiSprite = GetSprite(path);
+            if (uiSprite == null)
+            {
+                uiSprite = new UISprite(sprite, path);
+                AddSprite(uiSprite);
+            }
+            else
+            {
+                uiSprite.Sprite = sprite;
+                uiSprite.NotifyObservers();
+            }
+
+            return uiSprite;
+        }
+
+        /// <summary>
+        /// Unloads the sprite at path.
+        /// </summary>
+        public void UnloadSprite(string path)
+        {
+            var uiSprite = GetSprite(path);
+            if (uiSprite == null)
+            {
+                Utils.LogError("[MarkLight] Unable to unload sprite \"{0}\". Sprite not found.", path);
+                return;
+            }
+
+            uiSprite.Unload();
+        }
+
+        /// <summary>
         /// Refreshes and updates the view presenter instance.
         /// </summary>
         public static void UpdateInstance()
@@ -550,9 +581,9 @@ namespace MarkLight
             }
         }
 
-#endregion
+        #endregion
 
-#region Properties
+        #region Properties
 
         /// <summary>
         /// Gets global presentation engine instance.
@@ -561,11 +592,7 @@ namespace MarkLight
         {
             get
             {
-                if (_instance == null)
-                {
-                    UpdateInstance();
-                }
-
+                UpdateInstance();
                 return _instance;
             }
         }
@@ -588,7 +615,7 @@ namespace MarkLight
                     _cachedValueConverters.Add("MarginValueConverter", new MarginValueConverter());
                     _cachedValueConverters.Add("MaterialValueConverter", new MaterialValueConverter());
                     _cachedValueConverters.Add("QuaternionValueConverter", new QuaternionValueConverter());
-                    _cachedValueConverters.Add("SpriteValueConverter", new SpriteValueConverter());
+                    _cachedValueConverters.Add("UISpriteValueConverter", new UISpriteValueConverter());
                     _cachedValueConverters.Add("StringValueConverter", new StringValueConverter());
                     _cachedValueConverters.Add("Vector2ValueConverter", new Vector2ValueConverter());
                     _cachedValueConverters.Add("Vector3ValueConverter", new Vector3ValueConverter());
@@ -599,6 +626,6 @@ namespace MarkLight
             }
         }
 
-#endregion
+        #endregion
     }
 }

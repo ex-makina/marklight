@@ -57,7 +57,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the list max.</d>
         [MapTo("ListMask.BackgroundImage")]
-        public _Sprite ListMaskImage;
+        public _UISprite ListMaskImage;
 
         /// <summary>
         /// List max image type.
@@ -160,7 +160,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Horizontal scrollbar image sprite.</d>
         [MapTo("ListPanel.HorizontalScrollbarImage")]
-        public _Sprite HorizontalScrollbarImage;
+        public _UISprite HorizontalScrollbarImage;
 
         /// <summary>
         /// Horizontal scrollbar image type.
@@ -188,7 +188,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Horizontal scrollbar handle image sprite.</d>
         [MapTo("ListPanel.HorizontalScrollbarHandleImage")]
-        public _Sprite HorizontalScrollbarHandleImage;
+        public _UISprite HorizontalScrollbarHandleImage;
 
         /// <summary>
         /// Horizontal scrollbar handle image type.
@@ -262,7 +262,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Vertical scrollbar image sprite.</d>
         [MapTo("ListPanel.VerticalScrollbarImage")]
-        public _Sprite VerticalScrollbarImage;
+        public _UISprite VerticalScrollbarImage;
 
         /// <summary>
         /// Vertical scrollbar image type.
@@ -290,7 +290,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Vertical scrollbar handle image sprite.</d>
         [MapTo("ListPanel.VerticalScrollbarHandleImage")]
-        public _Sprite VerticalScrollbarHandleImage;
+        public _UISprite VerticalScrollbarHandleImage;
 
         /// <summary>
         /// Vertical scrollbar handle image type.
@@ -718,6 +718,7 @@ namespace MarkLight.Views.UI
         public override void ChildLayoutChanged()
         {
             base.ChildLayoutChanged();
+
             QueueChangeHandler("LayoutChanged");
         }
 
@@ -732,14 +733,14 @@ namespace MarkLight.Views.UI
             if (Orientation.Value == ElementOrientation.Vertical)
             {
                 float viewportHeight = ListPanel.ScrollRect.ActualHeight;
-                float scrollHeight = ScrollContent.ActualHeight - viewportHeight;
+                float scrollHeight = ScrollContent.Height.Value.Pixels - viewportHeight;
                 vpMin = (1.0f - VerticalNormalizedPosition.Value) * scrollHeight - RealizationMargin.Value;
-                vpMax = vpMin + viewportHeight + RealizationMargin.Value;                
+                vpMax = vpMin + viewportHeight + RealizationMargin.Value;
             }
             else
             {
                 float viewportWidth = ListPanel.ScrollRect.ActualWidth;
-                float scrollWidth = ScrollContent.ActualWidth - viewportWidth;
+                float scrollWidth = ScrollContent.Width.Value.Pixels - viewportWidth;
                 vpMin = (1.0f - HorizontalNormalizedPosition.Value) * scrollWidth - RealizationMargin.Value;
                 vpMax = vpMin + viewportWidth + RealizationMargin.Value;
             }
@@ -758,14 +759,14 @@ namespace MarkLight.Views.UI
             {
                 if (!_virtualizedItems.IsInRange(item, vpMin, vpMax))
                 {
-                    item.MoveTo(_virtualizedItems.VirtualizedItemsContainer);
+                    item.MoveTo(_virtualizedItems.VirtualizedItemsContainer, -1, false);
                 }
             }
 
             // add new items to viewport
             foreach (var item in newItems)
             {
-                item.MoveTo(Content);
+                item.MoveTo(Content, -1, false);
                 ListPanel.ScrollRect.UnblockDragEvents(item);
             }
         }
@@ -1333,7 +1334,7 @@ namespace MarkLight.Views.UI
         {
             if (ListItemTemplates.Count <= 0)
                 return; // static list 
-                        
+
             Rebuild();
             LayoutsChanged();
         }
@@ -1350,16 +1351,19 @@ namespace MarkLight.Views.UI
             {
                 Clear();
                 layoutChanged = true;
+                Content.ChildrenChanged();
             }
             else if (e.ListChangeAction == ListChangeAction.Add)
             {
                 AddRange(e.StartIndex, e.EndIndex);
                 layoutChanged = true;
+                Content.ChildrenChanged();
             }
             else if (e.ListChangeAction == ListChangeAction.Remove)
             {
                 RemoveRange(e.StartIndex, e.EndIndex);
                 layoutChanged = true;
+                Content.ChildrenChanged();
             }
             else if (e.ListChangeAction == ListChangeAction.Modify)
             {
@@ -1372,6 +1376,7 @@ namespace MarkLight.Views.UI
             else if (e.ListChangeAction == ListChangeAction.Replace)
             {
                 ItemsReplaced(e.StartIndex, e.EndIndex);
+                layoutChanged = true;
             }
             else if (e.ListChangeAction == ListChangeAction.ScrollTo)
             {
@@ -1396,7 +1401,10 @@ namespace MarkLight.Views.UI
                     ListPanel.ScrollRect.UpdateNormalizedPosition.Value = true; // set to retain scroll position as content updates
                 }
 
-                LayoutsChanged();
+                LayoutChanged();
+
+                // inform parents of update
+                NotifyLayoutChanged();
             }
         }
 
@@ -1423,7 +1431,7 @@ namespace MarkLight.Views.UI
             {
                 // set vertical scroll distance
                 float viewportHeight = ListPanel.ScrollRect.ActualHeight;
-                float scrollRegionHeight = ScrollContent.ActualHeight;
+                float scrollRegionHeight = ScrollContent.Height.Value.Pixels;
                 float scrollHeight = scrollRegionHeight - viewportHeight;
                 if (scrollHeight <= 0)
                 {
@@ -1458,7 +1466,7 @@ namespace MarkLight.Views.UI
             {
                 // set horizontal scroll distance
                 float viewportWidth = ListPanel.ScrollRect.ActualWidth;
-                float scrollRegionWidth = ScrollContent.ActualWidth;
+                float scrollRegionWidth = ScrollContent.Width.Value.Pixels;
                 float scrollWidth = scrollRegionWidth - viewportWidth;
                 if (scrollWidth <= 0)
                 {
@@ -1541,6 +1549,7 @@ namespace MarkLight.Views.UI
 
             // update sort index
             UpdateSortIndex();
+            ChildrenChanged();
         }
 
         /// <summary>
@@ -1707,8 +1716,8 @@ namespace MarkLight.Views.UI
             object itemData = Items.Value[index];
             var template = GetListItemTemplate(itemData);
 
-            View content = UseVirtualization ? _virtualizedItems.VirtualizedItemsContainer : Content;           
-            var newItemView = content.CreateView(GetListItemTemplate(itemData), -1, _viewPools.Get(template));
+            View content = UseVirtualization ? _virtualizedItems.VirtualizedItemsContainer : Content;
+            var newItemView = content.CreateView(template, -1, _viewPools.Get(template));
             newItemView.Template = template;
             _presentedListItems.Insert(index, newItemView);
 
@@ -1794,6 +1803,7 @@ namespace MarkLight.Views.UI
                 virtualizedItemsContainer.IsActive.DirectValue = false;
                 virtualizedItemsContainer.Id = GameObjectName;
                 virtualizedItemsContainer.Owner = this;
+                //virtualizedItemsContainer.HideFlags.Value = UnityEngine.HideFlags.DontSave;
                 virtualizedItemsContainer.HideFlags.Value = UnityEngine.HideFlags.HideAndDontSave;
                 virtualizedItemsContainer.InitializeViews();
             }
@@ -1841,7 +1851,7 @@ namespace MarkLight.Views.UI
             }
 
             // set up virtualization
-            UseVirtualization.DirectValue = InitializeVirtualization();            
+            UseVirtualization.DirectValue = InitializeVirtualization();
             UpdatePresentedListItems();
 
             if (ListItemTemplates.Count > 0)
@@ -1877,7 +1887,7 @@ namespace MarkLight.Views.UI
                 Utils.LogWarning("[MarkLight] {0}: Can't virtualize list because IsScrollable is false or Overflow is set to Wrap.", GameObjectName);
                 return false;
             }
-            
+
             if (DisableItemArrangement)
             {
                 Utils.LogWarning("[MarkLight] {0}: Can't virtualize list because DisableItemArrangement is set to True.", GameObjectName);

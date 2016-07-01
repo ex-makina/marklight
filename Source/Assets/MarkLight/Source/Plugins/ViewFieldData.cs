@@ -18,7 +18,7 @@ namespace MarkLight
         #region Fields
 
         public View SourceView;
-        public View TargetView;        
+        public View TargetView;
         public bool TargetViewSet;
         public ViewFieldPathInfo ViewFieldPathInfo;
 
@@ -268,7 +268,7 @@ namespace MarkLight
             if (String.IsNullOrEmpty(viewFieldPath) || sourceView == null)
                 return null;
 
-            ViewFieldData fieldData = new ViewFieldData();            
+            ViewFieldData fieldData = new ViewFieldData();
             fieldData.TargetView = sourceView;
             fieldData.SourceView = sourceView;
 
@@ -305,7 +305,7 @@ namespace MarkLight
                     fieldData.ViewFieldPathInfo.MemberInfo.Add(fieldInfo);
                     fieldData.ViewFieldPathInfo.IsMapped = true;
                     fieldData.ViewFieldPathInfo.IsPathParsed = true;
-                    fieldData.TargetViewSet = false;                    
+                    fieldData.TargetViewSet = false;
                     viewTypeData.AddViewFieldPathInfo(viewFieldPath, fieldData.ViewFieldPathInfo);
                     return fieldData;
                 }
@@ -319,7 +319,7 @@ namespace MarkLight
                     fieldData.ViewFieldPathInfo.MemberInfo.Add(propertyInfo);
                     fieldData.ViewFieldPathInfo.IsMapped = true;
                     fieldData.ViewFieldPathInfo.IsPathParsed = true;
-                    fieldData.TargetViewSet = false;                    
+                    fieldData.TargetViewSet = false;
                     viewTypeData.AddViewFieldPathInfo(viewFieldPath, fieldData.ViewFieldPathInfo);
                     return fieldData;
                 }
@@ -357,7 +357,7 @@ namespace MarkLight
             SevereParseError = false;
 
             var viewTypeData = SourceView.ViewTypeData;
-            var viewFieldPath = viewTypeData.GetViewFieldPathInfo(ViewFieldPath); 
+            var viewFieldPath = viewTypeData.GetViewFieldPathInfo(ViewFieldPath);
             if (viewFieldPath != null)
             {
                 ViewFieldPathInfo = viewFieldPath;
@@ -375,6 +375,7 @@ namespace MarkLight
             var viewFields = ViewFieldPath.Split('.');
             object viewFieldObject = SourceView;
             var viewFieldBaseType = typeof(ViewFieldBase);
+            bool isGenericViewField = viewFields.Length > 0 ? viewTypeData.IsGenericViewField(viewFields[0]) : false;
 
             // parse view field path
             bool parseSuccess = true;
@@ -395,7 +396,7 @@ namespace MarkLight
                 {
                     continue;
                 }
-                                
+
                 var viewFieldType = viewFieldObject.GetType();
                 var memberInfo = viewFieldType.GetFieldInfo(viewField);
                 if (memberInfo == null)
@@ -450,7 +451,7 @@ namespace MarkLight
             }
 
             ViewFieldPathInfo.IsPathParsed = parseSuccess;
-            if (parseSuccess)
+            if (parseSuccess && !isGenericViewField)
             {
                 viewTypeData.AddViewFieldPathInfo(ViewFieldPath, ViewFieldPathInfo);
             }
@@ -477,7 +478,7 @@ namespace MarkLight
         /// </summary>
         public bool IsSet()
         {
-            if (_isSetInitialized || _isSet) 
+            if (_isSetInitialized || _isSet)
                 return _isSet;
 
             // check with source view if the view field has been set

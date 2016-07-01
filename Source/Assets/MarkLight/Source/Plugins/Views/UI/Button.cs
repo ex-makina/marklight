@@ -228,8 +228,16 @@ namespace MarkLight.Views.UI
         /// </summary>
         public virtual void TextChanged()
         {
-            if (AdjustToText == MarkLight.AdjustToText.None)
+            bool adjustsToText = AdjustToText != MarkLight.AdjustToText.None;
+            if (!PropagateChildLayoutChanges.IsSet)
+            {
+                PropagateChildLayoutChanges.DirectValue = adjustsToText;
+            }
+
+            if (!adjustsToText)
+            {
                 return;
+            }
 
             // adjust button size to text
             if (AdjustToText == MarkLight.AdjustToText.Width)

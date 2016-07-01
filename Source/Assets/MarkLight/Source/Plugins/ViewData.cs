@@ -275,6 +275,12 @@ namespace MarkLight
                 {
                     viewTypeData.FieldsNotSetFromXuml.Add(field.Name);
                 }
+
+                var genericViewField = field.GetCustomAttributes(typeof(GenericViewField), true).FirstOrDefault();
+                if (genericViewField != null)
+                {
+                    viewTypeData.GenericViewFields.Add(field.Name);
+                }
             }
 
             // get the normal fields that aren't mapped
@@ -334,11 +340,11 @@ namespace MarkLight
             {
                 themeData.BaseDirectory = baseDirectoryAttr.Value;
             }
-            
+
             var unitSizeAttr = xumlElement.Attribute("UnitSize");
             themeData.UnitSizeSet = unitSizeAttr != null;
             if (themeData.UnitSizeSet)
-            {           
+            {
                 if (String.IsNullOrEmpty(unitSizeAttr.Value))
                 {
                     // use default unit size
@@ -395,7 +401,7 @@ namespace MarkLight
         /// Loads XUML to resource dictionary database.
         /// </summary>
         private static void LoadResourceDictionaryXuml(XElement xumlElement, string xuml, string xumlAssetName)
-        {            
+        {
             var viewPresenter = ViewPresenter.Instance;
             var dictionaryNameAttr = xumlElement.Attribute("Name");
             string dictionaryName = dictionaryNameAttr != null ? dictionaryNameAttr.Value : "Default";
@@ -525,7 +531,7 @@ namespace MarkLight
             {
                 context = ValueConverterContext.Default;
             }
-                        
+
             // create view from XUML
             var viewTypeData = GetViewTypeData(viewName);
             if (viewTypeData == null)
@@ -701,7 +707,7 @@ namespace MarkLight
             var unitSizeAttr = element.Attribute("UnitSize");
             if (baseDirectoryAttr != null)
             {
-                elementContext.BaseDirectory = baseDirectoryAttr.Value;                
+                elementContext.BaseDirectory = baseDirectoryAttr.Value;
             }
             if (unitSizeAttr != null)
             {
@@ -852,6 +858,22 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Loads UI sprite.
+        /// </summary>
+        internal static UISprite LoadSprite(string path, Sprite sprite)
+        {
+            return ViewPresenter.Instance.LoadSprite(path, sprite);
+        }
+
+        /// <summary>
+        /// Unloads UI sprite.
+        /// </summary>
+        public static void UnloadSprite(string path)
+        {
+            ViewPresenter.Instance.UnloadSprite(path);
+        }
+
+        /// <summary>
         /// Sorts the view elements by their dependencies so they can be processed in the right order.
         /// </summary>
         private static List<ViewTypeData> SortByDependency(List<ViewTypeData> viewTypeDataList)
@@ -898,6 +920,6 @@ namespace MarkLight
             }
         }
 
-#endregion
+        #endregion
     }
 }

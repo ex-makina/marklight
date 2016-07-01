@@ -30,7 +30,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the tab content.</d>
         [MapTo("TabContent.BackgroundImage")]
-        public _Sprite TabContentImage;
+        public _UISprite TabContentImage;
 
         /// <summary>
         /// Tab content image type.
@@ -103,7 +103,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the tab header list.</d>
         [MapTo("TabHeaderList.BackgroundImage")]
-        public _Sprite TabListImage;
+        public _UISprite TabListImage;
 
         /// <summary>
         /// Tab header list image type.
@@ -231,7 +231,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the list max.</d>
         [MapTo("TabHeaderList.ListMaskImage")]
-        public _Sprite TabListMaskImage;
+        public _UISprite TabListMaskImage;
 
         /// <summary>
         /// Tab header list mask image type.
@@ -353,15 +353,6 @@ namespace MarkLight.Views.UI
 
             TabHeaderList.Orientation.DirectValue = ElementOrientation.Horizontal;
             TabHeaderList.Alignment.DirectValue = ElementAlignment.TopLeft;
-        }
-
-        /// <summary>
-        /// Called when a child layout has been updated.
-        /// </summary>
-        public override void ChildLayoutChanged()
-        {
-            base.ChildLayoutChanged();
-            QueueChangeHandler("LayoutChanged");
         }
 
         /// <summary>
@@ -675,10 +666,10 @@ namespace MarkLight.Views.UI
                 if (Items.Count > 0)
                 {
                     AddRange(0, Items.Count - 1);
-                }
 
-                // select first tab by default
-                SelectTab(0, false);
+                    // select first tab by default
+                    SelectTab(0, false);
+                }
             }
         }
 
@@ -847,6 +838,7 @@ namespace MarkLight.Views.UI
             {
                 // create default TabHeader                
                 tabHeader = ViewData.CreateView<TabHeader>(TabHeaderList.Content, tab.Parent, null, Theme, String.Empty, Style);
+                tabHeader.ParentList = TabHeaderList;
                 tabHeader.ParentTab = tab;
                 if (index >= 0)
                 {
@@ -865,6 +857,7 @@ namespace MarkLight.Views.UI
             {
                 // move tab header to list
                 tabHeader.MoveTo(TabHeaderList.Content, index >= 0 ? index + 1 : -1);
+                tabHeader.ParentList = TabHeaderList;
                 TabHeaderList.QueueChangeHandler("LayoutChanged");
             }
 

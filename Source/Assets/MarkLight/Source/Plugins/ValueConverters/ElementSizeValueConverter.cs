@@ -16,6 +16,9 @@ namespace MarkLight.ValueConverters
     {
         #region Fields
 
+        private Type _intType;
+        private Type _floatType;
+        
         #endregion
 
         #region Constructor
@@ -26,6 +29,8 @@ namespace MarkLight.ValueConverters
         public ElementSizeValueConverter()
         {
             _type = typeof(ElementSize);
+            _intType = typeof(int);
+            _floatType = typeof(float);
         }
 
         #endregion
@@ -59,6 +64,14 @@ namespace MarkLight.ValueConverters
                 {
                     return ConversionFailed(value, e);
                 }
+            }
+            else if (valueType == _intType)
+            {
+                return new ConversionResult(ElementSize.FromPixels((float)value));
+            }
+            else if (valueType == _floatType)
+            {
+                return new ConversionResult(ElementSize.FromPixels((float)value));
             }
 
             return ConversionFailed(value);

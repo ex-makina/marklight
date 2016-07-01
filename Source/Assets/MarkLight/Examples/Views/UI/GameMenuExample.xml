@@ -1,0 +1,143 @@
+<GameMenuExample xmlns="MarkLight" SoundEffectsVolume="100" MusicVolume="75" EasyMode="True" DisplayName="Player">
+  <UserInterface>
+
+    <!-- View switcher that switches between main menu, options, level select and in-game -->
+    <ViewSwitcher Id="ContentViewSwitcher" TransitionIn="BounceInAnimation">
+
+      <!-- Main Menu -->
+      <Region Id="MainMenu" Width="400" Height="460">
+        <Region Style="Window" Margin="40,50,40,80">
+          <Group Spacing="10" Margin="0,20,0,0">
+            <Button Text="Play" Click="Play" Width="200" Height="70" />
+            <Button Text="Options" Click="Options" Width="200" Height="70" />
+            <Button Text="Quit" Click="Quit" Width="200" Height="70" />
+          </Group>
+        </Region>
+
+        <Image Style="TitleRibbon" Alignment="Top" />
+        <Label Style="TitleRibbon" Text="Main Menu" Width="200" Alignment="Top" />
+      </Region>
+
+      <!-- Options -->
+      <Region Id="Options" Width="640" Height="480">
+        <Region Style="Window" Margin="0,50,0,36">
+          <Group Spacing="10" Margin="50" ContentAlignment="Left">
+            <Group Spacing="10" Orientation="Horizontal">
+              <Label Text="Sound Effects" Width="160" Height="30" TextAlignment="Left" />
+              <Slider Width="320" Value="{SoundEffectsVolume}" SetValueOnDragEnded="True" />
+            </Group>
+            <Group Spacing="10" Orientation="Horizontal">
+              <Label Text="Music" Width="160" Height="30" TextAlignment="Left" />
+              <Slider Width="320" Min="0" Max="100" Value="{MusicVolume}" SetValueOnDragEnded="True" />
+            </Group>
+            <Group Orientation="Horizontal">
+              <Label Text="Easy Mode" Width="160" Height="30" TextAlignment="Left" />
+              <CheckBox Style="CheckBox" IsChecked="{EasyMode}" Height="52" CheckBoxWidth="52" CheckBoxHeight="52" />
+            </Group>
+            <Group Orientation="Horizontal">
+              <Label Text="Display Name" Width="160" Height="30" TextAlignment="Left" />
+              <InputField Text="{DisplayName}" />
+            </Group>
+          </Group>
+        </Region>
+        <Button Style="Round" Click="BackToMainMenu" Alignment="BottomLeft" Offset="80,0,0,0">
+          <Image Style="BackArrow" />
+        </Button>
+        <Image Style="TitleRibbon" Alignment="Top" />
+        <Label Style="TitleRibbon" Text="Options" Width="160" Alignment="Top" />
+      </Region>
+
+      <!-- Level Select -->
+      <Region Id="LevelSelect" Width="600" Height="520">
+        <Region Style="Window" Margin="0,50px,0,36px">
+          <List Style="LevelSelectList" Orientation="Horizontal" CanSelect="False" Margin="50,60,50,50" 
+                Items="{Levels}" Spacing="10" Overflow="Wrap" IsScrollable="True" UseListMask="False"
+                DisableInteractionScrollDelta="1">
+            <ListItem Id="Stars0" IsTemplate="True" Width="82" Height="93" BackgroundColor="Clear">
+              <Button Style="LevelSelectButton" Click="StartLevel" />
+              <Image Style="Stars0" Alignment="Bottom" Offset="0,0,0,20" RaycastBlockMode="Never" />
+              <Label Style="Level" Text="{#Item.Number}" Alignment="Top" RaycastBlockMode="Never"  />
+            </ListItem>
+
+            <ListItem Id="Stars1" IsTemplate="True" Width="82" Height="93" BackgroundColor="Clear">
+              <Button Style="LevelSelectButton" Click="StartLevel" />
+              <Image Style="Stars1" Alignment="Bottom" Offset="0,0,0,20" RaycastBlockMode="Never" />
+              <Label Style="Level" Text="{#Item.Number}" Alignment="Top" RaycastBlockMode="Never"  />
+            </ListItem>
+
+            <ListItem Id="Stars2" IsTemplate="True" Width="82" Height="93" BackgroundColor="Clear">
+              <Button Style="LevelSelectButton" Click="StartLevel" />
+              <Image Style="Stars2" Alignment="Bottom" Offset="0,0,0,20" RaycastBlockMode="Never" />
+              <Label Style="Level" Text="{#Item.Number}" Alignment="Top" RaycastBlockMode="Never"  />
+            </ListItem>
+            
+            <ListItem Id="Stars3" IsTemplate="True" Width="82" Height="93" BackgroundColor="Clear">
+              <Button Style="LevelSelectButton" Click="StartLevel" />
+              <Image Style="Stars3" Alignment="Bottom" Offset="0,0,0,20" RaycastBlockMode="Never" />
+              <Label Style="Level" Text="{#Item.Number}" Alignment="Top" RaycastBlockMode="Never"  />
+            </ListItem>
+
+            <ListItem Id="LockedLevel" IsTemplate="True" Width="82" Height="93" BackgroundColor="Clear">
+              <Image Style="LockedLevel" />
+              <Image Style="StarsInactive" Alignment="Bottom" Offset="0,0,0,20" />
+              <Image Style="Lock" Offset="-5,-10,0,0" Alignment="TopLeft" />
+              <Label Style="Level" Text="{#Item.Number}" Alignment="Top" />
+            </ListItem>
+          </List>
+        </Region>
+
+        <Button Style="Round" Click="BackToMainMenu" Alignment="BottomLeft" Offset="80,0,0,0">
+          <Image Style="BackArrow" />
+        </Button>
+        <Image Style="TitleRibbon" Alignment="Top" />
+        <Label Style="TitleRibbon" Text="Level Select" Width="210" Alignment="Top" />
+      </Region>
+      
+      <!-- In-game -->
+      <Region Id="InGame">
+        <Button Style="Round" Click="BackToMainMenu" Alignment="BottomLeft" Offset="80,0,0,80">
+          <Image Style="MenuIcon" />
+        </Button>
+      </Region>
+
+    </ViewSwitcher>
+
+    <!-- View switcher animation -->
+    <ViewAnimation Id="BounceInAnimation">
+      <Animate Field="Scale" From="0" To="1" Duration="0.2s" EasingFunction="QuadraticEaseIn" />
+      <Animate Field="Rotation" From="0,0,-20" To="0,0,0" Duration="0.5s" EasingFunction="BackEaseInOut" />
+    </ViewAnimation>
+
+
+
+    <!--<Group Orientation="Vertical" ContentAlignment="Left" Spacing="10">
+      <Group Orientation="Horizontal" Spacing="15px">
+        <Button Text="Add" Click="Add" AdjustToText="Width" TextPadding="20,10,20,10" />
+        <Button Text="Remove" Click="Remove" IsDisabled="{=!FlowList.IsItemSelected}" AdjustToText="Width" TextPadding="20,10,20,10" />
+        <Button Text="Scroll To" Click="ScrollTo" IsDisabled="{=!FlowList.IsItemSelected}" AdjustToText="Width" TextPadding="20,10,20,10" />
+      </Group>
+
+      -->
+    <!-- displays a scrollable wrapped list of cards using multiple templates -->
+    <!--
+      <List Items="{Cards}" Id="FlowList" Overflow="Wrap" Spacing="5" Orientation="Horizontal" Width="600" Height="400" IsScrollable="True">
+        <ListItem Id="Card1" IsTemplate="True" Width="125" Height="181">
+          <Image Sprite="Assets/MarkLight/Examples/Sprites/Cards/jack_of_clubs.png" Margin="3" />
+        </ListItem>
+        <ListItem Id="Card2" IsTemplate="True" Width="125" Height="181">
+          <Image Sprite="Assets/MarkLight/Examples/Sprites/Cards/queen_of_diamonds.png" Margin="3" />
+        </ListItem>
+        <ListItem Id="Card3" IsTemplate="True" Width="125" Height="181">
+          <Image Sprite="Assets/MarkLight/Examples/Sprites/Cards/king_of_spades.png" Margin="3" />
+        </ListItem>
+        <ListItem Id="Card4" IsTemplate="True" Width="125" Height="181">
+          <Image Sprite="Assets/MarkLight/Examples/Sprites/Cards/ace_of_hearts.png" Margin="3" />
+        </ListItem>
+      </List>
+      
+      <Label Text="{FlowList.SelectedItem.Name}" AdjustToText="Width" />
+    </Group>-->
+
+  </UserInterface>
+  <EventSystem />
+</GameMenuExample>

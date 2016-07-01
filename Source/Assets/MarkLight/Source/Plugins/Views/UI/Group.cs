@@ -51,6 +51,12 @@ namespace MarkLight.Views.UI
         [ChangeHandler("LayoutChanged")]
         public _ElementSortDirection SortDirection;
 
+        /// <summary>
+        /// Sets the visibility of children so they are made visible after they are arranged.
+        /// </summary>
+        /// <d>Boolean indicating that the group should set the visibility of children so they are only made visible after they are arranged.</d>
+        public _bool SetChildVisibility;                     
+
         protected View _groupContentContainer;
 
         #endregion
@@ -136,7 +142,13 @@ namespace MarkLight.Views.UI
 
                 // don't group disabled views
                 if (!view.IsLive)
+                {
+                    if (SetChildVisibility)
+                    {
+                        view.IsVisible.Value = false;
+                    }
                     continue;
+                }
 
                 if (view.Width.Value.Unit == ElementSizeUnit.Percents)
                 {
@@ -204,10 +216,17 @@ namespace MarkLight.Views.UI
                 // update child layout
                 view.RectTransformChanged();
                 ++childIndex;
+
+                // update child visibility
+                if (SetChildVisibility)
+                {
+                    view.IsVisible.Value = true;
+                }
             }
 
             // set width and height 
             float totalSpacing = childCount > 1 ? (childIndex - 1) * Spacing.Value.Pixels : 0f;
+            bool adjustsToContent = false;
 
             if (!Width.IsSet)
             {
@@ -221,6 +240,7 @@ namespace MarkLight.Views.UI
 
                     // adjust width to content
                     Width.DirectValue = new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels);
+                    adjustsToContent = true;
                 }
                 else
                 {
@@ -240,12 +260,19 @@ namespace MarkLight.Views.UI
 
                     // adjust height to content
                     Height.DirectValue = new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels);
+                    adjustsToContent = true;
                 }
                 else
                 {
                     Height.DirectValue = new ElementSize(1, ElementSizeUnit.Percents);
                 }
             }
+
+            if (!PropagateChildLayoutChanges.IsSet)
+            {
+                // don't propagate changes if width and height isn't adjusted to content
+                PropagateChildLayoutChanges.DirectValue = adjustsToContent;
+            }           
 
             base.LayoutChanged();
         }
@@ -256,6 +283,17 @@ namespace MarkLight.Views.UI
         public override void Initialize()
         {
             _groupContentContainer = this;
+            if (SetChildVisibility)
+            {
+                // set inactive children as not visible
+                _groupContentContainer.ForEachChild<UIView>(x =>
+                {
+                    if (!x.IsActive)
+                    {
+                        x.IsVisible.Value = false;
+                    }
+                }, false);
+            }
 
             base.Initialize();            
         }

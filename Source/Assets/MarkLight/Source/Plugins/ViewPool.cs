@@ -41,7 +41,7 @@ namespace MarkLight
         /// </summary>
         public void InsertView(View view)
         {
-            view.MoveTo(ViewPoolContainer);
+            view.MoveTo(ViewPoolContainer, -1, false);
         }
 
         /// <summary>
