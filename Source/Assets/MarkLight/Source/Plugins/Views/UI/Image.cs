@@ -17,7 +17,7 @@ namespace MarkLight.Views.UI
     /// <summary>
     /// Image view.
     /// </summary>
-    /// <d>Used to display an image. Contains additional mappings to the image component.</d>
+    /// <d>Used to display an image. Contains additional mappings to the background image component.</d>
     [HideInPresenter]
     public class Image : UIView
     {
@@ -69,8 +69,8 @@ namespace MarkLight.Views.UI
         /// Image override sprite.
         /// </summary>
         /// <d>Set an override sprite to be used for rendering. If set the override sprite is used instead of the regular image sprite.</d>
-        [MapTo("ImageComponent.overrideSprite")]
-        public _Sprite OverrideSprite;
+        [MapTo("BackgroundImageOverrideSprite")]
+        public _UISprite OverrideSprite;
 
         /// <summary>
         /// Preserve aspect ratio.
@@ -83,8 +83,8 @@ namespace MarkLight.Views.UI
         /// Image sprite.
         /// </summary>
         /// <d>The sprite that will be rendered.</d>
-        [MapTo("ImageComponent.sprite", "BackgroundChanged")]
-        public _Sprite Sprite;
+        [MapTo("BackgroundImage")]
+        public _UISprite Sprite;
 
         /// <summary>
         /// Image type.

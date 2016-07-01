@@ -76,7 +76,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Horizontal scrollbar image sprite.</d>
         [MapTo("HorizontalScrollbar.BackgroundImage")]
-        public _Sprite HorizontalScrollbarImage;
+        public _UISprite HorizontalScrollbarImage;
 
         /// <summary>
         /// Horizontal scrollbar image type.
@@ -104,7 +104,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Horizontal scrollbar handle image sprite.</d>
         [MapTo("HorizontalScrollbar.HandleImage")]
-        public _Sprite HorizontalScrollbarHandleImage;
+        public _UISprite HorizontalScrollbarHandleImage;
 
         /// <summary>
         /// Horizontal scrollbar handle image type.
@@ -184,7 +184,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Vertical scrollbar image sprite.</d>
         [MapTo("VerticalScrollbar.BackgroundImage")]
-        public _Sprite VerticalScrollbarImage;
+        public _UISprite VerticalScrollbarImage;
 
         /// <summary>
         /// Vertical scrollbar image type.
@@ -212,7 +212,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Vertical scrollbar handle image sprite.</d>
         [MapTo("VerticalScrollbar.HandleImage")]
-        public _Sprite VerticalScrollbarHandleImage;
+        public _UISprite VerticalScrollbarHandleImage;
 
         /// <summary>
         /// Vertical scrollbar handle image type.

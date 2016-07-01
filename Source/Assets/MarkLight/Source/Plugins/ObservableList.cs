@@ -93,6 +93,9 @@ namespace MarkLight
         public void AddRange(IEnumerable<T> items)
         {
             int itemCount = items.Count();
+            if (itemCount <= 0)
+                return;
+
             int startIndex = _list.Count;
             int endIndex = startIndex + (itemCount - 1);
 

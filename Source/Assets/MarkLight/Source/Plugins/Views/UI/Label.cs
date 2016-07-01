@@ -207,7 +207,6 @@ namespace MarkLight.Views.UI
         {
             // parse text
             TextComponent.text = ParseText(TextComponent.text);
-
             if (AdjustToText == MarkLight.AdjustToText.None)
             {
                 // size of view doesn't change with text, no need to notify parents

@@ -61,7 +61,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the radio button.</d>
         [MapTo("RadioButtonImageView.Sprite")]
-        public _Sprite RadioButtonImage;
+        public _UISprite RadioButtonImage;
 
         /// <summary>
         /// Radio button image type.

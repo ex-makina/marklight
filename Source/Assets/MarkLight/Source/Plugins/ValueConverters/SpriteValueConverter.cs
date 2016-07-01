@@ -18,6 +18,12 @@ namespace MarkLight.ValueConverters
     /// </summary>
     public class SpriteValueConverter : ValueConverter
     {
+        #region Fields
+
+        private Type _uiSpriteType;
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -26,6 +32,7 @@ namespace MarkLight.ValueConverters
         public SpriteValueConverter()
         {
             _type = typeof(Sprite);
+            _uiSpriteType = typeof(UISprite);
         }
 
         #endregion
@@ -47,97 +54,22 @@ namespace MarkLight.ValueConverters
             {
                 return base.Convert(value, context);
             }
+            else if (valueType == _uiSpriteType)
+            {
+                var spriteValue = value as UISprite;
+                return new ConversionResult(spriteValue.Sprite);
+            }
             else if (valueType == _stringType)
             {
-                var stringValue = (string)value;
                 try
                 {
-                    string assetPath = stringValue.Trim();
-                    UnityEngine.Object asset = null;
-                    if (String.IsNullOrEmpty(assetPath))
-                    {
-                        return new ConversionResult(null);
-                    }
+                    UISpriteValueConverter uiConverter = new UISpriteValueConverter();
+                    var result = uiConverter.Convert(value);
+                    if (result.ConvertedValue == null)
+                        return result;
 
-                    if (!String.IsNullOrEmpty(context.BaseDirectory))
-                    {
-                        assetPath = Path.Combine(context.BaseDirectory, assetPath);
-                    }
-
-                    // is asset pre-loaded?
-                    asset = ViewPresenter.Instance.GetSprite(assetPath);
-                    if (asset != null)
-                    {
-                        // yes. return pre-loaded asset
-                        return new ConversionResult(asset);
-                    }
-
-                    // if the asset is in a resources folder the load path should be relative to the folder
-                    bool inResourcesFolder = assetPath.Contains("Resources/");
-                    string loadAssetPath = assetPath;
-                    if (inResourcesFolder)
-                    {
-                        loadAssetPath = loadAssetPath.Substring(assetPath.IndexOf("Resources/") + 10);
-                        string extension = System.IO.Path.GetExtension(assetPath);
-                        if (extension.Length > 0)
-                        {
-                            loadAssetPath = loadAssetPath.Substring(0, loadAssetPath.Length - extension.Length);
-                        }
-                    }
-
-                    // load asset from asset database
-                    if (!Application.isPlaying || inResourcesFolder)
-                    {
-                        // load sprite from asset database
-                        // does the path refer to a sprite in a sprite atlas?
-                        if (assetPath.Contains(":"))
-                        {
-                            // yes. load sprite from atlas
-                            string[] parts = loadAssetPath.Split(':');
-                            string filepath = parts[0];
-
-#if UNITY_EDITOR
-                            UnityEngine.Object[] subSprites = inResourcesFolder ? Resources.LoadAll(filepath) : AssetDatabase.LoadAllAssetRepresentationsAtPath(filepath);
-#else
-                            UnityEngine.Object[] subSprites = Resources.LoadAll(filepath);
-#endif
-                            foreach (var s in subSprites)
-                            {
-                                if (s.name == parts[1])
-                                {
-                                    asset = s;
-                                    break;
-                                }
-                            }
-
-                            if (asset == null)
-                            {
-                                return ConversionFailed(value, String.Format("Asset not found at path \"{0}\".", assetPath));
-                            }
-
-                            // add asset to view-presenter
-                            ViewPresenter.Instance.AddSprite(assetPath, asset as Sprite);
-                            return new ConversionResult(asset);
-                        }
-                        else
-                        {
-                            // load sprite
-#if UNITY_EDITOR
-                            asset = inResourcesFolder ? Resources.Load(loadAssetPath, _type) : AssetDatabase.LoadAssetAtPath(loadAssetPath, _type);
-#else
-                            asset = Resources.Load(loadAssetPath, _type);
-#endif                            
-                            if (asset == null)
-                            {
-                                return ConversionFailed(value, String.Format("Asset not found at path \"{0}\".", assetPath));
-                            }
-
-                            ViewPresenter.Instance.AddSprite(assetPath, asset as Sprite);
-                            return new ConversionResult(asset);
-                        }
-                    }
-                    
-                    return ConversionFailed(value, String.Format("Pre-loaded asset not found for path \"{0}\".", assetPath));
+                    var uiSprite = result.ConvertedValue as UISprite;
+                    return new ConversionResult(uiSprite.Sprite);
                 }
                 catch (Exception e)
                 {
@@ -153,9 +85,9 @@ namespace MarkLight.ValueConverters
         /// </summary>
         public override string ConvertToString(object value)
         {
-            return value != null ? ViewPresenter.Instance.GetSpriteAssetPath(value as Sprite) : String.Empty;
+            return value != null ? (value as UISprite).Path : String.Empty;
         }
 
-#endregion
+        #endregion
     }
 }

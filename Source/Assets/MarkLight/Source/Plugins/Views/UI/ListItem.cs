@@ -193,7 +193,7 @@ namespace MarkLight.Views.UI
 
         [NotSetFromXuml]
         [ChangeHandler("IsSelectedChanged", TriggerImmediately = true)]
-        public _bool IsSelected;        
+        public _bool IsSelected;
 
         [NotSetFromXuml]
         public _bool IsPressed;
@@ -231,7 +231,11 @@ namespace MarkLight.Views.UI
         /// <d>The list item mouse up action is triggered when the mouse is pressed and then released over the list item.</d>
         public ViewAction MouseUp;
 
-        private List _parentList;
+        /// <summary>
+        /// Parent list.
+        /// </summary>
+        /// <d>The list that created this list item.</d>
+        public List ParentList;
 
         #endregion
 
@@ -257,6 +261,19 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
+        /// Initializes the list item.
+        /// </summary>
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            if (ParentList == null)
+            {
+                ParentList = this.FindParent<List>();
+            }
+        }
+
+        /// <summary>
         /// Called when the layout of the view has been changed. 
         /// </summary>
         public override void LayoutChanged()
@@ -269,7 +286,7 @@ namespace MarkLight.Views.UI
                 if (!Height.IsSet)
                 {
                     Height.DirectValue = Breadth.IsSet ? new ElementSize(Breadth.Value) : ElementSize.FromPercents(1);
-                }                
+                }
             }
             else
             {
@@ -340,7 +357,7 @@ namespace MarkLight.Views.UI
             IsMouseOver.DirectValue = true;
             if (IsSelected)
                 return;
-            
+
             if (IsPressed)
             {
                 SetState("Pressed");
@@ -373,7 +390,7 @@ namespace MarkLight.Views.UI
         {
             if (ParentList == null || State == "Disabled")
                 return;
-                        
+
             if (!ParentList.SelectOnMouseUp.Value)
             {
                 ParentList.SelectItem(this, true);
@@ -483,26 +500,6 @@ namespace MarkLight.Views.UI
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Returns parent list.
-        /// </summary>
-        public List ParentList
-        {
-            get
-            {
-                if (_parentList == null)
-                {
-                    _parentList = this.FindParent<List>();
-                }
-
-                return _parentList;
-            }
-            set
-            {
-                _parentList = value;
-            }
-        }
 
         /// <summary>
         /// Returns default item style.

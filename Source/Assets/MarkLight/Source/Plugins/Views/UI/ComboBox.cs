@@ -31,7 +31,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the combo box button.</d>
         [MapTo("ComboBoxButton.BackgroundImage")]
-        public _Sprite ButtonImage;
+        public _UISprite ButtonImage;
 
         /// <summary>
         /// Combo box button image type.
@@ -251,7 +251,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the combo box list.</d>
         [MapTo("ComboBoxList.BackgroundImage")]
-        public _Sprite ListImage;
+        public _UISprite ListImage;
 
         /// <summary>
         /// Combo box list image type.
@@ -379,7 +379,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the list max.</d>
         [MapTo("ComboBoxList.ListMaskImage")]
-        public _Sprite ListMaskImage;
+        public _UISprite ListMaskImage;
 
         /// <summary>
         /// Combo box list mask image type.

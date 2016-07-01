@@ -71,5 +71,28 @@ namespace MarkLight.Examples.Data
         Spades = 3,
         Hearts = 4
     }
+
+    /// <summary>
+    /// Level.
+    /// </summary>
+    public class Level
+    {
+        public bool IsLocked;
+        public int Stars;
+        public int Number;
+
+        public string GetTemplateId()
+        {
+            // return template id for level based on its settings
+            if (IsLocked)
+            {
+                return "LockedLevel";
+            }
+            else
+            {
+                return String.Format("Stars{0}", Stars);
+            }
+        }
+    }
 }
 

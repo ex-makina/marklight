@@ -12,6 +12,7 @@
           Disabled-FontColor="Gray70" Disabled-ShadowColor="Gray40" Disabled-OutlineColor="Gray40"/>
   <Button Style="Round" BackgroundImage="Sprites/RoundButton.psd" Pressed-BackgroundImage="Sprites/RoundButtonPressed.psd" Highlighted-BackgroundImage="Sprites/RoundButtonHighlighted.psd" Width="69" Height="72" />
   <Button Style="CheckBox" BackgroundImage="Sprites/CheckButton.psd" Pressed-BackgroundImage="Sprites/CheckButtonPressed.psd" Highlighted-BackgroundImage="Sprites/CheckButton.psd" IsToggleButton="True" Width="52" Height="52" />
+  <Button Style="LevelSelectButton" BackgroundImage="Sprites/LevelButton.psd" Pressed-BackgroundImage="Sprites/LevelButtonPressed.psd" Highlighted-BackgroundImage="Sprites/LevelButtonHighlighted.psd" Width="82" Height="93" />
 
   <CheckBox CheckBoxImage="Sprites/CheckButton.psd" Checked-CheckBoxImage="Sprites/CheckButtonPressed.psd" CheckBoxWidth="26" CheckBoxHeight="26" Height="26" 
             CheckBoxColor="#ffffff" Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" FontStyle="Normal" FontColor="#000000" Spacing="10px"
@@ -27,6 +28,13 @@
   <Image Style="TitleRibbon" Sprite="Sprites/Ribbon.psd" Width="424" Height="107" />
   <Image Style="ShowcaseButtonContent" Sprite="Sprites/Lock.psd" Width="33" Height="41" Offset="0,-10,-10,0" Alignment="TopRight" />
   <Image Style="ShowcaseImage" Sprite="Sprites/Lock.psd" Width="33" Height="41" />
+  <Image Style="LockedLevel" Sprite="Sprites/LevelButtonDisabled.psd" />
+  <Image Style="StarsInactive" Sprite="Sprites/StarsInactive.psd" Width="56" Height="18" />
+  <Image Style="Stars0" Sprite="Sprites/Stars0.psd" Width="56" Height="18" />
+  <Image Style="Stars1" Sprite="Sprites/Stars1.psd" Width="56" Height="18" />
+  <Image Style="Stars2" Sprite="Sprites/Stars2.psd" Width="56" Height="18" />
+  <Image Style="Stars3" Sprite="Sprites/Stars3.psd" Width="56" Height="18" />
+  <Image Style="Lock" Sprite="Sprites/Lock.psd" Width="33" Height="41" />
 
   <Frame Style="Window" BackgroundImage="Sprites/Frame.psd" BackgroundImageType="Sliced" />
   <Frame Style="ShowcasePanel" BackgroundImage="Sprites/Frame.psd" BackgroundImageType="Sliced" BackgroundColor="#ffffff" Alignment="Top" />
@@ -64,8 +72,9 @@
       TitleAlignment="Top" TitleOffset="0,18px,0,0" />
 
   <List BackgroundImage="Sprites/ListBox.psd" BackgroundImageType="Sliced" BackgroundColor="White" UseListMask="True" ListMaskImage="Sprites/ListBoxMask.psd" ListMaskImageType="Sliced" ListMaskColor="#ffffff" />
+  <List Style="LevelSelectList" BackgroundImage="" BackgroundColor="Clear" />
   <ListItem Breadth="40" TextMargin="25,0,0,0" TextAlignment="Left" BackgroundColor="White"
-            Selected-BackgroundColor="#dbd7e3" Pressed-BackgroundColor="#dbd7e3"
+            Selected-BackgroundColor="#dbd7e3" Pressed-BackgroundColor="#dbd7e3"            
             Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontStyle="Normal" FontSize="22" FontColor="#8f86a3"            
             Selected-FontColor="#000000" Pressed-FontColor="White"
             Disabled-FontStyle="Italic" Disabled-FontColor="Gray80"
@@ -94,7 +103,8 @@
   <DataGrid BackgroundColor="White" ColumnTextMargin="10,0,10,0" ColumnTextAlignment="Left" ListMaskImage="" ListMaskShowGraphic="False" />
   <RowHeader Height="40" BackgroundColor="Gray70" />
   <ColumnHeader Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" FontStyle="Bold" />
-  <Row Breadth="40" BackgroundColor="White" Selected-BackgroundColor="#c3f7c5" Pressed-BackgroundColor="#dbd7e3" />
+  <Row Breadth="40" BackgroundColor="White" Selected-BackgroundColor="#c3f7c5" Pressed-BackgroundColor="#dbd7e3"
+       Alternate-BackgroundColor="Gray95" />
   <Column Font="Fonts/AveriaSansLibre-LightItalic.ttf" FontSize="22" FontColor="#000000" />
 
   <TabPanel Style="Menu" TabContentColor="#9F9B9B" TabContentImage="Sprites/TabContent.psd" TabContentImageType="Sliced" TabListContentMargin="0"

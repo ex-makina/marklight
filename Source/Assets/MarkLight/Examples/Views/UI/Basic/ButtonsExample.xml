@@ -1,13 +1,13 @@
 <ButtonsExample xmlns="MarkLight">
   <Group Spacing="25">
     <Group Orientation="Horizontal" Spacing="50">
-      <Group Spacing="10px">
+      <Group Spacing="10px" ContentAlignment="Left">
         <CheckBox Text="Option 1" />
         <CheckBox Text="Option 2" />
         <CheckBox Text="Option 3" />
       </Group>
 
-      <Group Spacing="10px">
+      <Group Spacing="10px" ContentAlignment="Left">
         <RadioButton Text="Option 1" />
         <RadioButton Text="Option 2" />
         <RadioButton Text="Option 3" />

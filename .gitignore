@@ -1,10 +1,24 @@
 # Files not part of core project
 
-Source/MarkLight.Demo/
-Source/Assets/DevTools/
+Source/AssetBundles/
+Source/Assets/AssetBundleManager/
+Source/Assets/AssetBundleManager.meta
+Source/Assets/AssetBundleTest/
+Source/Assets/AssetBundleTest.meta
+Source/Assets/Resources/
+Source/Assets/Resources.meta
 Source/Assets/UnityVS/
-Source/Assets/DevTools.meta
 Source/Assets/UnityVS.meta
+Source/Assets/OnDemandLoading.unity
+Source/Assets/OnDemandLoading.unity.meta
+Source/Assets/Views/OnDemandLoadingExample.cs
+Source/Assets/Views/OnDemandLoadingExample.cs.meta
+Source/Assets/Views/OnDemandLoadingExample.xml
+Source/Assets/Views/OnDemandLoadingExample.xml.meta
+Source/Assets/Views/TestView.cs
+Source/Assets/Views/TestView.cs.meta
+Source/Assets/Views/TestView.xml
+Source/Assets/Views/TestView.xml.meta
 
 
 # Unity generated

@@ -121,7 +121,8 @@
   <DataGrid BackgroundColor="White" ColumnTextMargin="10,0,10,0" ColumnTextAlignment="Left" ListMaskImage="" ListMaskShowGraphic="False" />
   <RowHeader Height="50" BackgroundColor="#ececec" />
   <ColumnHeader Font="Fonts/Lato-Regular.ttf" FontSize="20" />
-  <Row Breadth="50" BackgroundColor="White" Selected-BackgroundColor="#dbd7e3" Pressed-BackgroundColor="#dbd7e3" />
+  <Row Breadth="50" BackgroundColor="White" Selected-BackgroundColor="#dbd7e3" Pressed-BackgroundColor="#dbd7e3" 
+       Alternate-BackgroundColor="Gray95" />
   <Column Font="Fonts/Lato-Light.ttf" FontSize="20" FontColor="#000000" />
 
   <TabPanel Style="Menu" TabContentColor="#D7D7D7" TabListContentMargin="0" TabListColor="Clear" TabListMaskImage="" TabListMaskShowGraphic="False" />

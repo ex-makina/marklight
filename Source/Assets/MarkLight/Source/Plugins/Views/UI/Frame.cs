@@ -49,6 +49,7 @@ namespace MarkLight.Views.UI
             base.SetDefaultValues();
             ContentMargin.DirectValue = new ElementMargin();
             ResizeToContent.DirectValue = true;
+            PropagateChildLayoutChanges.DirectValue = true;
         }
 
         /// <summary>
@@ -65,6 +66,11 @@ namespace MarkLight.Views.UI
         /// </summary>
         public override void LayoutChanged()
         {
+            if (!PropagateChildLayoutChanges.IsSet)
+            {
+                PropagateChildLayoutChanges.DirectValue = ResizeToContent;
+            }
+
             if (ResizeToContent)
             {
                 float maxWidth = 0f;

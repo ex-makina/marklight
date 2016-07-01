@@ -185,22 +185,22 @@ namespace MarkLight.Views.UI
         /// Background image override sprite.
         /// </summary>
         /// <d>Set an override sprite to be used for rendering. If set the override sprite is used instead of the regular image sprite.</d>
-        [MapTo("ImageComponent.overrideSprite")]
-        public _Sprite BackgroundImageOverrideSprite;
+        [ChangeHandler("BackgroundChanged")]
+        public _UISprite BackgroundImageOverrideSprite;
 
         /// <summary>
         /// Preserve aspect ratio.
         /// </summary>
         /// <d>Indicates whether this image should preserve its Sprite aspect ratio.</d>
         [MapTo("ImageComponent.preserveAspect")]
-        public _Sprite BackgroundImagePreserveAspect;
+        public _bool BackgroundImagePreserveAspect;
 
         /// <summary>
         /// Background image sprite.
         /// </summary>
         /// <d>The sprite that will be rendered.</d>
-        [MapTo("ImageComponent.sprite", "BackgroundChanged")]
-        public _Sprite BackgroundImage;
+        [ChangeHandler("BackgroundChanged")]
+        public _UISprite BackgroundImage;
 
         /// <summary>
         /// Type of background image.
@@ -430,11 +430,25 @@ namespace MarkLight.Views.UI
             }
                         
             if (ImageComponent != null)
-            {
-                // set image color to white if sprite has been set but not color
-                if (BackgroundImage.IsSet && !BackgroundColor.IsSet)
+            {                
+                if (BackgroundImage.IsSet)
                 {
-                    ImageComponent.color = Color.white;
+                    var uiSprite = BackgroundImage.Value;
+                    if (uiSprite != null)
+                    {
+                        ImageComponent.sprite = uiSprite.Sprite;
+                        uiSprite.AddObserver(this);
+                    }
+                    else
+                    {
+                        ImageComponent.sprite = null;
+                    }
+
+                    if (!BackgroundColor.IsSet)
+                    {
+                        // set image color to white if sprite has been set but not color
+                        ImageComponent.color = Color.white;
+                    }
                 }
 
                 // if image color is clear disable image component
@@ -491,6 +505,40 @@ namespace MarkLight.Views.UI
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Called when a sprite used by the view has been loaded or unloaded.
+        /// </summary>
+        public override void OnSpriteChanged(UISprite sprite)
+        {
+            base.OnSpriteChanged(sprite);
+
+            // is the sprite changed currently used as the background sprite? 
+            if (BackgroundImage.Value != null && BackgroundImage.Value == sprite)
+            {
+                // yes. update background
+                BackgroundChanged();
+            }
+        }
+
+        /// <summary>
+        /// Called when the view is initialized.
+        /// </summary>
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            // get background sprite from global cache
+            if (BackgroundImage.IsSet && BackgroundImage.Value != null)
+            {
+                var sprite = ViewPresenter.Instance.GetSprite(BackgroundImage.Value.Path);
+                if (sprite != null)
+                {
+                    sprite.AddObserver(this);
+                    BackgroundImage.DirectValue = sprite;
+                }
+            }
         }
 
         #endregion

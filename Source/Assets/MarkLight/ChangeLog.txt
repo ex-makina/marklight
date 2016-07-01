@@ -1,7 +1,19 @@
-﻿v2.4.0
+﻿v2.5.0-alpha
+- On-demand loaded sprites supported
+- Performance improvements in how layout changes are propagated to parents
+- Added SetChildVisibility on Group which when set to True will remove flickering effect as enabled children are made visible before being positioned
+
+v2.4.1
+- Game menu example added
+- Fixed various bugs with list pooling and virtualization
+- Ints and floats can now be converted and bound to ElementSize fields
+- Binding to generic view fields allowed by using the GenericViewField attribute
+- Fixed the error 'Field X defined on type Y is not a field on the target object' by using GenericViewField
+
+v2.4.0
 - List can use virtualization (only present items visible in viewport) through the UseVirtualization bool
 - Fixed UWP 8.1 compatibility issues
-- Multiple list templates supported 
+- Multiple list templates supported
 - Optimized performance when loading and initializing views
 - Added PlayingCards example that demonstrates a scrollable wrapped list using multiple templates
 - Added bool AlternateItems to List and AlternateRows to DataGrid for enabling alternating row styles (alternating between "Default" and "Alternate" state)

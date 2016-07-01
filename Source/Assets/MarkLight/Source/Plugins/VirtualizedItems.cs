@@ -42,7 +42,7 @@ namespace MarkLight
         /// </summary>
         public void InsertView(ListItem view)
         {
-            view.MoveTo(VirtualizedItemsContainer);
+            view.MoveTo(VirtualizedItemsContainer, -1, false);
         }
 
         /// <summary>

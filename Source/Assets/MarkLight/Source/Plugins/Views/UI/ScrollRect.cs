@@ -229,13 +229,13 @@ namespace MarkLight.Views.UI
             ScrollRectComponent.horizontal = true;
             ImageComponent.color = Color.clear;
         }
-
+        
         /// <summary>
-        /// Called when a child layout has been updated.
+        /// Called when a child view has been added or removed.
         /// </summary>
-        public override void ChildLayoutChanged()
+        public override void ChildrenChanged()
         {
-            base.ChildLayoutChanged();
+            base.ChildrenChanged();
             QueueChangeHandler("LayoutChanged");
         }
 
