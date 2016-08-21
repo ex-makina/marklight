@@ -19,7 +19,9 @@ namespace MarkLight
     {
         #region Fields
 
-        public string ViewName;
+        public string ViewTypeName;
+        public List<string> ViewNameAliases;
+        public string ReplacesViewModel;
         public string Xuml;
         public List<string> DependencyNames;
         public List<string> ViewActionFields;
@@ -70,6 +72,7 @@ namespace MarkLight
         /// </summary>
         public ViewTypeData()
         {
+            ViewNameAliases = new List<string>();
             DependencyNames = new List<string>();
             ViewActionFields = new List<string>();
             DependencyFields = new List<string>();
@@ -104,7 +107,7 @@ namespace MarkLight
                     }
                     catch
                     {
-                        Utils.LogError("[MarkLight] View type \"{0}\" contains duplicate mapped view field \"{1} -> {2}\".", ViewName, mapField.From, mapField.To);
+                        Utils.LogError("[MarkLight] View type \"{0}\" contains duplicate mapped view field \"{1} -> {2}\".", ViewTypeName, mapField.From, mapField.To);
                     }
                 }
             }
@@ -158,9 +161,16 @@ namespace MarkLight
             if (_viewFields == null)
             {
                 _viewFields = new Dictionary<string, FieldInfo>();
-                var viewType = ViewData.GetViewType(ViewName);                
+                var viewType = ViewData.GetViewType(ViewTypeName);                
                 foreach (var viewField in viewType.GetFields())
                 {
+                    if (_viewFields.ContainsKey(viewField.Name))
+                    {
+                        // duplicates can happen if the 'new' modifier is used
+                        _viewFields[viewField.Name] = viewField;
+                        continue;
+                    }
+
                     _viewFields.Add(viewField.Name, viewField);                    
                 }
             }

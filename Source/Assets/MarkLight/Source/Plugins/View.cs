@@ -1201,9 +1201,6 @@ namespace MarkLight
         /// </summary>
         public virtual void LayoutChanged()
         {
-            //if (Application.isPlaying)
-            //    Debug.Log(ViewTypeName + ": LayoutChanged called"); // TODO remove
-
             //Utils.Log("LayoutChanged");
         }
 
@@ -1274,7 +1271,10 @@ namespace MarkLight
                             {
                                 // set default value
                                 var value = GetValue(stateValue.ViewFieldPath);
-                                stateValue.SetValue(value, viewFieldData.ValueConverter.ConvertToString(value));
+                                if (viewFieldData.ValueConverter != null)
+                                {
+                                    stateValue.SetValue(value, viewFieldData.ValueConverter.ConvertToString(value));
+                                }
                             }
                         }
                     }

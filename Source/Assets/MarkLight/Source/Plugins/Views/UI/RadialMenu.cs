@@ -89,7 +89,7 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Toggles radial menu.
         /// </summary>
-        public void Toggle(bool animate = true)
+        public void Toggle(bool animate)
         {
             if (_isOpen)
             {
@@ -104,7 +104,7 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Toggles radial menu.
         /// </summary>
-        public void ToggleAt(Vector2 position, bool animate = true)
+        public void ToggleAt(Vector2 position, bool animate)
         {
             if (_isOpen)
             {
@@ -119,7 +119,7 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Opens radial menu at position.
         /// </summary>
-        public void OpenAt(Vector2 mouseScreenPositionIn, bool animate = true)
+        public void OpenAt(Vector2 mouseScreenPositionIn, bool animate)
         {
             // calculate menu offset
             Vector2 pos = GetLocalPoint(mouseScreenPositionIn);
@@ -133,7 +133,7 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Opens the radial menu.
         /// </summary>
-        public void Open(bool animate = true)
+        public void Open(bool animate)
         {
             _isOpen = true;
 
@@ -182,7 +182,7 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Closes the radial menu.
         /// </summary>
-        public void Close(bool animate = true)
+        public void Close(bool animate)
         {
             _isOpen = false;
 

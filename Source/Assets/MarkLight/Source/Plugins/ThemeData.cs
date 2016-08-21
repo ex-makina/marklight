@@ -72,7 +72,7 @@ namespace MarkLight
             if (!_themeElementData.ContainsKey(viewTypeName))
             {
                 return matchedThemeElements;
-            }
+            }                        
 
             foreach (var themeElement in _themeElementData[viewTypeName])
             {

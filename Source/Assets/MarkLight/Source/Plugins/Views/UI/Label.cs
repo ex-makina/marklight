@@ -125,7 +125,7 @@ namespace MarkLight.Views.UI
         [MapTo("TextComponent.verticalOverflow")]
         public _VerticalWrapMode VerticalOverflow;
 #endif
-                       
+
         #endregion
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace MarkLight.Views.UI
         public virtual void TextChanged()
         {
             // parse text
-            TextComponent.text = ParseText(TextComponent.text);
+            Text.Value = ParseText(Text.Value);
             if (AdjustToText == MarkLight.AdjustToText.None)
             {
                 // size of view doesn't change with text, no need to notify parents
@@ -223,10 +223,7 @@ namespace MarkLight.Views.UI
         /// Called when a field affecting the layout of the view has changed.
         /// </summary>
         public override void LayoutChanged()
-        {            
-            if (TextComponent == null)
-                return;
-
+        {
             AdjustLabelToText();
             base.LayoutChanged();
         }
@@ -248,6 +245,9 @@ namespace MarkLight.Views.UI
         public override void BehaviorChanged()
         {
             base.BehaviorChanged();
+
+            if (TextComponent == null)
+                return;
 
             TextComponent.alignment = TextAnchor;
             if (ShadowColor.IsSet || ShadowDistance.IsSet)
@@ -282,16 +282,16 @@ namespace MarkLight.Views.UI
         {
             if (AdjustToText == MarkLight.AdjustToText.Width)
             {
-                Width.DirectValue = new ElementSize(TextComponent.preferredWidth);
+                Width.DirectValue = new ElementSize(PreferredWidth);
             }
             else if (AdjustToText == MarkLight.AdjustToText.Height)
             {
-                Height.DirectValue = new ElementSize(TextComponent.preferredHeight);
+                Height.DirectValue = new ElementSize(PreferredHeight);
             }
             else if (AdjustToText == MarkLight.AdjustToText.WidthAndHeight)
             {
-                Width.DirectValue = new ElementSize(TextComponent.preferredWidth);
-                Height.DirectValue = new ElementSize(TextComponent.preferredHeight);
+                Width.DirectValue = new ElementSize(PreferredWidth);
+                Height.DirectValue = new ElementSize(PreferredHeight);
             }
         }
 
@@ -303,7 +303,7 @@ namespace MarkLight.Views.UI
             if (text == null)
                 return String.Empty;
 
-            if (!TextComponent.supportRichText)
+            if (TextComponent == null || !TextComponent.supportRichText)
                 return text;
 
             string formattedText = string.Empty;
@@ -499,6 +499,28 @@ namespace MarkLight.Views.UI
                     default:
                         return TextAnchor.MiddleCenter;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Preferred width of text.
+        /// </summary>
+        public virtual float PreferredWidth
+        {
+            get
+            {
+                return TextComponent != null ? TextComponent.preferredWidth : 0;
+            }
+        }
+
+        /// <summary>
+        /// Preferred height of text.
+        /// </summary>
+        public virtual float PreferredHeight
+        {
+            get
+            {
+                return TextComponent != null ? TextComponent.preferredHeight : 0;
             }
         }
 

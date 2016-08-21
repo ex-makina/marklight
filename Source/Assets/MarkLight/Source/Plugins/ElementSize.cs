@@ -71,6 +71,14 @@ namespace MarkLight
         #region Methods
 
         /// <summary>
+        /// Converts float to element size.
+        /// </summary>
+        public static implicit operator ElementSize(float value)
+        {
+            return ElementSize.FromPixels(value);
+        }
+
+        /// <summary>
         /// Gets element size with the specified pixel size.
         /// </summary>
         public static ElementSize FromPixels(float pixels)

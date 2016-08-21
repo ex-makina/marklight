@@ -220,6 +220,12 @@ namespace MarkLight.Views.UI
         public _bool SetValueOnDragEnded;
 
         /// <summary>
+        /// Specifies how many steps the slider should have.
+        /// </summary>
+        /// <d>Specifies how many steps the slider should have. If zero or less, infinite steps are used.</d>
+        public _float Steps;
+
+        /// <summary>
         /// Region containing slider content.
         /// </summary>
         /// <d>Region containing slider background, fill and handle image.</d>
@@ -308,7 +314,8 @@ namespace MarkLight.Views.UI
         public virtual void SliderValueChanged()
         {
             // clamp value to min/max
-            Value.DirectValue = Value.Value.Clamp(Min, Max);
+            var clampedValue = Value.Value.Clamp(Min, Max);
+            Value.DirectValue = Steps > 0 ? Nearest(clampedValue, Min, Max, Steps) : clampedValue;
             UpdateSliderPosition(Value);
         }
 
@@ -329,7 +336,7 @@ namespace MarkLight.Views.UI
         /// Called on slider drag end.
         /// </summary>
         public void SliderEndDrag(PointerEventData eventData)
-        {            
+        {
             if (!CanSlide)
             {
                 return;
@@ -381,7 +388,7 @@ namespace MarkLight.Views.UI
             var fillTransform = SliderFillRegion.RectTransform;
 
             var pos = GetLocalPoint(mouseScreenPositionIn);
-            
+
             // calculate slide percentage (transform.position.x/y is center of fill area)
             float p = 0;
             float slideAreaLength = fillTransform.rect.width - SliderHandleImageView.Width.Value.Pixels;
@@ -396,6 +403,8 @@ namespace MarkLight.Views.UI
 
             // set value
             float newValue = (Max - Min) * p + Min;
+            newValue = Steps > 0 ? Nearest(newValue, Min, Max, Steps) : newValue;
+
             if (!SetValueOnDragEnded || (SetValueOnDragEnded && isEndDrag))
             {
                 Value.Value = newValue;
@@ -408,10 +417,19 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public static float Nearest(float value, float min, float max, float steps)
+        {
+            var zerone = Mathf.Round((value - min) * steps / (max - min)) / steps;
+            return zerone * (max - min) + min;
+        }
+
+        /// <summary>
         /// Sets slider position based on value.
         /// </summary>
         private void UpdateSliderPosition(float value)
-        {            
+        {
             float p = (value - Min) / (Max - Min);
             var fillTransform = SliderFillRegion.RectTransform;
 

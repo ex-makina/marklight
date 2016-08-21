@@ -32,7 +32,7 @@ namespace MarkLight
             var viewPresenter = ViewPresenter.Instance;
 
             viewPresenter.Views.Clear();
-            viewPresenter.Views.AddRange(viewPresenter.ViewTypeDataList.Where(y => !y.HideInPresenter).Select(x => x.ViewName).OrderBy(x => x));
+            viewPresenter.Views.AddRange(viewPresenter.ViewTypeDataList.Where(y => !y.HideInPresenter).Select(x => x.ViewTypeName).OrderBy(x => x));
 
             viewPresenter.Themes.Clear();
             viewPresenter.Themes.AddRange(viewPresenter.ThemeData.Select(x => x.ThemeName).OrderBy(x => x));
@@ -43,10 +43,11 @@ namespace MarkLight
                 viewType.Dependencies.Clear();
                 foreach (var dependencyName in viewType.DependencyNames)
                 {
-                    var dependency = viewPresenter.ViewTypeDataList.Where(x => String.Equals(x.ViewName, dependencyName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                    var dependency = viewPresenter.ViewTypeDataList.Where(x => 
+                        x.ViewNameAliases.Contains(dependencyName)).FirstOrDefault();
                     if (dependency == null)
                     {
-                        Utils.LogError("[MarkLight] {0}: View contains the child view \"{1}\" that could not be found.", viewType.ViewName, dependencyName);
+                        Utils.LogError("[MarkLight] {0}: View contains the child view \"{1}\" that could not be found.", viewType.ViewTypeName, dependencyName);
                         continue;
                     }
 
@@ -164,14 +165,15 @@ namespace MarkLight
         private static void LoadViewXuml(XElement xumlElement, string xuml)
         {
             var viewPresenter = ViewPresenter.Instance;
-            viewPresenter.ViewTypeDataList.RemoveAll(x => String.Equals(x.ViewName, xumlElement.Name.LocalName, StringComparison.OrdinalIgnoreCase));
+            viewPresenter.ViewTypeDataList.RemoveAll(x => String.Equals(x.ViewTypeName, xumlElement.Name.LocalName, StringComparison.OrdinalIgnoreCase));
 
             var viewTypeData = new ViewTypeData();
             viewPresenter.ViewTypeDataList.Add(viewTypeData);
 
             viewTypeData.Xuml = xuml;
             viewTypeData.XumlElement = xumlElement;
-            viewTypeData.ViewName = xumlElement.Name.LocalName;
+            viewTypeData.ViewTypeName = xumlElement.Name.LocalName;
+            viewTypeData.ViewNameAliases.Add(viewTypeData.ViewTypeName);
 
             // set dependency names
             foreach (var descendant in xumlElement.Descendants())
@@ -183,7 +185,7 @@ namespace MarkLight
             }
 
             // set view type
-            var type = GetViewType(viewTypeData.ViewName);
+            var type = GetViewType(viewTypeData.ViewTypeName);
             if (type == null)
             {
                 type = typeof(View);
@@ -218,6 +220,17 @@ namespace MarkLight
             // set excluded component fields
             var excludedComponentFields = type.GetCustomAttributes(typeof(ExcludeComponent), true);
             viewTypeData.ExcludedComponentFields.AddRange(excludedComponentFields.Select(x => (x as ExcludeComponent).ComponentFieldName));
+
+            // set view-model to view mappings
+            var viewNameAliases = type.GetCustomAttributes(typeof(ViewNameAlias), false);
+            viewTypeData.ViewNameAliases.AddRange(viewNameAliases.Select(x => (x as ViewNameAlias).ViewAlias));
+
+            // set view-model replacements
+            var replacesViewModel = type.GetCustomAttributes(typeof(ReplacesViewModel), false).FirstOrDefault();
+            if (replacesViewModel != null)
+            {
+                viewTypeData.ReplacesViewModel = (replacesViewModel as ReplacesViewModel).ViewTypeName;
+            }            
 
             // set mapped fields and their converters and change handlers
             var mapFields = type.GetFields().SelectMany(x => x.GetCustomAttributes(typeof(MapViewField), true));
@@ -280,6 +293,56 @@ namespace MarkLight
                 if (genericViewField != null)
                 {
                     viewTypeData.GenericViewFields.Add(field.Name);
+                }
+
+                // see if any component fields are replaced
+                var replacedComponentField = field.GetCustomAttributes(typeof(ReplacesComponentField), true).FirstOrDefault() as ReplacesComponentField;
+                if (replacedComponentField != null)
+                {
+                    // when a component field is replaced we need to update the mappings of other fields so they point to the new component
+                    foreach (var mappedField in viewTypeData.MapViewFields)
+                    {
+                        int indexOf = mappedField.To.IndexOf(replacedComponentField.ReplacedComponentField);
+                        if (indexOf != 0)
+                            continue;
+
+                        mappedField.To = mappedField.To.ReplaceFirst(replacedComponentField.ReplacedComponentField, field.Name);
+                    }
+                }
+
+                // see if any dependency fields are replaced
+                var replacedViewField = field.GetCustomAttributes(typeof(ReplacesDependencyField), true).FirstOrDefault() as ReplacesDependencyField;
+                if (replacedViewField != null)
+                {
+                    // add or update mapping of old dependency field so it points to the new one
+                    var mappedDependencyFieldData = viewTypeData.MapViewFields.FirstOrDefault(x => String.Equals(x.From, field.Name, StringComparison.OrdinalIgnoreCase));
+                    if (mappedDependencyFieldData != null)
+                    {
+                        var oldMappedDependencyFieldData = viewTypeData.MapViewFields.FirstOrDefault(x => String.Equals(x.From, replacedViewField.ReplacedDependencyField, StringComparison.OrdinalIgnoreCase));
+                        if (oldMappedDependencyFieldData != null)
+                        {
+                            // update so it maps to the new dependency field                           
+                            oldMappedDependencyFieldData.To = mappedDependencyFieldData.To;
+                            oldMappedDependencyFieldData.ValueConverterType = mappedDependencyFieldData.ValueConverterType;
+                            oldMappedDependencyFieldData.ValueConverterTypeSet = mappedDependencyFieldData.ValueConverterTypeSet;
+                            oldMappedDependencyFieldData.ChangeHandlerName = mappedDependencyFieldData.ChangeHandlerName;
+                            oldMappedDependencyFieldData.ChangeHandlerNameSet = mappedDependencyFieldData.ChangeHandlerNameSet;
+                            oldMappedDependencyFieldData.TriggerChangeHandlerImmediately = mappedDependencyFieldData.TriggerChangeHandlerImmediately;
+                        }
+                        else
+                        {
+                            // add new mapped value
+                            var mapViewField = new MapViewFieldData();
+                            mapViewField.From = replacedViewField.ReplacedDependencyField;
+                            mapViewField.To = mappedDependencyFieldData.To;
+                            mapViewField.ValueConverterType = mappedDependencyFieldData.ValueConverterType;
+                            mapViewField.ValueConverterTypeSet = mappedDependencyFieldData.ValueConverterTypeSet;
+                            mapViewField.ChangeHandlerName = mappedDependencyFieldData.ChangeHandlerName;
+                            mapViewField.ChangeHandlerNameSet = mappedDependencyFieldData.ChangeHandlerNameSet;
+                            mapViewField.TriggerChangeHandlerImmediately = mappedDependencyFieldData.TriggerChangeHandlerImmediately;
+                            viewTypeData.MapViewFields.Add(mapViewField);
+                        }
+                    }
                 }
             }
 
@@ -518,8 +581,6 @@ namespace MarkLight
             //   SetViewValues(view)       
             //   SetThemeValues(view)
 
-            // TODO store away and re-use view templates
-
             // use default theme if no theme is specified
             if (String.IsNullOrEmpty(theme))
             {
@@ -540,14 +601,14 @@ namespace MarkLight
             }
 
             // get view type
-            var viewType = GetViewType(viewName);
+            var viewType = GetViewType(viewTypeData.ViewTypeName);
             if (viewType == null)
             {
                 viewType = typeof(View);
             }
 
             // create view game object with required components
-            var go = new GameObject(viewTypeData.ViewName);
+            var go = new GameObject(viewTypeData.ViewTypeName);
             if (typeof(UIView).IsAssignableFrom(viewType))
             {
                 go.AddComponent<RectTransform>();
@@ -562,7 +623,7 @@ namespace MarkLight
             view.Style = style;
             view.Theme = theme;
             view.Content = view;
-            view.ViewXumlName = viewName;
+            view.ViewXumlName = viewTypeData.ViewTypeName;
             view.ValueConverterContext = context;
 
             // set component fields
@@ -663,6 +724,14 @@ namespace MarkLight
                 if (referencedView != null)
                 {
                     var referenceFieldInfo = viewType.GetField(referenceField);
+                    var referencedViewType = referencedView.GetType();
+
+                    if (!referenceFieldInfo.FieldType.IsAssignableFrom(referencedViewType))
+                    {
+                        Utils.LogError("[MarkLight] {0}: Unable to set view reference field \"{1}\". Referenced type \"{2}\" cannot be converted to target type \"{3}\".", viewTypeData.ViewTypeName, referenceField, referencedViewType.FullName, referenceFieldInfo.FieldType.FullName);
+                        continue;
+                    }
+
                     referenceFieldInfo.SetValue(view, referencedView);
                 }
             }
@@ -677,7 +746,15 @@ namespace MarkLight
             var themeData = GetThemeData(theme);
             if (themeData != null)
             {
-                foreach (var themeElement in themeData.GetThemeElementData(view.ViewTypeName, view.Id, view.Style))
+                // if the view-model replaces another then get the theme data from that view as well
+                var themeElements = new List<ThemeElementData>();
+                if (!String.IsNullOrEmpty(viewTypeData.ReplacesViewModel))
+                {
+                    themeElements.AddRange(themeData.GetThemeElementData(viewTypeData.ReplacesViewModel, view.Id, view.Style));
+                }
+                themeElements.AddRange(themeData.GetThemeElementData(view.ViewTypeName, view.Id, view.Style));
+                
+                foreach (var themeElement in themeElements)
                 {
                     var themeValueContext = new ValueConverterContext(context);
                     if (themeData.BaseDirectorySet)
@@ -903,14 +980,14 @@ namespace MarkLight
             if (viewTypeData.TemporaryMark)
             {
                 // cyclical dependency detected
-                throw new Exception(String.Format("Cyclical dependency {0}{1} detected.", dependencyChain, viewTypeData.ViewName));
+                throw new Exception(String.Format("Cyclical dependency {0}{1} detected.", dependencyChain, viewTypeData.ViewTypeName));
             }
             else if (!viewTypeData.PermanentMark)
             {
                 viewTypeData.TemporaryMark = true;
                 foreach (var dependency in viewTypeData.Dependencies)
                 {
-                    Visit(dependency, sorted, String.Format("{0}{1}->", dependencyChain, viewTypeData.ViewName));
+                    Visit(dependency, sorted, String.Format("{0}{1}->", dependencyChain, viewTypeData.ViewTypeName));
                 }
                 viewTypeData.TemporaryMark = false;
                 viewTypeData.PermanentMark = true;

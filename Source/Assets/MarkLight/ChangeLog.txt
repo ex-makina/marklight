@@ -1,4 +1,9 @@
-﻿v2.5.0-alpha
+﻿v2.5.0
+- Added Text Mesh Pro integration, enabled by uncommenting a line in TextMeshProLabel.cs which replaces the Label view with the TextMeshProLabel (created for the Unity 5.4 version)
+- Added field attribute ReplaceViewField, used if you want to replace one field with another
+- Added class attribute ReplacesViewModel, used if you want to replace another view-model entirely
+- Added class attribute ViewNameAlias, used if you want view name aliases that maps to the view-model
+- Fixed bug with scene not being marked as dirty when reloading views
 - On-demand loaded sprites supported
 - Performance improvements in how layout changes are propagated to parents
 - Added SetChildVisibility on Group which when set to True will remove flickering effect as enabled children are made visible before being positioned
@@ -11,7 +16,7 @@ v2.4.1
 - Fixed the error 'Field X defined on type Y is not a field on the target object' by using GenericViewField
 
 v2.4.0
-- List can use virtualization (only present items visible in viewport) through the UseVirtualization bool
+- List can use virtualization (only present items visible in vgoodiewport) through the UseVirtualization bool
 - Fixed UWP 8.1 compatibility issues
 - Multiple list templates supported
 - Optimized performance when loading and initializing views

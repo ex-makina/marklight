@@ -85,11 +85,7 @@ namespace MarkLight.Views.UI
 
             Width.DirectValue = new ElementSize(120);
             Height.DirectValue = new ElementSize(40);
-
-            if (TextComponent != null)
-            {
-                TextComponent.color = ColorValueConverter.ColorCodes["lightblue"];
-            }
+            FontColor.Value = ColorValueConverter.ColorCodes["lightblue"]; 
         }
 
         /// <summary>

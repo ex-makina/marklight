@@ -309,23 +309,23 @@ namespace MarkLight.Views.UI
         {
             if (ItemLabel == null || ItemLabel.AdjustToText.Value == MarkLight.AdjustToText.None)
                 return;
-
+            
             // adjust item size to text
             if (ItemLabel.AdjustToText.Value == MarkLight.AdjustToText.Width)
             {
-                Width.Value = new ElementSize(ItemLabel.TextComponent.preferredWidth + TextPadding.Value.Left.Pixels + TextPadding.Value.Right.Pixels
+                Width.Value = new ElementSize(ItemLabel.PreferredWidth + TextPadding.Value.Left.Pixels + TextPadding.Value.Right.Pixels
                     + ItemLabel.Margin.Value.Left.Pixels + ItemLabel.Margin.Value.Right.Pixels);
             }
             else if (ItemLabel.AdjustToText.Value == MarkLight.AdjustToText.Height)
             {
-                Height.Value = new ElementSize(ItemLabel.TextComponent.preferredHeight + TextPadding.Value.Top.Pixels + TextPadding.Value.Bottom.Pixels
+                Height.Value = new ElementSize(ItemLabel.PreferredHeight + TextPadding.Value.Top.Pixels + TextPadding.Value.Bottom.Pixels
                     + ItemLabel.Margin.Value.Top.Pixels + ItemLabel.Margin.Value.Bottom.Pixels);
             }
             else if (ItemLabel.AdjustToText.Value == MarkLight.AdjustToText.WidthAndHeight)
             {
-                Width.Value = new ElementSize(ItemLabel.TextComponent.preferredWidth + TextPadding.Value.Left.Pixels + TextPadding.Value.Right.Pixels
+                Width.Value = new ElementSize(ItemLabel.PreferredWidth + TextPadding.Value.Left.Pixels + TextPadding.Value.Right.Pixels
                     + ItemLabel.Margin.Value.Left.Pixels + ItemLabel.Margin.Value.Right.Pixels);
-                Height.Value = new ElementSize(ItemLabel.TextComponent.preferredHeight + TextPadding.Value.Top.Pixels + TextPadding.Value.Bottom.Pixels
+                Height.Value = new ElementSize(ItemLabel.PreferredHeight + TextPadding.Value.Top.Pixels + TextPadding.Value.Bottom.Pixels
                     + ItemLabel.Margin.Value.Top.Pixels + ItemLabel.Margin.Value.Bottom.Pixels);
             }
 

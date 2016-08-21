@@ -741,7 +741,7 @@ namespace MarkLight.Views.UI
             {
                 float viewportWidth = ListPanel.ScrollRect.ActualWidth;
                 float scrollWidth = ScrollContent.Width.Value.Pixels - viewportWidth;
-                vpMin = (1.0f - HorizontalNormalizedPosition.Value) * scrollWidth - RealizationMargin.Value;
+                vpMin = HorizontalNormalizedPosition.Value * scrollWidth - RealizationMargin.Value;
                 vpMax = vpMin + viewportWidth + RealizationMargin.Value;
             }
 
@@ -1384,6 +1384,7 @@ namespace MarkLight.Views.UI
             }
             else if (e.ListChangeAction == ListChangeAction.Move)
             {
+                layoutChanged = true;
             }
 
             if (ListChanged.HasEntries)

@@ -126,9 +126,12 @@ namespace MarkLight
                 _list[i] = newItemsList[i];
             }
 
-            if (ListChanged != null)
+            if (replaceCount > 0)
             {
-                ListChanged(this, new ListChangedEventArgs { ListChangeAction = ListChangeAction.Replace, StartIndex = 0, EndIndex = replaceCount - 1 });
+                if (ListChanged != null)
+                {
+                    ListChanged(this, new ListChangedEventArgs { ListChangeAction = ListChangeAction.Replace, StartIndex = 0, EndIndex = replaceCount - 1 });
+                }
             }
 
             if (newItemsCount > Count)
