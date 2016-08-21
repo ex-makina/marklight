@@ -100,18 +100,44 @@ If you get this error you need to switch platform at File -> Build settings ...
 from Web Player to a platform officially supported (PC, WebGL, Android, iOS, etc).
 
 
+====  Enabling Text Mesh Pro  ====================================================
+
+Text Mesh Pro is a third party asset that drastically improves text performance
+and features in Unity. If your project uses a lot of text it's almost an required 
+asset at this point. To use Text Mesh Pro with MarkLight you need to import the 
+Text Mesh Pro asset and uncomment a define in the file: 
+
+MarkLight\Source\Plugins\Views\UI\TextMeshPro\TextMeshProLabel.cs
+
+The integration has been developed for Text Mesh Pro version 1.0.54 for Unity 5.4.
+
+After uncommenting the line and reloading views in your scene, all Label views in 
+the project are then replaced by the Text Mesh Pro version. Note that you can still
+use the <Label> alias but now have access to more fields that can be set. For 
+details on what fields can be set check out the API docs for TextMeshProLabel.
+
+In order to use non-default fonts you need to generate fonts using the menu
+Window -> TextMeshPro - Font Asset Creator
+
+If you have been using standard unity fonts in your UI (TrueType & OpenType), 
+you can generate TextMeshPro fonts for them and if you put them in the same folder
+as your existing fonts and give them the same name (but with the .asset extension) 
+the framework will be able to import them without you needing to update the 
+font paths in your view/theme XUML. 
+
+
 ====  Connect  ===================================================================
 
 Webpage:     http://www.marklightforunity.com
 Asset store: https://www.assetstore.unity3d.com/en/#!/content/37466
+Slack chat:  https://marklight.herokuapp.com
 Reddit:      https://www.reddit.com/r/marklight
 Twitter:     https://twitter.com/MarkUX
-Slack chat:  https://marklight.herokuapp.com
 Unity forum: http://forum.unity3d.com/threads/marklight-markup-extension-framework-for-unity.400789
 Email:       contact@marklightforunity.com
 
 
-Have fun creating great things.
+Have fun creating great applications and games.
 
 Warm Regards,
 - Patrik

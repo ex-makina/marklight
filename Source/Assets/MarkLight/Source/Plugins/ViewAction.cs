@@ -174,7 +174,7 @@ namespace MarkLight
         /// <summary>
         /// Adds view action entry. 
         /// </summary>
-        internal void AddEntry(ViewActionEntry viewActionEntry)
+        public void AddEntry(ViewActionEntry viewActionEntry)
         {
             if (_viewActionEntries == null)
             {

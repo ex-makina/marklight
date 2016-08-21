@@ -3,5 +3,5 @@
     <ContentPlaceholder />
   </Region>
 
-  <Label Id="InputText" />
+  <UnityLabel Id="InputText" />
 </InputField>

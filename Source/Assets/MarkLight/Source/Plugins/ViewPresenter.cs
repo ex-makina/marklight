@@ -42,6 +42,8 @@ namespace MarkLight
         public List<string> FontPaths;
         public List<Material> Materials;
         public List<string> MaterialPaths;
+        public List<UnityEngine.Object> Assets;
+        public List<string> AssetPaths;
         public bool DisableAutomaticReload;
         public bool UpdateXsdSchema;
 
@@ -58,6 +60,7 @@ namespace MarkLight
         private Dictionary<string, UISprite> _spriteDictionary;
         private Dictionary<string, Font> _fontDictionary;
         private Dictionary<string, Material> _materialDictionary;
+        private Dictionary<string, UnityEngine.Object> _assetDictionary;
 
         #endregion
 
@@ -78,6 +81,8 @@ namespace MarkLight
             FontPaths = new List<string>();
             Materials = new List<Material>();
             MaterialPaths = new List<string>();
+            Assets = new List<UnityEngine.Object>();
+            AssetPaths = new List<string>();
             UnitSize = new Vector3(40, 40, 40);
         }
 
@@ -200,12 +205,15 @@ namespace MarkLight
             FontPaths.Clear();
             Materials.Clear();
             MaterialPaths.Clear();
+            Assets.Clear();
+            AssetPaths.Clear();
 
             _viewTypeDataDictionary = null;
             _themeDataDictionary = null;
             _resourceDictionaries = null;
             _spriteDictionary = null;
             _fontDictionary = null;
+            _assetDictionary = null;
             _materialDictionary = null;
             _viewTypes = null;
 
@@ -243,7 +251,34 @@ namespace MarkLight
             _viewTypeDataDictionary = new Dictionary<string, ViewTypeData>();
             foreach (var viewTypeData in ViewTypeDataList)
             {
-                _viewTypeDataDictionary.Add(viewTypeData.ViewName, viewTypeData);
+                foreach (var viewName in viewTypeData.ViewNameAliases)
+                {
+                    if (_viewTypeDataDictionary.ContainsKey(viewName))
+                    {
+                        Utils.LogError("[MarkLight] Can't map view-model \"{0}\" to view \"{1}\" because it is already mapped to view-model \"{2}\". If you want to replace another view-model use the ReplaceViewModel class attribute. Otherwise choose a different view name that is available.", viewTypeData.ViewTypeName, viewName, _viewTypeDataDictionary[viewName].ViewTypeName);
+                        continue;
+                    }
+
+                    _viewTypeDataDictionary.Add(viewName, viewTypeData);
+                }
+            }
+
+            // check if view-models should be replaced
+            foreach (var viewTypeData in ViewTypeDataList.Where(x => !String.IsNullOrEmpty(x.ReplacesViewModel)))
+            {
+                // find the view type it replaces
+                var replacedViewTypeData = ViewTypeDataList.FirstOrDefault(x => String.Equals(x.ViewTypeName, viewTypeData.ReplacesViewModel, StringComparison.OrdinalIgnoreCase));
+                if (replacedViewTypeData == null)
+                    continue;
+
+                // replace the view-model
+                foreach (var kv in _viewTypeDataDictionary.ToList())
+                {
+                    if (kv.Value == replacedViewTypeData)
+                    {
+                        _viewTypeDataDictionary[kv.Key] = viewTypeData;
+                    }
+                }
             }
         }
 
@@ -333,6 +368,32 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Gets pre-loaded asset from asset path.
+        /// </summary>
+        public UnityEngine.Object GetAsset(string assetPath)
+        {
+            if (_assetDictionary == null)
+            {
+                _assetDictionary = new Dictionary<string, UnityEngine.Object>();
+                for (int i = 0; i < Fonts.Count; ++i)
+                {
+                    _assetDictionary.Add(AssetPaths[i], Assets[i]);
+                }
+            }
+
+            return _assetDictionary.Get(assetPath);
+        }
+
+        /// <summary>
+        /// Gets asset path from asset.
+        /// </summary>
+        public string GetAssetPath(UnityEngine.Object asset)
+        {
+            int index = Assets.IndexOf(asset);
+            return AssetPaths[index];
+        }
+
+        /// <summary>
         /// Gets pre-loaded material from asset path.
         /// </summary>
         public Material GetMaterial(string assetPath)
@@ -391,6 +452,24 @@ namespace MarkLight
                 !_fontDictionary.ContainsKey(assetPath))
             {
                 _fontDictionary.Add(assetPath, asset);
+            }
+        }
+
+        /// <summary>
+        /// Adds asset to list of loaded assets.
+        /// </summary>
+        public void AddAsset(string assetPath, UnityEngine.Object asset)
+        {
+            if (AssetPaths.Contains(assetPath))
+                return;
+
+            AssetPaths.Add(assetPath);
+            Assets.Add(asset);
+
+            if (_assetDictionary != null &&
+                !_assetDictionary.ContainsKey(assetPath))
+            {
+                _assetDictionary.Add(assetPath, asset);
             }
         }
 

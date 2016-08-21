@@ -63,7 +63,7 @@ namespace Marklight.DevTools.Source.Editor
                 data.FileName = String.Format("{0}.html", data.FullTypeName.Replace("`1", "T"));
                 data.HtmlTypeName = data.TypeName.Replace("`1", "<T>");
 
-                data.IsView = ViewPresenter.Instance.ViewTypeDataList.Any(x => x.ViewName == data.TypeName);
+                data.IsView = ViewPresenter.Instance.ViewTypeDataList.Any(x => x.ViewTypeName == data.TypeName);
                 data.IsType = true;
 
                 // add summary
@@ -156,7 +156,7 @@ namespace Marklight.DevTools.Source.Editor
             // generate view content documentation
             foreach (var data in viewDocs)
             {
-                var viewTypeData = ViewPresenter.Instance.ViewTypeDataList.First(x => x.ViewName == data.TypeName);
+                var viewTypeData = ViewPresenter.Instance.ViewTypeDataList.First(x => x.ViewTypeName == data.TypeName);
                 var type = ViewData.GetViewType(data.TypeName);
 
                 // section: title
@@ -175,7 +175,7 @@ namespace Marklight.DevTools.Source.Editor
 
                 // section: used by
                 var usedByList = ViewPresenter.Instance.ViewTypeDataList.Where(x => x.DependencyNames.Contains(data.TypeName))
-                    .Select(x => viewDocs.FirstOrDefault(y => y.TypeName == x.ViewName)).Where(x => x != null).ToList();
+                    .Select(x => viewDocs.FirstOrDefault(y => y.TypeName == x.ViewTypeName)).Where(x => x != null).ToList();
                 if (usedByList.Count > 0)
                 {
                     sb.Append("<small class=\"inherit-info\">Used by:");

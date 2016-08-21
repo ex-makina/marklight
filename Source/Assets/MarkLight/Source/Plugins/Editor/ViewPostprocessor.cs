@@ -12,6 +12,9 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2 && !UNITY_5_3_1 && !UNITY_5_3_2 && !UNITY_5_3_3
+using UnityEditor.SceneManagement;
+#endif
 #endregion
 
 namespace MarkLight.Editor
@@ -95,7 +98,11 @@ namespace MarkLight.Editor
 
             // uncomment to log load performance
             //Utils.Log("Total view processing time: {0}", sw.ElapsedMilliseconds);
-            Utils.Log("[MarkLight] Views processed. {0}", DateTime.Now);
+
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2 && !UNITY_5_3_1 && !UNITY_5_3_2 && !UNITY_5_3_3
+            EditorSceneManager.MarkAllScenesDirty();
+#endif
+            Utils.Log("[MarkLight] Views processed. {0}", DateTime.Now);            
         }
 
         /// <summary>
@@ -153,14 +160,14 @@ namespace MarkLight.Editor
             foreach (var viewType in ViewPresenter.Instance.ViewTypeDataList)
             {
                 sb.AppendLine();
-                sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", viewType.ViewName, Environment.NewLine);
-                sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", viewType.ViewName, Environment.NewLine);
+                sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", viewType.ViewTypeName, Environment.NewLine);
+                sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", viewType.ViewTypeName, Environment.NewLine);
                 sb.AppendFormat("    <xs:sequence>{0}", Environment.NewLine);
                 sb.AppendFormat("      <xs:any processContents=\"lax\" minOccurs=\"0\" maxOccurs=\"unbounded\" />{0}", Environment.NewLine);
                 sb.AppendFormat("    </xs:sequence>{0}", Environment.NewLine);
 
                 // instantiate view to get detailed information about each view field
-                var view = ViewData.CreateView(viewType.ViewName, temporaryRootView, temporaryRootView);
+                var view = ViewData.CreateView(viewType.ViewTypeName, temporaryRootView, temporaryRootView);
                 view.InitializeViews();
 
                 var viewFields = new List<string>(viewType.ViewFields);

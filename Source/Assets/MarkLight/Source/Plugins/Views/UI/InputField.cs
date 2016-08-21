@@ -274,6 +274,12 @@ namespace MarkLight.Views.UI
         public _bool SetValueOnEndEdit;
 
         /// <summary>
+        /// Indicates that the value changed action is only to be triggered from changes made to the text in the UI.
+        /// </summary>
+        /// <b>Boolean indicate that the value changed action is only to be triggered from changes made to the text in the UI.</b>
+        public _bool OnlyTriggerValueChangedFromUI;
+
+        /// <summary>
         /// Region displayed when input field is empty.
         /// </summary>
         /// <d>Region that is displayed when the input field has no text input. Any child content of the input field is placed inside this region.</d>
@@ -344,7 +350,26 @@ namespace MarkLight.Views.UI
         /// </summary>
         public virtual void TextChanged()
         {
+            if (OnlyTriggerValueChangedFromUI)
+            {
+#if UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2
+                InputFieldComponent.onValueChange.RemoveAllListeners();
+#else
+                InputFieldComponent.onValueChanged.RemoveAllListeners();
+#endif
+            }
+
             InputFieldComponent.text = Text ?? String.Empty;
+
+            if (OnlyTriggerValueChangedFromUI)
+            {
+#if UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2
+                InputFieldComponent.onValueChange.AddListener(InputFieldValueChanged);
+#else
+                InputFieldComponent.onValueChanged.AddListener(InputFieldValueChanged);
+#endif
+                UpdatePlaceholder();
+            }
         }
 
         /// <summary>

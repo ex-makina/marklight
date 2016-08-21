@@ -176,7 +176,7 @@ namespace MarkLight
         public static implicit operator UnityEngine.UI.ScrollRect.ScrollbarVisibility(_ScrollbarVisibility value) { return value.Value; }
     }
 #endif
-
+    
     [Serializable]
     public class _PanelScrollbarVisibility : ViewField<PanelScrollbarVisibility>
     {
@@ -188,12 +188,46 @@ namespace MarkLight
     {
         public static implicit operator UnityEngine.UI.ScrollRect.MovementType(_ScrollRectMovementType value) { return value.Value; }
     }
+   
+    [Serializable]
+    public class _MaterialArray : ViewField<UnityEngine.Material[]>
+    {
+        public static implicit operator UnityEngine.Material[](_MaterialArray value) { return value.Value; }
+    }
 
     [Serializable]
     public class _RectTransformComponent : ViewField<RectTransform>
     {
         public static implicit operator RectTransform(_RectTransformComponent value) { return value.Value; }
     }
+
+    [Serializable]
+    public class _Transform : ViewField<Transform>
+    {
+        public static implicit operator Transform(_Transform value) { return value.Value; }
+    }
+
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2 && !UNITY_5_3
+    [Serializable]
+    public class _LightProbeUsage : ViewField<UnityEngine.Rendering.LightProbeUsage>
+    {
+        public static implicit operator UnityEngine.Rendering.LightProbeUsage(_LightProbeUsage value) { return value.Value; }
+    }
+#endif
+
+#if !UNITY_4_6 && !UNITY_5_0
+    [Serializable]
+    public class _ReflectionProbeUsage : ViewField<UnityEngine.Rendering.ReflectionProbeUsage>
+    {
+        public static implicit operator UnityEngine.Rendering.ReflectionProbeUsage(_ReflectionProbeUsage value) { return value.Value; }
+    }
+
+    [Serializable]
+    public class _ShadowCastingMode : ViewField<UnityEngine.Rendering.ShadowCastingMode>
+    {
+        public static implicit operator UnityEngine.Rendering.ShadowCastingMode(_ShadowCastingMode value) { return value.Value; }
+    }
+#endif
 
     [Serializable]
     public class _ScrollbarComponent : ViewField<UnityEngine.UI.Scrollbar>
@@ -263,4 +297,10 @@ namespace MarkLight
 
     [Serializable]
     public class _GenericObservableList : ViewField<GenericObservableList> { }
+
+    [Serializable]
+    public class _Color32 : ViewField<Color32>
+    {
+        public static implicit operator Color32(_Color32 value) { return value.Value; }
+    }
 }

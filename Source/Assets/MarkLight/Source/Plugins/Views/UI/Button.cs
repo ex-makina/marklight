@@ -242,16 +242,16 @@ namespace MarkLight.Views.UI
             // adjust button size to text
             if (AdjustToText == MarkLight.AdjustToText.Width)
             {
-                Width.DirectValue = new ElementSize(ButtonLabel.TextComponent.preferredWidth + TextPadding.Value.Left.Pixels + TextPadding.Value.Right.Pixels);
+                Width.DirectValue = new ElementSize(ButtonLabel.PreferredWidth + TextPadding.Value.Left.Pixels + TextPadding.Value.Right.Pixels);
             }
             else if (AdjustToText == MarkLight.AdjustToText.Height)
             {
-                Height.DirectValue = new ElementSize(ButtonLabel.TextComponent.preferredHeight + TextPadding.Value.Top.Pixels + TextPadding.Value.Bottom.Pixels);
+                Height.DirectValue = new ElementSize(ButtonLabel.PreferredHeight + TextPadding.Value.Top.Pixels + TextPadding.Value.Bottom.Pixels);
             }
             else if (AdjustToText == MarkLight.AdjustToText.WidthAndHeight)
             {
-                Width.DirectValue = new ElementSize(ButtonLabel.TextComponent.preferredWidth + TextPadding.Value.Left.Pixels + TextPadding.Value.Right.Pixels);
-                Height.DirectValue = new ElementSize(ButtonLabel.TextComponent.preferredHeight + TextPadding.Value.Top.Pixels + TextPadding.Value.Bottom.Pixels);
+                Width.DirectValue = new ElementSize(ButtonLabel.PreferredWidth + TextPadding.Value.Left.Pixels + TextPadding.Value.Right.Pixels);
+                Height.DirectValue = new ElementSize(ButtonLabel.PreferredHeight + TextPadding.Value.Top.Pixels + TextPadding.Value.Bottom.Pixels);
             }
 
             LayoutsChanged();

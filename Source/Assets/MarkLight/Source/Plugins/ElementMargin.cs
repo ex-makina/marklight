@@ -45,28 +45,6 @@ namespace MarkLight
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
-        public ElementMargin(float left, float top, float right = 0, float bottom = 0)
-        {
-            _left = new ElementSize(left, ElementSizeUnit.Pixels);
-            _top = new ElementSize(top, ElementSizeUnit.Pixels);
-            _right = new ElementSize(right, ElementSizeUnit.Pixels);
-            _bottom = new ElementSize(bottom, ElementSizeUnit.Pixels);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the class.
-        /// </summary>
-        public ElementMargin(float margin)
-        {
-            _left = new ElementSize(margin, ElementSizeUnit.Pixels);
-            _top = new ElementSize(margin, ElementSizeUnit.Pixels);
-            _right = new ElementSize(margin, ElementSizeUnit.Pixels);
-            _bottom = new ElementSize(margin, ElementSizeUnit.Pixels);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the class.
-        /// </summary>
         public ElementMargin(ElementSize margin)
         {
             _left = margin;

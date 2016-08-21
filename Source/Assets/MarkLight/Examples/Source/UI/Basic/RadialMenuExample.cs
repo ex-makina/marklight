@@ -38,7 +38,7 @@ namespace MarkLight.Examples.UI.Basic
         /// </summary>
         public void ToggleRadialMenu(PointerEventData eventData)
         {
-            ContextRadialMenu.ToggleAt(eventData.position);
+            ContextRadialMenu.ToggleAt(eventData.position, true);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace MarkLight.Examples.UI.Basic
         /// </summary>
         public void MenuButtonClicked(Button source)
         {
-            ContextRadialMenu.Close();
+            ContextRadialMenu.Close(true);
 
             MenuClickText.Value = source.Text + " Clicked!";
         }
