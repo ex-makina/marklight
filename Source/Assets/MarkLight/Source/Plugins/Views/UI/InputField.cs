@@ -317,6 +317,9 @@ namespace MarkLight.Views.UI
             InputText.Width.DirectValue = ElementSize.FromPercents(1);
             InputText.Height.DirectValue = ElementSize.FromPercents(1);
 
+            if (InputFieldComponent == null)
+                return;
+            
             // inputfield component
             InputFieldComponent.textComponent = InputText.TextComponent;
             InputFieldComponent.placeholder = InputFieldPlaceholder.ImageComponent;
@@ -329,6 +332,9 @@ namespace MarkLight.Views.UI
         public override void Initialize()
         {
             base.Initialize();
+
+            if (InputFieldComponent == null)
+                return;
 
             // hook up input field event system triggers           
             InputFieldComponent.onEndEdit.RemoveAllListeners();
@@ -403,7 +409,7 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Shows or hides placeholder based on text.
         /// </summary>
-        private void UpdatePlaceholder()
+        protected void UpdatePlaceholder()
         {
             if (String.IsNullOrEmpty(InputFieldComponent.text))
             {

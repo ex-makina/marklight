@@ -161,7 +161,12 @@ namespace MarkLight
             if (_viewFields == null)
             {
                 _viewFields = new Dictionary<string, FieldInfo>();
-                var viewType = ViewData.GetViewType(ViewTypeName);                
+                var viewType = ViewData.GetViewType(ViewTypeName);
+                if (viewType == null)
+                {
+                    viewType = typeof(View);
+                }
+                
                 foreach (var viewField in viewType.GetFields())
                 {
                     if (_viewFields.ContainsKey(viewField.Name))

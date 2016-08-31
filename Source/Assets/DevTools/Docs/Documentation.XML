@@ -1101,16 +1101,6 @@
             Initializes a new instance of the class.
             </summary>
         </member>
-        <member name="M:MarkLight.ElementMargin.#ctor(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Initializes a new instance of the class.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ElementMargin.#ctor(System.Single)">
-            <summary>
-            Initializes a new instance of the class.
-            </summary>
-        </member>
         <member name="M:MarkLight.ElementMargin.#ctor(MarkLight.ElementSize)">
             <summary>
             Initializes a new instance of the class.
@@ -1215,6 +1205,11 @@
         <member name="M:MarkLight.ElementSize.#ctor(MarkLight.ElementSize)">
             <summary>
             Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ElementSize.op_Implicit(System.Single)~MarkLight.ElementSize">
+            <summary>
+            Converts float to element size.
             </summary>
         </member>
         <member name="M:MarkLight.ElementSize.FromPixels(System.Single)">
@@ -1490,6 +1485,11 @@
         <member name="M:MarkLight.ExtensionMethods.ToPivot(MarkLight.ElementAlignment)">
             <summary>
             Converts content alignment to pivot.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ExtensionMethods.ReplaceFirst(System.String,System.String,System.String)">
+            <summary>
+            Replaces the first occurance of a string.
             </summary>
         </member>
         <member name="T:MarkLight.GenericObservableList">
@@ -2022,6 +2022,36 @@
             Raycast is never blocked.
             </summary>
         </member>
+        <member name="T:MarkLight.ReplacesComponentField">
+            <summary>
+            Attribute for replacing one component field with another.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ReplacesComponentField.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="T:MarkLight.ReplacesDependencyField">
+            <summary>
+            Attribute for replacing one dependency field with another.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ReplacesDependencyField.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="T:MarkLight.ReplacesViewModel">
+            <summary>
+            Attribute indicating that this view-model replaces another with the specified name.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ReplacesViewModel.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
         <member name="T:MarkLight.Resource">
             <summary>
             A resource that is defined in a resource dictionary and can be bound to in XUML.
@@ -2504,6 +2534,26 @@
             </summary>
         </member>
         <member name="M:MarkLight.ValueConverters.BoolValueConverter.ConvertToString(System.Object)">
+            <summary>
+            Converts value to string.
+            </summary>
+        </member>
+        <member name="T:MarkLight.ValueConverters.Color32ValueConverter">
+            <summary>
+            Value converter for Color type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.Color32ValueConverter.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.Color32ValueConverter.Convert(System.Object,MarkLight.ValueConverterContext)">
+            <summary>
+            Value converter for Color32 type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.Color32ValueConverter.ConvertToString(System.Object)">
             <summary>
             Converts value to string.
             </summary>
@@ -3848,6 +3898,16 @@
             Sets value of field.
             </summary>
         </member>
+        <member name="T:MarkLight.ViewNameAlias">
+            <summary>
+            Attribute indicating additional view name alias that will map to this view-model.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ViewNameAlias.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
         <member name="T:MarkLight.ViewPool">
             <summary>
             Provides access to a view pool.
@@ -3958,6 +4018,16 @@
             Gets asset path from font.
             </summary>
         </member>
+        <member name="M:MarkLight.ViewPresenter.GetAsset(System.String)">
+            <summary>
+            Gets pre-loaded asset from asset path.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ViewPresenter.GetAssetPath(UnityEngine.Object)">
+            <summary>
+            Gets asset path from asset.
+            </summary>
+        </member>
         <member name="M:MarkLight.ViewPresenter.GetMaterial(System.String)">
             <summary>
             Gets pre-loaded material from asset path.
@@ -3976,6 +4046,11 @@
         <member name="M:MarkLight.ViewPresenter.AddFont(System.String,UnityEngine.Font)">
             <summary>
             Adds font to list of loaded fonts.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ViewPresenter.AddAsset(System.String,UnityEngine.Object)">
+            <summary>
+            Adds asset to list of loaded assets.
             </summary>
         </member>
         <member name="M:MarkLight.ViewPresenter.AddMaterial(System.String,UnityEngine.Material)">
@@ -6170,6 +6245,12 @@
             </summary>
             <d>Boolean indicating if text value should be set at end edit rather than while text is being typed.</d>
         </member>
+        <member name="F:MarkLight.Views.UI.InputField.OnlyTriggerValueChangedFromUI">
+            <summary>
+            Indicates that the value changed action is only to be triggered from changes made to the text in the UI.
+            </summary>
+            <b>Boolean indicate that the value changed action is only to be triggered from changes made to the text in the UI.</b>
+        </member>
         <member name="F:MarkLight.Views.UI.InputField.InputFieldPlaceholder">
             <summary>
             Region displayed when input field is empty.
@@ -6408,6 +6489,16 @@
         <member name="P:MarkLight.Views.UI.Label.TextAnchor">
             <summary>
             Gets text anchor.
+            </summary>
+        </member>
+        <member name="P:MarkLight.Views.UI.Label.PreferredWidth">
+            <summary>
+            Preferred width of text.
+            </summary>
+        </member>
+        <member name="P:MarkLight.Views.UI.Label.PreferredHeight">
+            <summary>
+            Preferred height of text.
             </summary>
         </member>
         <member name="T:MarkLight.Views.UI.List">
@@ -8557,6 +8648,12 @@
             </summary>
             <d>Boolean indicating if the slider value should be set when the user releases the handle instead of continously while dragging.</d>
         </member>
+        <member name="F:MarkLight.Views.UI.Slider.Steps">
+            <summary>
+            Specifies how many steps the slider should have.
+            </summary>
+            <d>Specifies how many steps the slider should have. If zero or less, infinite steps are used.</d>
+        </member>
         <member name="F:MarkLight.Views.UI.Slider.SliderRegion">
             <summary>
             Region containing slider content.
@@ -8636,6 +8733,11 @@
         <member name="M:MarkLight.Views.UI.Slider.SetSlideTo(UnityEngine.Vector2,System.Boolean)">
             <summary>
             Slides the slider to the given position.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.Slider.Nearest(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            
             </summary>
         </member>
         <member name="M:MarkLight.Views.UI.Slider.UpdateSliderPosition(System.Single)">
@@ -9466,6 +9568,12 @@
             Gets layout root canvas.
             </summary>
         </member>
+        <member name="T:MarkLight.Views.UI.UnityLabel">
+            <summary>
+            Unity label view. 
+            </summary>
+            <d>View can be used when Text Mesh Pro integration is activated (replacing all Label views with Text Mesh Pro labels) but you still want to use the ordinary UGUI label.</d>
+        </member>
         <member name="T:MarkLight.Views.UI.UserInterface">
             <summary>
             View that holds user interface views.
@@ -10283,6 +10391,3052 @@
         <member name="M:MarkLight.VirtualizedItems.IsInRange(MarkLight.Views.UI.ListItem,System.Single,System.Single)">
             <summary>
             Gets boolean indicating if list item is in the specified range.
+            </summary>
+        </member>
+        <member name="M:TMPro.Examples.TMP_TextInfoDebugTool.DrawCharactersBounds">
+            <summary>
+            Method to draw a rectangle around each character.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:TMPro.Examples.TMP_TextInfoDebugTool.DrawWordBounds">
+            <summary>
+            Method to draw rectangles around each word of the text.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:TMPro.Examples.TMP_TextInfoDebugTool.DrawLinkBounds">
+            <summary>
+            Draw rectangle around each of the links contained in the text.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:TMPro.Examples.TMP_TextInfoDebugTool.DrawLineBounds">
+            <summary>
+            Draw Rectangles around each lines of the text.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:TMPro.Examples.TMP_TextInfoDebugTool.DrawBounds">
+            <summary>
+            Draw Rectangle around the bounds of the text object.
+            </summary>
+        </member>
+        <member name="M:TMPro.Examples.TextConsoleSimulator.RevealCharacters(TMPro.TMP_Text)">
+            <summary>
+            Method revealing the text one character at a time.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.Examples.TextConsoleSimulator.RevealWords(TMPro.TMP_Text)">
+            <summary>
+            Method revealing the text one word at a time.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.Examples.VertexColorCycler.AnimateVertexColors">
+            <summary>
+            Method to animate vertex colors of a TMP Text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TMPro.Examples.VertexJitter.VertexAnim">
+            <summary>
+            Structure to hold pre-computed animation data.
+            </summary>
+        </member>
+        <member name="M:TMPro.Examples.VertexJitter.AnimateVertexColors">
+            <summary>
+            Method to animate vertex colors of a TMP Text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.Examples.VertexShakeA.AnimateVertexColors">
+            <summary>
+            Method to animate vertex colors of a TMP Text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.Examples.VertexShakeB.AnimateVertexColors">
+            <summary>
+            Method to animate vertex colors of a TMP Text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.Examples.VertexZoom.AnimateVertexColors">
+            <summary>
+            Method to animate vertex colors of a TMP Text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.Examples.WarpTextExample.WarpText">
+            <summary>
+             Method to curve text along a Unity animation curve.
+            </summary>
+            <param name="textComponent"></param>
+            <returns></returns>
+        </member>
+        <member name="P:TMPro.MaterialReferenceManager.instance">
+            <summary>
+            Get a singleton instance of the registry
+            </summary>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.AddFontAsset(TMPro.TMP_FontAsset)">
+            <summary>
+            Add new font asset reference to dictionary.
+            </summary>
+            <param name="fontAsset"></param>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.AddFontAssetInternal(TMPro.TMP_FontAsset)">
+            <summary>
+             Add new Font Asset reference to dictionary.
+            </summary>
+            <param name="fontAsset"></param>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.AddSpriteAsset(TMPro.TMP_SpriteAsset)">
+            <summary>
+            Add new Sprite Asset to dictionary.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="spriteAsset"></param>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.AddSpriteAssetInternal(TMPro.TMP_SpriteAsset)">
+            <summary>
+            Internal method to add a new sprite asset to the dictionary.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="spriteAsset"></param>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.AddSpriteAsset(System.Int32,TMPro.TMP_SpriteAsset)">
+            <summary>
+            Add new Sprite Asset to dictionary.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="spriteAsset"></param>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.AddSpriteAssetInternal(System.Int32,TMPro.TMP_SpriteAsset)">
+            <summary>
+            Internal method to add a new sprite asset to the dictionary.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="spriteAsset"></param>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.AddFontMaterial(System.Int32,UnityEngine.Material)">
+            <summary>
+            Add new Material reference to dictionary.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="material"></param>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.AddFontMaterialInternal(System.Int32,UnityEngine.Material)">
+            <summary>
+            Add new material reference to dictionary.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="material"></param>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.Contains(TMPro.TMP_FontAsset)">
+            <summary>
+            Function to check if the font asset is already referenced.
+            </summary>
+            <param name="font"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.Contains(TMPro.TMP_SpriteAsset)">
+            <summary>
+            Function to check if the sprite asset is already referenced.
+            </summary>
+            <param name="font"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.TryGetFontAsset(System.Int32,TMPro.TMP_FontAsset@)">
+            <summary>
+            Function returning the Font Asset corresponding to the provided hash code.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="fontAsset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.TryGetFontAssetInternal(System.Int32,TMPro.TMP_FontAsset@)">
+            <summary>
+            Internal Function returning the Font Asset corresponding to the provided hash code.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="fontAsset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.TryGetSpriteAsset(System.Int32,TMPro.TMP_SpriteAsset@)">
+            <summary>
+            Function returning the Sprite Asset corresponding to the provided hash code.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="spriteAsset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.TryGetSpriteAssetInternal(System.Int32,TMPro.TMP_SpriteAsset@)">
+            <summary>
+            Internal function returning the Sprite Asset corresponding to the provided hash code.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="fontAsset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.TryGetMaterial(System.Int32,UnityEngine.Material@)">
+            <summary>
+            Function returning the Font Material corresponding to the provided hash code.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="material"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.MaterialReferenceManager.TryGetMaterialInternal(System.Int32,UnityEngine.Material@)">
+            <summary>
+            Internal function returning the Font Material corresponding to the provided hash code.
+            </summary>
+            <param name="hashCode"></param>
+            <param name="material"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.MaterialReference.#ctor(System.Int32,TMPro.TMP_FontAsset,TMPro.TMP_SpriteAsset,UnityEngine.Material,System.Single)">
+            <summary>
+            Constructor for new Material Reference.
+            </summary>
+            <param name="index"></param>
+            <param name="fontAsset"></param>
+            <param name="spriteAsset"></param>
+            <param name="material"></param>
+            <param name="padding"></param>
+        </member>
+        <member name="M:TMPro.MaterialReference.Contains(TMPro.MaterialReference[],TMPro.TMP_FontAsset)">
+            <summary>
+            Function to check if a certain font asset is contained in the material reference array.
+            </summary>
+            <param name="materialReferences"></param>
+            <param name="fontAsset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.MaterialReference.AddMaterialReference(UnityEngine.Material,TMPro.TMP_FontAsset,TMPro.MaterialReference[],System.Collections.Generic.Dictionary{System.Int32,System.Int32})">
+            <summary>
+            Function to add a new material reference and returning its index in the material reference array.
+            </summary>
+            <param name="material"></param>
+            <param name="fontAsset"></param>
+            <param name="materialReferences"></param>
+            <param name="materialReferenceIndexLookup"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.MaterialReference.AddMaterialReference(UnityEngine.Material,TMPro.TMP_SpriteAsset,TMPro.MaterialReference[],System.Collections.Generic.Dictionary{System.Int32,System.Int32})">
+            <summary>
+            
+            </summary>
+            <param name="material"></param>
+            <param name="spriteAsset"></param>
+            <param name="materialReferences"></param>
+            <param name="materialReferenceIndexLookup"></param>
+            <returns></returns>
+        </member>
+        <member name="F:TMPro.TMP_Asset.hashCode">
+            <summary>
+            HashCode based on the name of the asset.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_Asset.material">
+            <summary>
+            The material used by this asset.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_Asset.materialHashCode">
+            <summary>
+            HashCode based on the name of the material assigned to this asset.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_ColorGradient.#ctor">
+            <summary>
+            Default Constructor which sets each of the colors as white.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_ColorGradient.#ctor(UnityEngine.Color)">
+            <summary>
+            Constructor allowing to set the default color of the Color Gradient.
+            </summary>
+            <param name="color"></param>
+        </member>
+        <member name="M:TMPro.TMP_ColorGradient.#ctor(UnityEngine.Color,UnityEngine.Color,UnityEngine.Color,UnityEngine.Color)">
+            <summary>
+            The vertex colors at the corners of the characters.
+            </summary>
+            <param name="color0">Top left color.</param>
+            <param name="color1">Top right color.</param>
+            <param name="color2">Bottom left color.</param>
+            <param name="color3">Bottom right color.</param>
+        </member>
+        <member name="T:TMPro.TMP_FontWeights">
+            <summary>
+            Contains the font asset for the specified font weight styles.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_FontAsset.defaultFontAsset">
+            <summary>
+            Default Font Asset used as last resort when glyphs are missing.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_FontAsset.fontInfo">
+            <summary>
+            The general information about the font.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_FontAsset.fallbackFontAssets">
+            <summary>
+            List which contains the Fallback font assets for this font.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.OnValidate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.AddFaceInfo(TMPro.FaceInfo)">
+            <summary>
+            
+            </summary>
+            <param name="faceInfo"></param>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.AddGlyphInfo(TMPro.TMP_Glyph[])">
+            <summary>
+            
+            </summary>
+            <param name="glyphInfo"></param>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.AddKerningInfo(TMPro.KerningTable)">
+            <summary>
+            
+            </summary>
+            <param name="kerningTable"></param>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.ReadFontDefinition">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.HasCharacter(System.Int32)">
+            <summary>
+            Function to check if a certain character exists in the font asset.
+            </summary>
+            <param name="character"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.HasCharacter(System.Char)">
+            <summary>
+            Function to check if a certain character exists in the font asset.
+            </summary>
+            <param name="character"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.HasCharacter(System.Char,System.Boolean)">
+            <summary>
+            Function to check if a character is contained in a font asset with the option to also check through fallback font assets.
+            </summary>
+            <param name="character"></param>
+            <param name="searchFallbacks"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.HasCharacters(System.String,System.Collections.Generic.List{System.Char}@)">
+            <summary>
+            Function to check if certain characters exists in the font asset. Function returns a list of missing characters.
+            </summary>
+            <param name="character"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.GetCharacters(TMPro.TMP_FontAsset)">
+            <summary>
+            Function to extract all the characters from a font asset.
+            </summary>
+            <param name="fontAsset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_FontAsset.GetCharactersArray(TMPro.TMP_FontAsset)">
+            <summary>
+            Function which returns an array that contains all the characters from a font asset.
+            </summary>
+            <param name="fontAsset"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMPro.TMP_InputField">
+            <summary>
+            Editable text input field.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_TextViewport">
+            <summary>
+            Text Text used to display the input's value.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_InputType">
+            <summary>
+            Type of data expected by the input field.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_AsteriskChar">
+            <summary>
+            The character used to hide text in password field.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_KeyboardType">
+            <summary>
+            Keyboard type applies to mobile keyboards that get shown.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_HideMobileInput">
+            <summary>
+            Should hide mobile input.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_CharacterValidation">
+            <summary>
+            What kind of validation to use with the input field's data.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_CharacterLimit">
+            <summary>
+            Maximum number of characters allowed before input no longer works.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_OnEndEdit">
+            <summary>
+            Event delegates triggered when the input field submits its data.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_OnSubmit">
+            <summary>
+            Event delegates triggered when the input field submits its data.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_OnFocusLost">
+            <summary>
+            Event delegates triggered when the input field focus is lost.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_OnValueChanged">
+            <summary>
+            Event delegates triggered when the input field changes its data.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_OnValidateInput">
+            <summary>
+            Custom validation callback.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_Text">
+            <summary>
+            Input field's value.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_InputField.shouldHideMobileInput">
+            <summary>
+            Should the mobile keyboard input be hidden.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_InputField.text">
+            <summary>
+            Input field's current text value.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_InputField.caretPositionInternal">
+            <summary>
+            Current position of the cursor.
+            Getters are public Setters are protected
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_InputField.caretPosition">
+            <summary>
+            Get: Returns the focus position as thats the position that moves around even during selection.
+            Set: Set both the anchor and focus position such that a selection doesn't happen
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_InputField.selectionAnchorPosition">
+            <summary>
+            Get: Returns the fixed position of selection
+            Set: If Input.compositionString is 0 set the fixed position
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_InputField.selectionFocusPosition">
+            <summary>
+            Get: Returns the variable position of selection
+            Set: If Input.compositionString is 0 set the variable position
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_InputField.LateUpdate">
+            <summary>
+            Update the text based on input.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_InputField.GetCharacterIndexFromPosition(UnityEngine.Vector2)">
+            <summary>
+            Given an input position in local space on the Text return the index for the selection cursor at this position.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_InputField.m_ProcessingEvent">
+            <summary>
+            Handle the specified event.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_InputField.OnUpdateSelected(UnityEngine.EventSystems.BaseEventData)">
+            <summary>
+            
+            </summary>
+            <param name="eventData"></param>
+        </member>
+        <member name="M:TMPro.TMP_InputField.SendOnSubmit">
+            <summary>
+            Submit the input field's text.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_InputField.Append(System.String)">
+            <summary>
+            Append the specified text to the end of the current.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_InputField.UpdateLabel">
+            <summary>
+            Update the visual text Text.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_InputField.AdjustRectTransformRelativeToViewport(UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="startPosition"></param>
+            <param name="height"></param>
+            <param name="isCharVisible"></param>
+        </member>
+        <member name="M:TMPro.TMP_InputField.Validate(System.String,System.Int32,System.Char)">
+            <summary>
+            Validate the specified input.
+            </summary>
+        </member>
+        <member name="T:TMPro.TMP_LineInfo">
+            <summary>
+            Structure which contains information about the individual lines of text.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_MaterialManager.GetStencilMaterial(UnityEngine.Material,System.Int32)">
+            <summary>
+            Create a Masking Material Instance for the given ID
+            </summary>
+            <param name="baseMaterial"></param>
+            <param name="stencilID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_MaterialManager.ReleaseStencilMaterial(UnityEngine.Material)">
+            <summary>
+            Function to release the stencil material.
+            </summary>
+            <param name="stencilMaterial"></param>
+        </member>
+        <member name="M:TMPro.TMP_MaterialManager.SetStencil(UnityEngine.Material,System.Int32)">
+            <summary>
+            Function to set the Material Stencil ID
+            </summary>
+            <param name="material"></param>
+            <param name="stencilID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_MaterialManager.GetStencilID(UnityEngine.GameObject)">
+            <summary>
+            Function to get the Stencil ID
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_MaterialManager.GetFallbackMaterial(UnityEngine.Material,UnityEngine.Material)">
+            <summary>
+            This function returns a material instance using the material properties of a previous material but using the font atlas texture of the new font asset.
+            </summary>
+            <param name="sourceMaterial">The material containing the source material properties to be copied to the new material.</param>
+            <param name="targetMaterial">The font atlas texture that should be assigned to the new material.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_MaterialManager.AddFallbackMaterialReference(UnityEngine.Material)">
+            <summary>
+            
+            </summary>
+            <param name="targetMaterial"></param>
+        </member>
+        <member name="M:TMPro.TMP_MaterialManager.RemoveFallbackMaterialReference(UnityEngine.Material)">
+            <summary>
+            
+            </summary>
+            <param name="targetMaterial"></param>
+        </member>
+        <member name="M:TMPro.TMP_MaterialManager.CleanupFallbackMaterials">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_MaterialManager.ReleaseFallbackMaterial(UnityEngine.Material)">
+            <summary>
+            Function to release the fallback material.
+            </summary>
+            <param name="fallackMaterial"></param>
+        </member>
+        <member name="M:TMPro.TMP_MaterialManager.CopyMaterialPresetProperties(UnityEngine.Material,UnityEngine.Material)">
+            <summary>
+            Function to copy the properties of a source material preset to another while preserving the unique font asset properties of the destination material.
+            </summary>
+            <param name="source"></param>
+            <param name="destination"></param>
+        </member>
+        <member name="T:TMPro.TMP_MeshInfo">
+            <summary>
+            Structure which contains the vertex attributes (geometry) of the text object.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.#ctor(UnityEngine.Mesh,System.Int32)">
+            <summary>
+            Function to pre-allocate vertex attributes for a mesh of size X.
+            </summary>
+            <param name="mesh"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.#ctor(UnityEngine.Mesh,System.Int32,System.Boolean)">
+            <summary>
+            Function to pre-allocate vertex attributes for a mesh of size X.
+            </summary>
+            <param name="mesh"></param>
+            <param name="size"></param>
+            <param name="isVolumetric"></param>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.ResizeMeshInfo(System.Int32)">
+            <summary>
+            Function to resized the content of MeshData and re-assign normals, tangents and triangles.
+            </summary>
+            <param name="meshData"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.ResizeMeshInfo(System.Int32,System.Boolean)">
+            <summary>
+            Function to resized the content of MeshData and re-assign normals, tangents and triangles.
+            </summary>
+            <param name="size"></param>
+            <param name="isVolumetric"></param>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.Clear">
+            <summary>
+            Function to clear the vertices while preserving the Triangles, Normals and Tangents.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.Clear(System.Boolean)">
+            <summary>
+            Function to clear the vertices while preserving the Triangles, Normals and Tangents.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.ClearUnusedVertices">
+            <summary>
+            Function to clear the vertices while preserving the Triangles, Normals and Tangents.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.ClearUnusedVertices(System.Int32)">
+            <summary>
+            Function used to mark unused vertices as degenerate.
+            </summary>
+            <param name="startIndex"></param>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.ClearUnusedVertices(System.Int32,System.Boolean)">
+            <summary>
+            Function used to mark unused vertices as degenerate an upload resulting data to the mesh.
+            </summary>
+            <param name="startIndex"></param>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.SortGeometry(System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            Function to rearrange the quads of the text object to change their rendering order.
+            </summary>
+            <param name="sortingOrder"></param>
+        </member>
+        <member name="M:TMPro.TMP_MeshInfo.SwapVertexData(System.Int32,System.Int32)">
+            <summary>
+            Method to swap the vertex attributes between src and dst quads.
+            </summary>
+            <param name="src">Index of the first vertex attribute of the source character / quad.</param>
+            <param name="dst">Index of the first vertex attribute of the destination character / quad.</param>
+        </member>
+        <member name="P:TMPro.TMP_Settings.enableWordWrapping">
+            <summary>
+            Controls if Word Wrapping will be enabled on newly created text objects by default.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.enableKerning">
+            <summary>
+            Controls if Kerning is enabled on newly created text objects by default.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.enableExtraPadding">
+            <summary>
+            Controls if Extra Padding is enabled on newly created text objects by default.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.enableTintAllSprites">
+            <summary>
+            Controls if TintAllSprites is enabled on newly created text objects by default.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.enableParseEscapeCharacters">
+            <summary>
+            Controls if Escape Characters will be parsed in the Text Input Box on newly created text objects.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.missingGlyphCharacter">
+            <summary>
+            The character the will be used as a replacement for missing glyphs in a font asset.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.warningsDisabled">
+            <summary>
+            Controls the display of warning message in the console.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.defaultFontAsset">
+            <summary>
+            Returns the Default Font Asset to be used by newly created text objects.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.defaultFontAssetPath">
+            <summary>
+            The relative path to a Resources folder in the project.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.defaultFontSize">
+            <summary>
+            The Default Point Size of newly created text objects.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.defaultTextContainerWidth">
+            <summary>
+            The Default Width of the Rect Transform or Text Container.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.defaultTextContainerHeight">
+            <summary>
+            The Default Height of the Rect Transform or Text Container.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.fallbackFontAssets">
+            <summary>
+            Returns the list of Fallback Fonts defined in the TMP Settings file.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.matchMaterialPreset">
+            <summary>
+            Controls whether or not TMP will create a matching material preset or use the default material of the fallback font asset.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.defaultSpriteAsset">
+            <summary>
+            The Default Sprite Asset to be used by default.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.defaultSpriteAssetPath">
+            <summary>
+            The relative path to a Resources folder in the project.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.defaultStyleSheet">
+            <summary>
+            The Default Style Sheet used by the text objects.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.leadingCharacters">
+            <summary>
+            Text file that contains the leading characters used for line breaking for Asian languages.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.followingCharacters">
+            <summary>
+            Text file that contains the following characters used for line breaking for Asian languages.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.linebreakingRules">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Settings.instance">
+            <summary>
+            Get a singleton instance of the settings class.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Settings.LoadDefaultSettings">
+            <summary>
+            Static Function to load the TMP Settings file.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Settings.GetSettings">
+            <summary>
+            Returns the Sprite Asset defined in the TMP Settings file.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Settings.GetFontAsset">
+            <summary>
+            Returns the Font Asset defined in the TMP Settings file.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Settings.GetSpriteAsset">
+            <summary>
+            Returns the Sprite Asset defined in the TMP Settings file.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Settings.GetStyleSheet">
+            <summary>
+            Returns the Sprite Asset defined in the TMP Settings file.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Settings.GetCharacters(UnityEngine.TextAsset)">
+            <summary>
+             Get the characters from the line breaking files
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="P:TMPro.TMP_SpriteAsset.defaultSpriteAsset">
+            <summary>
+            Static reference to the default font asset included with TextMesh Pro.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SpriteAsset.OnValidate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SpriteAsset.GetDefaultSpriteMaterial">
+            <summary>
+            Create a material for the sprite asset.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SpriteAsset.GetSpriteIndex(System.Int32)">
+            <summary>
+            Function which returns the sprite index using the hashcode of the name
+            </summary>
+            <param name="hashCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SpriteAsset.LoadSprites">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SpriteAsset.GetSprites">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:TMPro.TMP_Style.name" -->
+        <member name="P:TMPro.TMP_Style.hashCode">
+            <summary>
+            The hash code corresponding to the name of this style.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:TMPro.TMP_Style.styleOpeningDefinition" -->
+        <!-- Badly formed XML comment ignored for member "P:TMPro.TMP_Style.styleClosingDefinition" -->
+        <!-- Badly formed XML comment ignored for member "M:TMPro.TMP_Style.RefreshStyle" -->
+        <member name="P:TMPro.TMP_StyleSheet.instance">
+            <summary>
+            Get a singleton instance of the TMP_StyleSheet
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_StyleSheet.LoadDefaultStyleSheet">
+            <summary>
+            Static Function to load the Default Style Sheet.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_StyleSheet.GetStyle(System.Int32)">
+            <summary>
+            Function to retrieve the Style matching the HashCode.
+            </summary>
+            <param name="hashCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_StyleSheet.GetStyleInternal(System.Int32)">
+            <summary>
+            Internal method to retrieve the Style matching the Hashcode.
+            </summary>
+            <param name="hashCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_StyleSheet.RefreshStyles">
+            <summary>
+            Function to refresh the Style Dictionary.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_StyleSheet.LoadStyleDictionaryInternal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.fontAsset">
+            <summary>
+            The TMP Font Asset assigned to this sub text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.spriteAsset">
+            <summary>
+            The TMP Sprite Asset assigned to this sub text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.material">
+            <summary>
+            The material to be assigned to this object. Returns an instance of the material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.sharedMaterial">
+            <summary>
+            The material to be assigned to this text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.fallbackMaterial">
+            <summary>
+            The fallback material created from the properties of the fallback source material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.fallbackSourceMaterial">
+            <summary>
+            The source material used by the fallback font
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.isDefaultMaterial">
+            <summary>
+            Is the text object using the default font asset material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.padding">
+            <summary>
+            Padding value resulting for the property settings on the material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.renderer">
+            <summary>
+            The Mesh Renderer of this text sub object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.meshFilter">
+            <summary>
+            The MeshFilter of this text sub object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMesh.mesh">
+            <summary>
+            The Mesh of this text sub object.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMesh.ON_TMP_SETTINGS_CHANGED">
+            <summary>
+            Event received when the TMP Settings are changed.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMesh.CreateMaterialInstance(UnityEngine.Material)">
+            <summary>
+            Method used to create an instance of the material
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SubMesh.GetSharedMaterial">
+            <summary>
+            Method returning the shared material assigned to the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SubMesh.SetSharedMaterial(UnityEngine.Material)">
+            <summary>
+            Method to set the shared material.
+            </summary>
+            <param name="mat"></param>
+        </member>
+        <member name="M:TMPro.TMP_SubMesh.GetPaddingForMaterial">
+            <summary>
+            Function called when the padding value for the material needs to be re-calculated.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SubMesh.UpdateMeshPadding(System.Boolean,System.Boolean)">
+            <summary>
+            Function to update the padding values of the object.
+            </summary>
+            <param name="isExtraPadding"></param>
+            <param name="isBold"></param>
+        </member>
+        <member name="M:TMPro.TMP_SubMesh.SetVerticesDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMesh.SetMaterialDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMesh.UpdateMaterial">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.fontAsset">
+            <summary>
+            The TMP Font Asset assigned to this sub text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.spriteAsset">
+            <summary>
+            The TMP Sprite Asset assigned to this sub text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.mainTexture">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.material">
+            <summary>
+            The material to be assigned to this object. Returns an instance of the material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.sharedMaterial">
+            <summary>
+            The material to be assigned to this text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.fallbackMaterial">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.fallbackSourceMaterial">
+            <summary>
+            The source material used by the fallback font
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.materialForRendering">
+            <summary>
+            Get the material that will be used for rendering.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.isDefaultMaterial">
+            <summary>
+            Is the text object using the default font asset material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.padding">
+            <summary>
+            Padding value resulting for the property settings on the material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.canvasRenderer">
+            <summary>
+            The Mesh Renderer of this text sub object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_SubMeshUI.mesh">
+            <summary>
+            The Mesh of this text sub object.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.AddSubTextObject(TMPro.TextMeshProUGUI,TMPro.MaterialReference)">
+            <summary>
+            Function to add a new sub text object.
+            </summary>
+            <param name="textComponent"></param>
+            <param name="materialReference"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.OnEnable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.ON_TMP_SETTINGS_CHANGED">
+            <summary>
+            Event received when the TMP Settings are changed.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.OnTransformParentChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.GetModifiedMaterial(UnityEngine.Material)">
+            <summary>
+            Function returning the modified material for masking if necessary.
+            </summary>
+            <param name="baseMaterial"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.GetPaddingForMaterial">
+            <summary>
+            Function called when the padding value for the material needs to be re-calculated.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.GetPaddingForMaterial(UnityEngine.Material)">
+            <summary>
+            Function called when the padding value for the material needs to be re-calculated.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.UpdateMeshPadding(System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="isExtraPadding"></param>
+            <param name="isBold"></param>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.SetAllDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.SetVerticesDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.SetLayoutDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.SetMaterialDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.SetPivotDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.UpdateGeometry">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.Rebuild(UnityEngine.UI.CanvasUpdate)">
+            <summary>
+            
+            </summary>
+            <param name="update"></param>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.RefreshMaterial">
+            <summary>
+            Function to update the material from the parent text object.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.UpdateMaterial">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.RecalculateClipping">
+            <summary>
+            Method called when the state of a parent changes.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.RecalculateMasking">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.GetMaterial">
+            <summary>
+            Method which returns an instance of the shared material
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.CreateMaterialInstance(UnityEngine.Material)">
+            <summary>
+            Method used to create an instance of the material
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.GetSharedMaterial">
+            <summary>
+            Method returning the shared material assigned to the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_SubMeshUI.SetSharedMaterial(UnityEngine.Material)">
+            <summary>
+            Method to set the shared material.
+            </summary>
+            <param name="mat"></param>
+        </member>
+        <member name="T:TMPro.TextRenderFlags">
+            <summary>
+            Flags controlling what vertex data gets pushed to the mesh.
+            </summary>
+        </member>
+        <member name="T:TMPro.TMP_Text">
+            <summary>
+            Base class which contains common properties and functions shared between the TextMeshPro and TextMeshProUGUI component.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.text">
+            <summary>
+            A string containing the text to be displayed.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.isRightToLeftText">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.font">
+            <summary>
+            The Font Asset to be assigned to this text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.fontSharedMaterial">
+            <summary>
+            The material to be assigned to this text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.fontSharedMaterials">
+            <summary>
+            An array containing the materials used by the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.fontMaterial">
+            <summary>
+            The material to be assigned to this text object. An instance of the material will be assigned to the object's renderer.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.fontMaterials">
+            <summary>
+            The materials to be assigned to this text object. An instance of the materials will be assigned.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.color">
+            <summary>
+            This is the default vertex color assigned to each vertices. Color tags will override vertex colors unless the overrideColorTags is set.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.alpha">
+            <summary>
+            Sets the vertex color alpha value.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.enableVertexGradient">
+            <summary>
+            Determines if Vertex Color Gradient should be used
+            </summary>
+            <value><c>true</c> if enable vertex gradient; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:TMPro.TMP_Text.colorGradient">
+            <summary>
+            Sets the vertex colors for each of the 4 vertices of the character quads.
+            </summary>
+            <value>The color gradient.</value>
+        </member>
+        <member name="P:TMPro.TMP_Text.colorGradientPreset">
+            <summary>
+            Set the vertex colors of the 4 vertices of each character quads.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.spriteAsset">
+            <summary>
+            Default Sprite Asset used by the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.tintAllSprites">
+            <summary>
+            Determines whether or not the sprite color is multiplies by the vertex color of the text.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.overrideColorTags">
+            <summary>
+            This overrides the color tags forcing the vertex colors to be the default font color.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.faceColor">
+            <summary>
+            Sets the color of the _FaceColor property of the assigned material. Changing face color will result in an instance of the material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.outlineColor">
+            <summary>
+            Sets the color of the _OutlineColor property of the assigned material. Changing outline color will result in an instance of the material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.outlineWidth">
+            <summary>
+            Sets the thickness of the outline of the font. Setting this value will result in an instance of the material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.fontSize">
+            <summary>
+            The point size of the font.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.fontScale">
+            <summary>
+            The scale of the current text.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.fontWeight">
+            <summary>
+            Control the weight of the font if an alternative font asset is assigned for the given weight in the font asset editor.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.pixelsPerUnit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.enableAutoSizing">
+            <summary>
+            Enable text auto-sizing
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.fontSizeMin">
+            <summary>
+            Minimum point size of the font when text auto-sizing is enabled.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.fontSizeMax">
+            <summary>
+            Maximum point size of the font when text auto-sizing is enabled.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.fontStyle">
+            <summary>
+            The style of the text
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.isUsingBold">
+            <summary>
+            Property used in conjunction with padding calculation for the geometry.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.alignment">
+            <summary>
+            Text alignment options
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.characterSpacing">
+            <summary>
+            The amount of additional spacing between characters.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.lineSpacing">
+            <summary>
+            The amount of additional spacing to add between each lines of text.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.paragraphSpacing">
+            <summary>
+            The amount of additional spacing to add between each lines of text.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.characterWidthAdjustment">
+            <summary>
+            Percentage the width of characters can be adjusted before text auto-sizing begins to reduce the point size.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.enableWordWrapping">
+            <summary>
+            Controls whether or not word wrapping is applied. When disabled, the text will be displayed on a single line.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.wordWrappingRatios">
+            <summary>
+            Controls the blending between using character and word spacing to fill-in the space for justified text.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.enableAdaptiveJustification">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.OverflowMode">
+            <summary>
+            Controls the Text Overflow Mode
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.enableKerning">
+            <summary>
+            Determines if kerning is enabled or disabled.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.extraPadding">
+            <summary>
+            Adds extra padding around each character. This may be necessary when the displayed text is very small to prevent clipping.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.richText">
+            <summary>
+            Enables or Disables Rich Text Tags
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.parseCtrlCharacters">
+            <summary>
+            Enables or Disables parsing of CTRL characters in input text.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.isOverlay">
+            <summary>
+            Sets the RenderQueue along with Ztest to force the text to be drawn last and on top of scene elements.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:TMPro.TMP_Text.isOrthographic" -->
+        <member name="P:TMPro.TMP_Text.enableCulling">
+            <summary>
+            Sets the culling on the shaders. Note changing this value will result in an instance of the material.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.ignoreVisibility">
+            <summary>
+            Forces objects that are not visible to get refreshed.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.horizontalMapping">
+            <summary>
+            Controls how the face and outline textures will be applied to the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.verticalMapping">
+            <summary>
+            Controls how the face and outline textures will be applied to the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.renderMode">
+            <summary>
+            Determines if the Mesh will be rendered.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.maxVisibleCharacters">
+            <summary>
+            Allows to control how many characters are visible from the input.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.maxVisibleWords">
+            <summary>
+            Allows to control how many words are visible from the input.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.maxVisibleLines">
+            <summary>
+            Allows control over how many lines of text are displayed.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.useMaxVisibleDescender">
+            <summary>
+            Determines if the text's vertical alignment will be adjusted based on visible descender of the text.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.pageToDisplay">
+            <summary>
+            Controls which page of text is shown
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.margin">
+            <summary>
+            The margins of the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.textInfo">
+            <summary>
+            Returns data about the text object which includes information about each character, word, line, link, etc.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.havePropertiesChanged">
+            <summary>
+            Property tracking if any of the text properties have changed. Flag is set before the text is regenerated.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.isUsingLegacyAnimationComponent">
+            <summary>
+            Property to handle legacy animation component.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.transform">
+            <summary>
+            Returns are reference to the Transform
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.rectTransform">
+            <summary>
+            Returns are reference to the RectTransform
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.autoSizeTextContainer">
+            <summary>
+            Enables control over setting the size of the text container to match the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.mesh">
+            <summary>
+            The mesh used by the font asset and material assigned to the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.isVolumetricText">
+            <summary>
+            Determines if the geometry of the characters will be quads or volumetric (cubes).
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.bounds">
+            <summary>
+            Returns the bounds of the mesh of the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.textBounds">
+            <summary>
+            Returns the bounds of the text of the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.flexibleHeight">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.flexibleWidth">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.minHeight">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.minWidth">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.preferredWidth">
+            <summary>
+            Computed preferred width of the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.preferredHeight">
+            <summary>
+            Computed preferred height of the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.renderedWidth">
+            <summary>
+            Compute the rendered width of the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.renderedHeight">
+            <summary>
+            Compute the rendered height of the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_Text.layoutPriority">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.LoadFontAsset">
+            <summary>
+            Method which derived classes need to override to load Font Assets.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetSharedMaterial(UnityEngine.Material)">
+            <summary>
+            Function called internally when a new shared material is assigned via the fontSharedMaterial property.
+            </summary>
+            <param name="mat"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetMaterial(UnityEngine.Material)">
+            <summary>
+            Function called internally when a new material is assigned via the fontMaterial property.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetFontBaseMaterial(UnityEngine.Material)">
+            <summary>
+            Function called internally when assigning a new base material.
+            </summary>
+            <param name="mat"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetSharedMaterials">
+            <summary>
+            Method which returns an array containing the materials used by the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetSharedMaterials(UnityEngine.Material[])">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetMaterials(UnityEngine.Material[])">
+            <summary>
+            Method returning instances of the materials used by the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.CreateMaterialInstance(UnityEngine.Material)">
+            <summary>
+            Function used to create an instance of the material
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetFaceColor(UnityEngine.Color32)">
+            <summary>
+            Function called internally to set the face color of the material. This will results in an instance of the material.
+            </summary>
+            <param name="color"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetOutlineColor(UnityEngine.Color32)">
+            <summary>
+            Function called internally to set the outline color of the material. This will results in an instance of the material.
+            </summary>
+            <param name="color"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetOutlineThickness(System.Single)">
+            <summary>
+            Function called internally to set the outline thickness property of the material. This will results in an instance of the material.
+            </summary>
+            <param name="thickness"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetShaderDepth">
+            <summary>
+            Set the Render Queue and ZTest mode on the current material
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetCulling">
+            <summary>
+            Set the culling mode on the material.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetPaddingForMaterial">
+            <summary>
+            Get the padding value for the currently assigned material
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetPaddingForMaterial(UnityEngine.Material)">
+            <summary>
+            Get the padding value for the given material
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetTextContainerLocalCorners">
+            <summary>
+            Method to return the local corners of the Text Container or RectTransform.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.ForceMeshUpdate">
+            <summary>
+            Function to force the regeneration of the text object.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.ForceMeshUpdate(System.Boolean)">
+            <summary>
+            Function to force the regeneration of the text object.
+            </summary>
+            <param name="ignoreActiveState">If set to true, the text object will be regenerated regardless of is active state.</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetTextInternal(System.String)">
+            <summary>
+            Internal function used by the Text Input Field to populate TMP_TextInfo data. 
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.UpdateGeometry(UnityEngine.Mesh,System.Int32)">
+            <summary>
+            Function to update the geometry of the main and sub text objects.
+            </summary>
+            <param name="mesh"></param>
+            <param name="index"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.UpdateVertexData(TMPro.TMP_VertexDataUpdateFlags)">
+            <summary>
+            Function to push the updated vertex data into the mesh and renderer.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.UpdateVertexData">
+            <summary>
+            Function to push the updated vertex data into the mesh and renderer.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetVertices(UnityEngine.Vector3[])">
+            <summary>
+            Function to push a new set of vertices to the mesh.
+            </summary>
+            <param name="vertices"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.UpdateMeshPadding">
+            <summary>
+            Function to be used to force recomputing of character padding when Shader / Material properties have been changed via script.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.CrossFadeColor(UnityEngine.Color,System.Single,System.Boolean,System.Boolean)">
+            <summary>
+            Tweens the CanvasRenderer color associated with this Graphic.
+            </summary>
+            <param name="targetColor">Target color.</param>
+            <param name="duration">Tween duration.</param>
+            <param name="ignoreTimeScale">Should ignore Time.scale?</param>
+            <param name="useAlpha">Should also Tween the alpha channel?</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.CrossFadeAlpha(System.Single,System.Single,System.Boolean)">
+            <summary>
+            Tweens the alpha of the CanvasRenderer color associated with this Graphic.
+            </summary>
+            <param name="alpha">Target alpha.</param>
+            <param name="duration">Duration of the tween in seconds.</param>
+            <param name="ignoreTimeScale">Should ignore Time.scale?</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.InternalCrossFadeColor(UnityEngine.Color,System.Single,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="targetColor"></param>
+            <param name="duration"></param>
+            <param name="ignoreTimeScale"></param>
+            <param name="useAlpha"></param>
+            <param name="useRGB"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.InternalCrossFadeAlpha(System.Single,System.Single,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="alpha"></param>
+            <param name="duration"></param>
+            <param name="ignoreTimeScale"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.ParseInputText">
+            <summary>
+            Method to parse the input text based on its source
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetText(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetText(System.String,System.Single)">
+            <summary>
+            <para>Formatted string containing a pattern and a value representing the text to be rendered.</para>
+            <para>ex. TextMeshPro.SetText ("Number is {0:1}.", 5.56f);</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="text">String containing the pattern."</param>
+            <param name="arg0">Value is a float.</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetText(System.String,System.Single,System.Single)">
+            <summary>
+            <para>Formatted string containing a pattern and a value representing the text to be rendered.</para>
+            <para>ex. TextMeshPro.SetText ("First number is {0} and second is {1:2}.", 10, 5.756f);</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="text">String containing the pattern."</param>
+            <param name="arg0">Value is a float.</param>
+            <param name="arg1">Value is a float.</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetText(System.String,System.Single,System.Single,System.Single)">
+            <summary>
+            <para>Formatted string containing a pattern and a value representing the text to be rendered.</para>
+            <para>ex. TextMeshPro.SetText ("A = {0}, B = {1} and C = {2}.", 2, 5, 7);</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="text">String containing the pattern."</param>
+            <param name="arg0">Value is a float.</param>
+            <param name="arg1">Value is a float.</param>
+            <param name="arg2">Value is a float.</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetText(System.Text.StringBuilder)">
+            <summary>
+            Set the text using a StringBuilder.
+            </summary>
+            <description>
+            Using a StringBuilder instead of concatenating strings prevents memory pollution with temporary objects.
+            </description>
+            <param name="text">StringBuilder with text to display.</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetCharArray(System.Char[])">
+            <summary>
+            Character array containing the text to be displayed.
+            </summary>
+            <param name="charArray"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetTextArrayToCharArray(System.Char[],System.Int32[]@)">
+            <summary>
+            Copies Content of formatted SetText() to charBuffer.
+            </summary>
+            <param name="charArray"></param>
+            <param name="charBuffer"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.StringToCharArray(System.String,System.Int32[]@)">
+            <summary>
+            Method to store the content of a string into an integer array.
+            </summary>
+            <param name="text"></param>
+            <param name="chars"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.StringBuilderToIntArray(System.Text.StringBuilder,System.Int32[]@)">
+            <summary>
+            Copy contents of StringBuilder into int array.
+            </summary>
+            <param name="text">Text to copy.</param>
+            <param name="chars">Array to store contents.</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.AddFloatToCharArray(System.Single,System.Int32@,System.Int32)">
+            <summary>
+            Function used in conjunction with SetText()
+            </summary>
+            <param name="number"></param>
+            <param name="index"></param>
+            <param name="precision"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.AddIntToCharArray(System.Int32,System.Int32@,System.Int32)">
+            <summary>
+            // Function used in conjunction with SetText()
+            </summary>
+            <param name="number"></param>
+            <param name="index"></param>
+            <param name="precision"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetArraySizes(System.Int32[])">
+            <summary>
+            Method used to determine the number of visible characters and required buffer allocations.
+            </summary>
+            <param name="chars"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GenerateTextMesh">
+            <summary>
+            Method which parses the text input, does the layout of the text as well as generating the geometry.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetPreferredValues">
+            <summary>
+            Function to Calculate the Preferred Width and Height of the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetPreferredValues(System.Single,System.Single)">
+            <summary>
+            Function to Calculate the Preferred Width and Height of the text object given the provided width and height.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetPreferredValues(System.String)">
+            <summary>
+            Function to Calculate the Preferred Width and Height of the text object given a certain string.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetPreferredValues(System.String,System.Single,System.Single)">
+            <summary>
+             Function to Calculate the Preferred Width and Height of the text object given a certain string and size of text container.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetPreferredWidth">
+            <summary>
+            Method to calculate the preferred width of a text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetPreferredWidth(UnityEngine.Vector2)">
+            <summary>
+            Method to calculate the preferred width of a text object.
+            </summary>
+            <param name="margin"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetPreferredHeight">
+            <summary>
+            Method to calculate the preferred height of a text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetPreferredHeight(UnityEngine.Vector2)">
+            <summary>
+            Method to calculate the preferred height of a text object.
+            </summary>
+            <param name="margin"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetRenderedValues">
+            <summary>
+            Method returning the rendered width and height of the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetRenderedWidth">
+            <summary>
+            Method returning the rendered width of the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetRenderedHeight">
+            <summary>
+            Method returning the rendered height of the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.CalculatePreferredValues(System.Single,UnityEngine.Vector2)">
+            <summary>
+            Method to calculate the preferred width and height of the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetCompoundBounds">
+            <summary>
+            Method returning the compound bounds of the text object and child sub objects.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetTextBounds">
+            <summary>
+            Method which returns the bounds of the text object;
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.AdjustLineOffset(System.Int32,System.Int32,System.Single)">
+            <summary>
+            Method to adjust line spacing as a result of using different fonts or font point size.
+            </summary>
+            <param name="startIndex"></param>
+            <param name="endIndex"></param>
+            <param name="offset"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.ResizeLineExtents(System.Int32)">
+            <summary>
+            Function to increase the size of the Line Extents Array.
+            </summary>
+            <param name="size"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetTextInfo(System.String)">
+            <summary>
+            Function used to evaluate the length of a text string.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.ComputeMarginSize">
+            <summary>
+            Function to force an update of the margin size.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetArraySizes(System.Int32[])">
+            <summary>
+            Function used in conjunction with GetTextInfo to figure out Array allocations.
+            </summary>
+            <param name="chars"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.SaveWordWrappingState(TMPro.WordWrapState@,System.Int32,System.Int32)">
+            <summary>
+            Save the State of various variables used in the mesh creation loop in conjunction with Word Wrapping
+            </summary>
+            <param name="state"></param>
+            <param name="index"></param>
+            <param name="count"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.RestoreWordWrappingState(TMPro.WordWrapState@)">
+            <summary>
+            Restore the State of various variables used in the mesh creation loop.
+            </summary>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.SaveGlyphVertexInfo(System.Single,System.Single,UnityEngine.Color32)">
+            <summary>
+            Store vertex information for each character.
+            </summary>
+            <param name="style_padding">Style_padding.</param>
+            <param name="vertexColor">Vertex color.</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.SaveSpriteVertexInfo(UnityEngine.Color32)">
+            <summary>
+            Store vertex information for each sprite.
+            </summary>
+            <param name="padding"></param>
+            <param name="style_padding"></param>
+            <param name="vertexColor"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.FillCharacterVertexBuffers(System.Int32,System.Int32)">
+            <summary>
+            Store vertex attributes into the appropriate TMP_MeshInfo.
+            </summary>
+            <param name="i"></param>
+            <param name="index_X4"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.FillSpriteVertexBuffers(System.Int32,System.Int32)">
+            <summary>
+            Fill Vertex Buffers for Sprites
+            </summary>
+            <param name="i"></param>
+            <param name="spriteIndex_X4"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.DrawUnderlineMesh(UnityEngine.Vector3,UnityEngine.Vector3,System.Int32@,System.Single,System.Single,System.Single,System.Single,UnityEngine.Color32)">
+            <summary>
+            Method to add the underline geometry.
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <param name="startScale"></param>
+            <param name="endScale"></param>
+            <param name="maxScale"></param>
+            <param name="underlineColor"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetSpecialCharacters(TMPro.TMP_FontAsset)">
+            <summary>
+            Method used to find and cache references to the Underline and Ellipsis characters.
+            </summary>
+            <param name=""></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetFontAssetForWeight(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.SetActiveSubMeshes(System.Boolean)">
+            <summary>
+            Method to Enable or Disable child SubMesh objects.
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:TMPro.TMP_Text.PackUV(System.Single,System.Single,System.Single)">
+            <summary>
+            Function to pack scale information in the UV2 Channel.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="scale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.PackUV(System.Single,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.HexToInt(System.Char)">
+            <summary>
+            Method to convert Hex to Int
+            </summary>
+            <param name="hex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetUTF16(System.Int32)">
+            <summary>
+            Convert UTF-16 Hex to Char
+            </summary>
+            <returns>The Unicode hex.</returns>
+            <param name="i">The index.</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.GetUTF32(System.Int32)">
+            <summary>
+            Convert UTF-32 Hex to Char
+            </summary>
+            <returns>The Unicode hex.</returns>
+            <param name="i">The index.</param>
+        </member>
+        <member name="M:TMPro.TMP_Text.HexCharsToColor(System.Char[],System.Int32)">
+            <summary>
+            Method to convert Hex color values to Color32
+            </summary>
+            <param name="hexChars"></param>
+            <param name="tagCount"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.HexCharsToColor(System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Method to convert Hex Color values to Color32
+            </summary>
+            <param name="hexChars"></param>
+            <param name="startIndex"></param>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.ConvertToFloat(System.Char[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Extracts a float value from char[] assuming we know the position of the start, end and decimal point.
+            </summary>
+            <param name="chars"></param> The Char[] containing the numerical sequence.
+            <param name="startIndex"></param> The index of the start of the numerical sequence.
+            <param name="endIndex"></param> The index of the last number in the numerical sequence.
+            <param name="decimalPointIndex"></param> The index of the decimal point if any.
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_Text.ValidateHtmlTag(System.Int32[],System.Int32,System.Int32@)">
+            <summary>
+            Function to identify and validate the rich tag. Returns the position of the > if the tag was valid.
+            </summary>
+            <param name="chars"></param>
+            <param name="startIndex"></param>
+            <param name="endIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMPro.TMP_TextElement">
+            <summary>
+            Base class for all text elements like characters (glyphs) and sprites.
+            </summary>
+        </member>
+        <member name="T:TMPro.TMP_TextInfo">
+            <summary>
+            Class which contains information about every element contained within the text object.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_TextInfo.Clear">
+            <summary>
+            Function to clear the counters of the text object.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_TextInfo.ClearMeshInfo(System.Boolean)">
+            <summary>
+            Function to clear the content of the MeshInfo array while preserving the Triangles, Normals and Tangents.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_TextInfo.ClearAllMeshInfo">
+            <summary>
+            Function to clear the content of all the MeshInfo arrays while preserving their Triangles, Normals and Tangents.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_TextInfo.ResetVertexLayout(System.Boolean)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_TextInfo.ClearUnusedVertices(TMPro.MaterialReference[])">
+            <summary>
+            Function used to mark unused vertices as degenerate.
+            </summary>
+            <param name="materials"></param>
+        </member>
+        <member name="M:TMPro.TMP_TextInfo.ClearLineInfo">
+            <summary>
+            Function to clear and initialize the lineInfo array. 
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_TextInfo.CopyMeshInfoVertexData">
+            <summary>
+            Function to copy the MeshInfo Arrays and their primary vertex data content.
+            </summary>
+            <returns>A copy of the MeshInfo[]</returns>
+        </member>
+        <member name="M:TMPro.TMP_TextInfo.Resize``1(``0[]@,System.Int32)">
+            <summary>
+            Function to resize any of the structure contained in the TMP_TextInfo class.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="array"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:TMPro.TMP_TextInfo.Resize``1(``0[]@,System.Int32,System.Boolean)">
+            <summary>
+            Function to resize any of the structure contained in the TMP_TextInfo class.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="array"></param>
+            <param name="size"></param>
+            <param name="isFixedSize"></param>
+        </member>
+        <member name="T:TMPro.CaretInfo">
+            <summary>
+            Structure which contains the character index and position of caret relative to the character.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.GetCursorInsertionIndex(TMPro.TMP_Text,UnityEngine.Vector3,UnityEngine.Camera)">
+            <summary>
+            
+            </summary>
+            <param name="textComponent">A reference to the text object.</param>
+            <param name="position">Position to check for intersection.</param>
+            <param name="camera">The scene camera which may be assigned to a Canvas using ScreenSpace Camera or WorldSpace render mode. Set to null is using ScreenSpace Overlay.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.GetCursorIndexFromPosition(TMPro.TMP_Text,UnityEngine.Vector3,UnityEngine.Camera)">
+            <summary>
+            Function returning the index of the character whose origin is closest to the cursor.
+            </summary>
+            <param name="textComponent">A reference to the text object.</param>
+            <param name="position">Position to check for intersection.</param>
+            <param name="camera">The scene camera which may be assigned to a Canvas using ScreenSpace Camera or WorldSpace render mode. Set to null is using ScreenSpace Overlay.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.GetCursorIndexFromPosition(TMPro.TMP_Text,UnityEngine.Vector3,UnityEngine.Camera,TMPro.CaretPosition@)">
+            <summary>
+            Function returning the index of the character whose origin is closest to the cursor.
+            </summary>
+            <param name="textComponent">A reference to the text object.</param>
+            <param name="position">Position to check for intersection.</param>
+            <param name="camera">The scene camera which may be assigned to a Canvas using ScreenSpace Camera or WorldSpace render mode. Set to null is using ScreenSpace Overlay.</param>
+            <param name="cursor">The position of the cursor insertion position relative to the position.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.IsIntersectingRectTransform(UnityEngine.RectTransform,UnityEngine.Vector3,UnityEngine.Camera)">
+            <summary>
+            Function used to determine if the position intersects with the RectTransform.
+            </summary>
+            <param name="rectTransform">A reference to the RectTranform of the text object.</param>
+            <param name="position">Position to check for intersection.</param>
+            <param name="camera">The scene camera which may be assigned to a Canvas using ScreenSpace Camera or WorldSpace render mode. Set to null is using ScreenSpace Overlay.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.FindIntersectingCharacter(TMPro.TMP_Text,UnityEngine.Vector3,UnityEngine.Camera,System.Boolean)">
+            <summary>
+            Function returning the index of the character at the given position (if any).
+            </summary>
+            <param name="text">A reference to the TextMeshPro component.</param>
+            <param name="position">Position to check for intersection.</param>
+            <param name="camera">The scene camera which is rendering the text or whichever one might be assigned to a Canvas using ScreenSpace Camera or WorldSpace render mode. Set to null is using ScreenSpace Overlay.</param>
+            <param name="visibleOnly">Only check for visible characters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.FindNearestCharacter(TMPro.TMP_Text,UnityEngine.Vector3,UnityEngine.Camera,System.Boolean)">
+            <summary>
+            Function to find the nearest character to position.
+            </summary>
+            <param name="text">A reference to the TMP Text component.</param>
+            <param name="position">Position to check for intersection.</param>
+            <param name="camera">The scene camera which may be assigned to a Canvas using ScreenSpace Camera or WorldSpace render mode. Set to null is using ScreenSpace Overlay.</param>
+            <param name="visibleOnly">Only check for visible characters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.FindIntersectingWord(TMPro.TMP_Text,UnityEngine.Vector3,UnityEngine.Camera)">
+            <summary>
+            Function returning the index of the word at the given position (if any).
+            </summary>
+            <param name="text">A reference to the TMP_Text component.</param>
+            <param name="position">Position to check for intersection.</param>
+            <param name="camera">The scene camera which may be assigned to a Canvas using ScreenSpace Camera or WorldSpace render mode. Set to null is using ScreenSpace Overlay.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.FindNearestWord(TMPro.TMP_Text,UnityEngine.Vector3,UnityEngine.Camera)">
+            <summary>
+            Function returning the index of the word at the given position (if any).
+            </summary>
+            <param name="text">A reference to the TMP_Text component.</param>
+            <param name="position"></param>
+            <param name="camera">The scene camera which may be assigned to a Canvas using ScreenSpace Camera or WorldSpace render mode. Set to null is using ScreenSpace Overlay.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.FindIntersectingLink(TMPro.TMP_Text,UnityEngine.Vector3,UnityEngine.Camera)">
+            <summary>
+            Function returning the index of the Link at the given position (if any).
+            </summary>
+            <param name="text">A reference to the TMP_Text component.</param>
+            <param name="position">Position to check for intersection.</param>
+            <param name="camera">The scene camera which may be assigned to a Canvas using ScreenSpace Camera or WorldSpace render mode. Set to null is using ScreenSpace Overlay.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.FindNearestLink(TMPro.TMP_Text,UnityEngine.Vector3,UnityEngine.Camera)">
+            <summary>
+            Function returning the index of the word at the given position (if any).
+            </summary>
+            <param name="text">A reference to the TMP_Text component.</param>
+            <param name="position">Position to check for intersection.</param>
+            <param name="camera">The scene camera which may be assigned to a Canvas using ScreenSpace Camera or WorldSpace render mode. Set to null is using ScreenSpace Overlay.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.PointIntersectRectangle(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Function to check if a Point is contained within a Rectangle.
+            </summary>
+            <param name="m"></param>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="c"></param>
+            <param name="d"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.ScreenPointToWorldPointInRectangle(UnityEngine.Transform,UnityEngine.Vector2,UnityEngine.Camera,UnityEngine.Vector3@)">
+            <summary>
+            Method to convert ScreenPoint to WorldPoint aligned with Rectangle
+            </summary>
+            <param name="transform"></param>
+            <param name="screenPoint"></param>
+            <param name="cam"></param>
+            <param name="worldPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.IntersectLinePlane(TMPro.TMP_TextUtilities.LineSegment,UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3@)">
+            <summary>
+            Function returning the point of intersection between a line and a plane.
+            </summary>
+            <param name="line"></param>
+            <param name="point"></param>
+            <param name="normal"></param>
+            <param name="intersectingPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.DistanceToLine(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Function returning the Square Distance from a Point to a Line.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="F:TMPro.TMP_TextUtilities.k_lookupStringL">
+            <summary>
+            Table used to convert character to lowercase.
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_TextUtilities.k_lookupStringU">
+            <summary>
+            Table used to convert character to uppercase.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.ToLowerFast(System.Char)">
+            <summary>
+            Get lowercase version of this ASCII character.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.ToUpperFast(System.Char)">
+            <summary>
+            Get uppercase version of this ASCII character.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.GetSimpleHashCode(System.String)">
+            <summary>
+            Function which returns a simple hashcode from a string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.GetSimpleHashCodeLowercase(System.String)">
+            <summary>
+            Function which returns a simple hashcode from a string converted to lowercase.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.HexToInt(System.Char)">
+            <summary>
+            Function to convert Hex to Int
+            </summary>
+            <param name="hex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_TextUtilities.StringToInt(System.String)">
+            <summary>
+            Function to convert a properly formatted string which contains an hex value to its decimal value. 
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="P:TMPro.TMP_UpdateManager.instance">
+            <summary>
+            Get a singleton instance of the registry
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_UpdateManager.#ctor">
+            <summary>
+            Register to receive callback from the Canvas System.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_UpdateManager.RegisterTextElementForLayoutRebuild(TMPro.TMP_Text)">
+            <summary>
+            Function to register elements which require a layout rebuild.
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:TMPro.TMP_UpdateManager.RegisterTextElementForGraphicRebuild(TMPro.TMP_Text)">
+            <summary>
+            Function to register elements which require a layout rebuild.
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:TMPro.TMP_UpdateManager.OnCameraPreRender(UnityEngine.Camera)">
+            <summary>
+            Callback which occurs just before the cam is rendered.
+            </summary>
+            <param name="cam"></param>
+        </member>
+        <member name="M:TMPro.TMP_UpdateManager.UnRegisterTextElementForRebuild(TMPro.TMP_Text)">
+            <summary>
+            Function to unregister elements which no longer require a rebuild.
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="T:TMPro.TMP_UpdateRegistry">
+            <summary>
+            Class for handling and scheduling text object updates.
+            </summary>
+        </member>
+        <member name="P:TMPro.TMP_UpdateRegistry.instance">
+            <summary>
+            Get a singleton instance of the registry
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_UpdateRegistry.#ctor">
+            <summary>
+            Register to receive callback from the Canvas System.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_UpdateRegistry.RegisterCanvasElementForLayoutRebuild(UnityEngine.UI.ICanvasElement)">
+            <summary>
+            Function to register elements which require a layout rebuild.
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:TMPro.TMP_UpdateRegistry.RegisterCanvasElementForGraphicRebuild(UnityEngine.UI.ICanvasElement)">
+            <summary>
+            Function to register elements which require a graphic rebuild.
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:TMPro.TMP_UpdateRegistry.PerformUpdateForCanvasRendererObjects">
+            <summary>
+            Method to handle objects that need updating.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_UpdateRegistry.PerformUpdateForMeshRendererObjects">
+            <summary>
+            Method to handle objects that need updating.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_UpdateRegistry.UnRegisterCanvasElementForRebuild(UnityEngine.UI.ICanvasElement)">
+            <summary>
+            Function to unregister elements which no longer require a rebuild.
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:TMPro.TMP_XmlTagStack`1.#ctor(`0[])">
+            <summary>
+            Constructor to create a new item stack.
+            </summary>
+            <param name="tagStack"></param>
+        </member>
+        <member name="M:TMPro.TMP_XmlTagStack`1.Clear">
+            <summary>
+            Function to clear and reset stack to first item.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_XmlTagStack`1.SetDefault(`0)">
+            <summary>
+            Function to set the first item on the stack and reset index.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:TMPro.TMP_XmlTagStack`1.Add(`0)">
+            <summary>
+            Function to add a new item to the stack.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:TMPro.TMP_XmlTagStack`1.Remove">
+            <summary>
+            Function to retrieve an item from the stack.
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:TMPro.TMP_XmlTagStack`1.CurrentItem" -->
+        <member name="M:TMPro.TMP_XmlTagStack`1.PreviousItem">
+            <summary>
+            Function to retrieve the previous item without affecting the stack.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TMPro.FaceInfo">
+            <summary>
+            Class that contains the basic information about the font.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_Glyph.Clone(TMPro.TMP_Glyph)">
+            <summary>
+            Function to create a deep copy of a GlyphInfo.
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMPro.TMP_VertexDataUpdateFlags">
+            <summary>
+            Flags to control what vertex data is pushed to the mesh and renderer.
+            </summary>
+        </member>
+        <member name="T:TMPro.TMP_CharacterInfo">
+            <summary>
+            Structure containing information about individual text elements (character or sprites).
+            </summary>
+        </member>
+        <member name="F:TMPro.TMP_CharacterInfo.index">
+            <summary>
+            Index of the character in the raw string.
+            </summary>
+        </member>
+        <member name="M:TMPro.VertexGradient.#ctor(UnityEngine.Color,UnityEngine.Color,UnityEngine.Color,UnityEngine.Color)">
+            <summary>
+            The vertex colors at the corners of the characters.
+            </summary>
+            <param name="color0">Top left color.</param>
+            <param name="color1">Top right color.</param>
+            <param name="color2">Bottom left color.</param>
+            <param name="color3">Bottom right color.</param>
+        </member>
+        <member name="T:TMPro.TMP_LinkInfo">
+            <summary>
+            Structure containing information about individual links contained in the text object.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_LinkInfo.GetLinkText">
+            <summary>
+            Function which returns the text contained in a link.
+            </summary>
+            <param name="textInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TMP_LinkInfo.GetLinkID">
+            <summary>
+            Function which returns the link ID as a string.
+            </summary>
+            <param name="text">The source input text.</param>
+            <returns></returns>
+        </member>
+        <member name="T:TMPro.TMP_WordInfo">
+            <summary>
+            Structure containing information about the individual words contained in the text object.
+            </summary>
+        </member>
+        <member name="M:TMPro.TMP_WordInfo.GetWord">
+            <summary>
+            Returns the word as a string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TMPro.TagAttribute">
+            <summary>
+            Structure used to store retrieve the name and hashcode of the font and material
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.ON_COLOR_GRADIENT_CHANGED(TMPro.TMP_ColorGradient)">
+            <summary>
+            Event received when a Color Gradient Preset is modified.
+            </summary>
+            <param name="textObject"></param>
+        </member>
+        <member name="M:TMPro.TextMeshPro.ON_TMP_SETTINGS_CHANGED">
+            <summary>
+            Event received when the TMP Settings are changed.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.GetMaterials(UnityEngine.Material[])">
+            <summary>
+            Method returning instances of the materials used by the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshPro.GetSharedMaterials">
+            <summary>
+            Method returning an array containing the materials used by the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshPro.SetSharedMaterials(UnityEngine.Material[])">
+            <summary>
+            Method used to assign new materials to the text and sub text objects.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.GetPaddingForMaterial(UnityEngine.Material)">
+            <summary>
+            Get the padding value for the currently assigned material.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshPro.GetPaddingForMaterial">
+            <summary>
+            Get the padding value for the currently assigned material.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshPro.ComputeMarginSize">
+            <summary>
+            Update the margin width and height
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.LateUpdate">
+            <summary>
+            Unity standard function used to check if the transform or scale of the text object has changed.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.OnPreRenderObject">
+            <summary>
+            Function called when the text needs to be updated.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.GenerateTextMesh">
+            <summary>
+            This is the main function that is responsible for creating / displaying the text.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.GetTextContainerLocalCorners">
+            <summary>
+            Method to return the local corners of the Text Container or RectTransform.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshPro.ClearMesh(System.Boolean)">
+            <summary>
+            Method to clear the mesh.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.SetMeshFilters(System.Boolean)">
+            <summary>
+            Method to disable the renderers.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.SetActiveSubMeshes(System.Boolean)">
+            <summary>
+            Method to Enable or Disable child SubMesh objects.
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:TMPro.TextMeshPro.GetCompoundBounds">
+            <summary>
+             Method returning the compound bounds of the text object and child sub objects.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshPro.UpdateSDFScale(System.Single)">
+            <summary>
+            Method to Update Scale in UV2
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.lineLength">
+            <summary>
+            Determines where word wrap will occur.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.anchor">
+            <summary>
+            Determines the anchor position of the text object.  
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.margin">
+            <summary>
+            The margins of the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.sortingLayerID">
+            <summary>
+            Sets the Renderer's sorting Layer ID
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.sortingOrder">
+            <summary>
+            Sets the Renderer's sorting order within the assigned layer.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.autoSizeTextContainer">
+            <summary>
+            Determines if the size of the text container will be adjusted to fit the text object when it is first created.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.textContainer">
+            <summary>
+            Returns a reference to the Text Container
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.transform">
+            <summary>
+            Returns a reference to the Transform
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.renderer">
+            <summary>
+            Returns the rendered assigned to the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.mesh">
+            <summary>
+            Returns the mesh assigned to the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.meshFilter">
+            <summary>
+            Returns the Mesh Filter of the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshPro.maskType">
+            <summary>
+            Sets the mask type 
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.SetMask(TMPro.MaskingTypes,UnityEngine.Vector4)">
+            <summary>
+            Function used to set the mask type and coordinates in World Space
+            </summary>
+            <param name="type"></param>
+            <param name="maskCoords"></param>
+        </member>
+        <member name="M:TMPro.TextMeshPro.SetMask(TMPro.MaskingTypes,UnityEngine.Vector4,System.Single,System.Single)">
+            <summary>
+            Function used to set the mask type, coordinates and softness
+            </summary>
+            <param name="type"></param>
+            <param name="maskCoords"></param>
+            <param name="softnessX"></param>
+            <param name="softnessY"></param>
+        </member>
+        <member name="M:TMPro.TextMeshPro.SetVerticesDirty">
+            <summary>
+            Schedule rebuilding of the text geometry.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.SetLayoutDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.SetMaterialDirty">
+            <summary>
+            Schedule updating of the material used by the text object.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.SetAllDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.Rebuild(UnityEngine.UI.CanvasUpdate)">
+            <summary>
+            
+            </summary>
+            <param name="update"></param>
+        </member>
+        <member name="M:TMPro.TextMeshPro.UpdateMaterial">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.UpdateMeshPadding">
+            <summary>
+            Function to be used to force recomputing of character padding when Shader / Material properties have been changed via script.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.ForceMeshUpdate">
+            <summary>
+            Function to force regeneration of the mesh before its normal process time. This is useful when changes to the text object properties need to be applied immediately.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.ForceMeshUpdate(System.Boolean)">
+            <summary>
+            Function to force regeneration of the mesh before its normal process time. This is useful when changes to the text object properties need to be applied immediately.
+            </summary>
+            <param name="ignoreInactive">If set to true, the text object will be regenerated regardless of is active state.</param>
+        </member>
+        <member name="M:TMPro.TextMeshPro.GetTextInfo(System.String)">
+            <summary>
+            Function used to evaluate the length of a text string.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshPro.UpdateGeometry(UnityEngine.Mesh,System.Int32)">
+            <summary>
+            Function to update the geometry of the main and sub text objects.
+            </summary>
+            <param name="mesh"></param>
+            <param name="index"></param>
+        </member>
+        <member name="M:TMPro.TextMeshPro.UpdateVertexData(TMPro.TMP_VertexDataUpdateFlags)">
+            <summary>
+            Function to upload the updated vertex data and renderer.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshPro.UpdateVertexData">
+            <summary>
+            Function to upload the updated vertex data and renderer.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.ON_COLOR_GRADIENT_CHANGED(TMPro.TMP_ColorGradient)">
+            <summary>
+            Event received when a Color Gradient Preset is modified.
+            </summary>
+            <param name="textObject"></param>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.ON_TMP_SETTINGS_CHANGED">
+            <summary>
+            Event received when the TMP Settings are changed.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.GetCanvas">
+            <summary>
+            Method to retrieve the parent Canvas.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.UpdateEnvMapMatrix">
+            <summary>
+            Method used when animating the Env Map on the material.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.GetMaterials(UnityEngine.Material[])">
+            <summary>
+            Method returning instances of the materials used by the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.GetSharedMaterials">
+            <summary>
+            Method returning an array containing the materials used by the text object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.SetSharedMaterials(UnityEngine.Material[])">
+            <summary>
+            Method used to assign new materials to the text and sub text objects.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.GetPaddingForMaterial(UnityEngine.Material)">
+            <summary>
+            Get the padding value for the currently assigned material.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.GetPaddingForMaterial">
+            <summary>
+            Get the padding value for the currently assigned material.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.ComputeMarginSize">
+            <summary>
+            Update the margin width and height
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.OnDidApplyAnimationProperties">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.LateUpdate">
+            <summary>
+            Unity standard function used to check if the transform or scale of the text object has changed.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.GenerateTextMesh">
+            <summary>
+            This is the main function that is responsible for creating / displaying the text.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.GetTextContainerLocalCorners">
+            <summary>
+            Method to return the local corners of the Text Container or RectTransform.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.ClearMesh">
+            <summary>
+            Method to clear the mesh.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.SetActiveSubMeshes(System.Boolean)">
+            <summary>
+            Method to Enable or Disable child SubMesh objects.
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.GetCompoundBounds">
+            <summary>
+             Method returning the compound bounds of the text object and child sub objects.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.UpdateSDFScale(System.Single)">
+            <summary>
+            Method to Update Scale in UV2
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshProUGUI.materialForRendering">
+            <summary>
+            Get the material that will be used for rendering.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshProUGUI.mesh">
+            <summary>
+            Reference to the Mesh used by the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshProUGUI.canvasRenderer">
+            <summary>
+            Reference to the CanvasRenderer used by the text object.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshProUGUI.inlineGraphicManager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:TMPro.TextMeshProUGUI.m_isRebuildingLayout">
+            <summary>
+            Anchor dampening prevents the anchor position from being adjusted unless the positional change exceeds about 40% of the width of the underline character. This essentially stabilizes the anchor position.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.CalculateLayoutInputHorizontal">
+            <summary>
+            Function called by Unity when the horizontal layout needs to be recalculated.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.CalculateLayoutInputVertical">
+            <summary>
+            Function called by Unity when the vertical layout needs to be recalculated.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.SetLayoutDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.SetMaterialDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.SetAllDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.Rebuild(UnityEngine.UI.CanvasUpdate)">
+            <summary>
+            
+            </summary>
+            <param name="update"></param>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.UpdateSubObjectPivot">
+            <summary>
+            Method to keep the pivot of the sub text objects in sync with the parent pivot.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.GetModifiedMaterial(UnityEngine.Material)">
+            <summary>
+            
+            </summary>
+            <param name="baseMaterial"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.UpdateMaterial">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMPro.TextMeshProUGUI.maskOffset">
+            <summary>
+            Sets the masking offset from the bounds of the object
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.RecalculateClipping">
+            <summary>
+            Method called when the state of a parent changes.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.RecalculateMasking">
+            <summary>
+            Method called when Stencil Mask needs to be updated on this element and parents.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.UpdateMeshPadding">
+            <summary>
+            Function to be used to force recomputing of character padding when Shader / Material properties have been changed via script.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.InternalCrossFadeColor(UnityEngine.Color,System.Single,System.Boolean,System.Boolean)">
+            <summary>
+            Tweens the CanvasRenderer color associated with this Graphic.
+            </summary>
+            <param name="targetColor">Target color.</param>
+            <param name="duration">Tween duration.</param>
+            <param name="ignoreTimeScale">Should ignore Time.scale?</param>
+            <param name="useAlpha">Should also Tween the alpha channel?</param>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.InternalCrossFadeAlpha(System.Single,System.Single,System.Boolean)">
+            <summary>
+            Tweens the alpha of the CanvasRenderer color associated with this Graphic.
+            </summary>
+            <param name="alpha">Target alpha.</param>
+            <param name="duration">Duration of the tween in seconds.</param>
+            <param name="ignoreTimeScale">Should ignore Time.scale?</param>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.ForceMeshUpdate">
+            <summary>
+            Function to force regeneration of the mesh before its normal process time. This is useful when changes to the text object properties need to be applied immediately.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.ForceMeshUpdate(System.Boolean)">
+            <summary>
+            Function to force regeneration of the mesh before its normal process time. This is useful when changes to the text object properties need to be applied immediately.
+            </summary>
+            <param name="ignoreInactive">If set to true, the text object will be regenerated regardless of is active state.</param>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.GetTextInfo(System.String)">
+            <summary>
+            Function used to evaluate the length of a text string.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.UpdateGeometry(UnityEngine.Mesh,System.Int32)">
+            <summary>
+            Function to update the geometry of the main and sub text objects.
+            </summary>
+            <param name="mesh"></param>
+            <param name="index"></param>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.UpdateVertexData(TMPro.TMP_VertexDataUpdateFlags)">
+            <summary>
+            Function to upload the updated vertex data and renderer.
+            </summary>
+        </member>
+        <member name="M:TMPro.TextMeshProUGUI.UpdateVertexData">
+            <summary>
+            Function to upload the updated vertex data and renderer.
+            </summary>
+        </member>
+        <member name="P:TMPro.TextContainer.rectTransform">
+            <summary>
+            The RectTransform used by the object
+            </summary>
+        </member>
+        <member name="P:TMPro.TextContainer.textMeshPro">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextContainer.OnEnable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextContainer.OnDisable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextContainer.OnContainerChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextContainer.OnValidate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMPro.TextContainer.OnRectTransformDimensionsChange">
+            <summary>
+            Callback from Unity to handle RectTransform changes.
             </summary>
         </member>
     </members>

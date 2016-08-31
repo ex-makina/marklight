@@ -43,7 +43,7 @@ namespace MarkLight
                 viewType.Dependencies.Clear();
                 foreach (var dependencyName in viewType.DependencyNames)
                 {
-                    var dependency = viewPresenter.ViewTypeDataList.Where(x => 
+                    var dependency = viewPresenter.ViewTypeDataList.Where(x =>
                         x.ViewNameAliases.Contains(dependencyName)).FirstOrDefault();
                     if (dependency == null)
                     {
@@ -230,7 +230,7 @@ namespace MarkLight
             if (replacesViewModel != null)
             {
                 viewTypeData.ReplacesViewModel = (replacesViewModel as ReplacesViewModel).ViewTypeName;
-            }            
+            }
 
             // set mapped fields and their converters and change handlers
             var mapFields = type.GetFields().SelectMany(x => x.GetCustomAttributes(typeof(MapViewField), true));
@@ -247,6 +247,29 @@ namespace MarkLight
 
                 mapTo.MapFieldData.From = field.Name;
                 viewTypeData.MapViewFields.Add(mapTo.MapFieldData);
+            }
+
+            // ... see if any dependency fields are remapped
+            var remappedViewFields = type.GetCustomAttributes(typeof(RemappedField), true).Cast<RemappedField>();
+            foreach (var remappedViewField in remappedViewFields)
+            {
+                // add or update mapping of old dependency field so it points to the new one
+                var mappedDependencyFieldData = viewTypeData.MapViewFields.FirstOrDefault(x => String.Equals(x.From, remappedViewField.MapFieldData.From, StringComparison.OrdinalIgnoreCase));
+                if (mappedDependencyFieldData != null)
+                {
+                    // update so it maps to the new dependency field                           
+                    mappedDependencyFieldData.To = remappedViewField.MapFieldData.To;
+                    mappedDependencyFieldData.ValueConverterType = remappedViewField.MapFieldData.ValueConverterType;
+                    mappedDependencyFieldData.ValueConverterTypeSet = remappedViewField.MapFieldData.ValueConverterTypeSet;
+                    mappedDependencyFieldData.ChangeHandlerName = remappedViewField.MapFieldData.ChangeHandlerName;
+                    mappedDependencyFieldData.ChangeHandlerNameSet = remappedViewField.MapFieldData.ChangeHandlerNameSet;
+                    mappedDependencyFieldData.TriggerChangeHandlerImmediately = remappedViewField.MapFieldData.TriggerChangeHandlerImmediately;
+                }
+                else
+                {
+                    // add new mapped value
+                    viewTypeData.MapViewFields.Add(remappedViewField.MapFieldData);
+                }
             }
 
             //  .. init change handlers and value converters
@@ -753,7 +776,7 @@ namespace MarkLight
                     themeElements.AddRange(themeData.GetThemeElementData(viewTypeData.ReplacesViewModel, view.Id, view.Style));
                 }
                 themeElements.AddRange(themeData.GetThemeElementData(view.ViewTypeName, view.Id, view.Style));
-                
+
                 foreach (var themeElement in themeElements)
                 {
                     var themeValueContext = new ValueConverterContext(context);

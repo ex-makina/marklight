@@ -28,12 +28,6 @@ namespace MarkLight.Views.UI
         #region TextComponent
 
         /// <summary>
-        /// Unity UI component used to render text.
-        /// </summary>
-        /// <d>Unity UI component used to render text.</d>
-        public Text TextComponent;
-
-        /// <summary>
         /// Label text.
         /// </summary>
         /// <d>The text of the label. The label can be set to adjust its size to the text through the AdjustToText field.</d>
@@ -126,6 +120,12 @@ namespace MarkLight.Views.UI
         public _VerticalWrapMode VerticalOverflow;
 #endif
 
+        /// <summary>
+        /// Unity UI component used to render text.
+        /// </summary>
+        /// <d>Unity UI component used to render text.</d>
+        public Text TextComponent;
+
         #endregion
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace MarkLight.Views.UI
         public virtual void TextChanged()
         {
             // parse text
-            Text.Value = ParseText(Text.Value);
+            Text.DirectValue = ParseText(Text.Value);
             if (AdjustToText == MarkLight.AdjustToText.None)
             {
                 // size of view doesn't change with text, no need to notify parents

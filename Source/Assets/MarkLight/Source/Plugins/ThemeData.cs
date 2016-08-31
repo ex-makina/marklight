@@ -86,10 +86,7 @@ namespace MarkLight
                     !String.Equals(themeElement.Style, style, StringComparison.OrdinalIgnoreCase))
                     continue;
 
-                // we have a match
-                matchedThemeElements.Add(themeElement);
-
-                // add styles this style is based on
+                // add styles matched style is based on
                 try
                 {
                     matchedThemeElements.AddRange(GetBasedOnThemeElementData(viewTypeName, themeElement.BasedOn));
@@ -98,6 +95,9 @@ namespace MarkLight
                 {
                     Utils.LogError("[MarkLight] Unable to get theme data. Exception thrown: {0}", Utils.GetError(e));
                 }
+
+                // add matched style
+                matchedThemeElements.Add(themeElement);
             }
 
             return matchedThemeElements;
@@ -118,9 +118,9 @@ namespace MarkLight
             {
                 if (themeElement.Style == basedOnTheme)
                 {
-                    //Debug.Log(string.Format("foundMatch for {0}", basedOnTheme));
-                    matchedThemeElements.Add(themeElement);
+                    //Debug.Log(string.Format("foundMatch for {0}", basedOnTheme));                    
                     matchedThemeElements.AddRange(GetBasedOnThemeElementData(viewTypeName, themeElement.BasedOn));
+                    matchedThemeElements.Add(themeElement);
                 }
             }
 

@@ -81,5 +81,5 @@
   <TabHeader Style="SubMenu" Breadth="40" TextPadding="15,10,15,10" TextAlignment="Center" BackgroundColor="#262b35"
              Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="#262b35" Pressed-BackgroundColor="#ef706a"
              Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#ffffff" AdjustToText="Width"
-             Selected-FontColor="#000000" />
+             Selected-FontColor="#000000" />  
 </Theme>

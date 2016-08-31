@@ -1,4 +1,4 @@
-====  MarkLight v2.5.0  ==========================================================
+====  MarkLight v2.5.1  ==========================================================
 
 Thank you for using MarkLight.
 
@@ -104,26 +104,34 @@ from Web Player to a platform officially supported (PC, WebGL, Android, iOS, etc
 
 Text Mesh Pro is a third party asset that drastically improves text performance
 and features in Unity. If your project uses a lot of text it's almost an required 
-asset at this point. To use Text Mesh Pro with MarkLight you need to import the 
-Text Mesh Pro asset and uncomment a define in the file: 
+asset at this point. 
 
-MarkLight\Source\Plugins\Views\UI\TextMeshPro\TextMeshProLabel.cs
+To enable Text Mesh Pro v1.0.54 integration created for Unity 5.4, create a file
+called "smcs.rsp" in your project asset folder, containing the line: 
 
-The integration has been developed for Text Mesh Pro version 1.0.54 for Unity 5.4.
+-define:ENABLE_TEXTMESHPRO
 
-After uncommenting the line and reloading views in your scene, all Label views in 
-the project are then replaced by the Text Mesh Pro version. Note that you can still
-use the <Label> alias but now have access to more fields that can be set. For 
-details on what fields can be set check out the API docs for TextMeshProLabel.
+Alternatively you can uncomment a line that sets the define in the Text Mesh Pro 
+source files manually. At "MarkLight\Source\Plugins\Views\UI\TextMeshPro\". Note 
+that this approach means you need to do this again if you upgrade the MarkLight 
+asset. 
+
+When enabled all InputFields and Labels are replaced by the TextMeshPro variant. 
+Make sure the Text Mesh Pro asset is imported in your project and that you reload 
+the views in the scene to have the changes take effect.
+
+Note that you can still use the <Label> and <InputField> alias but now have access 
+to more fields that can be set. For details on what fields can be set check out 
+the API docs for TextMeshProLabel and TextMeshProInputField.
 
 In order to use non-default fonts you need to generate fonts using the menu
 Window -> TextMeshPro - Font Asset Creator
 
 If you have been using standard unity fonts in your UI (TrueType & OpenType), 
 you can generate TextMeshPro fonts for them and if you put them in the same folder
-as your existing fonts and give them the same name (but with the .asset extension) 
-the framework will be able to import them without you needing to update the 
-font paths in your view/theme XUML. 
+as your existing fonts and give them exactly the same name (e.g. remove any postfix
+the generator adds such as "SDF") the framework will be able to import them without 
+you needing to update the font paths in your view/theme XUML. 
 
 
 ====  Connect  ===================================================================

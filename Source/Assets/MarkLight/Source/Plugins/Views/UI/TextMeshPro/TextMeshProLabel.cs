@@ -1,5 +1,15 @@
-﻿// Uncomment the define below to enable Text Mesh Pro integration (created for the Unity 5.4 version). When enabled all Label views are replaced by the TextMeshProLabel. 
-// Make sure the Text Mesh Pro asset is imported in the project. Reload views in the scene to have the changes take effect.
+﻿// Text Mesh Pro v1.0.54 integration created for Unity 5.4
+//
+// Activate Text Mesh Pro integration by creating a file called "smcs.rsp" in your project root, containing the line:
+// -define ENABLE_TEXTMESHPRO
+//
+// Alternatively you can uncomment the define below (and in the other Text Mesh Pro files) to manually enable it. 
+// Note that this approach means you need to do it again if you upgrade the MarkLight asset.
+//
+// When enabled all InputFields and Labels are replaced by the TextMeshPro variant. Make sure the Text Mesh Pro asset
+// is imported in your project and that you reload the views in the scene to have the changes take effect.
+// 
+
 
 //#define ENABLE_TEXTMESHPRO
 
@@ -28,11 +38,15 @@ using UnityEditor;
 namespace MarkLight.Views.UI
 {
     /// <summary>
-    /// TextMesh Pro label view.
+    /// Text Mesh Pro label view.
     /// </summary>
-    /// <d>Presents text using TextMesh Pro.</d>
+    /// <d>Presents text using Text Mesh Pro.</d>
     [ExcludeComponent("TextComponent")]
     [ReplacesViewModel("Label")]
+    [RemappedField("Text", "TextMeshProComponent.text", "TextChanged")]
+    [RemappedField("FontColor", "TextMeshProComponent.color")]
+    [RemappedField("FontSize", "TextMeshProComponent.fontSize", "TextStyleChanged")]
+    [RemappedField("LineSpacing", "TextMeshProComponent.lineSpacing", "TextStyleChanged")]
     [HideInPresenter]
     public class TextMeshProLabel : Label
     {
@@ -49,14 +63,6 @@ namespace MarkLight.Views.UI
         #endregion
 
         #region TextMeshPro
-
-        /// <summary>
-        /// Text to be displayed.
-        /// </summary>
-        /// <d>The text to be displayed.</d>
-        [MapTo("TextMeshProComponent.text", "TextChanged")]
-        [ReplacesDependencyField("Text")]
-        public _string TMProText;
 
         /// <summary>
         /// Indicates if text goes right to left.
@@ -100,14 +106,6 @@ namespace MarkLight.Views.UI
         /// <d>Text font materials.</d>
         [MapTo("TextMeshProComponent.fontMaterials")]
         public _MaterialArray FontMaterials;
-
-        /// <summary>
-        /// Default text vertex color.
-        /// </summary>
-        /// <d>Default text vertex color.</d>
-        [MapTo("TextMeshProComponent.color")]
-        [ReplacesDependencyField("FontColor")]
-        public _Color Color;
 
         /// <summary>
         /// Default text vertex alpha value.
@@ -181,14 +179,6 @@ namespace MarkLight.Views.UI
         public _float OutlineWidth;
 
         /// <summary>
-        /// Point size of the font.
-        /// </summary>
-        /// <d>Point size of the font.</d>
-        [MapTo("TextMeshProComponent.fontSize")]
-        [ReplacesDependencyField("FontSize")]
-        public _float TextMeshProFontSize;
-
-        /// <summary>
         /// Weight of the font.
         /// </summary>
         /// <d>Controls the weight of the font if an alternative font asset is assigned for the given weight in the font asset editor.</d>
@@ -237,14 +227,6 @@ namespace MarkLight.Views.UI
         /// <d>Additional spacing between characters.</d>
         [MapTo("TextMeshProComponent.characterSpacing")]
         public _float CharacterSpacing;
-
-        /// <summary>
-        /// Additional spacing between lines.
-        /// </summary>
-        /// <d>Additional spacing between lines.</d>
-        [MapTo("TextMeshProComponent.lineSpacing")]
-        [ReplacesDependencyField("LineSpacing")]
-        public _float TMProLineSpacing;
 
         /// <summary>
         /// Additional spacing between paragraphs.
@@ -471,11 +453,40 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
+        /// Initializes the view.
+        /// </summary>
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
+
+        /// <summary>
         /// Updates the layout of the view.
         /// </summary>
         public override void LayoutChanged()
         {
             base.LayoutChanged();
+        }
+
+        /// <summary>
+        /// Called when text changes.
+        /// </summary>
+        public override void TextChanged()
+        {
+            // parse text
+            Text.DirectValue = ParseText(Text.Value);
+            if (AdjustToText == MarkLight.AdjustToText.None)
+            {
+                // size of view doesn't change with text, no need to notify parents
+                QueueChangeHandler("LayoutChanged");
+            }
+            else
+            {                
+                LayoutChanged();
+
+                // size of view changes with text so notify parents
+                NotifyLayoutChanged();
+            }
         }
 
         /// <summary>
@@ -501,7 +512,7 @@ namespace MarkLight.Views.UI
             {
                 // convert marklight font style to text mesh pro font style
                 TMProFontStyle.DirectValue = FontStyle.Value.ToFontStyles();
-            } 
+            }
 
             base.TextStyleChanged();
         }
@@ -556,7 +567,7 @@ namespace MarkLight.Views.UI
         public bool resizeTextForBestFit { get { return default(bool); } set { } }
         public int resizeTextMaxSize { get { return default(int); } set { } }
         public int resizeTextMinSize { get { return default(int); } set { } }
-        public float preferredWidth {  get { return default(float); } set { } }
+        public float preferredWidth { get { return default(float); } set { } }
         public float preferredHeight { get { return default(float); } set { } }
 
 #if !UNITY_4_6
@@ -565,7 +576,7 @@ namespace MarkLight.Views.UI
 #endif
         #endregion
     }
-    
+
     /// <summary>
     /// Extension methods for text mesh pro integration.
     /// </summary>
@@ -714,7 +725,131 @@ namespace MarkLight.Views.UI
                     if (!Application.isPlaying || inResourcesFolder)
                     {
                         // load font from asset database
-#if UNITY_EDITOR 
+#if UNITY_EDITOR
+                        asset = inResourcesFolder ? Resources.Load(loadAssetPath) : AssetDatabase.LoadAssetAtPath(loadAssetPath, _type);
+#else
+                        asset = Resources.Load(loadAssetPath);
+#endif
+                        if (asset == null)
+                        {
+                            return unityFontLoading ? new ConversionResult(null) : ConversionFailed(value, String.Format("Asset not found at path \"{0}\".", assetPath));
+                        }
+
+                        ViewPresenter.Instance.AddAsset(assetPath, asset);
+                        return new ConversionResult(asset);
+                    }
+
+                    return unityFontLoading ? new ConversionResult(null) : ConversionFailed(value, String.Format("Pre-loaded asset not found for path \"{0}\".", assetPath));
+                }
+                catch (Exception e)
+                {
+                    return ConversionFailed(value, e);
+                }
+            }
+
+            return ConversionFailed(value);
+        }
+
+        /// <summary>
+        /// Converts value to string.
+        /// </summary>
+        public override string ConvertToString(object value)
+        {
+            return value != null ? ViewPresenter.Instance.GetAssetPath(value as UnityEngine.Object) : String.Empty;
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Value converter for TMP_FontAsset type.
+    /// </summary>
+    public class TMProGradientValueConverter : ValueConverter
+    {
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public TMProGradientValueConverter()
+        {
+            _type = typeof(TMP_ColorGradient);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Value converter for Font type.
+        /// </summary>
+        public override ConversionResult Convert(object value, ValueConverterContext context)
+        {
+            if (value == null)
+            {
+                return base.Convert(value, context);
+            }
+
+            Type valueType = value.GetType();
+            if (valueType == _type)
+            {
+                return base.Convert(value, context);
+            }
+            else if (valueType == _stringType)
+            {
+                var stringValue = (string)value;
+                try
+                {
+                    string assetPath = stringValue.Trim();
+                    UnityEngine.Object asset = null;
+                    if (String.IsNullOrEmpty(assetPath))
+                    {
+                        return new ConversionResult(null);
+                    }
+
+                    if (!String.IsNullOrEmpty(context.BaseDirectory))
+                    {
+                        assetPath = Path.Combine(context.BaseDirectory, assetPath);
+                    }
+
+                    // is asset pre-loaded?
+                    asset = ViewPresenter.Instance.GetAsset(assetPath);
+                    if (asset != null)
+                    {
+                        // yes. return pre-loaded asset
+                        return new ConversionResult(asset);
+                    }
+
+                    // if the asset is in a resources folder the load path should be relative to the folder and without file extension
+                    bool inResourcesFolder = assetPath.Contains("Resources/");
+                    string loadAssetPath = assetPath;
+                    bool unityFontLoading = false;
+                    if (inResourcesFolder)
+                    {
+                        loadAssetPath = loadAssetPath.Substring(assetPath.IndexOf("Resources/") + 10);
+                        string extension = System.IO.Path.GetExtension(assetPath);
+                        if (extension.Length > 0)
+                        {
+                            loadAssetPath = loadAssetPath.Substring(0, loadAssetPath.Length - extension.Length);
+                        }
+                    }
+                    else
+                    {
+                        // if the path refers to a unity font (TrueType or OpenType) then check if an equivalent Text Mesh Pro font asset exists
+                        string extension = System.IO.Path.GetExtension(loadAssetPath);
+                        if (String.Equals(extension, ".ttf", StringComparison.OrdinalIgnoreCase) ||
+                            String.Equals(extension, ".otf", StringComparison.OrdinalIgnoreCase))
+                        {
+                            loadAssetPath = System.IO.Path.ChangeExtension(loadAssetPath, ".asset");
+                            unityFontLoading = true;
+                        }
+                    }
+
+                    // load asset from asset database
+                    if (!Application.isPlaying || inResourcesFolder)
+                    {
+                        // load font from asset database
+#if UNITY_EDITOR
                         asset = inResourcesFolder ? Resources.Load(loadAssetPath) : AssetDatabase.LoadAssetAtPath(loadAssetPath, _type);
 #else
                         asset = Resources.Load(loadAssetPath);
@@ -818,7 +953,7 @@ namespace MarkLight.Views.UI
                     else
                     {
                         return StringConversionFailed(value);
-                    }                                       
+                    }
                 }
                 catch (Exception e)
                 {

@@ -525,6 +525,7 @@ namespace MarkLight
                 _valueConvertersForType.Add("Color", new ColorValueConverter());
                 _valueConvertersForType.Add("ElementSize", new ElementSizeValueConverter());
                 _valueConvertersForType.Add("Enum", new EnumValueConverter());
+                _valueConvertersForType.Add("Component", new ComponentValueConverter());
                 _valueConvertersForType.Add("Font", new FontValueConverter());
                 _valueConvertersForType.Add("ElementMargin", new MarginValueConverter());
                 _valueConvertersForType.Add("Material", new MaterialValueConverter());
@@ -689,6 +690,7 @@ namespace MarkLight
                     _cachedValueConverters.Add("BoolValueConverter", new BoolValueConverter());
                     _cachedValueConverters.Add("ColorValueConverter", new ColorValueConverter());
                     _cachedValueConverters.Add("ElementSizeValueConverter", new ElementSizeValueConverter());
+                    _cachedValueConverters.Add("ComponentValueConverter", new ComponentValueConverter());
                     _cachedValueConverters.Add("EnumValueConverter", new EnumValueConverter());
                     _cachedValueConverters.Add("FontValueConverter", new FontValueConverter());
                     _cachedValueConverters.Add("MarginValueConverter", new MarginValueConverter());

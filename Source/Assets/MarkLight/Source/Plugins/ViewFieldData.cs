@@ -431,11 +431,20 @@ namespace MarkLight
                     ViewFieldPathInfo.ViewFieldTypeName = ViewFieldPathInfo.ViewFieldType.Name;
                     ViewFieldPathInfo.ValueConverter = ValueConverter ?? ViewData.GetValueConverterForType(ViewFieldTypeName);
 
-                    // handle special case if converter is null and field type is enum
-                    if (ValueConverter == null && ViewFieldPathInfo.ViewFieldType.IsEnum())
-                    {
-                        ViewFieldPathInfo.ValueConverter = new EnumValueConverter(ViewFieldPathInfo.ViewFieldType);
-                    }
+                    // handle special case if converter is null 
+                    if (ValueConverter == null)
+                    {                        
+                        if (ViewFieldPathInfo.ViewFieldType.IsEnum())
+                        {
+                            // if enum use generic enum converter
+                            ViewFieldPathInfo.ValueConverter = new EnumValueConverter(ViewFieldPathInfo.ViewFieldType);
+                        }
+                        else if (ViewFieldPathInfo.ViewFieldType.IsSubclassOf(typeof(Component)))
+                        {
+                            // if component use generic component converter
+                            ViewFieldPathInfo.ValueConverter = new ComponentValueConverter(ViewFieldPathInfo.ViewFieldType);
+                        }
+                    }  
                 }
                 else
                 {
@@ -488,8 +497,7 @@ namespace MarkLight
         }
 
         #endregion
-
-
+        
         #region Properties
 
         /// <summary>

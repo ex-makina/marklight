@@ -49,10 +49,11 @@ namespace Marklight.DevTools.Source.Editor
             {
                 var data = new DocData();
 
-                // ignore examples, editor and dev-tools               
+                // ignore examples, editor, textmeshpro and dev-tools               
                 data.FullTypeName = element.Attribute("name").Value.Substring(2);
                 if (data.FullTypeName.StartsWith("MarkLight.Examples") || data.FullTypeName.StartsWith("MarkLight.DevTools") ||
-                    data.FullTypeName.StartsWith("MarkLight.Editor") || data.FullTypeName.StartsWith("MarkLight.Views.UI.DemoMessage"))
+                    data.FullTypeName.StartsWith("MarkLight.Editor") || data.FullTypeName.StartsWith("MarkLight.Views.UI.DemoMessage") ||
+                    data.FullTypeName.StartsWith("TMPro"))
                 {
                     continue;
                 }
@@ -158,6 +159,8 @@ namespace Marklight.DevTools.Source.Editor
             {
                 var viewTypeData = ViewPresenter.Instance.ViewTypeDataList.First(x => x.ViewTypeName == data.TypeName);
                 var type = ViewData.GetViewType(data.TypeName);
+                if (type == null)
+                    continue;
 
                 // section: title
                 var sb = new StringBuilder();
@@ -498,6 +501,9 @@ namespace Marklight.DevTools.Source.Editor
             sitemapSb.AppendLine("    </url>");
             sitemapSb.AppendLine("    <url>");
             sitemapSb.AppendLine("        <loc>http://www.marklightforunity.com/docs/news/marklight-2.4.1-released.html</loc>");
+            sitemapSb.AppendLine("    </url>");
+            sitemapSb.AppendLine("    <url>");
+            sitemapSb.AppendLine("        <loc>http://www.marklightforunity.com/docs/news/marklight-2.5.0-released.html</loc>");
             sitemapSb.AppendLine("    </url>");
 
             foreach (var doc in docData)
