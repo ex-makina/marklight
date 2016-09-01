@@ -208,7 +208,7 @@ namespace MarkLight.Views.UI
             var view = this.Find<UIView>(id, false);
             if (view == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to activate menu item. Menu item \"{1}\" not found.", GameObjectName, id);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to activate menu item. Menu item \"{1}\" not found.", GameObjectName, id));
                 return;
             }
 
@@ -222,7 +222,7 @@ namespace MarkLight.Views.UI
         {
             if (index >= _menuItems.Count() || index < 0)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to activate menu item. Index out of range.", GameObjectName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to activate menu item. Index out of range.", GameObjectName));
                 return;
             }
 
@@ -249,7 +249,7 @@ namespace MarkLight.Views.UI
             var view = this.Find<UIView>(id, false);
             if (view == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to deactivate menu item. Menu item \"{1}\" not found.", GameObjectName, id);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to deactivate menu item. Menu item \"{1}\" not found.", GameObjectName, id));
                 return;
             }
 
@@ -263,7 +263,7 @@ namespace MarkLight.Views.UI
         {
             if (index >= _menuItems.Count() || index < 0)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to deactivate menu item. Index out of range.", GameObjectName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to deactivate menu item. Index out of range.", GameObjectName));
                 return;
             }
 

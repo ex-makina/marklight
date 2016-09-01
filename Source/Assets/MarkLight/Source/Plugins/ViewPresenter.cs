@@ -11,7 +11,6 @@ using System.IO;
 using MarkLight.Views.UI;
 using MarkLight.Animation;
 using MarkLight.ValueConverters;
-using System.Diagnostics;
 #if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2 && !UNITY_5_3_1 && !UNITY_5_3_2 && !UNITY_5_3_3
 using UnityEngine.SceneManagement;
 #endif
@@ -189,7 +188,7 @@ namespace MarkLight
                 }
             }
 
-            Utils.LogError("[MarkLight] Error initializing views. Stack overflow when triggering change handlers. Make sure your change handlers doesn't trigger each other in a loop. The following change handlers were still triggered after {0} passes:{1}{2}", pass, Environment.NewLine, sb.ToString());
+            Debug.LogError(String.Format("[MarkLight] Error initializing views. Stack overflow when triggering change handlers. Make sure your change handlers doesn't trigger each other in a loop. The following change handlers were still triggered after {0} passes:{1}{2}", pass, Environment.NewLine, sb.ToString()));
         }
 
         /// <summary>
@@ -236,7 +235,7 @@ namespace MarkLight
             ViewTypeData viewTypeData;
             if (!_viewTypeDataDictionary.TryGetValue(viewTypeName, out viewTypeData))
             {
-                Utils.LogError("[MarkLight] Can't find view type \"{0}\".", viewTypeName);
+                Debug.LogError(String.Format("[MarkLight] Can't find view type \"{0}\".", viewTypeName));
                 return null;
             }
 
@@ -255,7 +254,7 @@ namespace MarkLight
                 {
                     if (_viewTypeDataDictionary.ContainsKey(viewName))
                     {
-                        Utils.LogError("[MarkLight] Can't map view-model \"{0}\" to view \"{1}\" because it is already mapped to view-model \"{2}\". If you want to replace another view-model use the ReplaceViewModel class attribute. Otherwise choose a different view name that is available.", viewTypeData.ViewTypeName, viewName, _viewTypeDataDictionary[viewName].ViewTypeName);
+                        Debug.LogError(String.Format("[MarkLight] Can't map view-model \"{0}\" to view \"{1}\" because it is already mapped to view-model \"{2}\". If you want to replace another view-model use the ReplaceViewModel class attribute. Otherwise choose a different view name that is available.", viewTypeData.ViewTypeName, viewName, _viewTypeDataDictionary[viewName].ViewTypeName));
                         continue;
                     }
 
@@ -426,7 +425,7 @@ namespace MarkLight
         {
             if (Sprites.Any(x => x.Path == sprite.Path))
             {
-                Utils.LogError("[MarkLight] Duplicate sprite \"{0}\" added.", sprite.Path);
+                Debug.LogError(String.Format("[MarkLight] Duplicate sprite \"{0}\" added.", sprite.Path));
                 return;
             }
             
@@ -637,7 +636,7 @@ namespace MarkLight
             var uiSprite = GetSprite(path);
             if (uiSprite == null)
             {
-                Utils.LogError("[MarkLight] Unable to unload sprite \"{0}\". Sprite not found.", path);
+                Debug.LogError(String.Format("[MarkLight] Unable to unload sprite \"{0}\". Sprite not found.", path));
                 return;
             }
 

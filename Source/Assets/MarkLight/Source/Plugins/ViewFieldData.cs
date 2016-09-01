@@ -49,7 +49,7 @@ namespace MarkLight
                 var targetView = GetTargetView();
                 if (targetView == null)
                 {
-                    Utils.LogError("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}\". View along path is null.", SourceView.GameObjectName, inValue, ViewFieldPath);
+                    Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}\". View along path is null.", SourceView.GameObjectName, inValue, ViewFieldPath));
                     return null;
                 }
 
@@ -66,7 +66,7 @@ namespace MarkLight
                     if (SevereParseError)
                     {
                         // severe parse error means the path is incorrect
-                        Utils.LogError("[MarkLight] {0}: Unable to assign value \"{1}\". {2}", SourceView.GameObjectName, inValue, Utils.ErrorMessage);
+                        Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\". {2}", SourceView.GameObjectName, inValue, Utils.ErrorMessage));
                     }
 
                     // unsevere parse errors can be expected, e.g. value along path is null
@@ -93,7 +93,7 @@ namespace MarkLight
                 var conversionResult = ValueConverter.Convert(value, context);
                 if (!conversionResult.Success)
                 {
-                    Utils.LogError("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}\". Value converion failed. {3}", SourceView.GameObjectName, value, ViewFieldPath, conversionResult.ErrorMessage);
+                    Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}\". Value converion failed. {3}", SourceView.GameObjectName, value, ViewFieldPath, conversionResult.ErrorMessage));
                     return null;
                 }
                 value = conversionResult.ConvertedValue;
@@ -145,7 +145,7 @@ namespace MarkLight
                 if (targetView == null)
                 {
                     hasValue = false;
-                    //Utils.LogError("[MarkLight] {0}: Unable to get value from view field \"{1}\". View along path is null.", SourceView.GameObjectName, ViewFieldPath));
+                    //Debug.LogError(String.Format("[MarkLight] {0}: Unable to get value from view field \"{1}\". View along path is null.", SourceView.GameObjectName, ViewFieldPath)));
                     return null;
                 }
 

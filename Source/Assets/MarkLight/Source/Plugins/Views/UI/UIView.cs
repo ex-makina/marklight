@@ -616,7 +616,7 @@ namespace MarkLight.Views.UI
                         _layoutRoot = this.FindParent<UserInterface>();
                         if (_layoutRoot == null)
                         {
-                            Utils.LogError("[MarkLight] {0}: LayoutRoot missing. All UIViews needs to be placed under a UserInterface root canvas.", GameObjectName);
+                            Debug.LogError(String.Format("[MarkLight] {0}: LayoutRoot missing. All UIViews needs to be placed under a UserInterface root canvas.", GameObjectName));
                         }
                     }
                 }

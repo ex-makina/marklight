@@ -107,7 +107,7 @@ namespace MarkLight
                     }
                     catch
                     {
-                        Utils.LogError("[MarkLight] View type \"{0}\" contains duplicate mapped view field \"{1} -> {2}\".", ViewTypeName, mapField.From, mapField.To);
+                        Debug.LogError(String.Format("[MarkLight] View type \"{0}\" contains duplicate mapped view field \"{1} -> {2}\".", ViewTypeName, mapField.From, mapField.To));
                     }
                 }
             }

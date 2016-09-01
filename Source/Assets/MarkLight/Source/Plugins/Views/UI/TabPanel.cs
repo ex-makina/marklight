@@ -523,7 +523,7 @@ namespace MarkLight.Views.UI
         {
             if (index >= _presentedTabs.Count)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to select tab. Index out of bounds.", GameObjectName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to select tab. Index out of bounds.", GameObjectName));
                 return;
             }
 
@@ -543,7 +543,7 @@ namespace MarkLight.Views.UI
 
             if (tabItem == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to select tab. Item not found.", GameObjectName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to select tab. Item not found.", GameObjectName));
                 return;
             }
 
@@ -698,7 +698,7 @@ namespace MarkLight.Views.UI
             // make sure we have a template
             if (TabItemTemplate == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to generate tabs from items. Template missing. Add a template by adding a Tab view with IsTemplate=\"True\" to the TabPanel.", GameObjectName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to generate tabs from items. Template missing. Add a template by adding a Tab view with IsTemplate=\"True\" to the TabPanel.", GameObjectName));
                 return;
             }
 
@@ -709,7 +709,7 @@ namespace MarkLight.Views.UI
             if (startIndex < 0 || startIndex > lastIndex ||
                 endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Utils.LogWarning("[MarkLight] {0}: Tab list mismatch. Rebuilding tabs.", ViewTypeName);
+                Debug.LogWarning(String.Format("[MarkLight] {0}: Tab list mismatch. Rebuilding tabs.", ViewTypeName));
                 Rebuild();
                 return;
             }
@@ -733,7 +733,7 @@ namespace MarkLight.Views.UI
             if (startIndex < 0 || startIndex > lastIndex ||
                 endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Utils.LogWarning("[MarkLight] {0}: Tab list mismatch. Rebuilding tabs.", GameObjectName);
+                Debug.LogWarning(String.Format("[MarkLight] {0}: Tab list mismatch. Rebuilding tabs.", GameObjectName));
                 Rebuild();
                 return;
             }

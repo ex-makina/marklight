@@ -844,7 +844,7 @@ namespace MarkLight.Views.UI
                 {
                     if (isHorizontal)
                     {
-                        Utils.LogWarning("[MarkLight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels or elements.", view.GameObjectName);
+                        Debug.LogWarning(String.Format("[MarkLight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels or elements.", view.GameObjectName));
                         continue;
                     }
                     else
@@ -857,7 +857,7 @@ namespace MarkLight.Views.UI
                 {
                     if (!isHorizontal)
                     {
-                        Utils.LogWarning("[MarkLight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", view.GameObjectName);
+                        Debug.LogWarning(String.Format("[MarkLight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", view.GameObjectName));
                         continue;
                     }
                     else
@@ -1242,7 +1242,7 @@ namespace MarkLight.Views.UI
         {
             if (index >= _presentedListItems.Count)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to select list item. Index out of bounds.", GameObjectName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to select list item. Index out of bounds.", GameObjectName));
                 return;
             }
 
@@ -1262,7 +1262,7 @@ namespace MarkLight.Views.UI
 
             if (listItem == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to select list item. Item not found.", GameObjectName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to select list item. Item not found.", GameObjectName));
                 return;
             }
 
@@ -1577,7 +1577,7 @@ namespace MarkLight.Views.UI
             // make sure we have a template
             if (ListItemTemplates.Count <= 0)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to generate list from items. Template missing. Add a template by adding a view with IsTemplate=\"True\" to the list.", GameObjectName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to generate list from items. Template missing. Add a template by adding a view with IsTemplate=\"True\" to the list.", GameObjectName));
                 return;
             }
 
@@ -1588,7 +1588,7 @@ namespace MarkLight.Views.UI
             if (startIndex < 0 || startIndex > lastIndex ||
                 endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Utils.LogWarning("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName);
+                Debug.LogWarning(String.Format("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName));
                 Rebuild();
                 return;
             }
@@ -1614,7 +1614,7 @@ namespace MarkLight.Views.UI
             if (startIndex < 0 || startIndex > lastIndex ||
                 endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Utils.LogWarning("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName);
+                Debug.LogWarning(String.Format("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName));
                 Rebuild();
                 return;
             }
@@ -1636,7 +1636,7 @@ namespace MarkLight.Views.UI
             bool listMatch = _presentedListItems.Count == Items.Value.Count;
             if (startIndex < 0 || startIndex > lastIndex || endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Utils.LogWarning("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName);
+                Debug.LogWarning(String.Format("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName));
                 Rebuild();
                 return;
             }
@@ -1677,7 +1677,7 @@ namespace MarkLight.Views.UI
             bool listMatch = _presentedListItems.Count == Items.Value.Count;
             if (startIndex < 0 || startIndex > lastIndex || endIndex < startIndex || endIndex > lastIndex || !listMatch)
             {
-                Utils.LogWarning("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName);
+                Debug.LogWarning(String.Format("[MarkLight] {0}: List mismatch. Rebuilding list.", GameObjectName));
                 Rebuild();
                 return;
             }
@@ -1744,7 +1744,7 @@ namespace MarkLight.Views.UI
         {
             if (ListItemTemplates.Count <= 0)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to generate list from items. Template missing. Add a template by adding a view with IsTemplate=\"True\" to the list.", GameObjectName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to generate list from items. Template missing. Add a template by adding a view with IsTemplate=\"True\" to the list.", GameObjectName));
                 return null;
             }
 
@@ -1885,20 +1885,20 @@ namespace MarkLight.Views.UI
             // verify things are correctly set up for virtualization
             if (Overflow.Value == OverflowMode.Wrap || IsScrollable == false)
             {
-                Utils.LogWarning("[MarkLight] {0}: Can't virtualize list because IsScrollable is false or Overflow is set to Wrap.", GameObjectName);
+                Debug.LogWarning(String.Format("[MarkLight] {0}: Can't virtualize list because IsScrollable is false or Overflow is set to Wrap.", GameObjectName));
                 return false;
             }
 
             if (DisableItemArrangement)
             {
-                Utils.LogWarning("[MarkLight] {0}: Can't virtualize list because DisableItemArrangement is set to True.", GameObjectName);
+                Debug.LogWarning(String.Format("[MarkLight] {0}: Can't virtualize list because DisableItemArrangement is set to True.", GameObjectName));
                 return false;
             }
 
             // check if templates are set and that they have the same height/width
             if (ListItemTemplates.Count <= 0)
             {
-                Utils.LogWarning("[MarkLight] {0}: Can't virtualize list because no item template found. Only dynamic lists can be virtualized.", GameObjectName);
+                Debug.LogWarning(String.Format("[MarkLight] {0}: Can't virtualize list because no item template found. Only dynamic lists can be virtualized.", GameObjectName));
                 return false;
             }
 

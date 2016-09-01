@@ -519,7 +519,7 @@ namespace MarkLight
             // check if from the same type
             if (variable.GetType() != value.GetType())
             {
-                Utils.LogError("[MarkLight] The checked flag is not from the same type as the checked variable.");
+                Debug.LogError("[MarkLight] The checked flag is not from the same type as the checked variable.");
                 return false;
             }
 

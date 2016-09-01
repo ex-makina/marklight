@@ -137,7 +137,7 @@ namespace MarkLight.Editor
         {
             if (ViewPresenter.Instance == null)
             {
-                Utils.LogError("[MarkLight] Unable to generate XSD schema. View presenter can't be found in scene. Make sure the view presenter is enabled.");
+                Debug.LogError("[MarkLight] Unable to generate XSD schema. View presenter can't be found in scene. Make sure the view presenter is enabled.");
                 return;
             }
 

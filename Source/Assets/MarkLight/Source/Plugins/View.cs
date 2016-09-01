@@ -101,6 +101,8 @@ namespace MarkLight
         [ChangeHandler("IsActiveChanged", TriggerImmediately = true)]
         public _bool IsActive;
 
+        #region GameObject
+
         /// <summary>
         /// Hide flags for the game object.
         /// </summary>
@@ -113,6 +115,8 @@ namespace MarkLight
         /// </summary>
         /// <d>GameObject that the view is attached to.</d>
         public GameObject GameObject;
+
+        #endregion
 
         #region Transform
 
@@ -144,6 +148,112 @@ namespace MarkLight
         public _Vector3 Scale;
 
         #endregion
+
+        //#region View Actions
+
+        ///// <summary>
+        ///// Cancel view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when a cancel event occurs.</d>
+        //public ViewAction Cancel;
+
+        ///// <summary>
+        ///// Deselect view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when another view is selected.</d>
+        //public ViewAction Deselect;
+
+        ///// <summary>
+        ///// Drop view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the view accepts a drop.</d>
+        //public ViewAction Drop;
+
+        ///// <summary>
+        ///// Move view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when a move event occurs.</d>
+        //public ViewAction Move;
+
+        ///// <summary>
+        ///// Click view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the user clicks/touches on the view.</d>
+        //public ViewAction Click;
+
+        ///// <summary>
+        ///// Drag view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the user presses mouse on and starts to drag over the view.</d>
+        //public ViewAction BeginDrag;
+
+        ///// <summary>
+        ///// End drag view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the user stops dragging mouse over the view.</d>
+        //public ViewAction EndDrag;
+
+        ///// <summary>
+        ///// Drag view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem as the user drags the mouse over the view.</d>
+        //public ViewAction Drag;
+
+        ///// <summary>
+        ///// Initialize potential drag view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem as the user initiates a potential drag over the view.</d>
+        //public ViewAction InitializePotentialDrag;
+
+        ///// <summary>
+        ///// Mouse down view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the mouse/touch presses down over the view.</d>
+        //public ViewAction MouseDown;
+
+        ///// <summary>
+        ///// Mouse enter view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the mouse enters the view.</d>
+        //public ViewAction MouseEnter;
+
+        ///// <summary>
+        ///// Mouse exit view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the mouse exits the view.</d>
+        //public ViewAction MouseExit;
+
+        ///// <summary>
+        ///// Mouse up view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the mouse/thouch releases over the view.</d>
+        //public ViewAction MouseUp;
+
+        ///// <summary>
+        ///// Scroll view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the user scrolls when the view is selected.</d>
+        //public ViewAction Scroll;
+
+        ///// <summary>
+        ///// Select view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the view is selected.</d>
+        //public ViewAction Select;
+
+        ///// <summary>
+        ///// Submit view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the user submits while view is selected.</d>
+        //public ViewAction Submit;
+
+        ///// <summary>
+        ///// Update selected view action.
+        ///// </summary>
+        ///// <d>Triggered by the EventSystem when the object associated with this EventTrigger is updated.</d>
+        //public ViewAction UpdateSelected;
+
+        //#endregion
 
         /// <summary>
         /// Item data.
@@ -296,7 +406,7 @@ namespace MarkLight
             var viewFieldData = GetViewFieldData(viewField);
             if (viewFieldData == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}\". View field not found.", GameObjectName, value, viewField);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}\". View field not found.", GameObjectName, value, viewField));
                 return null;
             }
 
@@ -322,7 +432,7 @@ namespace MarkLight
             }
             catch (Exception e)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}\". Exception thrown: {3}", GameObjectName, value, viewField, Utils.GetError(e));
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign value \"{1}\" to view field \"{2}\". Exception thrown: {3}", GameObjectName, value, viewField, Utils.GetError(e)));
                 return null;
             }
         }
@@ -352,7 +462,7 @@ namespace MarkLight
             var viewFieldData = GetViewFieldData(viewField);
             if (viewFieldData == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to set is-set indicator on view field \"{1}\". View field not found.", GameObjectName, viewField);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to set is-set indicator on view field \"{1}\". View field not found.", GameObjectName, viewField));
                 return;
             }
 
@@ -368,7 +478,7 @@ namespace MarkLight
             var viewFieldData = GetViewFieldData(viewField);
             if (viewFieldData == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". View field not found.", GameObjectName, viewFieldBinding, viewField);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". View field not found.", GameObjectName, viewFieldBinding, viewField));
                 return;
             }
 
@@ -386,7 +496,7 @@ namespace MarkLight
                 string[] bindings = trimmedBinding.Split(delimiterChars, StringSplitOptions.RemoveEmptyEntries);
                 if (bindings.Length < 1)
                 {
-                    Utils.LogError("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Improperly formatted binding string.", GameObjectName, viewFieldBinding, viewField);
+                    Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Improperly formatted binding string.", GameObjectName, viewFieldBinding, viewField));
                     return;
                 }
 
@@ -405,7 +515,7 @@ namespace MarkLight
 
                     if (transformMethodViewType == null)
                     {
-                        Utils.LogError("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". View \"{3}\" not found.", GameObjectName, viewFieldBinding, viewField, transformStr[0]);
+                        Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". View \"{3}\" not found.", GameObjectName, viewFieldBinding, viewField, transformStr[0]));
                         return;
                     }
                 }
@@ -413,7 +523,7 @@ namespace MarkLight
                 bindingValueObserver.TransformMethod = transformMethodViewType.GetMethod(transformMethodName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
                 if (bindingValueObserver.TransformMethod == null)
                 {
-                    Utils.LogError("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Transform method \"{3}\" not found in view type \"{4}\".", GameObjectName, viewFieldBinding, viewField, bindings[0], Parent.ViewTypeName);
+                    Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Transform method \"{3}\" not found in view type \"{4}\".", GameObjectName, viewFieldBinding, viewField, bindings[0], Parent.ViewTypeName));
                     return;
                 }
 
@@ -438,7 +548,7 @@ namespace MarkLight
                     var sourceViewFieldData = bindingView.GetViewFieldData(sourceFieldName);
                     if (sourceViewFieldData == null)
                     {
-                        Utils.LogError("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Source binding view field \"{3}\" not found.", GameObjectName, viewFieldBinding, viewField, binding);
+                        Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Source binding view field \"{3}\" not found.", GameObjectName, viewFieldBinding, viewField, binding));
                         return;
                     }
                     //Debug.Log(String.Format("Creating binding {0} <-> {1}", sourceViewFieldData.ViewFieldPath, viewFieldData.ViewFieldPath));
@@ -460,7 +570,7 @@ namespace MarkLight
                 if (matches.Count <= 0)
                 {
                     // no bindings found
-                    Utils.LogError("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". String contains no binding.", GameObjectName, viewFieldBinding, viewField);
+                    Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". String contains no binding.", GameObjectName, viewFieldBinding, viewField));
                     return;
                 }
 
@@ -505,7 +615,7 @@ namespace MarkLight
                     var sourceViewFieldData = bindingView.GetViewFieldData(sourceFieldName);
                     if (sourceViewFieldData == null)
                     {
-                        Utils.LogError("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Source binding view field \"{3}\" not found.", GameObjectName, viewFieldBinding, viewField, sourceFieldName);
+                        Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Source binding view field \"{3}\" not found.", GameObjectName, viewFieldBinding, viewField, sourceFieldName));
                         return;
                     }
                     //Debug.Log(String.Format("Creating binding {0} <-> {1}", sourceViewFieldData.ViewFieldPath, viewFieldData.ViewFieldPath));
@@ -614,7 +724,7 @@ namespace MarkLight
             var viewFieldData = GetViewFieldData(entry.ViewActionFieldName);
             if (viewFieldData == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to assign view action handler \"{1}.{2}()\" to view action \"{3}\". View action not found.", GameObjectName, Parent.ViewTypeName, entry.ViewActionHandlerName, entry.ViewActionFieldName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign view action handler \"{1}.{2}()\" to view action \"{3}\". View action not found.", GameObjectName, Parent.ViewTypeName, entry.ViewActionHandlerName, entry.ViewActionFieldName));
                 return;
             }
 
@@ -677,7 +787,7 @@ namespace MarkLight
             }
             else
             {
-                Utils.LogError("[MarkLight] {0}: Unable to assign view change handler \"{1}()\" for view field \"{2}\". Change handler method not found.", GameObjectName, changeHandler.ChangeHandlerName, changeHandler.ViewField);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign view change handler \"{1}()\" for view field \"{2}\". Change handler method not found.", GameObjectName, changeHandler.ChangeHandlerName, changeHandler.ViewField));
                 return;
             }
         }
@@ -727,7 +837,7 @@ namespace MarkLight
             if (viewFieldData == null)
             {
                 hasValue = false;
-                Utils.LogError("[MarkLight] {0}: Unable to get value from view field \"{1}\". View field not found.", GameObjectName, viewField);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to get value from view field \"{1}\". View field not found.", GameObjectName, viewField));
                 return null;
             }
 
@@ -738,7 +848,7 @@ namespace MarkLight
             catch (Exception e)
             {
                 hasValue = false;
-                Utils.LogError("[MarkLight] {0}: Unable to get value from view field \"{1}\". Exception thrown: {2}", GameObjectName, viewField, Utils.GetError(e));
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to get value from view field \"{1}\". Exception thrown: {2}", GameObjectName, viewField, Utils.GetError(e)));
                 return null;
             }
         }
@@ -760,7 +870,7 @@ namespace MarkLight
             var viewFieldData = GetViewFieldData(viewField);
             if (viewFieldData == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to get set-value from view field \"{1}\". View field not found.", GameObjectName, viewField);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to get set-value from view field \"{1}\". View field not found.", GameObjectName, viewField));
                 return false;
             }
 
@@ -973,7 +1083,7 @@ namespace MarkLight
                     }
                     catch (Exception e)
                     {
-                        Utils.LogError("[MarkLight] {0}: Exception thrown in change handler \"{1}\": {2}", GameObjectName, changeHandler, Utils.GetError(e));
+                        Debug.LogError(String.Format("[MarkLight] {0}: Exception thrown in change handler \"{1}\": {2}", GameObjectName, changeHandler, Utils.GetError(e)));
                     }
                 }
             }
@@ -1027,7 +1137,7 @@ namespace MarkLight
             var viewFieldData = GetViewFieldData(viewField);
             if (viewFieldData == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to set state value \"{1}-{2}\". View field \"{2}\" not found.", GameObjectName, state, viewField);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to set state value \"{1}-{2}\". View field \"{2}\" not found.", GameObjectName, state, viewField));
                 return;
             }
 
@@ -1265,7 +1375,7 @@ namespace MarkLight
                             var viewFieldData = GetViewFieldData(stateValue.ViewFieldPath);
                             if (viewFieldData == null)
                             {
-                                Utils.LogError("[MarkLight] {0}: Unable to assign default state value to view field \"{1}\". View field not found.", GameObjectName, stateValue.ViewFieldPath);
+                                Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign default state value to view field \"{1}\". View field not found.", GameObjectName, stateValue.ViewFieldPath));
                             }
                             else
                             {
@@ -1552,7 +1662,7 @@ namespace MarkLight
             }
             catch (Exception e)
             {
-                Utils.LogError("[MarkLight] {0}: InitializeInternalDefaultValues() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e));
+                Debug.LogError(String.Format("[MarkLight] {0}: InitializeInternalDefaultValues() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
             }
 #else
             InitializeInternalDefaultValues();
@@ -1571,7 +1681,7 @@ namespace MarkLight
             }
             catch (Exception e)
             {
-                Utils.LogError("[MarkLight] {0}: InitializeInternal() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e));
+                Debug.LogError(String.Format("[MarkLight] {0}: InitializeInternal() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
             }
 #else
             InitializeInternal();
@@ -1590,7 +1700,7 @@ namespace MarkLight
             }
             catch (Exception e)
             {
-                Utils.LogError("[MarkLight] {0}: Initialize() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e));
+                Debug.LogError(String.Format("[MarkLight] {0}: Initialize() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
             }
 #else
             Initialize();
@@ -1609,7 +1719,7 @@ namespace MarkLight
             }
             catch (Exception e)
             {
-                Utils.LogError("[MarkLight] {0}: PropagateBindings() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e));
+                Debug.LogError(String.Format("[MarkLight] {0}: PropagateBindings() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
             }
 #else
             PropagateBindings();
@@ -1628,7 +1738,7 @@ namespace MarkLight
             }
             catch (Exception e)
             {
-                Utils.LogError("[MarkLight] {0}: QueueAllChangeHandlers() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e));
+                Debug.LogError(String.Format("[MarkLight] {0}: QueueAllChangeHandlers() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
             }
 #else
             QueueAllChangeHandlers();
@@ -1647,7 +1757,7 @@ namespace MarkLight
             }
             catch (Exception e)
             {
-                Utils.LogError("[MarkLight] {0}: TriggerChangeHandlers() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e));
+                Debug.LogError(String.Format("[MarkLight] {0}: TriggerChangeHandlers() failed. Exception thrown: {1}", GameObjectName, Utils.GetError(e)));
             }
 #else
             TriggerChangeHandlers();

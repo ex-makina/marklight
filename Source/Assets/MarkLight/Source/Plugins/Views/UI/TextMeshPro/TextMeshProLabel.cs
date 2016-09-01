@@ -10,7 +10,6 @@
 // is imported in your project and that you reload the views in the scene to have the changes take effect.
 // 
 
-
 //#define ENABLE_TEXTMESHPRO
 
 #if ENABLE_TEXTMESHPRO

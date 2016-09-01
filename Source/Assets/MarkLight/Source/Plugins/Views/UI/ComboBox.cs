@@ -491,7 +491,7 @@ namespace MarkLight.Views.UI
 
 
 #if UNITY_4_6_0
-            Utils.LogError("[MarkLight] Due to a bug in Unity 4.6.0 (653443) the ComboBox will not work correctly. The bug has been resolved in Unity 4.6.1p1.");
+            Debug.LogError("[MarkLight] Due to a bug in Unity 4.6.0 (653443) the ComboBox will not work correctly. The bug has been resolved in Unity 4.6.1p1.");
 #endif
         }
 

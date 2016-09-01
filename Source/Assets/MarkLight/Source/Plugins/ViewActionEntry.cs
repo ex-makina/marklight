@@ -106,7 +106,7 @@ namespace MarkLight
             }
             catch (Exception e)
             {
-                Utils.LogError("[MarkLight] {0}: Exception thrown when triggering view action handler \"{1}.{2}()\" for view action \"{3}\": {4}", SourceView.GameObjectName, ParentView.ViewTypeName, ViewActionHandlerName, ViewActionFieldName, Utils.GetError(e));
+                Debug.LogError(String.Format("[MarkLight] {0}: Exception thrown when triggering view action handler \"{1}.{2}()\" for view action \"{3}\": {4}", SourceView.GameObjectName, ParentView.ViewTypeName, ViewActionHandlerName, ViewActionFieldName, Utils.GetError(e)));
             }
         }
 
@@ -119,7 +119,7 @@ namespace MarkLight
             _viewActionMethod = ParentView.GetType().GetMethod(ViewActionHandlerName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             if (_viewActionMethod == null)
             {
-                Utils.LogError("[MarkLight] {0}: Unable to initialize view action handler \"{1}.{2}()\" for view action \"{3}\". View action handler not found.", SourceView.GameObjectName, ParentView.ViewTypeName, ViewActionHandlerName, ViewActionFieldName);
+                Debug.LogError(String.Format("[MarkLight] {0}: Unable to initialize view action handler \"{1}.{2}()\" for view action \"{3}\". View action handler not found.", SourceView.GameObjectName, ParentView.ViewTypeName, ViewActionHandlerName, ViewActionFieldName));
                 return;
             }
 
@@ -137,7 +137,7 @@ namespace MarkLight
                 {
                     if (!viewActionMethodParameters[i].ParameterType.IsAssignableFrom(SourceView.GetType()))
                     {
-                        Utils.LogError("[MarkLight] View action \"{0}.{1}\" has parameter \"{2}\" with invalid type. Expected type (or baseclass of) \"{3}\".", ParentView.ViewTypeName, ViewActionHandlerName, viewActionMethodParameters[i].Name, SourceView.ViewTypeName);
+                        Debug.LogError(String.Format("[MarkLight] View action \"{0}.{1}\" has parameter \"{2}\" with invalid type. Expected type (or baseclass of) \"{3}\".", ParentView.ViewTypeName, ViewActionHandlerName, viewActionMethodParameters[i].Name, SourceView.ViewTypeName));
                     }
 
                     _parameters[i] = SourceView;

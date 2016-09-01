@@ -15,11 +15,11 @@ namespace MarkLight
     public static class Utils
     {
         #region Fields
-
-        public static bool SuppressLogging = false;
+                
         public static System.Diagnostics.Stopwatch Stopwatch;
         public static string ErrorMessage = string.Empty;
-        private static System.Random _random;        
+        private static System.Random _random;
+        private static bool _suppressLogging = false;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Extracts infromation from an exception and returns a readable error message.
+        /// Extracts information from an exception and returns a readable error message.
         /// </summary>
         public static object GetError(Exception e)
         {
@@ -179,6 +179,26 @@ namespace MarkLight
         public static bool IsEven(int value)
         {
             return value % 2 == 0;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets boolean indicating if logging should be suppressed.
+        /// </summary>
+        public static bool SuppressLogging
+        {
+            get
+            {                
+                return _suppressLogging;
+            }
+            set
+            {
+                Debug.logger.logEnabled = value;
+                _suppressLogging = value;
+            }
         }
 
         #endregion
