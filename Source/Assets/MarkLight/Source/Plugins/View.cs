@@ -149,111 +149,111 @@ namespace MarkLight
 
         #endregion
 
-        //#region View Actions
+        #region View Actions
 
-        ///// <summary>
-        ///// Cancel view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when a cancel event occurs.</d>
-        //public ViewAction Cancel;
+        /// <summary>
+        /// Cancel view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when a cancel event occurs.</d>
+        public ViewAction Cancel;
 
-        ///// <summary>
-        ///// Deselect view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when another view is selected.</d>
-        //public ViewAction Deselect;
+        /// <summary>
+        /// Deselect view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when another view is selected.</d>
+        public ViewAction Deselect;
 
-        ///// <summary>
-        ///// Drop view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the view accepts a drop.</d>
-        //public ViewAction Drop;
+        /// <summary>
+        /// Drop view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the view accepts a drop.</d>
+        public ViewAction Drop;
 
-        ///// <summary>
-        ///// Move view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when a move event occurs.</d>
-        //public ViewAction Move;
+        /// <summary>
+        /// Move view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when a move event occurs.</d>
+        public ViewAction Move;
 
-        ///// <summary>
-        ///// Click view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the user clicks/touches on the view.</d>
-        //public ViewAction Click;
+        /// <summary>
+        /// Click view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the user clicks/touches on the view.</d>
+        public ViewAction Click;
 
-        ///// <summary>
-        ///// Drag view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the user presses mouse on and starts to drag over the view.</d>
-        //public ViewAction BeginDrag;
+        /// <summary>
+        /// Drag view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the user presses mouse on and starts to drag over the view.</d>
+        public ViewAction BeginDrag;
 
-        ///// <summary>
-        ///// End drag view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the user stops dragging mouse over the view.</d>
-        //public ViewAction EndDrag;
+        /// <summary>
+        /// End drag view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the user stops dragging mouse over the view.</d>
+        public ViewAction EndDrag;
 
-        ///// <summary>
-        ///// Drag view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem as the user drags the mouse over the view.</d>
-        //public ViewAction Drag;
+        /// <summary>
+        /// Drag view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem as the user drags the mouse over the view.</d>
+        public ViewAction Drag;
 
-        ///// <summary>
-        ///// Initialize potential drag view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem as the user initiates a potential drag over the view.</d>
-        //public ViewAction InitializePotentialDrag;
+        /// <summary>
+        /// Initialize potential drag view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem as the user initiates a potential drag over the view.</d>
+        public ViewAction InitializePotentialDrag;
 
-        ///// <summary>
-        ///// Mouse down view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the mouse/touch presses down over the view.</d>
-        //public ViewAction MouseDown;
+        /// <summary>
+        /// Mouse down view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the mouse/touch presses down over the view.</d>
+        public ViewAction MouseDown;
 
-        ///// <summary>
-        ///// Mouse enter view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the mouse enters the view.</d>
-        //public ViewAction MouseEnter;
+        /// <summary>
+        /// Mouse enter view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the mouse enters the view.</d>
+        public ViewAction MouseEnter;
 
-        ///// <summary>
-        ///// Mouse exit view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the mouse exits the view.</d>
-        //public ViewAction MouseExit;
+        /// <summary>
+        /// Mouse exit view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the mouse exits the view.</d>
+        public ViewAction MouseExit;
 
-        ///// <summary>
-        ///// Mouse up view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the mouse/thouch releases over the view.</d>
-        //public ViewAction MouseUp;
+        /// <summary>
+        /// Mouse up view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the mouse/thouch releases over the view.</d>
+        public ViewAction MouseUp;
 
-        ///// <summary>
-        ///// Scroll view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the user scrolls when the view is selected.</d>
-        //public ViewAction Scroll;
+        /// <summary>
+        /// Scroll view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the user scrolls when the view is selected.</d>
+        public ViewAction Scroll;
 
-        ///// <summary>
-        ///// Select view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the view is selected.</d>
-        //public ViewAction Select;
+        /// <summary>
+        /// Select view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the view is selected.</d>
+        public ViewAction Select;
 
-        ///// <summary>
-        ///// Submit view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the user submits while view is selected.</d>
-        //public ViewAction Submit;
+        /// <summary>
+        /// Submit view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the user submits while view is selected.</d>
+        public ViewAction Submit;
 
-        ///// <summary>
-        ///// Update selected view action.
-        ///// </summary>
-        ///// <d>Triggered by the EventSystem when the object associated with this EventTrigger is updated.</d>
-        //public ViewAction UpdateSelected;
+        /// <summary>
+        /// Update selected view action.
+        /// </summary>
+        /// <d>Triggered by the EventSystem when the object associated with this EventTrigger is updated.</d>
+        public ViewAction UpdateSelected;
 
-        //#endregion
+        #endregion
 
         /// <summary>
         /// Item data.
@@ -334,10 +334,10 @@ namespace MarkLight
         private Dictionary<string, Dictionary<string, StateAnimation>> _stateAnimations;
         private HashSet<string> _setViewFields;
         private List<ValueObserver> _valueObservers;
+        private List<ViewAction> _eventSystemViewActions;
         private HashSet<string> _changeHandlers;
         private Dictionary<string, MethodInfo> _changeHandlerMethods;
         private Dictionary<string, string> _expressionViewField;
-        private List<ViewAction> _eventSystemViewActions;
         private bool _isDefaultState;
         private bool _isInitialized;
         private string _previousState;
@@ -368,10 +368,10 @@ namespace MarkLight
             _stateAnimations = new Dictionary<string, Dictionary<string, StateAnimation>>();
             _setViewFields = new HashSet<string>();
             _valueObservers = new List<ValueObserver>();
+            _eventSystemViewActions = new List<ViewAction>();
             _changeHandlers = new HashSet<string>();
             _changeHandlerMethods = new Dictionary<string, MethodInfo>();
             _expressionViewField = new Dictionary<string, string>();
-            _eventSystemViewActions = new List<ViewAction>();
         }
 
         #endregion
@@ -888,10 +888,10 @@ namespace MarkLight
             _stateAnimations = new Dictionary<string, Dictionary<string, StateAnimation>>();
             _setViewFields = new HashSet<string>();
             _valueObservers = new List<ValueObserver>();
+            _eventSystemViewActions = new List<ViewAction>();
             _changeHandlers = new HashSet<string>();
             _changeHandlerMethods = new Dictionary<string, MethodInfo>();
             _expressionViewField = new Dictionary<string, string>();
-            _eventSystemViewActions = new List<ViewAction>();
             _previousState = State;
             _isDefaultState = State == DefaultStateName;
         }
@@ -932,20 +932,23 @@ namespace MarkLight
                 SetChangeHandler(changeHandler);
             }
 
-            // initialize system event triggers
-            _eventSystemViewActions = new List<ViewAction>();
-            foreach (var viewActionField in viewTypeData.ViewActionFields)
-            {
-                // get view action field data
-                var viewFieldData = GetViewFieldData(viewActionField);
-
-                bool hasValue;
-                ViewAction viewAction = viewFieldData.GetValue(out hasValue) as ViewAction;
-                if (viewAction != null && viewAction.TriggeredByEventSystem)
-                {
-                    _eventSystemViewActions.Add(viewAction);
-                }
-            }
+            // initialize system event triggers            
+            if (Cancel.HasEntries) _eventSystemViewActions.Add(Cancel);
+            if (Click.HasEntries) _eventSystemViewActions.Add(Click);
+            if (Deselect.HasEntries) _eventSystemViewActions.Add(Deselect);
+            if (Drag.HasEntries) _eventSystemViewActions.Add(Drag);
+            if (Drop.HasEntries) _eventSystemViewActions.Add(Drop);
+            if (EndDrag.HasEntries) _eventSystemViewActions.Add(EndDrag);
+            if (InitializePotentialDrag.HasEntries) _eventSystemViewActions.Add(InitializePotentialDrag);
+            if (Move.HasEntries) _eventSystemViewActions.Add(Move);
+            if (MouseDown.HasEntries) _eventSystemViewActions.Add(MouseDown);
+            if (MouseEnter.HasEntries) _eventSystemViewActions.Add(MouseEnter);
+            if (MouseExit.HasEntries) _eventSystemViewActions.Add(MouseExit);
+            if (MouseUp.HasEntries) _eventSystemViewActions.Add(MouseUp);
+            if (Scroll.HasEntries) _eventSystemViewActions.Add(Scroll);
+            if (Select.HasEntries) _eventSystemViewActions.Add(Select);
+            if (Submit.HasEntries) _eventSystemViewActions.Add(Submit);
+            if (UpdateSelected.HasEntries) _eventSystemViewActions.Add(UpdateSelected);
 
             InitEventSystemTriggers();
             IsInitialized = true;

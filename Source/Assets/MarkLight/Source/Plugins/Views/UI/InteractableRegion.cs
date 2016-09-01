@@ -21,40 +21,6 @@ namespace MarkLight.Views.UI
     [HideInPresenter]
     public class InteractableRegion : UIView
     {
-        #region Fields
-
-        /// <summary>
-        /// Interactable region click.
-        /// </summary>
-        /// <d>Triggered when the user clicks on the interactable region.</d>
-        public ViewAction Click;
-
-        /// <summary>
-        /// Interactable region begin drag.
-        /// </summary>
-        /// <d>Triggered when the user presses mouse on and starts to drag over the interactable region.</d>
-        public ViewAction BeginDrag;
-
-        /// <summary>
-        /// Interactable region end drag.
-        /// </summary>
-        /// <d>Triggered when the user stops dragging mouse over the interactable region.</d>
-        public ViewAction EndDrag;
-
-        /// <summary>
-        /// Interactable region drag.
-        /// </summary>
-        /// <d>Triggered as the user drags the mouse over the interactable region.</d>
-        public ViewAction Drag;
-
-        /// <summary>
-        /// Interactable region initialize potential drag.
-        /// </summary>
-        /// <d>Triggered as the user initiates a potential drag over the interactable region.</d>
-        public ViewAction InitializePotentialDrag;
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -63,7 +29,6 @@ namespace MarkLight.Views.UI
         public override void SetDefaultValues()
         {
             base.SetDefaultValues();
-
             RaycastBlockMode.DirectValue = MarkLight.RaycastBlockMode.Always;
         }
 

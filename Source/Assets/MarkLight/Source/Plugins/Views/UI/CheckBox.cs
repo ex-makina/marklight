@@ -234,12 +234,6 @@ namespace MarkLight.Views.UI
 
         #endregion
 
-        /// <summary>
-        /// Check box click action.
-        /// </summary>
-        /// <d>The check box click action is triggered when the user clicks on the check box image or text label.</d>
-        public ViewAction Click;
-
         #endregion
 
         #region Methods

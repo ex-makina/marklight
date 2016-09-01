@@ -422,18 +422,6 @@ namespace MarkLight.Views.UI
 
         #endregion
 
-        /// <summary>
-        /// View action triggered when the input field is selected.
-        /// </summary>
-        /// <d>View action triggered when the input field is selected.</d>
-        public ViewAction Select;
-
-        /// <summary>
-        /// View action triggered when the input field is deselected.
-        /// </summary>
-        /// <d>View action triggered when the input field is deselected.</d>
-        public ViewAction Deselect;
-
         #endregion
 
         #region Methods

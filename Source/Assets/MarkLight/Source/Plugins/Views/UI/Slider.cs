@@ -237,30 +237,6 @@ namespace MarkLight.Views.UI
         /// <d>Triggered when the slider value changes. Triggered once when handle is released if SetValueOnDragEnded is set.</d>
         public ViewAction ValueChanged;
 
-        /// <summary>
-        /// Slider begin drag.
-        /// </summary>
-        /// <d>Triggered when the user presses mouse on and starts to drag over the slider.</d>
-        public ViewAction BeginDrag;
-
-        /// <summary>
-        /// Slider end drag.
-        /// </summary>
-        /// <d>Triggered when the user stops dragging mouse over the slider.</d>
-        public ViewAction EndDrag;
-
-        /// <summary>
-        /// Slider drag.
-        /// </summary>
-        /// <d>Triggered as the user drags the mouse over the slider.</d>
-        public ViewAction Drag;
-
-        /// <summary>
-        /// Slider initialize potential drag.
-        /// </summary>
-        /// <d>Triggered as the user initiates a potential drag over the slider.</d>
-        public ViewAction InitializePotentialDrag;
-
         #endregion
 
         #region Methods

@@ -202,36 +202,6 @@ namespace MarkLight.Views.UI
         public _bool IsMouseOver;
 
         /// <summary>
-        /// List item click action.
-        /// </summary>
-        /// <d>The list item click action is triggered when the user clicks on the list item.</d>
-        public ViewAction Click;
-
-        /// <summary>
-        /// List item mouse enter action.
-        /// </summary>
-        /// <d>The list item mouse enter action is triggered when the mouse enters the list item.</d>
-        public ViewAction MouseEnter;
-
-        /// <summary>
-        /// List item mouse exit action.
-        /// </summary>
-        /// <d>The list item mouse exit action is triggered when the mouse exits the list item.</d>
-        public ViewAction MouseExit;
-
-        /// <summary>
-        /// List item mouse down action.
-        /// </summary>
-        /// <d>The list item mouse down action is triggered when the mouse is pressed over the list item.</d>
-        public ViewAction MouseDown;
-
-        /// <summary>
-        /// List item mouse down action.
-        /// </summary>
-        /// <d>The list item mouse up action is triggered when the mouse is pressed and then released over the list item.</d>
-        public ViewAction MouseUp;
-
-        /// <summary>
         /// Parent list.
         /// </summary>
         /// <d>The list that created this list item.</d>

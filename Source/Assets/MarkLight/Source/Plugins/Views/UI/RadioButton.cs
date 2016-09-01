@@ -228,12 +228,6 @@ namespace MarkLight.Views.UI
 
         #endregion
 
-        /// <summary>
-        /// Radio button click action.
-        /// </summary>
-        /// <d>The radio button click action is triggered when the user clicks on the radio button image or text label.</d>
-        public ViewAction Click;
-
         #endregion
 
         #region Methods

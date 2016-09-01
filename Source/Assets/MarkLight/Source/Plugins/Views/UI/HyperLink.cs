@@ -41,37 +41,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         [NotSetFromXuml]
         public bool IsMouseOver;
-
-        /// <summary>
-        /// Hyperlink click action.
-        /// </summary>
-        /// <d>The hyperlink click action is triggered when the user clicks on the hyperlink.</d>
-        public ViewAction Click;
-
-        /// <summary>
-        /// Hyperlink mouse enter action.
-        /// </summary>
-        /// <d>The hyperlink mouse enter action is triggered when the mouse enters the hyperlink.</d>
-        public ViewAction MouseEnter;
-
-        /// <summary>
-        /// Hyperlink mouse exit action.
-        /// </summary>
-        /// <d>The hyperlink mouse exit action is triggered when the mouse exits the hyperlink.</d>
-        public ViewAction MouseExit;
-
-        /// <summary>
-        /// Hyperlink mouse down action.
-        /// </summary>
-        /// <d>The hyperlink mouse down action is triggered when the mouse is pressed over the hyperlink.</d>
-        public ViewAction MouseDown;
-
-        /// <summary>
-        /// Hyperlink mouse down action.
-        /// </summary>
-        /// <d>The hyperlink mouse up action is triggered when the mouse is pressed and then released over the hyperlink.</d>
-        public ViewAction MouseUp;
-
+                
         #endregion
 
         #region Methods

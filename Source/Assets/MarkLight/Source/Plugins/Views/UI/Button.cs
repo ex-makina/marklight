@@ -178,36 +178,6 @@ namespace MarkLight.Views.UI
         public _bool CanToggleOff;
 
         /// <summary>
-        /// Button click action.
-        /// </summary>
-        /// <d>The button click action is triggered when the user clicks on the button.</d>
-        public ViewAction Click;
-
-        /// <summary>
-        /// Button mouse enter action.
-        /// </summary>
-        /// <d>The button mouse enter action is triggered when the mouse enters the button.</d>
-        public ViewAction MouseEnter;
-
-        /// <summary>
-        /// Button mouse exit action.
-        /// </summary>
-        /// <d>The button mouse exit action is triggered when the mouse exits the button.</d>
-        public ViewAction MouseExit;
-
-        /// <summary>
-        /// Button mouse down action.
-        /// </summary>
-        /// <d>The button mouse down action is triggered when the mouse is pressed over the button.</d>
-        public ViewAction MouseDown;
-
-        /// <summary>
-        /// Button mouse down action.
-        /// </summary>
-        /// <d>The button mouse up action is triggered when the mouse is pressed and then released over the button.</d>
-        public ViewAction MouseUp;
-
-        /// <summary>
         /// Indicates if the button is pressed.
         /// </summary>
         [NotSetFromXuml]

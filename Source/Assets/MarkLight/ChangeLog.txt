@@ -2,6 +2,7 @@
 - Added Text Mesh Pro InputField
 - Added RemappedField used if you want to change the mapping (MapTo) of a dependency view field in a derived class
 - Added generic ComponentValueConverter so component fields such as RenderCamera can be specified in XUML as string which is the path/name of the game object
+- View actions triggered by unity event system (Click, Drag, MouseUp, etc) are included in base View class and is available in all views
 - Fixed so double-clicking console error messages show the exact line the error was printed rather than the Utils.LogError wrapper
 - Fixed bug where inherited style values (BasedOn) was added after the inherited values (potentially overwriting them)
 - Fixed bug where Text Mesh Pro Label text updates its size after the text is rendered
