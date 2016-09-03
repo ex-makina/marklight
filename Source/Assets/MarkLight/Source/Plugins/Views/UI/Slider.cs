@@ -30,7 +30,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the slider.</d>
         [MapTo("SliderBackgroundImageView.Sprite")]
-        public _UISprite SliderBackgroundImage;
+        public _SpriteAsset SliderBackgroundImage;
 
         /// <summary>
         /// Slider image type.
@@ -68,7 +68,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the slider fill.</d>
         [MapTo("SliderFillImageView.Sprite")]
-        public _UISprite SliderFillImage;
+        public _SpriteAsset SliderFillImage;
 
         /// <summary>
         /// Slider fill image type.
@@ -106,7 +106,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the slider handle.</d>
         [MapTo("SliderHandleImageView.Sprite")]
-        public _UISprite SliderHandleImage;
+        public _SpriteAsset SliderHandleImage;
 
         /// <summary>
         /// Slider handle image type.

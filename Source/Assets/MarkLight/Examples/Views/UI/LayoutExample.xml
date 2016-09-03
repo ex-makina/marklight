@@ -1,0 +1,51 @@
+<LayoutExample xmlns="MarkLight">
+  <UserInterface>
+    <Region Width="800" Height="600" Alignment="Center" BackgroundColor="Indigo" />
+    
+    <!-- Region that we adjust layout to-->
+    <Region Id="LayoutRegion" Width="800" Height="600" Alignment="Center" BackgroundColor="Coral">
+
+      <!-- Buttons to adjust various layout parameters-->
+      <Group Spacing="5">
+        <Label Text="Alignment:" AdjustToText="Width" />
+        <Group Orientation="Horizontal" Spacing="5">          
+          <Button Style="Small" Text="TopLeft" Click="TopLeft" />
+          <Button Style="Small" Text="Top" Click="Top" />
+          <Button Style="Small" Text="TopRight" Click="TopRight" />
+        </Group>
+
+        <Group Orientation="Horizontal" Spacing="5">
+          <Button Style="Small" Text="Left" Click="Left" />
+          <Button Style="Small" Text="Center" Click="Center" />
+          <Button Style="Small" Text="Right" Click="Right" />
+        </Group>
+
+        <Group Orientation="Horizontal" Spacing="5">
+          <Button Style="Small" Text="BottomLeft" Click="BottomLeft" />
+          <Button Style="Small" Text="Bottom" Click="Bottom" />
+          <Button Style="Small" Text="BottomRight" Click="BottomRight" />
+        </Group>
+
+        <Label Text="Toggle 100px margin:" AdjustToText="Width" />
+        <Group Orientation="Horizontal" Spacing="5">
+          <Button Style="Small" Text="MarginLeft" ToggleClick="MarginLeft" IsToggleButton="True" />
+          <Button Style="Small" Text="MarginTop" ToggleClick="MarginTop" IsToggleButton="True" />
+          <Button Style="Small" Text="MarginRight" ToggleClick="MarginRight" IsToggleButton="True" />
+          <Button Style="Small" Text="MarginBottom" ToggleClick="MarginBottom" IsToggleButton="True" />
+        </Group>
+
+        <Label Text="Toggle 100px offset:" AdjustToText="Width" />
+        <Group Orientation="Horizontal" Spacing="5">
+          <Button Style="Small" Text="OffsetLeft" ToggleClick="OffsetLeft" IsToggleButton="True" />
+          <Button Style="Small" Text="OffsetTop" ToggleClick="OffsetTop" IsToggleButton="True" />
+          <Button Style="Small" Text="OffsetRight" ToggleClick="OffsetRight" IsToggleButton="True" />
+          <Button Style="Small" Text="OffsetBottom" ToggleClick="OffsetBottom" IsToggleButton="True" />
+        </Group>
+      </Group>
+      
+      
+    </Region>
+    
+  </UserInterface>
+  <EventSystem />
+</LayoutExample>

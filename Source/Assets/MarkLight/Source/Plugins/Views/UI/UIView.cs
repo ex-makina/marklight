@@ -186,7 +186,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Set an override sprite to be used for rendering. If set the override sprite is used instead of the regular image sprite.</d>
         [ChangeHandler("BackgroundChanged")]
-        public _UISprite BackgroundImageOverrideSprite;
+        public _SpriteAsset BackgroundImageOverrideSprite;
 
         /// <summary>
         /// Preserve aspect ratio.
@@ -200,7 +200,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered.</d>
         [ChangeHandler("BackgroundChanged")]
-        public _UISprite BackgroundImage;
+        public _SpriteAsset BackgroundImage;
 
         /// <summary>
         /// Type of background image.
@@ -367,8 +367,8 @@ namespace MarkLight.Views.UI
                 offsetMaxY = height.Value.Pixels / 2f;
             }
 
-            RectTransform.anchorMin = new Vector2(xMin, yMin);
-            RectTransform.anchorMax = new Vector2(xMax, yMax);
+            RectTransform.anchorMin = new Vector2(xMin + Margin.Value.Left.Percent, yMin + Margin.Value.Bottom.Percent);
+            RectTransform.anchorMax = new Vector2(xMax - Margin.Value.Right.Percent, yMax - Margin.Value.Top.Percent);
 
             // positioning and margins
             RectTransform.offsetMin = new Vector2(
@@ -430,14 +430,14 @@ namespace MarkLight.Views.UI
             }
                         
             if (ImageComponent != null)
-            {                
-                if (BackgroundImage.IsSet)
+            {
+                if (BackgroundImage.IsSet || BackgroundImageOverrideSprite.IsSet)
                 {
-                    var uiSprite = BackgroundImage.Value;
-                    if (uiSprite != null)
+                    var sprite = BackgroundImageOverrideSprite.IsSet ? BackgroundImageOverrideSprite.Value : BackgroundImage.Value; 
+                    if (sprite != null)
                     {
-                        ImageComponent.sprite = uiSprite.Sprite;
-                        uiSprite.AddObserver(this);
+                        ImageComponent.sprite = sprite.Sprite;
+                        sprite.UnityAsset.AddObserver(this);
                     }
                     else
                     {
@@ -510,12 +510,12 @@ namespace MarkLight.Views.UI
         /// <summary>
         /// Called when a sprite used by the view has been loaded or unloaded.
         /// </summary>
-        public override void OnSpriteChanged(UISprite sprite)
+        public override void OnAssetChanged(UnityAsset unityAsset)
         {
-            base.OnSpriteChanged(sprite);
+            base.OnAssetChanged(unityAsset);
 
             // is the sprite changed currently used as the background sprite? 
-            if (BackgroundImage.Value != null && BackgroundImage.Value == sprite)
+            if (BackgroundImage.Value != null && BackgroundImage.Value.UnityAsset == unityAsset)
             {
                 // yes. update background
                 BackgroundChanged();
@@ -532,11 +532,11 @@ namespace MarkLight.Views.UI
             // get background sprite from global cache
             if (BackgroundImage.IsSet && BackgroundImage.Value != null)
             {
-                var sprite = ViewPresenter.Instance.GetSprite(BackgroundImage.Value.Path);
-                if (sprite != null)
+                var spriteAsset = ViewPresenter.Instance.GetAsset(BackgroundImage.Value.Path);
+                if (spriteAsset != null)
                 {
-                    sprite.AddObserver(this);
-                    BackgroundImage.DirectValue = sprite;
+                    spriteAsset.AddObserver(this);
+                    BackgroundImage.DirectValue = new SpriteAsset(spriteAsset);
                 }
             }
         }

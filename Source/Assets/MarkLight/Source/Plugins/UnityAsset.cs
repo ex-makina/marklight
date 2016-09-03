@@ -9,17 +9,17 @@ using UnityEngine;
 namespace MarkLight
 {
     /// <summary>
-    /// Represents a sprite.
+    /// Contains information about a unity asset.
     /// </summary>
     [Serializable]
-    public class UISprite
+    public class UnityAsset
     {
         #region Fields
 
-        public Sprite Sprite;
+        public UnityEngine.Object Asset;
         public string Path;
 
-        private Dictionary<int, WeakReference> SpriteLoadObservers;
+        private Dictionary<int, WeakReference> _assetLoadObservers;
 
         #endregion
 
@@ -28,9 +28,9 @@ namespace MarkLight
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
-        public UISprite(Sprite sprite, string path)
+        public UnityAsset(string path, UnityEngine.Object asset)
         {
-            Sprite = sprite;
+            Asset = asset;
             Path = path;
         }
          
@@ -43,30 +43,30 @@ namespace MarkLight
         /// </summary>
         public void AddObserver(View view)
         {
-            if (SpriteLoadObservers == null)
+            if (_assetLoadObservers == null)
             {
-                SpriteLoadObservers = new Dictionary<int, WeakReference>();
+                _assetLoadObservers = new Dictionary<int, WeakReference>();
             }
 
             int hashCode = view.GetHashCode();
-            if (SpriteLoadObservers.ContainsKey(hashCode))
+            if (_assetLoadObservers.ContainsKey(hashCode))
                 return;
 
-            SpriteLoadObservers.Add(hashCode, new WeakReference(view));
+            _assetLoadObservers.Add(hashCode, new WeakReference(view));
         }
 
         /// <summary>
-        /// Notifies observers that a sprite has been loaded/unloaded.
+        /// Notifies observers that a asset has been loaded/unloaded.
         /// </summary>
         public void NotifyObservers()
         {
-            if (SpriteLoadObservers == null)
+            if (_assetLoadObservers == null)
             {
-                SpriteLoadObservers = new Dictionary<int, WeakReference>();
+                _assetLoadObservers = new Dictionary<int, WeakReference>();
             }
 
             List<int> observersToRemove = new List<int>();
-            foreach (var keyValue in SpriteLoadObservers)
+            foreach (var keyValue in _assetLoadObservers)
             {
                 if (!keyValue.Value.IsAlive)
                 {
@@ -75,7 +75,7 @@ namespace MarkLight
                 }
 
                 View view = keyValue.Value.Target as View;
-                view.OnSpriteChanged(this);
+                view.OnAssetChanged(this);
             }
 
             // remove observers that are not alive anymore
@@ -83,7 +83,7 @@ namespace MarkLight
             {
                 foreach (var key in observersToRemove)
                 {
-                    SpriteLoadObservers.Remove(key);
+                    _assetLoadObservers.Remove(key);
                 }
             }
         }
@@ -105,22 +105,22 @@ namespace MarkLight
                 return;
 
             //var sprite = Sprite;
-            Sprite = null;
+            Asset = null;
             NotifyObservers();
 
             // uncomment to ensure memory is released
-            //if (sprite != null)
+            //if (asset != null)
             //{
-            //    UnityEngine.Object.DestroyImmediate(sprite, true);
+            //    UnityEngine.Object.DestroyImmediate(asset, true);
             //}
         }
 
         /// <summary>
-        /// Attempt to load sprite.
+        /// Attempt to load asset.
         /// </summary>
-        public bool Load(Sprite sprite)
+        public bool Load(UnityEngine.Object asset)
         {
-            Sprite = sprite;
+            Asset = asset;
             NotifyObservers();
             return IsLoaded;
         }
@@ -130,16 +130,27 @@ namespace MarkLight
         #region Properties
 
         /// <summary>
-        /// Gets boolean indicating if the sprite is loaded.
+        /// Gets boolean indicating if the asset is loaded.
         /// </summary>
         public bool IsLoaded
         {
             get
             {
-                return Sprite != null;
+                return Asset != null;
+            }
+        }
+
+        /// <summary>
+        /// Gets asset converted to sprite.
+        /// </summary>
+        public Sprite Sprite
+        {
+            get
+            {
+                return Asset != null ? Asset as Sprite : null;
             }
         }
 
         #endregion
-    }
+    }    
 }

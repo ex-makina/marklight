@@ -36,15 +36,10 @@ namespace MarkLight
         public List<string> Views;
         public List<string> Themes;
         public GameObject RootView;
-        public List<UISprite> Sprites;
-        public List<Font> Fonts;
-        public List<string> FontPaths;
-        public List<Material> Materials;
-        public List<string> MaterialPaths;
-        public List<UnityEngine.Object> Assets;
-        public List<string> AssetPaths;
         public bool DisableAutomaticReload;
         public bool UpdateXsdSchema;
+
+        public AssetDictionary AssetDictionary;
 
         private static ViewPresenter _instance;
         private static string _currentScene;
@@ -55,11 +50,7 @@ namespace MarkLight
         private Dictionary<string, ResourceDictionary> _resourceDictionaries;
         private Dictionary<string, ValueConverter> _valueConvertersForType;
         private Dictionary<string, ValueConverter> _valueConverters;
-        private Dictionary<string, ValueInterpolator> _valueInterpolatorsForType;
-        private Dictionary<string, UISprite> _spriteDictionary;
-        private Dictionary<string, Font> _fontDictionary;
-        private Dictionary<string, Material> _materialDictionary;
-        private Dictionary<string, UnityEngine.Object> _assetDictionary;
+        private Dictionary<string, ValueInterpolator> _valueInterpolatorsForType;        
 
         #endregion
 
@@ -70,18 +61,12 @@ namespace MarkLight
         /// </summary>
         public ViewPresenter()
         {
+            AssetDictionary = new AssetDictionary();
             ViewTypeDataList = new List<ViewTypeData>();
             ThemeData = new List<ThemeData>();
             ResourceDictionaries = new List<ResourceDictionary>();
             Views = new List<string>();
             Themes = new List<string>();
-            Sprites = new List<UISprite>();
-            Fonts = new List<Font>();
-            FontPaths = new List<string>();
-            Materials = new List<Material>();
-            MaterialPaths = new List<string>();
-            Assets = new List<UnityEngine.Object>();
-            AssetPaths = new List<string>();
             UnitSize = new Vector3(40, 40, 40);
         }
 
@@ -199,21 +184,11 @@ namespace MarkLight
             ThemeData.Clear();
             ViewTypeDataList.Clear();
             ResourceDictionaries.Clear();
-            Sprites.Clear();
-            Fonts.Clear();
-            FontPaths.Clear();
-            Materials.Clear();
-            MaterialPaths.Clear();
-            Assets.Clear();
-            AssetPaths.Clear();
+            AssetDictionary.Clear();
 
             _viewTypeDataDictionary = null;
             _themeDataDictionary = null;
             _resourceDictionaries = null;
-            _spriteDictionary = null;
-            _fontDictionary = null;
-            _assetDictionary = null;
-            _materialDictionary = null;
             _viewTypes = null;
 
             if (RootView != null)
@@ -316,71 +291,19 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Gets pre-loaded sprite from asset path.
+        /// Gets pre-loaded asset from path.
         /// </summary>
-        public UISprite GetSprite(string assetPath)
+        public UnityAsset GetAsset(string assetPath)
         {
-            if (_spriteDictionary == null)
-            {
-                _spriteDictionary = new Dictionary<string, UISprite>();
-                foreach (var sprite in Sprites)
-                {
-                    _spriteDictionary.Add(sprite.Path, sprite);
-                }
-            }
-
-            return _spriteDictionary.Get(assetPath);
+            return AssetDictionary.Get(assetPath);
         }
 
         /// <summary>
-        /// Gets pre-loaded UI sprite from sprite reference.
+        /// Gets pre-loaded asset from path.
         /// </summary>
-        public UISprite GetSprite(Sprite sprite)
+        public UnityAsset GetAsset(UnityEngine.Object asset)
         {
-            return Sprites.FirstOrDefault(x => x.Sprite == sprite);
-        }
-
-        /// <summary>
-        /// Gets pre-loaded font from asset path.
-        /// </summary>
-        public Font GetFont(string assetPath)
-        {
-            if (_fontDictionary == null)
-            {
-                _fontDictionary = new Dictionary<string, Font>();
-                for (int i = 0; i < Fonts.Count; ++i)
-                {
-                    _fontDictionary.Add(FontPaths[i], Fonts[i]);
-                }
-            }
-
-            return _fontDictionary.Get(assetPath);
-        }
-
-        /// <summary>
-        /// Gets asset path from font.
-        /// </summary>
-        public string GetFontAssetPath(Font font)
-        {
-            int index = Fonts.IndexOf(font);
-            return FontPaths[index];
-        }
-
-        /// <summary>
-        /// Gets pre-loaded asset from asset path.
-        /// </summary>
-        public UnityEngine.Object GetAsset(string assetPath)
-        {
-            if (_assetDictionary == null)
-            {
-                _assetDictionary = new Dictionary<string, UnityEngine.Object>();
-                for (int i = 0; i < Fonts.Count; ++i)
-                {
-                    _assetDictionary.Add(AssetPaths[i], Assets[i]);
-                }
-            }
-
-            return _assetDictionary.Get(assetPath);
+            return AssetDictionary.Get(asset);
         }
 
         /// <summary>
@@ -388,106 +311,23 @@ namespace MarkLight
         /// </summary>
         public string GetAssetPath(UnityEngine.Object asset)
         {
-            int index = Assets.IndexOf(asset);
-            return AssetPaths[index];
-        }
-
-        /// <summary>
-        /// Gets pre-loaded material from asset path.
-        /// </summary>
-        public Material GetMaterial(string assetPath)
-        {
-            if (_materialDictionary == null)
-            {
-                _materialDictionary = new Dictionary<string, Material>();
-                for (int i = 0; i < Fonts.Count; ++i)
-                {
-                    _materialDictionary.Add(MaterialPaths[i], Materials[i]);
-                }
-            }
-
-            return _materialDictionary.Get(assetPath);
-        }
-
-        /// <summary>
-        /// Gets asset path from material.
-        /// </summary>
-        public string GetMaterialAssetPath(Material material)
-        {
-            int index = Materials.IndexOf(material);
-            return MaterialPaths[index];
-        }
-
-        /// <summary>
-        /// Adds sprite to list of loaded sprites.
-        /// </summary>
-        public void AddSprite(UISprite sprite)
-        {
-            if (Sprites.Any(x => x.Path == sprite.Path))
-            {
-                Debug.LogError(String.Format("[MarkLight] Duplicate sprite \"{0}\" added.", sprite.Path));
-                return;
-            }
-            
-            Sprites.Add(sprite);
-            if (_spriteDictionary != null && !_spriteDictionary.ContainsKey(sprite.Path))
-            {
-                _spriteDictionary.Add(sprite.Path, sprite);
-            }
-        }
-
-        /// <summary>
-        /// Adds font to list of loaded fonts.
-        /// </summary>
-        public void AddFont(string assetPath, Font asset)
-        {
-            if (FontPaths.Contains(assetPath))
-                return;
-
-            FontPaths.Add(assetPath);
-            Fonts.Add(asset);
-
-            if (_fontDictionary != null &&
-                !_fontDictionary.ContainsKey(assetPath))
-            {
-                _fontDictionary.Add(assetPath, asset);
-            }
-        }
+            var unityAsset = AssetDictionary.Get(asset);
+            return unityAsset != null ? unityAsset.Path : String.Empty;
+        }        
 
         /// <summary>
         /// Adds asset to list of loaded assets.
         /// </summary>
-        public void AddAsset(string assetPath, UnityEngine.Object asset)
+        public UnityAsset AddAsset(string path, UnityEngine.Object asset)
         {
-            if (AssetPaths.Contains(assetPath))
-                return;
-
-            AssetPaths.Add(assetPath);
-            Assets.Add(asset);
-
-            if (_assetDictionary != null &&
-                !_assetDictionary.ContainsKey(assetPath))
+            if (!AssetDictionary.ContainsKey(path))
             {
-                _assetDictionary.Add(assetPath, asset);
+                var unityAsset = new UnityAsset(path, asset);
+                AssetDictionary.Add(unityAsset);
+                return unityAsset;
             }
-        }
 
-        /// <summary>
-        /// Adds material to list of loaded materials.
-        /// </summary>
-        public void AddMaterial(string assetPath, Material asset)
-        {
-            if (MaterialPaths.Contains(assetPath))
-                return;
-
-            MaterialPaths.Add(assetPath);
-            Materials.Add(asset);
-
-            if (_materialDictionary != null &&
-                !_materialDictionary.ContainsKey(assetPath))
-            {
-                _materialDictionary.Add(assetPath, asset);
-            }
+            return AssetDictionary[path];
         }
 
         /// <summary>
@@ -529,7 +369,9 @@ namespace MarkLight
                 _valueConvertersForType.Add("ElementMargin", new MarginValueConverter());
                 _valueConvertersForType.Add("Material", new MaterialValueConverter());
                 _valueConvertersForType.Add("Quaternion", new QuaternionValueConverter());
-                _valueConvertersForType.Add("UISprite", new UISpriteValueConverter());
+                _valueConvertersForType.Add("Sprite", new SpriteValueConverter());
+                _valueConvertersForType.Add("UnityAsset", new AssetValueConverter());
+                _valueConvertersForType.Add("SpriteAsset", new SpriteAssetValueConverter());
                 _valueConvertersForType.Add("String", new StringValueConverter());
                 _valueConvertersForType.Add("Vector2", new Vector2ValueConverter());
                 _valueConvertersForType.Add("Vector3", new Vector3ValueConverter());
@@ -609,38 +451,37 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Loads UI sprite at path.
+        /// Loads asset at path.
         /// </summary>
-        public UISprite LoadSprite(string path, Sprite sprite)
+        public UnityAsset LoadAsset(string path, UnityEngine.Object asset)
         {
-            var uiSprite = GetSprite(path);
-            if (uiSprite == null)
+            var unityAsset = GetAsset(path);
+            if (unityAsset == null)
             {
-                uiSprite = new UISprite(sprite, path);
-                AddSprite(uiSprite);
+                unityAsset = AddAsset(path, asset);
             }
             else
             {
-                uiSprite.Sprite = sprite;
-                uiSprite.NotifyObservers();
+                unityAsset.Asset = asset;
+                unityAsset.NotifyObservers();
             }
 
-            return uiSprite;
+            return unityAsset;
         }
 
         /// <summary>
-        /// Unloads the sprite at path.
+        /// Unloads the asset at path.
         /// </summary>
-        public void UnloadSprite(string path)
+        public void UnloadAsset(string path)
         {
-            var uiSprite = GetSprite(path);
-            if (uiSprite == null)
+            var unityAsset = GetAsset(path);
+            if (unityAsset == null)
             {
-                Debug.LogError(String.Format("[MarkLight] Unable to unload sprite \"{0}\". Sprite not found.", path));
+                Debug.LogError(String.Format("[MarkLight] Unable to unload asset \"{0}\". Asset not found.", path));
                 return;
             }
 
-            uiSprite.Unload();
+            unityAsset.Unload();
         }
 
         /// <summary>
@@ -676,6 +517,9 @@ namespace MarkLight
             }
         }
 
+        /// <summary>
+        /// Gets cached value converters.
+        /// </summary>
         private Dictionary<string, ValueConverter> CachedValueConverters
         {
             get
@@ -695,7 +539,9 @@ namespace MarkLight
                     _cachedValueConverters.Add("MarginValueConverter", new MarginValueConverter());
                     _cachedValueConverters.Add("MaterialValueConverter", new MaterialValueConverter());
                     _cachedValueConverters.Add("QuaternionValueConverter", new QuaternionValueConverter());
-                    _cachedValueConverters.Add("UISpriteValueConverter", new UISpriteValueConverter());
+                    _cachedValueConverters.Add("SpriteValueConverter", new SpriteValueConverter());
+                    _cachedValueConverters.Add("SpriteAssetValueConverter", new SpriteAssetValueConverter());
+                    _cachedValueConverters.Add("AssetValueConverter", new AssetValueConverter());
                     _cachedValueConverters.Add("StringValueConverter", new StringValueConverter());
                     _cachedValueConverters.Add("Vector2ValueConverter", new Vector2ValueConverter());
                     _cachedValueConverters.Add("Vector3ValueConverter", new Vector3ValueConverter());

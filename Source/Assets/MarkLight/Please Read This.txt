@@ -1,4 +1,4 @@
-====  MarkLight v2.5.1  ==========================================================
+====  MarkLight v2.6.0  ==========================================================
 
 Thank you for using MarkLight.
 
@@ -30,6 +30,16 @@ meshes, lights, etc).
 Backup your project. Remove the MarkLight folder and import the new package. 
 For easy upgrade in the future keep your custom views and themes in a folder 
 outside the /MarkLight folder (e.g. in the folder /Views at the project root).
+
+Make sure you reload the views in your existing scenes for the changes to take
+effect. Migration instructions available at: 
+
+v2.5.0 -> v2.6.0:
+- Unity view actions (Click, Drag, etc) are now included in the View base class
+which means if you have any declared in your custom views you can just remove 
+them.
+- UISprite replaced by SpriteAsset (for on-demand loading)
+- LoadSprite/UnloadSprite replaced by LoadAsset/UnloadAsset
 
 
 ====  Package Details  ===========================================================

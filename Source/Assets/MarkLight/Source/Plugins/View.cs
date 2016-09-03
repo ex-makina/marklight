@@ -1849,9 +1849,9 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Called when UI sprite has been loaded or unloaded.
+        /// Called when asset has been loaded or unloaded.
         /// </summary>
-        public virtual void OnSpriteChanged(UISprite sprite)
+        public virtual void OnAssetChanged(UnityAsset asset)
         {
             //Utils.Log("Notifying Observer {0} that sprite {1} IsLoaded = {2}", GameObjectName, sprite.Path, sprite.IsLoaded);
         }

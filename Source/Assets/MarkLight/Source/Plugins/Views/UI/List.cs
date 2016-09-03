@@ -57,7 +57,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the list max.</d>
         [MapTo("ListMask.BackgroundImage")]
-        public _UISprite ListMaskImage;
+        public _SpriteAsset ListMaskImage;
 
         /// <summary>
         /// List max image type.
@@ -160,7 +160,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Horizontal scrollbar image sprite.</d>
         [MapTo("ListPanel.HorizontalScrollbarImage")]
-        public _UISprite HorizontalScrollbarImage;
+        public _SpriteAsset HorizontalScrollbarImage;
 
         /// <summary>
         /// Horizontal scrollbar image type.
@@ -188,7 +188,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Horizontal scrollbar handle image sprite.</d>
         [MapTo("ListPanel.HorizontalScrollbarHandleImage")]
-        public _UISprite HorizontalScrollbarHandleImage;
+        public _SpriteAsset HorizontalScrollbarHandleImage;
 
         /// <summary>
         /// Horizontal scrollbar handle image type.
@@ -262,7 +262,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Vertical scrollbar image sprite.</d>
         [MapTo("ListPanel.VerticalScrollbarImage")]
-        public _UISprite VerticalScrollbarImage;
+        public _SpriteAsset VerticalScrollbarImage;
 
         /// <summary>
         /// Vertical scrollbar image type.
@@ -290,7 +290,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Vertical scrollbar handle image sprite.</d>
         [MapTo("ListPanel.VerticalScrollbarHandleImage")]
-        public _UISprite VerticalScrollbarHandleImage;
+        public _SpriteAsset VerticalScrollbarHandleImage;
 
         /// <summary>
         /// Vertical scrollbar handle image type.

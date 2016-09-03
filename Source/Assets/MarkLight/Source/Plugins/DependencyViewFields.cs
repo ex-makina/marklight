@@ -59,10 +59,13 @@ namespace MarkLight
     public class _Quaternion : ViewField<Quaternion> { }
 
     [Serializable]
-    public class _UISprite : ViewField<UISprite> { }
+    public class _Sprite : ViewField<Sprite> { }
 
     [Serializable]
-    public class _Sprite : ViewField<Sprite> { }
+    public class _UnityAsset : ViewField<UnityAsset> { }
+
+    [Serializable]
+    public class _SpriteAsset : ViewField<SpriteAsset> { }
 
     [Serializable]
     public class _Vector2 : ViewField<Vector2> { }

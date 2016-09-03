@@ -88,7 +88,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the data grid list.</d>
         [MapTo("DataGridList.BackgroundImage")]
-        public _UISprite ListImage;
+        public _SpriteAsset ListImage;
 
         /// <summary>
         /// Data grid list image type.
@@ -216,7 +216,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the list max.</d>
         [MapTo("DataGridList.ListMaskImage")]
-        public _UISprite ListMaskImage;
+        public _SpriteAsset ListMaskImage;
 
         /// <summary>
         /// List max image type.

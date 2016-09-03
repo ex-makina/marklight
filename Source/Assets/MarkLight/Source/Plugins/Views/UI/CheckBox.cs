@@ -67,7 +67,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the check box.</d>
         [MapTo("CheckBoxImageView.Sprite")]
-        public _UISprite CheckBoxImage;
+        public _SpriteAsset CheckBoxImage;
 
         /// <summary>
         /// Check box image type.

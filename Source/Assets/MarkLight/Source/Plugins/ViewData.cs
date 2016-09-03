@@ -17,7 +17,7 @@ using MarkLight.ValueConverters;
 namespace MarkLight
 {
     /// <summary>
-    /// Contains logic for accessing and loading view data.
+    /// Contains logic for managing loading views.
     /// </summary>
     public static class ViewData
     {
@@ -958,19 +958,27 @@ namespace MarkLight
         }
 
         /// <summary>
-        /// Loads UI sprite.
+        /// Loads sprite asset.
         /// </summary>
-        internal static UISprite LoadSprite(string path, Sprite sprite)
+        public static UnityAsset LoadAsset(string path, Sprite asset)
         {
-            return ViewPresenter.Instance.LoadSprite(path, sprite);
+            return ViewPresenter.Instance.LoadAsset(path, asset);
         }
 
         /// <summary>
-        /// Unloads UI sprite.
+        /// Loads asset.
         /// </summary>
-        public static void UnloadSprite(string path)
+        public static UnityAsset LoadAsset(string path, UnityEngine.Object asset)
         {
-            ViewPresenter.Instance.UnloadSprite(path);
+            return ViewPresenter.Instance.LoadAsset(path, asset);
+        }
+
+        /// <summary>
+        /// Unloads asset.
+        /// </summary>
+        public static void UnloadAsset(string path)
+        {
+            ViewPresenter.Instance.UnloadAsset(path);
         }
 
         /// <summary>

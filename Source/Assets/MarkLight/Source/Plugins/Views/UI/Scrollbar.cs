@@ -82,7 +82,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Handle image sprite.</d>
         [MapTo("Handle.Sprite")]
-        public _UISprite HandleImage;
+        public _SpriteAsset HandleImage;
 
         /// <summary>
         /// Handle image type.

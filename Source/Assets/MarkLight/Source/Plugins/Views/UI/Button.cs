@@ -189,6 +189,12 @@ namespace MarkLight.Views.UI
         [NotSetFromXuml]
         public bool IsMouseOver;
 
+        /// <summary>
+        /// Toggle click view action.
+        /// </summary>
+        /// <d>Similar to Click view action but is only triggered if IsToggleButton is True and if the button toggles its state. It also supplies a bool indicating the button toggle state.</d>
+        public ViewAction ToggleClick;
+
         #endregion
 
         #region Methods
@@ -272,6 +278,8 @@ namespace MarkLight.Views.UI
                 {
                     SetState(DefaultStateName);
                 }
+
+                ToggleClick.Trigger(ToggleValue.Value);
             }
         }
 

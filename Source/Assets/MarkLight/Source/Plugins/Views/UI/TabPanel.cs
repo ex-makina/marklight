@@ -30,7 +30,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the tab content.</d>
         [MapTo("TabContent.BackgroundImage")]
-        public _UISprite TabContentImage;
+        public _SpriteAsset TabContentImage;
 
         /// <summary>
         /// Tab content image type.
@@ -103,7 +103,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the tab header list.</d>
         [MapTo("TabHeaderList.BackgroundImage")]
-        public _UISprite TabListImage;
+        public _SpriteAsset TabListImage;
 
         /// <summary>
         /// Tab header list image type.
@@ -231,7 +231,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered as the list max.</d>
         [MapTo("TabHeaderList.ListMaskImage")]
-        public _UISprite TabListMaskImage;
+        public _SpriteAsset TabListMaskImage;
 
         /// <summary>
         /// Tab header list mask image type.

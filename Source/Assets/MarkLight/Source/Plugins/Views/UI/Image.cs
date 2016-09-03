@@ -70,7 +70,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Set an override sprite to be used for rendering. If set the override sprite is used instead of the regular image sprite.</d>
         [MapTo("BackgroundImageOverrideSprite")]
-        public _UISprite OverrideSprite;
+        public _SpriteAsset OverrideSprite;
 
         /// <summary>
         /// Preserve aspect ratio.
@@ -84,7 +84,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>The sprite that will be rendered.</d>
         [MapTo("BackgroundImage")]
-        public _UISprite Sprite;
+        public _SpriteAsset Sprite;
 
         /// <summary>
         /// Image type.
