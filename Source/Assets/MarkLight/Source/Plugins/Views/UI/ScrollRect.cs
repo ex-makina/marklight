@@ -203,6 +203,7 @@ namespace MarkLight.Views.UI
             UpdateBackground.DirectValue = false;
             ScrollRectComponent.vertical = true;
             ScrollRectComponent.horizontal = true;
+            ScrollRectComponent.scrollSensitivity = 60f;
             ImageComponent.color = Color.clear;
         }
         
@@ -338,6 +339,7 @@ namespace MarkLight.Views.UI
 
             // check if view has drag event entries
             bool hasDragEntries = false;
+            bool hasScrollEntries = false;
             foreach (var entry in triggers)
             {
                 if (entry.eventID == EventTriggerType.BeginDrag ||
@@ -347,6 +349,24 @@ namespace MarkLight.Views.UI
                 {
                     hasDragEntries = true;
                 }
+                else if (entry.eventID == EventTriggerType.Scroll)
+                {
+                    hasScrollEntries = true;
+                }
+            }
+
+            // unblock scroll events if the view doesn't handle scrolling
+            if (!hasScrollEntries)
+            {
+                // unblock scroll
+                var scrollEntry = new EventTrigger.Entry();
+                scrollEntry.eventID = EventTriggerType.Scroll;
+                scrollEntry.callback = new EventTrigger.TriggerEvent();
+                scrollEntry.callback.AddListener(eventData =>
+                {
+                    ScrollRectComponent.SendMessage("OnScroll", eventData);
+                });
+                triggers.Add(scrollEntry);
             }
 
             // unblock drag events if the view doesn't handle drag events

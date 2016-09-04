@@ -1,4 +1,4 @@
-<List>  
+<List>
   <Mask Id="ListMask">
     <Panel Id="ListPanel">
       <Region Id="ScrollContent">

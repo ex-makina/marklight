@@ -196,7 +196,7 @@ namespace MarkLight
             }
             set
             {
-                Debug.logger.logEnabled = value;
+                Debug.logger.logEnabled = !value;
                 _suppressLogging = value;
             }
         }
