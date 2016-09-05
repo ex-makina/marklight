@@ -192,7 +192,7 @@ namespace MarkLight.Views.UI
             base.SetDefaultValues();
 
             Canvas.renderMode = UnityEngine.RenderMode.ScreenSpaceOverlay;
-            Canvas.pixelPerfect = true;
+            Canvas.pixelPerfect = false;
             Canvas.sortingOrder = 0;
             CanvasScaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ConstantPixelSize;
             CanvasScaler.scaleFactor = 1;

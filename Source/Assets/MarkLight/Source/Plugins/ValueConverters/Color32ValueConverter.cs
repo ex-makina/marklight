@@ -41,6 +41,17 @@ namespace MarkLight.ValueConverters
         /// </summary>
         public override ConversionResult Convert(object value, ValueConverterContext context)
         {
+            if (value == null)
+            {
+                return base.Convert(value, context);
+            }
+
+            Type valueType = value.GetType();
+            if (valueType == _type)
+            {
+                return base.Convert(value, context);
+            }
+
             var result = _colorValueConverter.Convert(value, context);
             if (result.Success)
             {

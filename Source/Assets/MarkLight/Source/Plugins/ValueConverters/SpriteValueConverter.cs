@@ -31,5 +31,18 @@ namespace MarkLight.ValueConverters
         }
 
         #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Used to extend the asset value converter with custom types.
+        /// </summary>
+        protected override ConversionResult ConvertCustomType(object value, Type valueType, ValueConverterContext context)
+        {
+            var spriteAsset = value as SpriteAsset;
+            return spriteAsset != null ? new ConversionResult(spriteAsset.Sprite) : ConversionFailed(value);
+        }
+
+        #endregion
     }
 }

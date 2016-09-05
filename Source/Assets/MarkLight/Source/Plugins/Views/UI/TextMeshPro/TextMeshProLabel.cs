@@ -639,7 +639,7 @@ namespace MarkLight.Views.UI
     /// <summary>
     /// Value converter for TMP_FontAsset type.
     /// </summary>
-    public class TMProFontValueConverter : ValueConverter
+    public class TMProFontValueConverter : AssetValueConverter
     {
         #region Constructor
 
@@ -649,6 +649,8 @@ namespace MarkLight.Views.UI
         public TMProFontValueConverter()
         {
             _type = typeof(TMP_FontAsset);
+            _loadType = _type;
+            IsUnityAssetType = false;
         }
 
         #endregion
@@ -656,105 +658,41 @@ namespace MarkLight.Views.UI
         #region Methods
 
         /// <summary>
-        /// Value converter for Font type.
+        /// Converts asset path and sets bool indicating if asset not found errors should be suppressed.
         /// </summary>
-        public override ConversionResult Convert(object value, ValueConverterContext context)
+        protected override string ConvertAssetPath(string loadAssetPath, bool inResourcesFolder, out bool suppressAssetNotFoundError)
         {
-            if (value == null)
-            {
-                return base.Convert(value, context);
+            suppressAssetNotFoundError = false;
+            if (inResourcesFolder)
+            {                
+                return loadAssetPath;
             }
 
-            Type valueType = value.GetType();
-            if (valueType == _type)
+            // if the path refers to a unity font (TrueType or OpenType) then check if an equivalent Text Mesh Pro font asset exists
+            string extension = System.IO.Path.GetExtension(loadAssetPath);
+            if (String.Equals(extension, ".ttf", StringComparison.OrdinalIgnoreCase) ||
+                String.Equals(extension, ".otf", StringComparison.OrdinalIgnoreCase))
             {
-                return base.Convert(value, context);
-            }
-            else if (valueType == _stringType)
-            {
-                var stringValue = (string)value;
-                try
-                {
-                    string assetPath = stringValue.Trim();
-                    UnityEngine.Object asset = null;
-                    if (String.IsNullOrEmpty(assetPath))
-                    {
-                        return new ConversionResult(null);
-                    }
-
-                    if (!String.IsNullOrEmpty(context.BaseDirectory))
-                    {
-                        assetPath = Path.Combine(context.BaseDirectory, assetPath);
-                    }
-
-                    // is asset pre-loaded?
-                    asset = ViewPresenter.Instance.GetAsset(assetPath);
-                    if (asset != null)
-                    {
-                        // yes. return pre-loaded asset
-                        return new ConversionResult(asset);
-                    }
-
-                    // if the asset is in a resources folder the load path should be relative to the folder and without file extension
-                    bool inResourcesFolder = assetPath.Contains("Resources/");
-                    string loadAssetPath = assetPath;
-                    bool unityFontLoading = false;
-                    if (inResourcesFolder)
-                    {
-                        loadAssetPath = loadAssetPath.Substring(assetPath.IndexOf("Resources/") + 10);
-                        string extension = System.IO.Path.GetExtension(assetPath);
-                        if (extension.Length > 0)
-                        {
-                            loadAssetPath = loadAssetPath.Substring(0, loadAssetPath.Length - extension.Length);
-                        }
-                    }
-                    else
-                    {
-                        // if the path refers to a unity font (TrueType or OpenType) then check if an equivalent Text Mesh Pro font asset exists
-                        string extension = System.IO.Path.GetExtension(loadAssetPath);
-                        if (String.Equals(extension, ".ttf", StringComparison.OrdinalIgnoreCase) ||
-                            String.Equals(extension, ".otf", StringComparison.OrdinalIgnoreCase))
-                        {
-                            loadAssetPath = System.IO.Path.ChangeExtension(loadAssetPath, ".asset");
-                            unityFontLoading = true;
-                        }
-                    }
-
-                    // load asset from asset database
-                    if (!Application.isPlaying || inResourcesFolder)
-                    {
-                        // load font from asset database
-#if UNITY_EDITOR
-                        asset = inResourcesFolder ? Resources.Load(loadAssetPath) : AssetDatabase.LoadAssetAtPath(loadAssetPath, _type);
-#else
-                        asset = Resources.Load(loadAssetPath);
-#endif
-                        if (asset == null)
-                        {
-                            return unityFontLoading ? new ConversionResult(null) : ConversionFailed(value, String.Format("Asset not found at path \"{0}\".", assetPath));
-                        }
-
-                        ViewPresenter.Instance.AddAsset(assetPath, asset);
-                        return new ConversionResult(asset);
-                    }
-
-                    return unityFontLoading ? new ConversionResult(null) : ConversionFailed(value, String.Format("Pre-loaded asset not found for path \"{0}\".", assetPath));
-                }
-                catch (Exception e)
-                {
-                    return ConversionFailed(value, e);
-                }
+                loadAssetPath = System.IO.Path.ChangeExtension(loadAssetPath, ".asset");
+                suppressAssetNotFoundError = true;
             }
 
-            return ConversionFailed(value);
+            return loadAssetPath;
         }
 
         /// <summary>
-        /// Converts value to string.
+        /// Converts loaded asset to desired type.
         /// </summary>
-        public override string ConvertToString(object value)
+        protected override ConversionResult ConvertAssetResult(UnityAsset loadedAsset)
         {
-            return value != null ? ViewPresenter.Instance.GetAssetPath(value as UnityEngine.Object) : String.Empty;
+            if (loadedAsset.Asset is Font)
+            {
+                // if it's a unity font we return null
+                return new ConversionResult(null);
+            }
+
+            // else we return the text mesh pro asset
+            return new ConversionResult(loadedAsset.Asset);            
         }
 
         #endregion
@@ -763,7 +701,7 @@ namespace MarkLight.Views.UI
     /// <summary>
     /// Value converter for TMP_FontAsset type.
     /// </summary>
-    public class TMProGradientValueConverter : ValueConverter
+    public class TMProGradientValueConverter : AssetValueConverter
     {
         #region Constructor
 
@@ -773,112 +711,8 @@ namespace MarkLight.Views.UI
         public TMProGradientValueConverter()
         {
             _type = typeof(TMP_ColorGradient);
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Value converter for Font type.
-        /// </summary>
-        public override ConversionResult Convert(object value, ValueConverterContext context)
-        {
-            if (value == null)
-            {
-                return base.Convert(value, context);
-            }
-
-            Type valueType = value.GetType();
-            if (valueType == _type)
-            {
-                return base.Convert(value, context);
-            }
-            else if (valueType == _stringType)
-            {
-                var stringValue = (string)value;
-                try
-                {
-                    string assetPath = stringValue.Trim();
-                    UnityEngine.Object asset = null;
-                    if (String.IsNullOrEmpty(assetPath))
-                    {
-                        return new ConversionResult(null);
-                    }
-
-                    if (!String.IsNullOrEmpty(context.BaseDirectory))
-                    {
-                        assetPath = Path.Combine(context.BaseDirectory, assetPath);
-                    }
-
-                    // is asset pre-loaded?
-                    asset = ViewPresenter.Instance.GetAsset(assetPath);
-                    if (asset != null)
-                    {
-                        // yes. return pre-loaded asset
-                        return new ConversionResult(asset);
-                    }
-
-                    // if the asset is in a resources folder the load path should be relative to the folder and without file extension
-                    bool inResourcesFolder = assetPath.Contains("Resources/");
-                    string loadAssetPath = assetPath;
-                    bool unityFontLoading = false;
-                    if (inResourcesFolder)
-                    {
-                        loadAssetPath = loadAssetPath.Substring(assetPath.IndexOf("Resources/") + 10);
-                        string extension = System.IO.Path.GetExtension(assetPath);
-                        if (extension.Length > 0)
-                        {
-                            loadAssetPath = loadAssetPath.Substring(0, loadAssetPath.Length - extension.Length);
-                        }
-                    }
-                    else
-                    {
-                        // if the path refers to a unity font (TrueType or OpenType) then check if an equivalent Text Mesh Pro font asset exists
-                        string extension = System.IO.Path.GetExtension(loadAssetPath);
-                        if (String.Equals(extension, ".ttf", StringComparison.OrdinalIgnoreCase) ||
-                            String.Equals(extension, ".otf", StringComparison.OrdinalIgnoreCase))
-                        {
-                            loadAssetPath = System.IO.Path.ChangeExtension(loadAssetPath, ".asset");
-                            unityFontLoading = true;
-                        }
-                    }
-
-                    // load asset from asset database
-                    if (!Application.isPlaying || inResourcesFolder)
-                    {
-                        // load font from asset database
-#if UNITY_EDITOR
-                        asset = inResourcesFolder ? Resources.Load(loadAssetPath) : AssetDatabase.LoadAssetAtPath(loadAssetPath, _type);
-#else
-                        asset = Resources.Load(loadAssetPath);
-#endif
-                        if (asset == null)
-                        {
-                            return unityFontLoading ? new ConversionResult(null) : ConversionFailed(value, String.Format("Asset not found at path \"{0}\".", assetPath));
-                        }
-
-                        ViewPresenter.Instance.AddAsset(assetPath, asset);
-                        return new ConversionResult(asset);
-                    }
-
-                    return unityFontLoading ? new ConversionResult(null) : ConversionFailed(value, String.Format("Pre-loaded asset not found for path \"{0}\".", assetPath));
-                }
-                catch (Exception e)
-                {
-                    return ConversionFailed(value, e);
-                }
-            }
-
-            return ConversionFailed(value);
-        }
-
-        /// <summary>
-        /// Converts value to string.
-        /// </summary>
-        public override string ConvertToString(object value)
-        {
-            return value != null ? ViewPresenter.Instance.GetAssetPath(value as UnityEngine.Object) : String.Empty;
+            _loadType = _type;
+            IsUnityAssetType = false;
         }
 
         #endregion

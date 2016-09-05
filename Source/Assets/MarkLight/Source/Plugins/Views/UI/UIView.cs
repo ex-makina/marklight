@@ -437,7 +437,10 @@ namespace MarkLight.Views.UI
                     if (sprite != null)
                     {
                         ImageComponent.sprite = sprite.Sprite;
-                        sprite.UnityAsset.AddObserver(this);
+                        if (sprite.UnityAsset != null)
+                        {
+                            sprite.UnityAsset.AddObserver(this);
+                        }
                     }
                     else
                     {

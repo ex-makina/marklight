@@ -241,7 +241,7 @@ namespace MarkLight
         public bool Remove(TKey key)
         {
             if (key == null)
-                throw new ArgumentNullException("key");
+                return false;
 
             int hash = _Comparer.GetHashCode(key) & 2147483647;
             int index = hash % _Buckets.Length;
@@ -343,7 +343,7 @@ namespace MarkLight
         private int FindIndex(TKey key)
         {
             if (key == null)
-                throw new ArgumentNullException("key");
+                return -1;
 
             if (_Buckets != null)
             {

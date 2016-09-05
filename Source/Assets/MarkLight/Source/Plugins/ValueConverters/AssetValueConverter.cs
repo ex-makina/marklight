@@ -108,6 +108,9 @@ namespace MarkLight.ValueConverters
                         }
                     }
 
+                    bool suppressAssetNotFoundError = false;
+                    loadAssetPath = ConvertAssetPath(loadAssetPath, inResourcesFolder, out suppressAssetNotFoundError);
+
                     // load asset from asset database
                     if (!Application.isPlaying || inResourcesFolder)
                     {
@@ -121,22 +124,51 @@ namespace MarkLight.ValueConverters
 #endif
                         if (asset == null)
                         {
-                            return ConversionFailed(value, String.Format("Asset not found at path \"{0}\".", assetPath));
+                            return suppressAssetNotFoundError ? new ConversionResult(null) : ConversionFailed(value, String.Format("Asset not found at path \"{0}\".", assetPath));
                         }
 
                         var loadedAsset = ViewPresenter.Instance.AddAsset(assetPath, asset);
                         return ConvertAssetResult(loadedAsset);
                     }
 
-                    return ConversionFailed(value, String.Format("Pre-loaded asset not found for path \"{0}\".", assetPath));
+                    return suppressAssetNotFoundError ? new ConversionResult(null) : ConversionFailed(value, String.Format("Pre-loaded asset not found for path \"{0}\".", assetPath));
                 }
                 catch (Exception e)
                 {
                     return ConversionFailed(value, e);
                 }
             }
+            else if (valueType == _loadType)
+            {
+                // is asset pre-loaded? 
+                var unityAsset = ViewPresenter.Instance.GetAsset(value as UnityEngine.Object);
+                if (unityAsset != null)
+                    return ConvertAssetResult(unityAsset); // yes
 
+                // no. return new unity asset
+                return ConvertAssetResult(new UnityAsset(String.Empty, value as UnityEngine.Object));
+            }
+            else
+            {
+                return ConvertCustomType(value, valueType, context);
+            }
+        }
+
+        /// <summary>
+        /// Used to extend the asset value converter with custom types.
+        /// </summary>
+        protected virtual ConversionResult ConvertCustomType(object value, Type valueType, ValueConverterContext context)
+        {
             return ConversionFailed(value);
+        }
+
+        /// <summary>
+        /// Converts asset path and sets bool indicating if asset not found errors should be suppressed.
+        /// </summary>
+        protected virtual string ConvertAssetPath(string loadAssetPath, bool inResourcesFolder, out bool suppressAssetNotFoundError)
+        {
+            suppressAssetNotFoundError = false;
+            return loadAssetPath;
         }
 
         /// <summary>
