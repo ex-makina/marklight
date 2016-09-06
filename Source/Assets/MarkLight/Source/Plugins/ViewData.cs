@@ -601,7 +601,7 @@ namespace MarkLight
             //   Foreach contentView
             //      CreateView(contentView)
             //      SetViewValues(contentView)
-            //   SetViewValues(view)       
+            //   SetViewValues(view)
             //   SetThemeValues(view)
 
             // use default theme if no theme is specified

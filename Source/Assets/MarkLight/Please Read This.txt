@@ -39,7 +39,7 @@ v2.5.0 -> v2.6.0:
 which means if you have any declared in your custom views you can just remove 
 them.
 - UISprite replaced by SpriteAsset (for on-demand loading)
-- LoadSprite/UnloadSprite replaced by LoadAsset/UnloadAsset
+- GetSprite/LoadSprite/UnloadSprite replaced by GetAsset/LoadAsset/UnloadAsset
 
 
 ====  Package Details  ===========================================================
