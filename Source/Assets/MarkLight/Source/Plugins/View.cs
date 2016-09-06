@@ -936,6 +936,7 @@ namespace MarkLight
             if (Cancel.HasEntries) _eventSystemViewActions.Add(Cancel);
             if (Click.HasEntries) _eventSystemViewActions.Add(Click);
             if (Deselect.HasEntries) _eventSystemViewActions.Add(Deselect);
+            if (BeginDrag.HasEntries) _eventSystemViewActions.Add(BeginDrag);
             if (Drag.HasEntries) _eventSystemViewActions.Add(Drag);
             if (Drop.HasEntries) _eventSystemViewActions.Add(Drop);
             if (EndDrag.HasEntries) _eventSystemViewActions.Add(EndDrag);
