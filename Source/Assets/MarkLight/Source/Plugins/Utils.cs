@@ -196,7 +196,9 @@ namespace MarkLight
             }
             set
             {
+#if !UNITY_4_6 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2 && !UNITY_5_3
                 Debug.logger.logEnabled = !value;
+#endif
                 _suppressLogging = value;
             }
         }
