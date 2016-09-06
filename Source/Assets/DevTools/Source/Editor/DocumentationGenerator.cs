@@ -338,7 +338,7 @@ namespace Marklight.DevTools.Source.Editor
                     sb.Append("</table><br>");
 
                     // section: view actions
-                    var viewActionFieldData = view.ViewFieldDataDictionary.Values.Where(x => x.ViewFieldTypeName == "ViewAction").ToList();
+                    var viewActionFieldData = viewTypeData.ViewActionFields;
                     if (viewActionFieldData.Count > 0)
                     {
                         sb.Append("<h2>View Actions</h2>");
@@ -348,11 +348,8 @@ namespace Marklight.DevTools.Source.Editor
 
                         int viewActionIndex = 0;
                         foreach (var viewFieldData in viewActionFieldData)
-                        {                            
-                            if (!viewFieldData.IsOwner)
-                                continue;
-
-                            var viewActionData = data.GetFieldActionData(viewFieldData.ViewFieldPath);
+                        {      
+                            var viewActionData = data.GetFieldActionData(viewFieldData);
                             if (!String.IsNullOrEmpty(viewActionData))
                             {
                                 // find the type
@@ -369,14 +366,14 @@ namespace Marklight.DevTools.Source.Editor
 
                             // get view action field summary
                             var baseViewDoc = data;
-                            if (String.IsNullOrEmpty(baseViewDoc.GetFieldSummary(viewFieldData.ViewFieldPath)))
+                            if (String.IsNullOrEmpty(baseViewDoc.GetFieldSummary(viewFieldData)))
                             {
                                 // check if field summary exist in any of the base types
                                 var baseType = view.GetType().BaseType;
                                 while (baseType != null && baseType != typeof(object))
                                 {
                                     baseViewDoc = docData.FirstOrDefault(x => x.TypeName == baseType.Name);
-                                    if (baseViewDoc != null && !String.IsNullOrEmpty(baseViewDoc.GetFieldSummary(viewFieldData.ViewFieldPath)))
+                                    if (baseViewDoc != null && !String.IsNullOrEmpty(baseViewDoc.GetFieldSummary(viewFieldData)))
                                         break;
 
                                     baseType = baseType.BaseType;
@@ -389,13 +386,13 @@ namespace Marklight.DevTools.Source.Editor
                             }
 
                             // get action data
-                            sb.AppendFormat("<tr data-toggle=\"collapse\" data-target=\"#viewActionDetails{0}\" class=\"accordion-toggle clickable\"><td class=\"viewFieldName\">{1}{2}</td><td class=\"viewFieldType\">{3}</td><td class=\"viewTableSummary\">{4}</td><td><button class=\"btn btn-default btn-xs\"><span class=\"glyphicon glyphicon-plus\"></span></button></td></tr>", viewActionIndex, viewFieldData.ViewFieldPath,
+                            sb.AppendFormat("<tr data-toggle=\"collapse\" data-target=\"#viewActionDetails{0}\" class=\"accordion-toggle clickable\"><td class=\"viewFieldName\">{1}{2}</td><td class=\"viewFieldType\">{3}</td><td class=\"viewTableSummary\">{4}</td><td><button class=\"btn btn-default btn-xs\"><span class=\"glyphicon glyphicon-plus\"></span></button></td></tr>", viewActionIndex, viewFieldData,
                                 String.Empty,
                                 viewActionData,
-                                baseViewDoc.GetFieldSummary(viewFieldData.ViewFieldPath));
+                                baseViewDoc.GetFieldSummary(viewFieldData));
 
                             // add expandable details row
-                            sb.AppendFormat("<tr><td colspan=\"4\" class=\"hiddenRow\"><div class=\"accordion-body collapse viewFieldDetails\" id=\"viewActionDetails{0}\"><div class=\"viewFieldDetailsContent\">{1}</div></div></td></tr>", viewActionIndex, baseViewDoc.GetFieldDescription(viewFieldData.ViewFieldPath));
+                            sb.AppendFormat("<tr><td colspan=\"4\" class=\"hiddenRow\"><div class=\"accordion-body collapse viewFieldDetails\" id=\"viewActionDetails{0}\"><div class=\"viewFieldDetailsContent\">{1}</div></div></td></tr>", viewActionIndex, baseViewDoc.GetFieldDescription(viewFieldData));
                             ++viewActionIndex;
                         }
 
