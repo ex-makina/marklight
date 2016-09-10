@@ -118,7 +118,7 @@ namespace MarkLight.ValueConverters
 
                         // load font from asset database
 #if UNITY_EDITOR 
-                        asset = inResourcesFolder ? Resources.Load(loadAssetPath) : AssetDatabase.LoadAssetAtPath(loadAssetPath, _loadType);
+                        asset = inResourcesFolder ? Resources.Load(loadAssetPath, _loadType) : AssetDatabase.LoadAssetAtPath(loadAssetPath, _loadType);
 #else
                         asset = Resources.Load(loadAssetPath);
 #endif

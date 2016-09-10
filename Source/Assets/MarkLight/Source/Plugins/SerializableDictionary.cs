@@ -634,38 +634,13 @@ namespace MarkLight
     [Serializable]
     public class AssetDictionary : SerializableDictionary<string, UnityAsset>
     {
-        #region Fields
-
-        private Dictionary<UnityEngine.Object, UnityAsset> _assetLookupDictionary;
-
-        #endregion
-
         #region Methods
-
-        /// <summary>
-        /// Clears the dictionary.
-        /// </summary>
-        public new void Clear()
-        {
-            if (_assetLookupDictionary != null)
-            {
-                _assetLookupDictionary = null;
-            }
-
-            base.Clear();
-        }
 
         /// <summary>
         /// Adds unity asset to the dictionary.
         /// </summary>
-        /// <param name="asset"></param>
         public void Add(UnityAsset asset)
         {
-            if (_assetLookupDictionary != null)
-            {
-                _assetLookupDictionary.Add(asset.Asset, asset);
-            }
-
             Add(asset.Path, asset);
         }
 
@@ -674,24 +649,16 @@ namespace MarkLight
         /// </summary>
         public UnityAsset Get(UnityEngine.Object asset)
         {
-            if (_assetLookupDictionary == null)
+            if (asset == null)
+                return null;
+
+            foreach (var unityAsset in Values)
             {
-                _assetLookupDictionary = new Dictionary<UnityEngine.Object, UnityAsset>();
-                foreach (var unityAsset in Values)
-                {
-                    _assetLookupDictionary.Add(unityAsset.Asset, unityAsset);
-                }
+                if (asset == unityAsset.Asset)
+                    return unityAsset;
             }
 
-            UnityAsset value;
-            if (!_assetLookupDictionary.TryGetValue(asset, out value))
-            {
-                return null;
-            }
-            else
-            {
-                return value;
-            }
+            return null;            
         }
 
         #endregion

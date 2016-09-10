@@ -1,4 +1,7 @@
-﻿v2.6.0
+﻿v2.7.0
+- Fixed bug where loading from Resources folder didn't work
+
+v2.6.0
 - Added Text Mesh Pro InputField integration
 - All view actions triggered by the unity event system (Click, Drag, MouseUp, etc) are now residing in the base View class and as such is available in all views
 - Fixed so mouse-wheel/track pad can be used to scroll in lists
