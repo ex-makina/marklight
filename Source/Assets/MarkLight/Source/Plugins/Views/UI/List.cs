@@ -1050,7 +1050,10 @@ namespace MarkLight.Views.UI
                     }
                     else
                     {
-                        Height.DirectValue = ElementSize.FromPixels(maxHeight);
+                        if (!Height.IsSet)
+                        {
+                            Height.DirectValue = ElementSize.FromPixels(maxHeight);
+                        }
                     }
                 }
                 else
@@ -1065,7 +1068,10 @@ namespace MarkLight.Views.UI
                     }
                     else
                     {
-                        Width.DirectValue = ElementSize.FromPixels(maxWidth);
+                        if (!Width.IsSet)
+                        {
+                            Width.DirectValue = ElementSize.FromPixels(maxWidth);
+                        }
                     }
                 }
             }
