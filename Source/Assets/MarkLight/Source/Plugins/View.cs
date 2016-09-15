@@ -482,6 +482,8 @@ namespace MarkLight
                 return;
             }
 
+            viewFieldData.SetIsSet();
+
             // create BindingValueObserver and add it as observer to source view fields
             var bindingValueObserver = new BindingValueObserver();
             bindingValueObserver.Target = viewFieldData;

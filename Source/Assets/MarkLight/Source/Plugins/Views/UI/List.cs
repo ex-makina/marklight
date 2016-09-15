@@ -1519,8 +1519,8 @@ namespace MarkLight.Views.UI
                     return;
 
                 int itemIndex = Items.Value != null ? Items.Value.GetIndex(x.Item.Value) : index;
-                x.SortIndex.DirectValue = itemIndex;
-                x.IsAlternate.Value = AlternateItems.Value && Utils.IsOdd(itemIndex);
+                x.SortIndex.DirectValue = itemIndex + 1;
+                x.IsAlternate.Value = AlternateItems.Value && Utils.IsOdd(itemIndex + 1);
                 ++index;
             });
         }

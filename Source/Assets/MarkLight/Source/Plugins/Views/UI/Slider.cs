@@ -220,6 +220,12 @@ namespace MarkLight.Views.UI
         public _bool SetValueOnDragEnded;
 
         /// <summary>
+        /// Indicates if slider should go right to left.
+        /// </summary>
+        /// <d>Boolean indicating if the slider should go from right to left instead of left to right (default).</d>
+        public _bool IsRightToLeft;
+
+        /// <summary>
         /// Specifies how many steps the slider should have.
         /// </summary>
         /// <d>Specifies how many steps the slider should have. If zero or less, infinite steps are used.</d>
@@ -268,6 +274,8 @@ namespace MarkLight.Views.UI
         {
             Width.DirectValue = Width.IsSet ? Width.Value : (Orientation == ElementOrientation.Horizontal ? Length.Value : Breadth.Value);
             Height.DirectValue = Height.IsSet ? Height.Value : (Orientation == ElementOrientation.Horizontal ? Breadth.Value : Length.Value);
+            SliderFillImageView.Alignment.Value = IsRightToLeft ? ElementAlignment.Right : ElementAlignment.Left;
+            SliderHandleImageView.Alignment.Value = IsRightToLeft ? ElementAlignment.Right : ElementAlignment.Left;
 
             base.LayoutChanged();
 
@@ -377,6 +385,12 @@ namespace MarkLight.Views.UI
                 p = ((pos.y - fillTransform.localPosition.y + slideAreaLength / 2f) / slideAreaLength).Clamp(0, 1);
             }
 
+            if (IsRightToLeft)
+            {
+                // if we slide from left to right then the slide percentage is inverted
+                p = 1 - p;
+            }
+
             // set value
             float newValue = (Max - Min) * p + Min;
             newValue = Steps > 0 ? Nearest(newValue, Min, Max, Steps) : newValue;
@@ -393,7 +407,7 @@ namespace MarkLight.Views.UI
         }
 
         /// <summary>
-        /// 
+        /// Snaps to nearest value based on number of steps.
         /// </summary>
         public static float Nearest(float value, float min, float max, float steps)
         {
@@ -412,9 +426,12 @@ namespace MarkLight.Views.UI
             // set handle offset
             float fillWidth = fillTransform.rect.width;
             float slideAreaWidth = fillWidth - SliderHandleImageView.Width.Value.Pixels;
-            float handleOffset = p * slideAreaWidth + SliderFillRegion.Margin.Value.Left.Pixels;
+            float sliderFillMargin = IsRightToLeft ? SliderFillRegion.Margin.Value.Right.Pixels : SliderFillRegion.Margin.Value.Left.Pixels;
+            float handleOffset = p * slideAreaWidth + sliderFillMargin;
 
-            SliderHandleImageView.OffsetFromParent.DirectValue = ElementMargin.FromLeft(new ElementSize(handleOffset, ElementSizeUnit.Pixels));
+            SliderHandleImageView.OffsetFromParent.DirectValue = IsRightToLeft ?
+                ElementMargin.FromRight(new ElementSize(handleOffset, ElementSizeUnit.Pixels)) :
+                ElementMargin.FromLeft(new ElementSize(handleOffset, ElementSizeUnit.Pixels));
             SliderHandleImageView.LayoutChanged();
 
             // set fill percentage as to match the offset of the handle
