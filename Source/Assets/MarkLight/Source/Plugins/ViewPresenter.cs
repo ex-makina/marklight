@@ -237,12 +237,12 @@ namespace MarkLight
 				LoadViewTypeDataDictionary();
 			}
 
-            ViewTypeData viewTypeData;
-            if (!_viewTypeDataDictionary.TryGetValue(viewTypeName, out viewTypeData))
-            {
-                Utils.LogError("[MarkLight] Can't find view type \"{0}\".", viewTypeName);
-                return null;
-            }
+			ViewTypeData viewTypeData;
+			if (!_viewTypeDataDictionary.TryGetValue(viewTypeName, out viewTypeData))
+			{
+			    Utils.LogError("[MarkLight] Can't find view type \"{0}\".", viewTypeName);
+			    return null;
+			}
 
             return viewTypeData;
         }
