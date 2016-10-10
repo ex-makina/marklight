@@ -23,10 +23,11 @@ namespace MarkLight
         /// <summary>
         /// Gets or sets view field notifying observers if the value has changed.
         /// </summary>
-        public T Value
+        public virtual T Value
         {
             get
             {
+                AutoSubscription.NotifyViewFieldWasAccessed(this);
                 if (ParentView != null && IsMapped)
                 {
                     return (T)ParentView.GetValue(ViewFieldPath);
@@ -51,7 +52,7 @@ namespace MarkLight
         /// <summary>
         /// Sets view field directly without notifying observers that the value has changed.
         /// </summary>
-        public T DirectValue
+        public virtual T DirectValue
         {
             set
             {
@@ -70,10 +71,11 @@ namespace MarkLight
         /// <summary>
         /// Gets boolean indicating if the value has been set. 
         /// </summary>
-        public bool IsSet
+        public virtual bool IsSet
         {
             get
             {
+                AutoSubscription.NotifyViewFieldWasAccessed(this);
                 if (ParentView != null)
                 {
                     return ParentView.IsSet(ViewFieldPath);
@@ -88,10 +90,11 @@ namespace MarkLight
         /// <summary>
         /// Gets or sets internal value without considering mappings and without notifying observers.
         /// </summary>
-        public T InternalValue
+        public virtual T InternalValue
         {
             get
             {
+                AutoSubscription.NotifyViewFieldWasAccessed(this);
                 return _internalValue;
             }
             set
