@@ -3,64 +3,29 @@ using UnityEngine;
 
 namespace MarkLight
 {
+    [Serializable]
     public class CalculatedViewField<T> : ViewField<T>, IAutoSubscriber
     {
-        bool CachedValueIsValid = false;
+        bool IsCalculating;
+        bool CachedValueIsValid;
+        [System.NonSerialized]
         System.Collections.Generic.HashSet<ViewFieldBase> FieldsSubscribedTo = new System.Collections.Generic.HashSet<ViewFieldBase>();
+        [System.NonSerialized]
         public System.Func<T> GetCalculatedValue;
+        [System.NonSerialized]
         public System.Action<T> UpdateSourceValuesFromValue;
 
         public override T InternalValue
         {
             get
             {
-                return GetValue();
+                EnsureCachedValueIsUpToDate();
+                return base.InternalValue;
             }
 
             set
             {
-                SetValue(value);
                 base.InternalValue = value;
-            }
-        }
-
-        public override T DirectValue
-        {
-            set
-            {
-                SetValue(value);
-                base.DirectValue = value;
-            }
-        }
-
-        public override object DirectObjectValue
-        {
-            set
-            {
-                SetValue((T)value);
-                base.DirectObjectValue = value;
-            }
-        }
-
-        public override object ObjectValue
-        {
-            get
-            {
-                return GetValue();
-            }
-
-            set
-            {
-                SetValue((T)value);
-                base.ObjectValue = value;
-            }
-        }
-
-        public override bool IsSet
-        {
-            get
-            {
-                return true;
             }
         }
 
@@ -68,38 +33,42 @@ namespace MarkLight
         {
             get
             {
-                return GetValue();
+                EnsureCachedValueIsUpToDate();
+                return base.Value;
             }
 
             set
             {
-                SetValue(value);
                 base.Value = value;
             }
         }
 
-        T GetValue()
+        void EnsureCachedValueIsUpToDate()
         {
-            Debug.Log("Calculating value");
+            if (!CachedValueIsValid)
+                UpdateCachedValue();
+        }
+
+        void UpdateCachedValue()
+        {
+            CachedValueIsValid = false;
             if (GetCalculatedValue == null)
                 throw new System.InvalidOperationException("GetCalculatedValue has not been specifed");
-
             T calculatedValue;
-            if (CachedValueIsValid)
-                return InternalValue;
             try
             {
+                IsCalculating = true;
                 ClearChangeSubscriptions();
                 AutoSubscription.StartSubscription(this);
                 calculatedValue = GetCalculatedValue();
             }
             finally
             {
+                IsCalculating = false;
                 AutoSubscription.EndSubscription(this);
             }
             CachedValueIsValid = true;
-            base.Value = calculatedValue;
-            return calculatedValue;
+            Value = calculatedValue;
         }
 
         void SetValue(T value)
@@ -112,23 +81,28 @@ namespace MarkLight
 
         void IAutoSubscriber.ViewFieldWasAccessed(ViewFieldBase viewField)
         {
-            if (!FieldsSubscribedTo.Contains(viewField))
+            if (viewField != this && !FieldsSubscribedTo.Contains(viewField))
+            {
                 viewField.ValueSet += ViewField_ValueSet;
+                FieldsSubscribedTo.Add(viewField);
+            }
         }
 
         void ViewField_ValueSet(object sender, EventArgs e)
         {
-            Debug.Log("A subscribed-to member's value changed");
             CachedValueIsValid = false;
-            base.InternalValue = default(T);
+            if (!IsCalculating)
+                UpdateCachedValue();
         }
 
         void ClearChangeSubscriptions()
         {
-            Debug.Log("Unsubscribing from " + FieldsSubscribedTo.Count + " fields");
             foreach (ViewFieldBase notifier in FieldsSubscribedTo)
                 notifier.ValueSet -= ViewField_ValueSet;
             FieldsSubscribedTo.Clear();
         }
     }
+
+    [Serializable]
+    public class _CalculatedString : CalculatedViewField<string> { }
 }

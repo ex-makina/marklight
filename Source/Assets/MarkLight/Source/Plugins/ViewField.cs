@@ -45,14 +45,42 @@ namespace MarkLight
                 {
                     InternalValue = value;
                     _isSet = true;
-                }                
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets view field notifying observers if the value has changed.
+        /// </summary>
+        public object ObjectValue
+        {
+            get
+            {
+                if (ParentView != null && IsMapped)
+                {
+                    return ParentView.GetValue(ViewFieldPath);
+                }
+
+                return _internalValue;
+            }
+            set
+            {
+                if (ParentView != null)
+                {
+                    ParentView.SetValue(ViewFieldPath, value);
+                }
+                else
+                {
+                    InternalValue = (T)value;
+                    _isSet = true;
+                }
             }
         }
 
         /// <summary>
         /// Sets view field directly without notifying observers that the value has changed.
         /// </summary>
-        public virtual T DirectValue
+        public T DirectValue
         {
             set
             {
@@ -69,9 +97,28 @@ namespace MarkLight
         }
 
         /// <summary>
+        /// Sets view field directly without notifying observers that the value has changed.
+        /// </summary>
+        public object DirectObjectValue
+        {
+            set
+            {
+                if (ParentView != null && IsMapped)
+                {
+                    ParentView.SetValue(ViewFieldPath, value, true, null, null, false);
+                }
+                else
+                {
+                    _internalValue = (T)value;
+                    _isSet = true;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets boolean indicating if the value has been set. 
         /// </summary>
-        public virtual bool IsSet
+        public bool IsSet
         {
             get
             {
