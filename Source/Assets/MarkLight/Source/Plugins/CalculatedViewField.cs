@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MarkLight
@@ -8,11 +9,9 @@ namespace MarkLight
     {
         bool IsCalculating;
         bool CachedValueIsValid;
-        [System.NonSerialized]
-        System.Collections.Generic.HashSet<ViewFieldBase> FieldsSubscribedTo = new System.Collections.Generic.HashSet<ViewFieldBase>();
-        [System.NonSerialized]
+        HashSet<ViewFieldBase> FieldsSubscribedTo = new HashSet<ViewFieldBase>();
+        HashSet<IObservableList> ObservableListsSubscribedTo = new HashSet<IObservableList>();
         public System.Func<T> GetCalculatedValue;
-        [System.NonSerialized]
         public System.Action<T> UpdateSourceValuesFromValue;
 
         public override T InternalValue
@@ -88,6 +87,22 @@ namespace MarkLight
             }
         }
 
+        void IAutoSubscriber.ObservableListWasAccessed(IObservableList list)
+        {
+            if (!ObservableListsSubscribedTo.Contains(list))
+            {
+                list.ListChanged += List_ListChanged;
+                ObservableListsSubscribedTo.Add(list);
+            }
+        }
+
+        private void List_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            CachedValueIsValid = false;
+            if (!IsCalculating)
+                UpdateCachedValue();
+        }
+
         void ViewField_ValueSet(object sender, EventArgs e)
         {
             CachedValueIsValid = false;
@@ -100,6 +115,10 @@ namespace MarkLight
             foreach (ViewFieldBase notifier in FieldsSubscribedTo)
                 notifier.ValueSet -= ViewField_ValueSet;
             FieldsSubscribedTo.Clear();
+
+            foreach (IObservableList notifier in ObservableListsSubscribedTo)
+                notifier.ListChanged -= List_ListChanged;
+            ObservableListsSubscribedTo.Clear();
         }
     }
 

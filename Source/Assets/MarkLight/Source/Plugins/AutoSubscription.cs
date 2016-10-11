@@ -45,6 +45,15 @@ namespace MarkLight
             topmostSubscriber.ViewFieldWasAccessed(field);
         }
 
+        public static void NotifyObservableListWasAccessed(IObservableList list)
+        {
+            if (AutoSubscriberQueue.Count == 0)
+                return;
+
+            IAutoSubscriber topmostSubscriber = AutoSubscriberQueue.Peek();
+            topmostSubscriber.ObservableListWasAccessed(list);
+        }
+
 
     }
 }

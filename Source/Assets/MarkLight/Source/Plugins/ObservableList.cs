@@ -214,6 +214,7 @@ namespace MarkLight
         /// </summary>
         public ReadOnlyCollection<T> AsReadOnly()
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.AsReadOnly();
         }
 
@@ -222,6 +223,7 @@ namespace MarkLight
         /// </summary>
         public int BinarySearch(T item)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.BinarySearch(item);
         }
 
@@ -230,6 +232,7 @@ namespace MarkLight
         /// </summary>
         public int BinarySearch(T item, IComparer<T> comparer)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.BinarySearch(item, comparer);
         }
 
@@ -238,6 +241,7 @@ namespace MarkLight
         /// </summary>
         public int BinarySearch(int index, int count, T item, IComparer<T> comparer)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.BinarySearch(index, count, item, comparer);
         }
 
@@ -262,6 +266,7 @@ namespace MarkLight
         /// </summary>
         public bool Contains(T item)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.Contains(item);
         }
 
@@ -270,6 +275,7 @@ namespace MarkLight
         /// </summary>
         public List<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.ConvertAll(converter);
         }
 
@@ -302,6 +308,7 @@ namespace MarkLight
         /// </summary>
         public bool Exists(Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.Exists(predicate);
         }
 
@@ -310,6 +317,7 @@ namespace MarkLight
         /// </summary>
         public T Find(Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.Find(predicate);
         }
 
@@ -318,6 +326,7 @@ namespace MarkLight
         /// </summary>
         public List<T> FindAll(Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.FindAll(predicate);
         }
 
@@ -326,6 +335,7 @@ namespace MarkLight
         /// </summary>
         public int FindIndex(Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.FindIndex(predicate);
         }
 
@@ -334,6 +344,7 @@ namespace MarkLight
         /// </summary>
         public int FindIndex(int startIndex, Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.FindIndex(startIndex, predicate);
         }
         
@@ -342,6 +353,7 @@ namespace MarkLight
         /// </summary>
         public int FindIndex(int startIndex, int count, Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.FindIndex(startIndex, count, predicate);
         }
 
@@ -350,6 +362,7 @@ namespace MarkLight
         /// </summary>
         public T FindLast(Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.FindLast(predicate);
         }
 
@@ -358,6 +371,7 @@ namespace MarkLight
         /// </summary>
         public int FindLastIndex(Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.FindLastIndex(predicate);
         }
 
@@ -366,6 +380,7 @@ namespace MarkLight
         /// </summary>
         public int FindLastIndex(int startIndex, Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.FindLastIndex(startIndex, predicate);
         }
 
@@ -374,6 +389,7 @@ namespace MarkLight
         /// </summary>
         public int FindLastIndex(int startIndex, int count, Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.FindLastIndex(startIndex, count, predicate);
         }
 
@@ -382,6 +398,7 @@ namespace MarkLight
         /// </summary>
         public void ForEach(Action<T> action)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             _list.ForEach(action);
         }
 
@@ -390,6 +407,7 @@ namespace MarkLight
         /// </summary>
         public IEnumerator<T> GetEnumerator()
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.GetEnumerator();
         }
 
@@ -398,6 +416,7 @@ namespace MarkLight
         /// </summary>
         IEnumerator IEnumerable.GetEnumerator()
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return GetEnumerator();
         }
 
@@ -406,6 +425,7 @@ namespace MarkLight
         /// </summary>
         public List<T> GetRange(int index, int count)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.GetRange(index, count);
         }
 
@@ -414,6 +434,7 @@ namespace MarkLight
         /// </summary>
         public int IndexOf(T item)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.IndexOf(item);
         }
 
@@ -422,6 +443,7 @@ namespace MarkLight
         /// </summary>
         public int IndexOf(T item, int startIndex)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.IndexOf(item, startIndex);
         }
 
@@ -430,6 +452,7 @@ namespace MarkLight
         /// </summary>
         public int IndexOf(T item, int startIndex, int count)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.IndexOf(item, startIndex, count);
         }
 
@@ -466,6 +489,7 @@ namespace MarkLight
         /// </summary>
         public int LastIndexOf(T item)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.LastIndexOf(item);
         }
 
@@ -474,6 +498,7 @@ namespace MarkLight
         /// </summary>
         public int LastIndexOf(T item, int startIndex)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.LastIndexOf(item, startIndex);
         }
 
@@ -482,6 +507,7 @@ namespace MarkLight
         /// </summary>
         public int LastIndexOf(T item, int startIndex, int count)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.LastIndexOf(item, startIndex, count);
         }
 
@@ -648,6 +674,7 @@ namespace MarkLight
         /// </summary>
         public T[] ToArray()
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.ToArray();
         }
 
@@ -664,6 +691,7 @@ namespace MarkLight
         /// </summary>
         public bool TrueForAll(Predicate<T> predicate)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return _list.TrueForAll(predicate);
         }
 
@@ -680,6 +708,7 @@ namespace MarkLight
         /// </summary>
         public int GetIndex(object item)
         {
+            AutoSubscription.NotifyObservableListWasAccessed(this);
             return item != null ? IndexOf((T)item) : -1;
         }
 
@@ -732,6 +761,7 @@ namespace MarkLight
         {
             get
             {
+                AutoSubscription.NotifyObservableListWasAccessed(this);
                 return _list.Count;
             }
         }
@@ -743,6 +773,7 @@ namespace MarkLight
         {
             get
             {
+                AutoSubscription.NotifyObservableListWasAccessed(this);
                 return this[index];
             }
         }
@@ -754,6 +785,7 @@ namespace MarkLight
         {
             get
             {
+                AutoSubscription.NotifyObservableListWasAccessed(this);
                 return _list[index];
             }
             set
@@ -779,6 +811,7 @@ namespace MarkLight
         {
             get
             {
+                AutoSubscription.NotifyObservableListWasAccessed(this);
                 return _selectedItem != null ? (T)_selectedItem : default(T);
             }
             set
@@ -794,6 +827,7 @@ namespace MarkLight
         {
             get
             {
+                AutoSubscription.NotifyObservableListWasAccessed(this);
                 return _selectedItem != null ? IndexOf((T)_selectedItem) : -1;
             }
             set
