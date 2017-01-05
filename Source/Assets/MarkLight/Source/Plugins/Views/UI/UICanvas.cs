@@ -76,13 +76,6 @@ namespace MarkLight.Views.UI
         public _string SortingLayerName;
 
         /// <summary>
-        /// Canvas sorting order.
-        /// </summary>
-        /// <d>Canvas draw order within a sorting layer.</d>
-        [MapTo("Canvas.orderInLayer")]
-        public _int OrderInLayer;
-
-        /// <summary>
         /// Override canvas sort order.
         /// </summary>
         /// <d>Boolean indicating if the sort order should be overriden (not inherited from parent canvas).</d>

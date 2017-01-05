@@ -17,6 +17,6 @@ namespace MarkLight
         /// <summary>
         /// Element size specified in percents.
         /// </summary>
-        Percents = 1
+        Percents = 1            
     }
 }

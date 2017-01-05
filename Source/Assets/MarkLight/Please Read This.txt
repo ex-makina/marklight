@@ -1,6 +1,6 @@
-====  MarkLight v2.6.0  ==========================================================
+====  MarkLight v2.7.0  ==========================================================
 
-Thank you for using MarkLight.
+Thank you very much for using MarkLight. Join the community and help each other make some great games.
 
     Check out http://www.marklightforunity.com for the latest API docs and tutorials
 
@@ -12,17 +12,18 @@ Thank you for using MarkLight.
 	Join MarkLight Slack chat at:
 	https://marklight.herokuapp.com
 
+	Want to support me on Patreon? 
+	https://www.patreon.com/studiodelight
+
 
 ====  Introduction  ==============================================================
 
-MarkLight is framework for Unity that empowers developers and designers to 
-create components that can be combined, shared, extended, styled and plugged 
-into different projects.
+MarkLight offers a language similar to HTML but instead of rendering elements of a 
+web page you you create scenes in Unity. 
 
-MarkLight offers a markup design language (like HTML/XAML) that can be used to 
-express views and their relationship to the underlying game logic. Views are 
-modular building blocks that can represent anything in the scene (UI widgets, 
-meshes, lights, etc).
+The scene elements (called views) you build in MarkLight can be combined together, 
+extended, styled and easily reused in different projects. Currently the framework
+ships with 25+ standard views for creating user-interfaces. 
 
 
 ====  Upgrading from earlier versions  ===========================================
@@ -32,14 +33,7 @@ For easy upgrade in the future keep your custom views and themes in a folder
 outside the /MarkLight folder (e.g. in the folder /Views at the project root).
 
 Make sure you reload the views in your existing scenes for the changes to take
-effect. Migration instructions available at: 
-
-v2.5.0 -> v2.6.0:
-- Unity view actions (Click, Drag, etc) are now included in the View base class
-which means if you have any declared in your custom views you can just remove 
-them.
-- UISprite replaced by SpriteAsset (for on-demand loading)
-- GetSprite/LoadSprite/UnloadSprite replaced by GetAsset/LoadAsset/UnloadAsset
+effect.
 
 
 ====  Package Details  ===========================================================
@@ -152,11 +146,10 @@ Slack chat:  https://marklight.herokuapp.com
 Reddit:      https://www.reddit.com/r/marklight
 Twitter:     https://twitter.com/MarkUX
 Unity forum: http://forum.unity3d.com/threads/marklight-markup-extension-framework-for-unity.400789
+Patreon:     https://www.patreon.com/studiodelight
 Email:       contact@marklightforunity.com
 
-
-Have fun creating great applications and games.
-
 Warm Regards,
-- Patrik
+Patrik
+
 

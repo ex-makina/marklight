@@ -251,12 +251,7 @@
         </member>
         <member name="T:MarkLight.Examples.UI.LayoutExample">
             <summary>
-            Example demonstrating layouting.
-            </summary>
-        </member>
-        <member name="M:MarkLight.Examples.UI.LayoutExample.Initialize">
-            <summary>
-            Initializes the view.
+            Example demonstrating how we can adjust layout to a region by changing Alignment, Margin and Offset.
             </summary>
         </member>
         <member name="T:MarkLight.Examples.UI.PlayingCardsExample">
@@ -2022,6 +2017,16 @@
             Raycast is never blocked.
             </summary>
         </member>
+        <member name="T:MarkLight.RemappedField">
+            <summary>
+            Maps a dependency field to another field.
+            </summary>
+        </member>
+        <member name="M:MarkLight.RemappedField.#ctor(System.String,System.String,System.String,System.Type,System.Boolean)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
         <member name="T:MarkLight.ReplacesComponentField">
             <summary>
             Attribute for replacing one component field with another.
@@ -2155,6 +2160,52 @@
         <member name="P:MarkLight.ResourceDictionary.XumlElement">
             <summary>
             Gets or sets XUML element.
+            </summary>
+        </member>
+        <member name="T:MarkLight.SerializableDictionary`2">
+            <summary>
+            Serializable dictionary. 
+            </summary>
+        </member>
+        <member name="M:MarkLight.SerializableDictionary`2.Get(`0)">
+            <summary>
+            Gets value from dictionary and returns null if it doesn't exist.
+            </summary>
+        </member>
+        <member name="M:MarkLight.AssetDictionary.Clear">
+            <summary>
+            Clears the dictionary.
+            </summary>
+        </member>
+        <member name="M:MarkLight.AssetDictionary.Add(MarkLight.UnityAsset)">
+            <summary>
+            Adds unity asset to the dictionary.
+            </summary>
+            <param name="asset"></param>
+        </member>
+        <member name="M:MarkLight.AssetDictionary.Get(UnityEngine.Object)">
+            <summary>
+            Gets value from dictionary and returns null if it doesn't exist.
+            </summary>
+        </member>
+        <member name="T:MarkLight.SpriteAsset">
+            <summary>
+            Contains information about a unity sprite asset.
+            </summary>
+        </member>
+        <member name="M:MarkLight.SpriteAsset.#ctor(MarkLight.UnityAsset)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="P:MarkLight.SpriteAsset.Sprite">
+            <summary>
+            Gets unity asset sprite.
+            </summary>
+        </member>
+        <member name="P:MarkLight.SpriteAsset.Path">
+            <summary>
+            Gets unity asset path.
             </summary>
         </member>
         <member name="T:MarkLight.SpriteBundle">
@@ -2338,44 +2389,49 @@
             Creates a dependency field from type.
             </summary>
         </member>
-        <member name="T:MarkLight.UISprite">
+        <member name="T:MarkLight.UnityAsset">
             <summary>
-            Represents a sprite.
+            Contains information about a unity asset.
             </summary>
         </member>
-        <member name="M:MarkLight.UISprite.#ctor(UnityEngine.Sprite,System.String)">
+        <member name="M:MarkLight.UnityAsset.#ctor(System.String,UnityEngine.Object)">
             <summary>
             Initializes a new instance of the class.
             </summary>
         </member>
-        <member name="M:MarkLight.UISprite.AddObserver(MarkLight.View)">
+        <member name="M:MarkLight.UnityAsset.AddObserver(MarkLight.View)">
             <summary>
             Adds view to be notified when load/unloading occurs.
             </summary>
         </member>
-        <member name="M:MarkLight.UISprite.NotifyObservers">
+        <member name="M:MarkLight.UnityAsset.NotifyObservers">
             <summary>
-            Notifies observers that a sprite has been loaded/unloaded.
+            Notifies observers that a asset has been loaded/unloaded.
             </summary>
         </member>
-        <member name="M:MarkLight.UISprite.ToString">
+        <member name="M:MarkLight.UnityAsset.ToString">
             <summary>
             Converts element size to string.
             </summary>
         </member>
-        <member name="M:MarkLight.UISprite.Unload">
+        <member name="M:MarkLight.UnityAsset.Unload">
             <summary>
             Unload sprite.
             </summary>
         </member>
-        <member name="M:MarkLight.UISprite.Load(UnityEngine.Sprite)">
+        <member name="M:MarkLight.UnityAsset.Load(UnityEngine.Object)">
             <summary>
-            Attempt to load sprite.
+            Attempt to load asset.
             </summary>
         </member>
-        <member name="P:MarkLight.UISprite.IsLoaded">
+        <member name="P:MarkLight.UnityAsset.IsLoaded">
             <summary>
-            Gets boolean indicating if the sprite is loaded.
+            Gets boolean indicating if the asset is loaded.
+            </summary>
+        </member>
+        <member name="P:MarkLight.UnityAsset.Sprite">
+            <summary>
+            Gets asset converted to sprite.
             </summary>
         </member>
         <member name="T:MarkLight.Utils">
@@ -2395,7 +2451,7 @@
         </member>
         <member name="M:MarkLight.Utils.GetError(System.Exception)">
             <summary>
-            Extracts infromation from an exception and returns a readable error message.
+            Extracts information from an exception and returns a readable error message.
             </summary>
         </member>
         <member name="M:MarkLight.Utils.Log(System.String)">
@@ -2446,6 +2502,11 @@
         <member name="M:MarkLight.Utils.IsEven(System.Int32)">
             <summary>
             Gets bool inidcating if the number is even.
+            </summary>
+        </member>
+        <member name="P:MarkLight.Utils.SuppressLogging">
+            <summary>
+            Gets or sets boolean indicating if logging should be suppressed.
             </summary>
         </member>
         <member name="T:MarkLight.ValueConverter">
@@ -2516,6 +2577,41 @@
         <member name="P:MarkLight.ValueConverterContext.Default">
             <summary>
             Gets default value converter context.
+            </summary>
+        </member>
+        <member name="T:MarkLight.ValueConverters.AssetValueConverter">
+            <summary>
+            Value converter for Font type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.AssetValueConverter.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.AssetValueConverter.Convert(System.Object,MarkLight.ValueConverterContext)">
+            <summary>
+            Value converter for Font type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.AssetValueConverter.ConvertCustomType(System.Object,System.Type,MarkLight.ValueConverterContext)">
+            <summary>
+            Used to extend the asset value converter with custom types.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.AssetValueConverter.ConvertAssetPath(System.String,System.Boolean,System.Boolean@)">
+            <summary>
+            Converts asset path and sets bool indicating if asset not found errors should be suppressed.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.AssetValueConverter.ConvertAssetResult(MarkLight.UnityAsset)">
+            <summary>
+            Converts loaded asset to desired type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.AssetValueConverter.ConvertToString(System.Object)">
+            <summary>
+            Converts value to string.
             </summary>
         </member>
         <member name="T:MarkLight.ValueConverters.BoolValueConverter">
@@ -2591,6 +2687,31 @@
         <member name="M:MarkLight.ValueConverters.ColorValueConverter.RGBAToColor(System.String)">
             <summary>
             Gets color from float RGBA values (0-1)
+            </summary>
+        </member>
+        <member name="T:MarkLight.ValueConverters.ComponentValueConverter">
+            <summary>
+            Value converter for component types.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.ComponentValueConverter.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.ComponentValueConverter.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.ComponentValueConverter.Convert(System.Object,MarkLight.ValueConverterContext)">
+            <summary>
+            Value converter for String type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.ComponentValueConverter.ConvertToString(System.Object)">
+            <summary>
+            Converts value to string.
             </summary>
         </member>
         <member name="T:MarkLight.ValueConverters.DurationValueConverter">
@@ -2688,16 +2809,6 @@
             Initializes a new instance of the class.
             </summary>
         </member>
-        <member name="M:MarkLight.ValueConverters.FontValueConverter.Convert(System.Object,MarkLight.ValueConverterContext)">
-            <summary>
-            Value converter for Font type.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ValueConverters.FontValueConverter.ConvertToString(System.Object)">
-            <summary>
-            Converts value to string.
-            </summary>
-        </member>
         <member name="T:MarkLight.ValueConverters.IntValueConverter">
             <summary>
             Value converter for int type.
@@ -2748,16 +2859,6 @@
             Initializes a new instance of the class.
             </summary>
         </member>
-        <member name="M:MarkLight.ValueConverters.MaterialValueConverter.Convert(System.Object,MarkLight.ValueConverterContext)">
-            <summary>
-            Value converter for Material type.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ValueConverters.MaterialValueConverter.ConvertToString(System.Object)">
-            <summary>
-            Converts value to string.
-            </summary>
-        </member>
         <member name="T:MarkLight.ValueConverters.QuaternionValueConverter">
             <summary>
             Value converter for Quaternion type.
@@ -2778,6 +2879,26 @@
             Converts value to string.
             </summary>
         </member>
+        <member name="T:MarkLight.ValueConverters.SpriteAssetValueConverter">
+            <summary>
+            Value converter for Sprite type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.SpriteAssetValueConverter.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.SpriteAssetValueConverter.ConvertAssetResult(MarkLight.UnityAsset)">
+            <summary>
+            Converts loaded asset to desired type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ValueConverters.SpriteAssetValueConverter.ConvertToString(System.Object)">
+            <summary>
+            Converts value to string.
+            </summary>
+        </member>
         <member name="T:MarkLight.ValueConverters.SpriteValueConverter">
             <summary>
             Value converter for Sprite type.
@@ -2788,14 +2909,9 @@
             Initializes a new instance of the class.
             </summary>
         </member>
-        <member name="M:MarkLight.ValueConverters.SpriteValueConverter.Convert(System.Object,MarkLight.ValueConverterContext)">
+        <member name="M:MarkLight.ValueConverters.SpriteValueConverter.ConvertCustomType(System.Object,System.Type,MarkLight.ValueConverterContext)">
             <summary>
-            Value converter for Sprite type.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ValueConverters.SpriteValueConverter.ConvertToString(System.Object)">
-            <summary>
-            Converts value to string.
+            Used to extend the asset value converter with custom types.
             </summary>
         </member>
         <member name="T:MarkLight.ValueConverters.StringValueConverter">
@@ -2814,26 +2930,6 @@
             </summary>
         </member>
         <member name="M:MarkLight.ValueConverters.StringValueConverter.ConvertToString(System.Object)">
-            <summary>
-            Converts value to string.
-            </summary>
-        </member>
-        <member name="T:MarkLight.ValueConverters.UISpriteValueConverter">
-            <summary>
-            Value converter for UISprite type.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ValueConverters.UISpriteValueConverter.#ctor">
-            <summary>
-            Initializes a new instance of the class.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ValueConverters.UISpriteValueConverter.Convert(System.Object,MarkLight.ValueConverterContext)">
-            <summary>
-            Value converter for Sprite type.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ValueConverters.UISpriteValueConverter.ConvertToString(System.Object)">
             <summary>
             Converts value to string.
             </summary>
@@ -3020,6 +3116,108 @@
             Scale of the view.
             </summary>
             <d>The scale of the view in relation to the layout parent view transform.</d>
+        </member>
+        <member name="F:MarkLight.View.Cancel">
+            <summary>
+            Cancel view action.
+            </summary>
+            <d>Triggered by the EventSystem when a cancel event occurs.</d>
+        </member>
+        <member name="F:MarkLight.View.Deselect">
+            <summary>
+            Deselect view action.
+            </summary>
+            <d>Triggered by the EventSystem when another view is selected.</d>
+        </member>
+        <member name="F:MarkLight.View.Drop">
+            <summary>
+            Drop view action.
+            </summary>
+            <d>Triggered by the EventSystem when the view accepts a drop.</d>
+        </member>
+        <member name="F:MarkLight.View.Move">
+            <summary>
+            Move view action.
+            </summary>
+            <d>Triggered by the EventSystem when a move event occurs.</d>
+        </member>
+        <member name="F:MarkLight.View.Click">
+            <summary>
+            Click view action.
+            </summary>
+            <d>Triggered by the EventSystem when the user clicks/touches on the view.</d>
+        </member>
+        <member name="F:MarkLight.View.BeginDrag">
+            <summary>
+            Drag view action.
+            </summary>
+            <d>Triggered by the EventSystem when the user presses mouse on and starts to drag over the view.</d>
+        </member>
+        <member name="F:MarkLight.View.EndDrag">
+            <summary>
+            End drag view action.
+            </summary>
+            <d>Triggered by the EventSystem when the user stops dragging mouse over the view.</d>
+        </member>
+        <member name="F:MarkLight.View.Drag">
+            <summary>
+            Drag view action.
+            </summary>
+            <d>Triggered by the EventSystem as the user drags the mouse over the view.</d>
+        </member>
+        <member name="F:MarkLight.View.InitializePotentialDrag">
+            <summary>
+            Initialize potential drag view action.
+            </summary>
+            <d>Triggered by the EventSystem as the user initiates a potential drag over the view.</d>
+        </member>
+        <member name="F:MarkLight.View.MouseDown">
+            <summary>
+            Mouse down view action.
+            </summary>
+            <d>Triggered by the EventSystem when the mouse/touch presses down over the view.</d>
+        </member>
+        <member name="F:MarkLight.View.MouseEnter">
+            <summary>
+            Mouse enter view action.
+            </summary>
+            <d>Triggered by the EventSystem when the mouse enters the view.</d>
+        </member>
+        <member name="F:MarkLight.View.MouseExit">
+            <summary>
+            Mouse exit view action.
+            </summary>
+            <d>Triggered by the EventSystem when the mouse exits the view.</d>
+        </member>
+        <member name="F:MarkLight.View.MouseUp">
+            <summary>
+            Mouse up view action.
+            </summary>
+            <d>Triggered by the EventSystem when the mouse/thouch releases over the view.</d>
+        </member>
+        <member name="F:MarkLight.View.Scroll">
+            <summary>
+            Scroll view action.
+            </summary>
+            <d>Triggered by the EventSystem when the user scrolls when the view is selected.</d>
+        </member>
+        <member name="F:MarkLight.View.Select">
+            <summary>
+            Select view action.
+            </summary>
+            <d>Triggered by the EventSystem when the view is selected.</d>
+        </member>
+        <member name="F:MarkLight.View.Submit">
+            <summary>
+            Submit view action.
+            </summary>
+            <d>Triggered by the EventSystem when the user submits while view is selected.</d>
+        </member>
+        <member name="F:MarkLight.View.UpdateSelected">
+            <summary>
+            Update selected view action.
+            </summary>
+            <d>Triggered by the EventSystem when the object associated with this EventTrigger is updated.</d>
         </member>
         <member name="F:MarkLight.View.Item">
             <summary>
@@ -3438,9 +3636,9 @@
             Moves the view's content to a new parent.
             </summary>
         </member>
-        <member name="M:MarkLight.View.OnSpriteChanged(MarkLight.UISprite)">
+        <member name="M:MarkLight.View.OnAssetChanged(MarkLight.UnityAsset)">
             <summary>
-            Called when UI sprite has been loaded or unloaded.
+            Called when asset has been loaded or unloaded.
             </summary>
         </member>
         <member name="P:MarkLight.View.IsLive">
@@ -3575,7 +3773,7 @@
         </member>
         <member name="T:MarkLight.ViewData">
             <summary>
-            Contains logic for accessing and loading view data.
+            Contains logic for managing loading views.
             </summary>
         </member>
         <member name="M:MarkLight.ViewData.GenerateViews">
@@ -3673,14 +3871,19 @@
             Gets value interpolator for view field type.
             </summary>
         </member>
-        <member name="M:MarkLight.ViewData.LoadSprite(System.String,UnityEngine.Sprite)">
+        <member name="M:MarkLight.ViewData.LoadAsset(System.String,UnityEngine.Sprite)">
             <summary>
-            Loads UI sprite.
+            Loads sprite asset.
             </summary>
         </member>
-        <member name="M:MarkLight.ViewData.UnloadSprite(System.String)">
+        <member name="M:MarkLight.ViewData.LoadAsset(System.String,UnityEngine.Object)">
             <summary>
-            Unloads UI sprite.
+            Loads asset.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ViewData.UnloadAsset(System.String)">
+            <summary>
+            Unloads asset.
             </summary>
         </member>
         <member name="M:MarkLight.ViewData.SortByDependency(System.Collections.Generic.List{MarkLight.ViewTypeData})">
@@ -3703,7 +3906,17 @@
             Gets or sets view field notifying observers if the value has changed.
             </summary>
         </member>
+        <member name="P:MarkLight.ViewField`1.ObjectValue">
+            <summary>
+            Gets or sets view field notifying observers if the value has changed.
+            </summary>
+        </member>
         <member name="P:MarkLight.ViewField`1.DirectValue">
+            <summary>
+            Sets view field directly without notifying observers that the value has changed.
+            </summary>
+        </member>
+        <member name="P:MarkLight.ViewField`1.DirectObjectValue">
             <summary>
             Sets view field directly without notifying observers that the value has changed.
             </summary>
@@ -3998,29 +4211,14 @@
             Gets resource dictionary.
             </summary>
         </member>
-        <member name="M:MarkLight.ViewPresenter.GetSprite(System.String)">
-            <summary>
-            Gets pre-loaded sprite from asset path.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ViewPresenter.GetSprite(UnityEngine.Sprite)">
-            <summary>
-            Gets pre-loaded UI sprite from sprite reference.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ViewPresenter.GetFont(System.String)">
-            <summary>
-            Gets pre-loaded font from asset path.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ViewPresenter.GetFontAssetPath(UnityEngine.Font)">
-            <summary>
-            Gets asset path from font.
-            </summary>
-        </member>
         <member name="M:MarkLight.ViewPresenter.GetAsset(System.String)">
             <summary>
-            Gets pre-loaded asset from asset path.
+            Gets pre-loaded asset from path.
+            </summary>
+        </member>
+        <member name="M:MarkLight.ViewPresenter.GetAsset(UnityEngine.Object)">
+            <summary>
+            Gets pre-loaded asset from path.
             </summary>
         </member>
         <member name="M:MarkLight.ViewPresenter.GetAssetPath(UnityEngine.Object)">
@@ -4028,34 +4226,9 @@
             Gets asset path from asset.
             </summary>
         </member>
-        <member name="M:MarkLight.ViewPresenter.GetMaterial(System.String)">
-            <summary>
-            Gets pre-loaded material from asset path.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ViewPresenter.GetMaterialAssetPath(UnityEngine.Material)">
-            <summary>
-            Gets asset path from material.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ViewPresenter.AddSprite(MarkLight.UISprite)">
-            <summary>
-            Adds sprite to list of loaded sprites.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ViewPresenter.AddFont(System.String,UnityEngine.Font)">
-            <summary>
-            Adds font to list of loaded fonts.
-            </summary>
-        </member>
         <member name="M:MarkLight.ViewPresenter.AddAsset(System.String,UnityEngine.Object)">
             <summary>
             Adds asset to list of loaded assets.
-            </summary>
-        </member>
-        <member name="M:MarkLight.ViewPresenter.AddMaterial(System.String,UnityEngine.Material)">
-            <summary>
-            Adds material to list of loaded materials.
             </summary>
         </member>
         <member name="M:MarkLight.ViewPresenter.GetViewType(System.String)">
@@ -4078,14 +4251,14 @@
             Gets value interpolator for view field type.
             </summary>
         </member>
-        <member name="M:MarkLight.ViewPresenter.LoadSprite(System.String,UnityEngine.Sprite)">
+        <member name="M:MarkLight.ViewPresenter.LoadAsset(System.String,UnityEngine.Object)">
             <summary>
-            Loads UI sprite at path.
+            Loads asset at path.
             </summary>
         </member>
-        <member name="M:MarkLight.ViewPresenter.UnloadSprite(System.String)">
+        <member name="M:MarkLight.ViewPresenter.UnloadAsset(System.String)">
             <summary>
-            Unloads the sprite at path.
+            Unloads the asset at path.
             </summary>
         </member>
         <member name="M:MarkLight.ViewPresenter.UpdateInstance">
@@ -4096,6 +4269,11 @@
         <member name="P:MarkLight.ViewPresenter.Instance">
             <summary>
             Gets global presentation engine instance.
+            </summary>
+        </member>
+        <member name="P:MarkLight.ViewPresenter.CachedValueConverters">
+            <summary>
+            Gets cached value converters.
             </summary>
         </member>
         <member name="T:MarkLight.ViewTypeData">
@@ -4689,36 +4867,6 @@
             </summary>
             <d>Boolean indicating if the button can be toggled off by user interaction. If set to false the button can only be toggled on programmatically.</d>
         </member>
-        <member name="F:MarkLight.Views.UI.Button.Click">
-            <summary>
-            Button click action.
-            </summary>
-            <d>The button click action is triggered when the user clicks on the button.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.Button.MouseEnter">
-            <summary>
-            Button mouse enter action.
-            </summary>
-            <d>The button mouse enter action is triggered when the mouse enters the button.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.Button.MouseExit">
-            <summary>
-            Button mouse exit action.
-            </summary>
-            <d>The button mouse exit action is triggered when the mouse exits the button.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.Button.MouseDown">
-            <summary>
-            Button mouse down action.
-            </summary>
-            <d>The button mouse down action is triggered when the mouse is pressed over the button.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.Button.MouseUp">
-            <summary>
-            Button mouse down action.
-            </summary>
-            <d>The button mouse up action is triggered when the mouse is pressed and then released over the button.</d>
-        </member>
         <member name="F:MarkLight.Views.UI.Button.IsPressed">
             <summary>
             Indicates if the button is pressed.
@@ -4728,6 +4876,12 @@
             <summary>
             Indicates if the mouse is over the button.
             </summary>
+        </member>
+        <member name="F:MarkLight.Views.UI.Button.ToggleClick">
+            <summary>
+            Toggle click view action.
+            </summary>
+            <d>Similar to Click view action but is only triggered if IsToggleButton is True and if the button toggles its state. It also supplies a bool indicating the button toggle state.</d>
         </member>
         <member name="M:MarkLight.Views.UI.Button.TextChanged">
             <summary>
@@ -4963,12 +5117,6 @@
             The check box label.
             </summary>
             <d>The check box label displays text next to the check box.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.CheckBox.Click">
-            <summary>
-            Check box click action.
-            </summary>
-            <d>The check box click action is triggered when the user clicks on the check box image or text label.</d>
         </member>
         <member name="M:MarkLight.Views.UI.CheckBox.SetDefaultValues">
             <summary>
@@ -5885,36 +6033,6 @@
             Boolean indicating if mouse is over the hyperlink.
             </summary>
         </member>
-        <member name="F:MarkLight.Views.UI.HyperLink.Click">
-            <summary>
-            Hyperlink click action.
-            </summary>
-            <d>The hyperlink click action is triggered when the user clicks on the hyperlink.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.HyperLink.MouseEnter">
-            <summary>
-            Hyperlink mouse enter action.
-            </summary>
-            <d>The hyperlink mouse enter action is triggered when the mouse enters the hyperlink.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.HyperLink.MouseExit">
-            <summary>
-            Hyperlink mouse exit action.
-            </summary>
-            <d>The hyperlink mouse exit action is triggered when the mouse exits the hyperlink.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.HyperLink.MouseDown">
-            <summary>
-            Hyperlink mouse down action.
-            </summary>
-            <d>The hyperlink mouse down action is triggered when the mouse is pressed over the hyperlink.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.HyperLink.MouseUp">
-            <summary>
-            Hyperlink mouse down action.
-            </summary>
-            <d>The hyperlink mouse up action is triggered when the mouse is pressed and then released over the hyperlink.</d>
-        </member>
         <member name="M:MarkLight.Views.UI.HyperLink.SetDefaultValues">
             <summary>
             Sets default values of the view.
@@ -6305,36 +6423,6 @@
             </summary>
             <d>Interactable region used to intercept and handle user interactions such as clicks and drags.</d>
         </member>
-        <member name="F:MarkLight.Views.UI.InteractableRegion.Click">
-            <summary>
-            Interactable region click.
-            </summary>
-            <d>Triggered when the user clicks on the interactable region.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.InteractableRegion.BeginDrag">
-            <summary>
-            Interactable region begin drag.
-            </summary>
-            <d>Triggered when the user presses mouse on and starts to drag over the interactable region.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.InteractableRegion.EndDrag">
-            <summary>
-            Interactable region end drag.
-            </summary>
-            <d>Triggered when the user stops dragging mouse over the interactable region.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.InteractableRegion.Drag">
-            <summary>
-            Interactable region drag.
-            </summary>
-            <d>Triggered as the user drags the mouse over the interactable region.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.InteractableRegion.InitializePotentialDrag">
-            <summary>
-            Interactable region initialize potential drag.
-            </summary>
-            <d>Triggered as the user initiates a potential drag over the interactable region.</d>
-        </member>
         <member name="M:MarkLight.Views.UI.InteractableRegion.SetDefaultValues">
             <summary>
             Sets default values of the view.
@@ -6345,12 +6433,6 @@
             Label view.
             </summary>
             <d>Presents (read-only) text. Can adjust its size to text. Can display rich text with BBCode style syntax.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.Label.TextComponent">
-            <summary>
-            Unity UI component used to render text.
-            </summary>
-            <d>Unity UI component used to render text.</d>
         </member>
         <member name="F:MarkLight.Views.UI.Label.Text">
             <summary>
@@ -6415,6 +6497,12 @@
         <!-- Badly formed XML comment ignored for member "F:MarkLight.Views.UI.Label.ResizeTextMinSize" -->
         <!-- Badly formed XML comment ignored for member "F:MarkLight.Views.UI.Label.HorizontalOverflow" -->
         <!-- Badly formed XML comment ignored for member "F:MarkLight.Views.UI.Label.VerticalOverflow" -->
+        <member name="F:MarkLight.Views.UI.Label.TextComponent">
+            <summary>
+            Unity UI component used to render text.
+            </summary>
+            <d>Unity UI component used to render text.</d>
+        </member>
         <member name="F:MarkLight.Views.UI.Label.TextAlignment">
             <summary>
             Label text alignment.
@@ -7365,36 +7453,6 @@
             </summary>
             <d>Reference to the template used to create the view. Used to identify the list item type.</d>
         </member>
-        <member name="F:MarkLight.Views.UI.ListItem.Click">
-            <summary>
-            List item click action.
-            </summary>
-            <d>The list item click action is triggered when the user clicks on the list item.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.ListItem.MouseEnter">
-            <summary>
-            List item mouse enter action.
-            </summary>
-            <d>The list item mouse enter action is triggered when the mouse enters the list item.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.ListItem.MouseExit">
-            <summary>
-            List item mouse exit action.
-            </summary>
-            <d>The list item mouse exit action is triggered when the mouse exits the list item.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.ListItem.MouseDown">
-            <summary>
-            List item mouse down action.
-            </summary>
-            <d>The list item mouse down action is triggered when the mouse is pressed over the list item.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.ListItem.MouseUp">
-            <summary>
-            List item mouse down action.
-            </summary>
-            <d>The list item mouse up action is triggered when the mouse is pressed and then released over the list item.</d>
-        </member>
         <member name="F:MarkLight.Views.UI.ListItem.ParentList">
             <summary>
             Parent list.
@@ -8100,12 +8158,6 @@
             </summary>
             <d>The radio button label displays text next to the radio button.</d>
         </member>
-        <member name="F:MarkLight.Views.UI.RadioButton.Click">
-            <summary>
-            Radio button click action.
-            </summary>
-            <d>The radio button click action is triggered when the user clicks on the radio button image or text label.</d>
-        </member>
         <member name="M:MarkLight.Views.UI.RadioButton.SetDefaultValues">
             <summary>
             Sets default values of the view.
@@ -8322,30 +8374,6 @@
             ScrollRect component.
             </summary>
             <d>Component responsible for handling scrollable content.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.ScrollRect.BeginDrag">
-            <summary>
-            Slider begin drag.
-            </summary>
-            <d>Triggered when the user presses mouse on and starts to drag over the slider.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.ScrollRect.EndDrag">
-            <summary>
-            Slider end drag.
-            </summary>
-            <d>Triggered when the user stops dragging mouse over the slider.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.ScrollRect.Drag">
-            <summary>
-            Slider drag.
-            </summary>
-            <d>Triggered as the user drags the mouse over the slider.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.ScrollRect.InitializePotentialDrag">
-            <summary>
-            Slider initialize potential drag.
-            </summary>
-            <d>Triggered as the user initiates a potential drag over the slider.</d>
         </member>
         <member name="M:MarkLight.Views.UI.ScrollRect.SetDefaultValues">
             <summary>
@@ -8665,30 +8693,6 @@
             Slider value changed.
             </summary>
             <d>Triggered when the slider value changes. Triggered once when handle is released if SetValueOnDragEnded is set.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.Slider.BeginDrag">
-            <summary>
-            Slider begin drag.
-            </summary>
-            <d>Triggered when the user presses mouse on and starts to drag over the slider.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.Slider.EndDrag">
-            <summary>
-            Slider end drag.
-            </summary>
-            <d>Triggered when the user stops dragging mouse over the slider.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.Slider.Drag">
-            <summary>
-            Slider drag.
-            </summary>
-            <d>Triggered as the user drags the mouse over the slider.</d>
-        </member>
-        <member name="F:MarkLight.Views.UI.Slider.InitializePotentialDrag">
-            <summary>
-            Slider initialize potential drag.
-            </summary>
-            <d>Triggered as the user initiates a potential drag over the slider.</d>
         </member>
         <member name="M:MarkLight.Views.UI.Slider.SetDefaultValues">
             <summary>
@@ -9164,6 +9168,767 @@
             Returns list item template.
             </summary>
         </member>
+        <member name="T:MarkLight.Views.UI.TextMeshProInputField">
+            <summary>
+            Text Mesh Pro Input field.
+            </summary>
+            <d>Text input using Text Mesh Pro</d>    
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.IsRightToLeftText">
+            <summary>
+            Indicates if text goes right to left.
+            </summary>
+            <d>Boolean indicating if text goes right to left.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.TMProFont">
+            <summary>
+            Text font.
+            </summary>
+            <d>Text font.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.FontSharedMaterial">
+            <summary>
+            Text font shared material.
+            </summary>
+            <d>Text font shared material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.FontSharedMaterials">
+            <summary>
+            Text font shared materials.
+            </summary>
+            <d>Text font shared materials.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.FontMaterial">
+            <summary>
+            Text font material.
+            </summary>
+            <d>Text font material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.FontMaterials">
+            <summary>
+            Text font materials.
+            </summary>
+            <d>Text font materials.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.TextAlpha">
+            <summary>
+            Default text vertex alpha value.
+            </summary>
+            <d>Default text vertex alpha value.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.EnableVertexGradient">
+            <summary>
+            Indicates if text vertex color gradient should be used.
+            </summary>
+            <d>Boolean indicating if text vertex color gradient should be used.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.ColorGradient">
+            <summary>
+            Specifies the colors for the four vertices of the character quads.
+            </summary>
+            <d>Specifies the colors for the four vertices of the character quads.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.ColorGradientPreset">
+            <summary>
+            Preset specifying the color gradient.
+            </summary>
+            <d>Preset specifying the color gradient.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.SpriteAsset">
+            <summary>
+            Sprite asset used by the text object.
+            </summary>
+            <d>Sprite asset used by the text object.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.TintAllSprites">
+            <summary>
+            Indicates if sprite color is multiplies by the vertex color of the text.
+            </summary>
+            <d>Indicates if sprite color is multiplies by the vertex color of the text.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.OverrideColorTags">
+            <summary>
+            Indicates if color tags should be ignored and default font color should be used.
+            </summary>
+            <d>Boolean indicating if color tags should be ignored and default font color should be used.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.FaceColor">
+            <summary>
+            Face color property of the assigned material.
+            </summary>
+            <d>_FaceColor property of the assigned material. Changing face color will result in an instance of the material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.TextMeshProOutlineColor">
+            <summary>
+            Outline color property of the assigned material.
+            </summary>
+            <d>_OutlineColor property of the assigned material. Changing outline color will result in an instance of the material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.OutlineWidth">
+            <summary>
+            Thickness of the font outline.
+            </summary>
+            <d>Thickness of the font outline. Setting this will result in an instance of the material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.FontWeight">
+            <summary>
+            Weight of the font.
+            </summary>
+            <d>Controls the weight of the font if an alternative font asset is assigned for the given weight in the font asset editor.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.EnableAutoSizing">
+            <summary>
+            Enables text auto-sizing.
+            </summary>
+            <d>Boolean indicating if text auto-sizing should be enabled.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.FontSizeMin">
+            <summary>
+            Minimum point size of font when auto-sizing is enabled.
+            </summary>
+            <d>Minimum point size of font when auto-sizing is enabled through the EnableAutoSizing field.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.FontSizeMax">
+            <summary>
+            Maximum point size of font when auto-sizing is enabled.
+            </summary>
+            <d>Maximum point size of font when auto-sizing is enabled through the EnableAutoSizing field.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.TMProFontStyle">
+            <summary>
+            Text font style.
+            </summary>
+            <d>Text font style.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.TMProAlignment">
+            <summary>
+            Text alignment options.
+            </summary>
+            <d>Text alignment options.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.CharacterSpacing">
+            <summary>
+            Additional spacing between characters.
+            </summary>
+            <d>Additional spacing between characters.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.ParagraphSpacing">
+            <summary>
+            Additional spacing between paragraphs.
+            </summary>
+            <d>Additional spacing between paragraphs.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.CharacterWidthAdjustment">
+            <summary>
+            Percentage of character width can be adjusted before auto-sizing reduces point size.
+            </summary>
+            <d>Percentage of character width can be adjusted before auto-sizing reduces point size.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.EnableWordWrapping">
+            <summary>
+            Indicates if words should be wrapped.
+            </summary>
+            <d>Boolean indicating if words should be wrapped.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.WordWrappingRatios">
+            <summary>
+            Controls the ratio between character and word spacing to fill-in space for justified text.
+            </summary>
+            <d>Controls the ratio between character and word spacing to fill-in space for justified text.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.EnableAdaptiveJustification">
+            <summary>
+            Indicates if justification should be adaptive.
+            </summary>
+            <d>Boolean indicating if justification should be adaptive.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.OverflowMode">
+            <summary>
+            Specifies text overflow mode.
+            </summary>
+            <d>Enum specifying text overflow mode.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.EnableKerning">
+            <summary>
+            Indicates if kerning is enabled.
+            </summary>
+            <d>Boolean indicating if kerning is enabled.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.ExtraPadding">
+            <summary>
+            Indicates if extra padding around characters should be added.
+            </summary>
+            <d>Boolean indicating if extra padding around characters should be added. This may be necessary when the displayed text is very small to prevent clipping.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.RichText">
+            <summary>
+            Indicates if rich text tags are enabled.
+            </summary>
+            <d>Boolean indicating if rich text tags are enabled.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.ParseCtrlCharacters">
+            <summary>
+            Indicates if CTRL characters should be parsed.
+            </summary>
+            <d>Boolean indiciating if CTRL characters should be parsed.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.IsOverlay">
+            <summary>
+            Indicates if text should be rendered last on top of scene elements.
+            </summary>
+            <d>Boolean indicating if text should be rendered last on top of scene elements.</d>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:MarkLight.Views.UI.TextMeshProInputField.IsOrthographic" -->
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.EnableCulling">
+            <summary>
+            Enables culling on the shaders. 
+            </summary>
+            <d>Enables culling on the shaders. Note changing this value will result in an instance of the material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.IgnoreVisibility">
+            <summary>
+            Indicates if non-visible objects should be refreshed.
+            </summary>
+            <d>Boolean indicating if non-visible objects should be refreshed.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.HorizontalMapping">
+            <summary>
+            Controls how face and outline textures are applied to text object.
+            </summary>
+            <d>Controls how face and outline textures are applied to text object.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.VerticalMapping">
+            <summary>
+            Controls how face and outline textures are applied to text object.
+            </summary>
+            <d>Controls how face and outline textures are applied to text object.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.RenderMode">
+            <summary>
+            Indicates if the mesh will be rendered.
+            </summary>
+            <d>Boolean indicating if the mesh will be rendered.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.MaxVisibleCharacters">
+            <summary>
+            Maximum number of characters visible.
+            </summary>
+            <d>Maximum number of characters visible.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.MaxVisibleWords">
+            <summary>
+            Maximum number of words visible.
+            </summary>
+            <d>Maximum number of words visible.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.MaxVisibleLines">
+            <summary>
+            Maximum number of lines visible.
+            </summary>
+            <d>Maximum number of lines visible.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.UseMaxVisibleDescender">
+            <summary>
+            Indicates if vertical alignment of text is adjusted based on visible descender of text.
+            </summary>
+            <d>Boolean indicating if vertical alignment of text is adjusted based on visible descender of text.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.PageToDisplay">
+            <summary>
+            Indicates which page of the text is displayed.
+            </summary>
+            <d>Indicates which page of the text is displayed (starting at 1).</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.InputTextMargin">
+            <summary>
+            Margin of text object.
+            </summary>
+            <d>Margin of text object.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.AutoSizeTextContainer">
+            <summary>
+            Indicates if size of text container adjusts to match text object.
+            </summary>
+            <d>Indicates if size of text container adjusts to match text object.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.IsVolumetricText">
+            <summary>
+            Indicates if geometry of characters are volumetric (cubes) rather than quads.
+            </summary>
+            <d>Indicates if geometry of characters are volumetric (cubes) rather than quads.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.TextMeshProInputFieldComponent">
+            <summary>
+            Text Mesh Pro InputField component.
+            </summary>
+            <d>Text Mesh Pro InputField component.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProInputField.InputFieldComponentWrapper">
+            <summary>
+            Wrapper for the unity text component.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProInputField.SetDefaultValues">
+            <summary>
+            Sets default values of the view.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProInputField.Initialize">
+            <summary>
+            Initializes the view.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProInputField.TextChanged">
+            <summary>
+            Called when the input text is changed.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProInputField.TMProInputFieldEndEdit(System.String)">
+            <summary>
+            Called on input field end edit.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProInputField.TMProInputFieldValueChanged(System.String)">
+            <summary>
+            Called when input field value has been updated.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProInputField.TMProUpdatePlaceholder">
+            <summary>
+            Shows or hides placeholder based on text.
+            </summary>
+        </member>
+        <member name="P:MarkLight.Views.UI.TextMeshProInputField.IsFocused">
+            <summary>
+            Gets boolean indicating if the text field is in focus (allowing input). 
+            </summary>
+        </member>
+        <member name="T:MarkLight.Views.UI.InputFieldComponentWrapper">
+            <summary>
+            Wraps the unity input field component.
+            </summary>
+        </member>
+        <member name="T:MarkLight.Views.UI.TextMeshProLabel">
+            <summary>
+            Text Mesh Pro label view.
+            </summary>
+            <d>Presents text using Text Mesh Pro.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.CanvasRendererComponent">
+            <summary>
+            Renders graphics on a canvas.
+            </summary>
+            <d>Renders graphics on a canvas.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.IsRightToLeftText">
+            <summary>
+            Indicates if text goes right to left.
+            </summary>
+            <d>Boolean indicating if text goes right to left.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.TMProFont">
+            <summary>
+            Text font.
+            </summary>
+            <d>Text font.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.FontSharedMaterial">
+            <summary>
+            Text font shared material.
+            </summary>
+            <d>Text font shared material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.FontSharedMaterials">
+            <summary>
+            Text font shared materials.
+            </summary>
+            <d>Text font shared materials.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.FontMaterial">
+            <summary>
+            Text font material.
+            </summary>
+            <d>Text font material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.FontMaterials">
+            <summary>
+            Text font materials.
+            </summary>
+            <d>Text font materials.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.TextAlpha">
+            <summary>
+            Default text vertex alpha value.
+            </summary>
+            <d>Default text vertex alpha value.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.EnableVertexGradient">
+            <summary>
+            Indicates if text vertex color gradient should be used.
+            </summary>
+            <d>Boolean indicating if text vertex color gradient should be used.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.ColorGradient">
+            <summary>
+            Specifies the colors for the four vertices of the character quads.
+            </summary>
+            <d>Specifies the colors for the four vertices of the character quads.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.ColorGradientPreset">
+            <summary>
+            Preset specifying the color gradient.
+            </summary>
+            <d>Preset specifying the color gradient.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.SpriteAsset">
+            <summary>
+            Sprite asset used by the text object.
+            </summary>
+            <d>Sprite asset used by the text object.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.TintAllSprites">
+            <summary>
+            Indicates if sprite color is multiplies by the vertex color of the text.
+            </summary>
+            <d>Indicates if sprite color is multiplies by the vertex color of the text.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.OverrideColorTags">
+            <summary>
+            Indicates if color tags should be ignored and default font color should be used.
+            </summary>
+            <d>Boolean indicating if color tags should be ignored and default font color should be used.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.FaceColor">
+            <summary>
+            Face color property of the assigned material.
+            </summary>
+            <d>_FaceColor property of the assigned material. Changing face color will result in an instance of the material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.TextMeshProOutlineColor">
+            <summary>
+            Outline color property of the assigned material.
+            </summary>
+            <d>_OutlineColor property of the assigned material. Changing outline color will result in an instance of the material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.OutlineWidth">
+            <summary>
+            Thickness of the font outline.
+            </summary>
+            <d>Thickness of the font outline. Setting this will result in an instance of the material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.FontWeight">
+            <summary>
+            Weight of the font.
+            </summary>
+            <d>Controls the weight of the font if an alternative font asset is assigned for the given weight in the font asset editor.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.EnableAutoSizing">
+            <summary>
+            Enables text auto-sizing.
+            </summary>
+            <d>Boolean indicating if text auto-sizing should be enabled.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.FontSizeMin">
+            <summary>
+            Minimum point size of font when auto-sizing is enabled.
+            </summary>
+            <d>Minimum point size of font when auto-sizing is enabled through the EnableAutoSizing field.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.FontSizeMax">
+            <summary>
+            Maximum point size of font when auto-sizing is enabled.
+            </summary>
+            <d>Maximum point size of font when auto-sizing is enabled through the EnableAutoSizing field.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.TMProFontStyle">
+            <summary>
+            Text font style.
+            </summary>
+            <d>Text font style.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.TMProAlignment">
+            <summary>
+            Text alignment options.
+            </summary>
+            <d>Text alignment options.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.CharacterSpacing">
+            <summary>
+            Additional spacing between characters.
+            </summary>
+            <d>Additional spacing between characters.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.ParagraphSpacing">
+            <summary>
+            Additional spacing between paragraphs.
+            </summary>
+            <d>Additional spacing between paragraphs.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.CharacterWidthAdjustment">
+            <summary>
+            Percentage of character width can be adjusted before auto-sizing reduces point size.
+            </summary>
+            <d>Percentage of character width can be adjusted before auto-sizing reduces point size.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.EnableWordWrapping">
+            <summary>
+            Indicates if words should be wrapped.
+            </summary>
+            <d>Boolean indicating if words should be wrapped.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.WordWrappingRatios">
+            <summary>
+            Controls the ratio between character and word spacing to fill-in space for justified text.
+            </summary>
+            <d>Controls the ratio between character and word spacing to fill-in space for justified text.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.EnableAdaptiveJustification">
+            <summary>
+            Indicates if justification should be adaptive.
+            </summary>
+            <d>Boolean indicating if justification should be adaptive.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.OverflowMode">
+            <summary>
+            Specifies text overflow mode.
+            </summary>
+            <d>Enum specifying text overflow mode.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.EnableKerning">
+            <summary>
+            Indicates if kerning is enabled.
+            </summary>
+            <d>Boolean indicating if kerning is enabled.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.ExtraPadding">
+            <summary>
+            Indicates if extra padding around characters should be added.
+            </summary>
+            <d>Boolean indicating if extra padding around characters should be added. This may be necessary when the displayed text is very small to prevent clipping.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.RichText">
+            <summary>
+            Indicates if rich text tags are enabled.
+            </summary>
+            <d>Boolean indicating if rich text tags are enabled.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.ParseCtrlCharacters">
+            <summary>
+            Indicates if CTRL characters should be parsed.
+            </summary>
+            <d>Boolean indiciating if CTRL characters should be parsed.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.IsOverlay">
+            <summary>
+            Indicates if text should be rendered last on top of scene elements.
+            </summary>
+            <d>Boolean indicating if text should be rendered last on top of scene elements.</d>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:MarkLight.Views.UI.TextMeshProLabel.IsOrthographic" -->
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.EnableCulling">
+            <summary>
+            Enables culling on the shaders. 
+            </summary>
+            <d>Enables culling on the shaders. Note changing this value will result in an instance of the material.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.IgnoreVisibility">
+            <summary>
+            Indicates if non-visible objects should be refreshed.
+            </summary>
+            <d>Boolean indicating if non-visible objects should be refreshed.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.HorizontalMapping">
+            <summary>
+            Controls how face and outline textures are applied to text object.
+            </summary>
+            <d>Controls how face and outline textures are applied to text object.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.VerticalMapping">
+            <summary>
+            Controls how face and outline textures are applied to text object.
+            </summary>
+            <d>Controls how face and outline textures are applied to text object.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.RenderMode">
+            <summary>
+            Indicates if the mesh will be rendered.
+            </summary>
+            <d>Boolean indicating if the mesh will be rendered.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.MaxVisibleCharacters">
+            <summary>
+            Maximum number of characters visible.
+            </summary>
+            <d>Maximum number of characters visible.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.MaxVisibleWords">
+            <summary>
+            Maximum number of words visible.
+            </summary>
+            <d>Maximum number of words visible.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.MaxVisibleLines">
+            <summary>
+            Maximum number of lines visible.
+            </summary>
+            <d>Maximum number of lines visible.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.UseMaxVisibleDescender">
+            <summary>
+            Indicates if vertical alignment of text is adjusted based on visible descender of text.
+            </summary>
+            <d>Boolean indicating if vertical alignment of text is adjusted based on visible descender of text.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.PageToDisplay">
+            <summary>
+            Indicates which page of the text is displayed.
+            </summary>
+            <d>Indicates which page of the text is displayed (starting at 1).</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.TextMargin">
+            <summary>
+            Margin of text object.
+            </summary>
+            <d>Margin of text object.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.AutoSizeTextContainer">
+            <summary>
+            Indicates if size of text container adjusts to match text object.
+            </summary>
+            <d>Indicates if size of text container adjusts to match text object.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.IsVolumetricText">
+            <summary>
+            Indicates if geometry of characters are volumetric (cubes) rather than quads.
+            </summary>
+            <d>Indicates if geometry of characters are volumetric (cubes) rather than quads.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.TextMeshProComponent">
+            <summary>
+            Text Mesh Pro UGUI component.
+            </summary>
+            <d>Text Mesh Pro UGUI component.</d>
+        </member>
+        <member name="F:MarkLight.Views.UI.TextMeshProLabel.TextComponentWrapper">
+            <summary>
+            Wrapper for the unity text component.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProLabel.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProLabel.SetDefaultValues">
+            <summary>
+            Sets default values of the view.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProLabel.Initialize">
+            <summary>
+            Initializes the view.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProLabel.LayoutChanged">
+            <summary>
+            Updates the layout of the view.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProLabel.TextChanged">
+            <summary>
+            Called when text changes.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProLabel.BehaviorChanged">
+            <summary>
+            Called when fields affecting the behavior of the view are changed.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProLabel.TextStyleChanged">
+            <summary>
+            Called when fields changing the text styles are changed.
+            </summary>
+        </member>
+        <member name="P:MarkLight.Views.UI.TextMeshProLabel.PreferredWidth">
+            <summary>
+            Preferred width of text.
+            </summary>
+        </member>
+        <member name="P:MarkLight.Views.UI.TextMeshProLabel.PreferredHeight">
+            <summary>
+            Preferred height of text.
+            </summary>
+        </member>
+        <member name="T:MarkLight.Views.UI.TextComponentWrapper">
+            <summary>
+            Wraps the unity text component.
+            </summary>
+        </member>
+        <member name="T:MarkLight.Views.UI.TextMeshProExtensionMethods">
+            <summary>
+            Extension methods for text mesh pro integration.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProExtensionMethods.ToTextAlignmentOptions(MarkLight.ElementAlignment)">
+            <summary>
+            Converts marklight text alignment to text mesh pro text alignment.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TextMeshProExtensionMethods.ToFontStyles(UnityEngine.FontStyle)">
+            <summary>
+            Converts marklight font style to text mesh pro font style.
+            </summary>
+        </member>
+        <member name="T:MarkLight.Views.UI.TMProFontValueConverter">
+            <summary>
+            Value converter for TMP_FontAsset type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TMProFontValueConverter.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TMProFontValueConverter.ConvertAssetPath(System.String,System.Boolean,System.Boolean@)">
+            <summary>
+            Converts asset path and sets bool indicating if asset not found errors should be suppressed.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TMProFontValueConverter.ConvertAssetResult(MarkLight.UnityAsset)">
+            <summary>
+            Converts loaded asset to desired type.
+            </summary>
+        </member>
+        <member name="T:MarkLight.Views.UI.TMProGradientValueConverter">
+            <summary>
+            Value converter for TMP_FontAsset type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.TMProGradientValueConverter.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="T:MarkLight.Views.UI.VertexGradientValueConverter">
+            <summary>
+            Value converter for VertexGradient type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.VertexGradientValueConverter.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.VertexGradientValueConverter.Convert(System.Object,MarkLight.ValueConverterContext)">
+            <summary>
+            Value converter for Font type.
+            </summary>
+        </member>
+        <member name="M:MarkLight.Views.UI.VertexGradientValueConverter.ConvertToString(System.Object)">
+            <summary>
+            Converts value to string.
+            </summary>
+        </member>
         <member name="T:MarkLight.Views.UI.UICanvas">
             <summary>
             Canvas view.
@@ -9533,7 +10298,7 @@
             Tests if mouse is over this view. 
             </summary>
         </member>
-        <member name="M:MarkLight.Views.UI.UIView.OnSpriteChanged(MarkLight.UISprite)">
+        <member name="M:MarkLight.Views.UI.UIView.OnAssetChanged(MarkLight.UnityAsset)">
             <summary>
             Called when a sprite used by the view has been loaded or unloaded.
             </summary>

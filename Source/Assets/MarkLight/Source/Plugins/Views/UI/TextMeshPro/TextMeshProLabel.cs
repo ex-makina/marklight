@@ -189,6 +189,7 @@ namespace MarkLight.Views.UI
         /// </summary>
         /// <d>Boolean indicating if text auto-sizing should be enabled.</d>
         [MapTo("TextMeshProComponent.enableAutoSizing")]
+        [ReplacesDependencyField("ResizeTextForBestFit")]
         public _bool EnableAutoSizing;
 
         /// <summary>

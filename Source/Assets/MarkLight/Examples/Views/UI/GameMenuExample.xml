@@ -24,11 +24,11 @@
           <Group Spacing="10" Margin="50" ContentAlignment="Left">
             <Group Spacing="10" Orientation="Horizontal">
               <Label Text="Sound Effects" Width="160" Height="30" TextAlignment="Left" />
-              <Slider Width="320" Value="{SoundEffectsVolume}" SetValueOnDragEnded="True" />
+              <Slider Width="320" Value="{SoundEffectsVolume}" SetValueOnDragEnded="True" IsRightToLeft="True" />
             </Group>
             <Group Spacing="10" Orientation="Horizontal">
               <Label Text="Music" Width="160" Height="30" TextAlignment="Left" />
-              <Slider Width="320" Min="0" Max="100" Value="{MusicVolume}" SetValueOnDragEnded="True" />
+              <Slider Width="320" Min="0" Max="100" Value="{MusicVolume}" SetValueOnDragEnded="True" IsRightToLeft="True" />
             </Group>
             <Group Orientation="Horizontal">
               <Label Text="Easy Mode" Width="160" Height="30" TextAlignment="Left" />

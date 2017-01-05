@@ -1,8 +1,10 @@
 ﻿v2.7.0
 - Added IsRightToLeft bool to Slider to make it slidable from right to left
+- Fixed bug where HorizontalScrollbarVisibility was used instead of VerticalScrollbarVisibility
 - Fixed bug where bound fields didn't have their IsSet indicator set
 - Fixed bug where loading from Resources folder didn't work
 - Fixed bug where first item in list was ignored when sorting it
+- Removed UICanvas.OrderInLayer which mapped to the wrong field, SortingOrder should be used instead
 
 v2.6.0
 - Added Text Mesh Pro InputField integration

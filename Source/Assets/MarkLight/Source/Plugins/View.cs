@@ -522,7 +522,16 @@ namespace MarkLight
                     }
                 }
 
-                bindingValueObserver.TransformMethod = transformMethodViewType.GetMethod(transformMethodName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                try
+                {
+                    bindingValueObserver.TransformMethod = transformMethodViewType.GetMethod(transformMethodName, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Error assigning transform method \"{3}\" in view type \"{4}\". {5}", GameObjectName, viewFieldBinding, viewField, bindings[0], Parent.ViewTypeName, Utils.GetError(e)));
+                    return;
+                }
+
                 if (bindingValueObserver.TransformMethod == null)
                 {
                     Debug.LogError(String.Format("[MarkLight] {0}: Unable to assign binding \"{1}\" to view field \"{2}\". Transform method \"{3}\" not found in view type \"{4}\".", GameObjectName, viewFieldBinding, viewField, bindings[0], Parent.ViewTypeName));

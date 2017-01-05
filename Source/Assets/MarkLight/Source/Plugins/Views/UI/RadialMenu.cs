@@ -226,7 +226,7 @@ namespace MarkLight.Views.UI
                 return;
             }
 
-            DeactivateMenuItem(_menuItems[index]);
+            ActivateMenuItem(_menuItems[index]);
         }
 
         /// <summary>
