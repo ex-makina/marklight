@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="MarkLight is a framework for Unity that offers XUML a design language similar to HTML but instead of creating webpages it is used to design scenes in Unity.">
+<meta name="keywords" content="marklight, markux, mvvm, unity, unity3d, mvm, mvp, mvc, ux, ui, user interface, user experience, interfaces, game, games, controls, widgets, xml, markup, framework, design, create, share, dream, build, play, dynamic, responsive, fluid, intuitive, easy, simple, powerful, sleek, elegant, structured, flow, creative">
+<meta name="author" content="Ex Makina">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Views Models - Bringing Views to Life | MarkLight</title>
+<script src="../../js/html5shiv.js"></script>  <!-- support for HTML5 in IE8 -->
+<!-- CSS file links -->
+<link href="../../css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../../css/bootstrap.icon-large.min.css" rel="stylesheet">
+<link href="../../css/style-documentation.css" rel="stylesheet" type="text/css" media="all" id="styleChange" />
+<link href="../../css/lightbox.css" type="text/css" rel="stylesheet" />
+<link href="../../css/responsive.css" type="text/css" rel="stylesheet" />
+<link href="../../css/vs.css" type="text/css" rel="stylesheet" />
+<link href="../../css/font-awesome-4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76413937-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script>
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+     function () {
+     document.location = url;
+     }
+   });
+}
+</script>
+</head>
+
+<body>
+
+    <!-- Sub-Header Start -->
+    <header class="navbar navbar-fixed-top subNavBar" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+        <ul class="nav navbar-nav navbar-left subCategories">
+            <li><a href="../introduction.html" class="external">Introduction</a></li>
+            <li class="subCategorySelected"><a href="../tutorials.html">Tutorials</a></li>
+            <li><a href="../api/MarkLight.Views.Animate.html" class="external">API docs</a></li>            
+        </ul>
+        <span class="slackLeftOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span>
+      </div><!-- /.navbar-collapse -->
+    </header>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top mainNavBar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.marklightforunity.com/"></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../../index.html" class="external">Home</a></li>
+                    <li><a href="https://www.assetstore.unity3d.com/#!/content/37466" class="external" onclick="trackOutboundLink('https://www.assetstore.unity3d.com/#!/content/37466'); return false;">Download</a></li>
+                    <li class="current"><a href="../introduction.html" class="current">Documentation</a></li>
+                    <li><a href="https://www.patreon.com/studiodelight" class="external patreon"></a></li> 
+                </ul>
+            </div><!--/.navbar-collapse -->
+      </div><!-- END Container -->
+    </header><!-- END Header -->
+
+    <!-- Documentation Start -->
+    <a class="anchor" id="documentationAnchor"></a>
+    <section id="documentation" class="marginSubMenu">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">   
+            <h1>View Models - Bringing Views to Life</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-8">        
+
+          <a class="docIndexAnchor" id="introduction"></a>
+          <h2>Introduction</h2>
+          While XUML serves to describe the design, layout and configuration of a view, the <b>view model</b> describes its data, logic and behavior. The view model makes it possible for a view to do things like respond to user interaction, respond to changes in other views, modify its state or perform actions every frame.<br>
+          <br>
+          <h2>View Models in the Scene</h2>
+          Before we break down all the parts of the view model I want to explain how the view models are represented in the unity scene hierarchy. Here is an example of a simple view model that responds to a button click:<br>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <i>View XUML</i>
+              <pre><code class="xml">
+&lt;ExampleView&gt;
+  &lt;UserInterface&gt;
+    &lt;Button Text="Play" Click="StartGame" /&gt;
+  &lt;/UserInterface&gt;
+  &lt;EventSystem /&gt;
+&lt;/ExampleView&gt;<br>
+              </code></pre>
+            </div>
+            <div class="col-lg-6">
+              <i>View Model</i>
+              <pre><code class="C#">
+public class ExampleView : View
+{
+    public void StartGame()
+    {
+        Debug.Log("Play Clicked");
+    }
+}
+              </code></pre>
+            </div>
+          </div>
+          <br>
+          If we setup our scene to present the ExampleView the MarkLight editor extension will process the XUML file and generate the following objects in the scene:<br>
+          <br>
+          <img src="../../images/documentation/view-model/view-model-in-scene.png" class="img-responsive" alt="View Model in Scene"><br>
+          As you can see in the scene hierarchy on the left, the processor has created game objects for the views and arranged them in the hierarchy we've specified in the XUML. On the right you can see that the view object <b>ExampleView</b> has its view model attached as a component.<br>
+          <br>
+          <a class="docIndexAnchor" id="declaring-view-model"></a>
+          <h2>View Model Declaration</h2>  
+          A view model is declared as a class that inherits from the <a href="../api/MarkLight.View.html">View</a> base class or a subclass thereof, most common being <a href="../api/MarkLight.Views.UI.UIView.html">UIView</a> that is used whenever a view resides in a UI canvas. The name of the class is the name you use to refer to the view in XUML. Here is an example how the Label view model is declared:<br>
+          <br>
+          <i>Label.cs</i>
+          <pre><code class="C#">
+    [ExcludeComponent("ImageComponent")]
+    [HideInPresenter]
+    public class Label : UIView
+    {
+          </code></pre>      
+          <br>
+          As shown in the example you can add class attributes when declaring the view model. These are more advanced options that you don't need to worry about in most cases. Here is a description of what they do:<br>
+          <br>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Class Attribute</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="../api/MarkLight.HideInPresenter.html">HideInPresenter</a></td>
+                <td>When specified the view is not shown in the view presenter's main view selection. Used to not clutter up the main view selection with views only intended to be used internally in other views.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.ExcludeComponent.html">ExcludeComponent</a></td>
+                <td>When encountering a component field in the view the processor automatically adds the component to the view. This attribute tells the processor to not add component associated with the specified field. Used primarily to exclude one graphic component so it can be replaced with another since Unity doesn't allow multiple graphic components to be added to a view.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.MapViewField.html">MapViewField</a></td>
+                <td>Allows you to map one view field to another on the class level. Usually <a href="../api/MarkLight.MapTo.html">MapTo</a> is used when mapping fields but in some cases such as when view actions are mapped you'd want to use this instead.</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>          
+          <a class="docIndexAnchor" id="view-fields"></a>
+          <h2>View Fields</h2>  
+          View fields represents the data/configuration/attributes of a view. It can be the text of a label, width of a view, the orientation of list, etc. View fields are declared as class fields on the view model. The name of the field is the name you use to refer to it in XUML.<br>
+          <div class="row">
+            <div class="col-lg-6">
+              <pre><code class="C#">
+public class Example : UIView
+{
+    <mark>public string Text;</mark>
+}
+              </code></pre>
+            </div>
+            <div class="col-lg-6">
+              <pre><code class="xml">
+  &lt;Example <mark>Text="Example Text"</mark> /&gt;<br><br><br>
+              </code></pre>
+            </div>
+          </div>
+          <br>
+
+          When programmatically modifying the value of a view field you need to use a generic method called <b>SetValue</b>. This is so the system can be notified of changes and utilize the change handling and binding systems. Example of how to use SetValue:<br>
+          <br>
+          <pre><code class="C#">
+    SetValue(() => Text, "Test"); // sets Text = "Test" and notifies observers
+    SetValue(() => ChildView.Orientation, Orientation.Horizontal);
+          </code></pre>
+          <br>
+          To avoid having to call SetValue and to make things simpler you can change the view field <b>Text</b> to a <b>dependency field</b>, which is recommended specially if you plan on mapping fields or programmatically setting values.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="dependency-fields"></a>
+          <h2>Dependency Fields</h2>
+          Dependency fields wrap SetValue calls. To create a dependency field simply add an underscore <b>_</b> to the type in your view field declaration:<br>
+          <br>
+          <pre><code class="C#">
+public class Example : UIView
+{
+    public <mark>_string</mark> Text;
+}
+          </code></pre>
+          <br>
+          You can now set the value of a dependency field through the <b>Value</b> or <b>DirectValue</b> property:<br>
+          <br>
+          <pre><code class="C#">
+Text.Value = "Test"; // sets value and notifies observers
+Text.DirectValue = "Test"; // sets value without notifying observers
+          </code></pre>      
+          <br>
+          Dependency fields makes things more readable and user-friendly. They also ensure that value propagation logic is utilized unless explicitly specified otherwise (DirectValue used).<br>
+          <br>
+          If you have a custom type that you wish to create a dependency field from you need to declare a dependency field class for your type:<br>
+          <br>
+          <span class="inlineCode">public class &#95;YourType : ViewField&lt;YourType&gt; { }</span><br>
+          <br>
+
+          <a class="docIndexAnchor" id="view-references"></a>
+          <h2>View References</h2>
+          To reference a child view within your view model you can do so by adding a view field with the same type as the view you want to reference and giving it the same name as the ID you give the view in XUML:<br>
+          <div class="row">
+            <div class="col-lg-6">
+              <pre><code class="C#">
+public class Example : UIView
+{
+    <mark>public Label MyLabel;</mark>
+}
+              </code></pre>
+            </div>
+            <div class="col-lg-6">
+              <pre><code class="xml">
+&lt;Example&gt;
+    &lt;Label <mark>Id="MyLabel"</mark> /&gt;
+&lt;/Example&gt;<br>
+              </code></pre>
+            </div>
+          </div>
+          <br>
+          In XUML you can access fields directly on the Label through the reference:<br>
+          <br>
+          <pre><code class="xml">
+&lt;Example MyLabel.Text="Label Text" /&gt;
+          </code></pre> 
+          <br>
+          This can get a bit verbose and sometimes we want a more descriptive name rather than the generic name of e.g. <b>Label.Text</b>. We can accomplish this through <a href="#mapping-fields">view field mapping</a> explained in a later section.<br>
+          <br>
+
+
+          <a class="docIndexAnchor" id="view-components"></a>
+          <h2>View Components</h2>
+          To add a unity component to your view object you declare a component field on your view model:<br>
+          <br>
+          <pre><code class="C#">
+public class Example : UIView
+{
+    public UnityEngine.UI.Text TextComponent;
+}
+          </code></pre>
+          <br>
+          The example above adds a <a href="http://docs.unity3d.com/ScriptReference/UI.Text.html">Unity Text component</a> to the view object. This component can be accessed through XUML as with any other view field:<br>
+          <br>
+          <pre><code class="xml">
+  &lt;Example <mark>TextComponent.text="Example Text"</mark> /&gt;
+          </code></pre>          
+          <br>
+          Just like with view references we might want to access the component fields through less verbose and more descriptive names. See the section on <a href="#mapping-fields">view field mapping</a> for information on how this is done.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="view-actions"></a>
+          <h2>View Actions</h2>
+          A view action is an event that can be declared on the view model that other views can attach action handlers to. A view action can be triggered by the view model or by the unity event system (such as when user clicks on a view). A view action is declared as a class field of the type <b>ViewAction</b> on the view model. The name you give the field is the name you refer to the action in XUML:<br>
+          <br>
+          <pre><code class="C#">
+public class TriggerExample : UIView
+{
+    <mark>public ViewAction MyCustomAction;</mark>
+}
+          </code></pre>
+          <br>
+          To trigger the view action you call:<br>
+          <br>
+          <span class="inlineCode">MyCustomAction.Trigger();</span><br>
+          <span class="inlineCode">MyCustomAction.Trigger(data); // pass data to the handlers</span><br>
+          <br>
+          To listen to view actions you declare an action handler method that will be invoked when the action is triggered. The action handler can have parameters that will be injected when the handler is invoked. Here is an example of another view that listens to the view action <b>Example.MyCustomAction</b>:<br>
+          <br>
+          <pre><code class="C#">
+public class ListenExample : UIView
+{
+    public void MyCustomActionHandler(Example source, string data)
+    {
+    }
+}
+          </code></pre>
+          <br>
+          <pre><code class="xml">
+&lt;ListenExample&gt;
+    &lt;TriggerExample <mark>MyCustomAction="MyCustomActionHandler"</mark> /&gt;
+&lt;/ListenExample&gt;<br>
+          </code></pre>
+          <br>
+          Finally if you want the unity event system to trigger your actions automatically you can name your action one of the following names:<br>
+          <br>
+          BeginDrag<br>
+          Cancel<br>
+          Deselect<br>
+          Drag<br>
+          Drop<br>
+          EndDrag<br>
+          InitializePotentialDrag<br>
+          Move<br>
+          Click<br>
+          PointerClick<br>
+          MouseClick<br>
+          PointerDown<br>
+          MouseDown<br>
+          PointerEnter<br>
+          MouseEnter<br>
+          PointerExit<br>
+          MouseExit<br>
+          PointerUp<br>
+          MouseUp<br>
+          Scroll<br>
+          Select<br>
+          Submit<br>
+          UpdateSelected<br>
+          <br>
+          Doing so makes sure that your action will be triggered when the corresponding unity event occurs. For example if you wish to add a view action that gets triggered when the user clicks on the view, you name the view action <b>Click</b>:<br>
+          <br>
+          <pre><code class="C#">
+public class TriggerExample : UIView
+{
+    <mark>public ViewAction Click;</mark>
+}
+          </code></pre>
+          <br>
+
+
+          <a class="docIndexAnchor" id="mapping-fields"></a>
+          <h2>Mapping View Fields</h2>
+          View field mapping is a way to provide abbreviated and descriptive view fields that maps and refers to view fields that resides in another view or unity component. Example of setting a component field without mapping:<br>
+          <br>
+          <pre><code class="C#">
+public class Example : UIView
+{
+    public UnityEngine.UI.Text TextComponent;
+}
+          </code></pre>
+          <br>
+          <pre><code class="xml">
+  &lt;Example <mark>TextComponent.text="Example Text"</mark> /&gt;
+          </code></pre>          
+          <br>
+          <b>TextComponent.text</b> is a generic name and doesn't tell us what the text represent and the typing the whole field path is cumbersome. To solve this by declaring a new view field and mapping it to the text component field:<br>
+          <br>
+          <pre><code class="C#">
+public class Example : UIView
+{
+<mark>    [MapTo("TextComponent.text")]
+    public _string GameTitle;</mark>
+
+    public UnityEngine.UI.Text TextComponent;
+}
+          </code></pre>
+          <br>
+          We can now access and change the field through XUML and code like this:<br>
+          <div class="row">
+            <div class="col-lg-6">
+              <pre><code class="C#">
+  GameTitle.Value = "Example Text";
+              </code></pre>
+            </div>
+            <div class="col-lg-6">
+              <pre><code class="xml">
+  &lt;Example <mark>GameTitle="Example Text"</mark> /&gt;
+              </code></pre>
+            </div>
+          </div>
+          <br>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <i class="icon-large icon-info-sign"></i> The standard views relies heavily on dependency fields and view field mapping to make things easy to access and intuitive to use. It's recommended that you do the same, specially if you plan on distributing and re-using your views.
+            </div>
+          </div>
+          <br>
+
+          <a class="docIndexAnchor" id="change-handlers"></a>
+          <h2>Change Handlers</h2>          
+          Change handlers are methods within the view model that are invoked whenever certain view fields are changed. For example <a href="../api/MarkLight.Views.UI.UIView.html">UIView</a> relies on change handlers to do layout logic whenever a field affecting the layout has changed (such as width, alignment, margin, etc). To declare a change handler add the attribute <a href="../api/MarkLight.ChangeHandler.html">ChangeHandler</a> to a view field:<br>
+          <br>
+          <pre><code class="C#">
+public class Example : UIView
+{
+    <mark>[ChangeHandler("TextChanged")]</mark>
+    public _string Text;
+
+    public virtual void TextChanged()
+    {
+        // called once at init and whenever text changes value
+    }
+}
+          </code></pre>
+          <br>
+          You can give the change handler any name you want. The postfix <b>Changed</b> is the recommended name standard within the framework. It's also recommended that you make the method virtual so it can be overridden by subclasses that wish to handle the same changes.<br>
+          <br>
+          Finally if you are mapping fields you can declare the change handler within the <b>MapTo</b> attribute:<br>
+          <br>
+          <pre><code class="C#">
+    [MapTo("TextComponent.text", <mark>"TextChanged"</mark>)]
+    public _string Text;
+          </code></pre>
+          <br>
+
+          <a class="docIndexAnchor" id="initialization"></a>
+          <h2>Initializing a View</h2>
+          To initialize values on the view model you can set the values in the root element in your XUML file:<br>
+          <div class="row">
+            <div class="col-lg-6">
+              <pre><code class="C#">
+  public class Example : UIView
+  {
+      public _string Player;
+  }
+              </code></pre>
+            </div>
+            <div class="col-lg-6">
+              <pre><code class="xml">
+  &lt;Example Player="Default Player"&gt;
+  &lt;/Example&gt;<br><br>
+              </code></pre>
+            </div>
+          </div>
+          <br>
+          If you wish to populate data during runtime or perform certain logic upon initialization you can override the <b>Initialize</b> method. This method gets called once when the scene starts after all the internal initialization has completed.<br>
+          <br>
+          <pre><code class="C#">    
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        // populate runtime data, do lookups, etc.
+    }
+          </code></pre>
+          <br>
+          If you want to set default values in code you can override <b>SetDefaultValues</b> which gets called after internal initialization is done but before any XUML values are set.<br>
+          <br>
+          Finally if you wish to perform some initialization logic every time the view gets activated in the scene, you can attach a <a href="#view-actions">view action handler</a> to the view action <b>Activated</b>. If the view starts out activated it gets triggered once after the view is initialized.<br>
+          <br>
+
+          <br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+          </div> <!-- END OF FIRST COLUMN -->
+          <div class="col-lg-1">
+          </div>
+          <div class="col-lg-3">
+
+              <div class="toc hidden-print hidden-xs hidden-sm" data-spy="affix" data-offset-top="115">
+                <ul>
+                  <li><a href="#introduction">Introduction</a></li>
+                  <li><a href="#declaring-view-model">View Model Declaration</a></li>
+                  <li><a href="#view-fields">View Fields</a></li>
+                  <li><a href="#dependency-fields">Dependency Fields</a></li>
+                  <li><a href="#view-references">View References</a></li>
+                  <li><a href="#view-components">View Components</a></li>
+                  <li><a href="#view-actions">View Actions</a></li>
+                  <li><a href="#mapping-fields">Mapping View Fields</a></li>
+                  <li><a href="#change-handlers">Change Handlers</a></li>
+                  <li><a href="#initialization">Initializing a View</a></li>
+                </ul>
+              </div>
+
+          </div> <!-- END OF SECOND COLUMN -->          
+        </div><!-- END OF ROW-->
+      </div> <!-- END OF CONTAINER -->
+    </section>
+
+
+    <!-- Start subscription box -->
+    <section id="promoBox">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4><span>Join the Announcement List</span></h4>
+            <p>Be notified when new themes, views, tutorials and updates are available</p>
+          </div>
+          <div class="col-lg-6">
+            <form method="post" name="subscribeForm" id="subscribeForm" action="http://scripts.dreamhost.com/add_list.cgi">
+                <input type="hidden" name="list" value="news" />
+                <input type="hidden" name="domain" value="markux.com" />
+                <input type="text" name="email" id="emailInput" placeholder="your email here" /> 
+                <input type="submit" name="submit" id="subscribeButton" value="Subscribe" /> 
+            </form>
+
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END container -->
+    </section><!-- END Promo box -->
+
+    <footer>
+      <div class="container">
+        <div class="row footer-info">
+          <div class="col-lg-5">
+            <img src="../../images/exmakina.png" alt="company logo" />
+          </div>
+          <div class="col-lg-3 contact">
+            <ul>
+              <li><img src="../../images/icons/footerMail.png" alt="mail icon" /><a href="mailto:contact@marklightforunity.com "> contact@marklightforunity.com </a></li> 
+            </ul>                
+          </div>
+          <div class="col-lg-4">
+            <ul class="socialIcons footer-social socialIconsOffset">
+                <li><a href="https://twitter.com/MarkUX" onclick="trackOutboundLink('https://twitter.com/MarkUX'); return false;" class="twitterIcon" target="_blank"></a></li>
+                <li><a href="http://www.reddit.com/r/marklight" onclick="trackOutboundLink('http://www.reddit.com/r/marklight'); return false;" class="redditIcon" target="_blank"></a></li>
+                <li><span class="slackOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span></li>
+            </ul>
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END Container -->
+    </footer><!-- END Footer -->
+    
+<!-- JavaScript file links -->
+<script src="../../js/jquery-1.12.3.min.js"></script>            <!-- Jquery -->
+<script src="../../js/bootstrap.min.js"></script>     <!-- bootstrap -->
+<script src="../../js/jquery.bxslider.min.js"></script>  <!-- bxslider -->
+<script src="../../js/tabs.js"></script> <!-- custom tab script -->
+<script src="../../js/lightbox-2.6.min.js"></script>  <!-- lightbox -->
+<script src="../../js/jquery.scrollTo.js"></script>  <!-- scollTo -->
+<script src="../../js/jquery.nav.js"></script>  <!-- one page nav -->
+<script src="../../js/respond.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+
+<script>
+  "use strict";
+
+$(document).ready(function() {
+    hljs.initHighlightingOnLoad();
+    $('.nav.navbar-nav.navbar-right').onePageNav({
+        currentClass: 'current',
+        filter: ':not(.external)'
+    }); 
+    $('span code').each(function(i, inline)
+    {
+      hljs.highlightBlock(inline);
+    });
+});
+</script>
+
+</body>
+</html>

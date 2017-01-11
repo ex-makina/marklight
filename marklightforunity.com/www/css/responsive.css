@@ -1,0 +1,88 @@
+
+/* IE Image hover bug fix */
+@media screen and (min-width:0\0) { 
+    .overlay{
+	margin-top:5px;
+	margin-left:-269px;
+	width:260px;
+	height:158px;
+	position:absolute;
+	display:none;
+	opacity:0.9;
+	z-index:1000;
+	}
+}
+
+/**************** TABLET *****************/
+
+@media only screen and (max-width:1170px) { 
+
+	/* Slider */
+	#iphoneWhite, #iphoneBlack, #ipadWhite, #ipadBlack, #iphoneBlackSmall {
+		display:none;
+	}
+
+	.col-lg-6.slideText {
+		text-align:center;
+		margin:0 auto;
+	}
+
+	.col-lg-4.featureItem { margin-bottom:30px; }
+
+	.featureIcon { margin:0px 25px 0px 0px; }
+
+	.image { width:270px;}
+
+	#screenshots h4 { margin-top:-10px; }
+
+	#screenshots p { margin-bottom:40px; }
+
+	#contactInputName { width:100%; margin-bottom:0px; }
+
+	.contactInput, .contactMessage { width:100%; }
+
+	.dividerWide { display:none; }
+}
+
+/**************** MOBILE *****************/
+
+@media only screen and (min-width: 480px) and (max-width: 797px) {
+
+	body {font-size:14px;}
+
+	.navbar.navbar-default.navbar-fixed-top { padding-bottom:20px; }
+
+	.nav.navbar-nav.navbar-right li.current a { background-image:none; padding-bottom:10px; }
+
+	.jumbotron h1 { font-size:35px; }
+
+	.jumbotron p { font-size:19px; }
+
+	#contactInputName { width:100%; margin-bottom:0px; }
+
+	.contactInput, .contactMessage { width:100%; }
+}
+
+@media only screen and (max-width: 479px) {
+
+	body {font-size:14px;}
+
+	.navbar.navbar-default.navbar-fixed-top { padding-bottom:20px; }
+
+	.nav.navbar-nav.navbar-right li.current a { background-image:none; padding-bottom:10px; }
+
+	.jumbotron h1 { font-size:35px; }
+
+	.jumbotron p { font-size:19px; }
+
+	#emailInput { width:65% }
+
+	#subscribeButton { background-position:-80px; padding-right:7px; width:100px;}
+
+	.iphoneSmall, .transition1, .transition2, .dividerHalf { display:none; }
+
+	#contactInputName { width:100%; margin-bottom:0px; }
+
+	.contactInput, .contactMessage { width:100%; }
+
+}

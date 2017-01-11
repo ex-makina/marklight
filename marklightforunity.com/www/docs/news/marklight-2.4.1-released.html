@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="MarkLight is a framework for Unity that offers XUML a design language similar to HTML but instead of creating webpages it is used to design scenes in Unity.">
+<meta name="keywords" content="marklight, markux, mvvm, unity, unity3d, mvm, mvp, mvc, ux, ui, user interface, user experience, interfaces, game, games, controls, widgets, xml, markup, framework, design, create, share, dream, build, play, dynamic, responsive, fluid, intuitive, easy, simple, powerful, sleek, elegant, structured, flow, creative">
+<meta name="author" content="Ex Makina">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>MarkLight 2.4.1 Released | MarkLight</title>
+<script src="../../js/html5shiv.js"></script>  <!-- support for HTML5 in IE8 -->
+<!-- CSS file links -->
+<link href="../../css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../../css/bootstrap.icon-large.min.css" rel="stylesheet">
+<link href="../../css/style-documentation.css" rel="stylesheet" type="text/css" media="all" id="styleChange" />
+<link href="../../css/lightbox.css" type="text/css" rel="stylesheet" />
+<link href="../../css/responsive.css" type="text/css" rel="stylesheet" />
+<link href="../../css/vs.css" type="text/css" rel="stylesheet" />
+<link href="../../css/font-awesome-4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76413937-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script>
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+     function () {
+     document.location = url;
+     }
+   });
+}
+</script>
+</head>
+
+<body>
+
+    <!-- Sub-Header Start -->
+    <header class="navbar navbar-fixed-top subNavBar" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+        <ul class="nav navbar-nav navbar-left subCategories">
+            <li class="subCategorySelected"><a href="../introduction.html" class="external">Introduction</a></li>
+            <li><a href="../tutorials.html">Tutorials</a></li>
+            <li><a href="../api/MarkLight.Views.Animate.html" class="external">API docs</a></li>            
+        </ul>
+        <span class="slackLeftOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span>
+      </div><!-- /.navbar-collapse -->
+    </header>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top mainNavBar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.marklightforunity.com/"></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../../index.html" class="external">Home</a></li>
+                    <li><a href="https://www.assetstore.unity3d.com/#!/content/37466" class="external" onclick="trackOutboundLink('https://www.assetstore.unity3d.com/#!/content/37466'); return false;">AssetStore</a></li>
+                    <li class="current"><a href="../introduction.html" class="current">Documentation</a></li>
+                </ul>
+            </div><!--/.navbar-collapse -->
+      </div><!-- END Container -->
+    </header><!-- END Header -->
+
+    <!-- Documentation Start -->
+    <a class="anchor" id="documentationAnchor"></a>
+    <section id="documentation" class="marginSubMenu">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">   
+            <h1>MarkLight 2.4.1 Released</h1>
+            Jul 1, 2016
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-9">        
+
+          <a class="docIndexAnchor" id="introduction"></a>
+          Version highlights:<br>
+          <br>
+          <ol>
+
+            <li>
+              <b>Virtualized Lists</b> - Lists items can be can be virtualized through the <b>UseVirtualization</b> field. When enabled only the items visible in the scrollable viewport of the list will be active in the list hierarchy. This improves performance significantly when having large lists of complicated items and when only a few are shown at a time.<br>
+              <br>
+            </li>
+
+            <li>
+              <b>Multiple List Templates</b> - A list can now have multiple list templates for different types of items. To use this feature you create multiple templates in your list and give them different IDs. In your item view model you add a method called <b>GetTemplateId()</b> which returns the ID (string) of the template that should be used (based on internal parameters). The new PlayingCardsExample and GameMenuExample scenes demonstrates thhis feature.<br><br>
+            </li>
+
+            <li>
+              <b>Performance Improvements</b> - Improved load and initialization performance. The views should take up less memory.<br>
+            </li>
+
+          </ol>
+          <br>
+          <br>
+          <h2>Change Log</h2>
+          <br>
+          <span class="changelog">
+<b>v2.4.1</b><br>
+<ul>
+<li>Game menu example added</li>
+<li>Fixed various bugs with list pooling and virtualization</li>
+<li>Ints and floats can now be converted and bound to ElementSize fields</li>
+<li>Binding to generic view fields allowed by using the GenericViewField attribute</li>
+<li>Fixed the error 'Field X defined on type Y is not a field on the target object' by using GenericViewField</li>
+</ul>
+<b>v2.4.0</b><br>
+<ul>
+<li>List can use virtualization (only present items visible in viewport) through the UseVirtualization bool</li>
+<li>Fixed UWP 8.1 compatibility issues</li>
+<li>Multiple list templates supported</li>
+<li>Optimized performance when loading and initializing views</li>
+<li>Added PlayingCards example that demonstrates a scrollable wrapped list using multiple templates</li>
+<li>Added bool AlternateItems to List and AlternateRows to DataGrid for enabling alternating row styles (alternating between "Default" and "Alternate" state)</li>
+<li>Fixed issue with exceptions thrown when bindings referencing destroyed objects (e.g. bindings to removed list items)</li>
+<li>Fixed so content in a ScrollRect can be aligned through ContentAlignment field (e.g. to the top) even if its smaller than the scroll rect size</li>
+<li>Scrollable list content alignment can be aligned through ScrollableContentAlignment field</li>
+<li>Fixed bug where UpdateRectTransform was ignored by lists and groups</li>
+<li>Fixed bug where changes in IsActive didn't notify parents of layout update</li>
+<li>Added event "ValueSet" on dependency view fields that is triggered whenever the value is set</li>
+<li>Fixed bug where TabPanel doesn't update selected item when tab is selected</li>
+<li>Fixed bug where UnitSize z-axis (uz) was ignored</li> 
+<li>Fixed bug where UnitSize and BaseDirectory wasn't updated immediately when changed on the view presenter</li>
+<li>Added IsScrollable field to DataGrid</li>
+</ul>
+</span>
+
+
+          <br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+          </div> <!-- END OF FIRST COLUMN -->
+
+        </div><!-- END OF ROW-->
+      </div> <!-- END OF CONTAINER -->
+    </section>
+
+
+    <!-- Start subscription box -->
+    <section id="promoBox">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4><span>Join the Announcement List</span></h4>
+            <p>Be notified when new themes, views, tutorials and updates are available</p>
+          </div>
+          <div class="col-lg-6">
+            <form method="post" name="subscribeForm" id="subscribeForm" action="http://scripts.dreamhost.com/add_list.cgi">
+                <input type="hidden" name="list" value="news" />
+                <input type="hidden" name="domain" value="markux.com" />
+                <input type="text" name="email" id="emailInput" placeholder="your email here" /> 
+                <input type="submit" name="submit" id="subscribeButton" value="Subscribe" /> 
+            </form>
+
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END container -->
+    </section><!-- END Promo box -->
+
+    <footer>
+      <div class="container">
+        <div class="row footer-info">
+          <div class="col-lg-5">
+            <img src="../../images/exmakina.png" alt="company logo" />
+          </div>
+          <div class="col-lg-3 contact">
+            <ul>
+              <li><img src="../../images/icons/footerMail.png" alt="mail icon" /><a href="mailto:contact@marklightforunity.com "> contact@marklightforunity.com </a></li> 
+            </ul>                
+          </div>
+          <div class="col-lg-4">
+            <ul class="socialIcons footer-social socialIconsOffset">
+                <li><a href="https://twitter.com/MarkUX" onclick="trackOutboundLink('https://twitter.com/MarkUX'); return false;" class="twitterIcon" target="_blank"></a></li>
+                <li><a href="http://www.reddit.com/r/marklight" onclick="trackOutboundLink('http://www.reddit.com/r/marklight'); return false;" class="redditIcon" target="_blank"></a></li>
+                <li><span class="slackOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span></li>
+            </ul>
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END Container -->
+    </footer><!-- END Footer -->
+    
+<!-- JavaScript file links -->
+<script src="../../js/jquery-1.12.3.min.js"></script>            <!-- Jquery -->
+<script src="../../js/bootstrap.min.js"></script>     <!-- bootstrap -->
+<script src="../../js/jquery.bxslider.min.js"></script>  <!-- bxslider -->
+<script src="../../js/tabs.js"></script> <!-- custom tab script -->
+<script src="../../js/lightbox-2.6.min.js"></script>  <!-- lightbox -->
+<script src="../../js/jquery.scrollTo.js"></script>  <!-- scollTo -->
+<script src="../../js/jquery.nav.js"></script>  <!-- one page nav -->
+<script src="../../js/respond.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+
+<script>
+  "use strict";
+
+$(document).ready(function() {
+    hljs.initHighlightingOnLoad();
+    $('.nav.navbar-nav.navbar-right').onePageNav({
+        currentClass: 'current',
+        filter: ':not(.external)'
+    }); 
+    $('span code').each(function(i, inline)
+    {
+      hljs.highlightBlock(inline);
+    });
+});
+</script>
+
+</body>
+</html>

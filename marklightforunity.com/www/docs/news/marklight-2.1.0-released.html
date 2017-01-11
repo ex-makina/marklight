@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="MarkLight is a framework for Unity that offers XUML a design language similar to HTML but instead of creating webpages it is used to design scenes in Unity.">
+<meta name="keywords" content="marklight, markux, mvvm, unity, unity3d, mvm, mvp, mvc, ux, ui, user interface, user experience, interfaces, game, games, controls, widgets, xml, markup, framework, design, create, share, dream, build, play, dynamic, responsive, fluid, intuitive, easy, simple, powerful, sleek, elegant, structured, flow, creative">
+<meta name="author" content="Ex Makina">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>MarkLight 2.1.0 is Released! | MarkLight</title>
+<script src="../../js/html5shiv.js"></script>  <!-- support for HTML5 in IE8 -->
+<!-- CSS file links -->
+<link href="../../css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../../css/bootstrap.icon-large.min.css" rel="stylesheet">
+<link href="../../css/style-documentation.css" rel="stylesheet" type="text/css" media="all" id="styleChange" />
+<link href="../../css/lightbox.css" type="text/css" rel="stylesheet" />
+<link href="../../css/responsive.css" type="text/css" rel="stylesheet" />
+<link href="../../css/vs.css" type="text/css" rel="stylesheet" />
+<link href="../../css/font-awesome-4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76413937-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script>
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+     function () {
+     document.location = url;
+     }
+   });
+}
+</script>
+</head>
+
+<body>
+
+    <!-- Sub-Header Start -->
+    <header class="navbar navbar-fixed-top subNavBar" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+        <ul class="nav navbar-nav navbar-left subCategories">
+            <li class="subCategorySelected"><a href="../introduction.html" class="external">Introduction</a></li>
+            <li><a href="../tutorials.html">Tutorials</a></li>
+            <li><a href="../api/MarkLight.Views.Animate.html" class="external">API docs</a></li>            
+        </ul>
+        <span class="slackLeftOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span>
+      </div><!-- /.navbar-collapse -->
+    </header>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top mainNavBar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.marklightforunity.com/"></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../../index.html" class="external">Home</a></li>
+                    <li><a href="https://www.assetstore.unity3d.com/#!/content/37466" class="external" onclick="trackOutboundLink('https://www.assetstore.unity3d.com/#!/content/37466'); return false;">AssetStore</a></li>
+                    <li class="current"><a href="../introduction.html" class="current">Documentation</a></li>
+                </ul>
+            </div><!--/.navbar-collapse -->
+      </div><!-- END Container -->
+    </header><!-- END Header -->
+
+    <!-- Documentation Start -->
+    <a class="anchor" id="documentationAnchor"></a>
+    <section id="documentation" class="marginSubMenu">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">   
+            <h1>MarkLight 2.1.0 is released!</h1>
+            April 27, 2016
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-9">        
+
+          <a class="docIndexAnchor" id="introduction"></a>
+          MarkLight 2.1.0 is a major evolution of the framework and it brings a lot of new features. Here are a few of the highlights:<br>
+          <br>
+          <ol>
+            <li>
+              <b>Larger Scope</b> - The framework is no longer limited to creating user interfaces. You can now build entire scenes in MarkLight.<br><br>            
+            </li>
+
+            <li>
+              <b>Improved Data Binding</b>
+              <ul>
+                <li>Multi binding:<br><span class="inlineHighlight"><code class="xml">&lt;Label Text="$Sum({Value1}, {Value2})" /&gt;</code></span></li>
+                <li>Binding to properties</li>
+                <li>Local, one-way and negated bindings</li>
+                <li>More dynamic handling of value propagation, e.g. changes in an object affects bindings to nested fields</li>
+                <li><a href="../tutorials/data-binding.html">More information here</a></li>
+              </ul>
+              <br>
+            </li>
+
+            <li>
+              <b>Dependency Fields</b> - wraps SetValue calls. Use by adding underscore <b>_</b> to the type name:<br>
+              <br>
+              <span class="inlineCode">&nbsp;&nbsp;&nbsp;&nbsp;public <mark>_string</mark> Text;</span><br>
+              <br>
+              Now you can assign values through a Value property:<br>
+              <br>
+              <span class="inlineCode">&nbsp;&nbsp;&nbsp;&nbsp;Text.Value = "New text";</span><br>
+              <br>
+              <a href="../tutorials/view-model.html#dependency-fields">More information here</a><br>
+              <br>
+            </li>
+
+            <li>
+              <b>Field Mapping</b> - create abbreviated and descriptive view fields that maps and refer to view fields in another view or unity component:<br>
+              <br>
+              <span class="inlineCode">
+              &nbsp;&nbsp;&nbsp;&nbsp;<mark>[MapTo("TextComponent.text")]</mark><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;public _string Text;</span><br>
+              <br>
+              <a href="../tutorials/view-model.html#mapping-fields">More information here</a><br>
+              <br>
+            </li>
+
+            <li>
+              <b>State Fields</b> - Simplifies creating views that can have different states. You can create various field states by prefixing the field path with a state name followed by a dash:<br>
+              <br>
+              <pre><code class="xml">
+&lt;Button BackgroundColor="#7d7d7d" 
+        <mark>Highlighted-</mark>BackgroundColor="Gray90"
+        <mark>Pressed-</mark>BackgroundColor="#ef706a" /&gt;
+              </code></pre>
+              You can switch between view states by calling <b>SetState(</b><i>stateName</i><b>)</b>.<br>
+              <br>
+            </li>          
+
+            <li>
+              <b>State Animations</b> - Animation between states can be defined using the new <b>StateAnimation</b> view:
+              <br>
+              <pre><code class="xml">
+&lt;StateAnimation From="Any" To="Highlighted"&gt;
+    &lt;Animate Field="BackgroundColor" Duration="0.05" /&gt;
+&lt;/StateAnimation>
+
+&lt;StateAnimation From="Highlighted" To="Default"&gt;
+    &lt;Animate Field="BackgroundColor" Duration="0.5" /&gt;
+&lt;/StateAnimation&gt;
+              </code></pre>
+              <br>
+            </li>
+
+            <li>
+              <b>Better Dynamic Lists</b> - Creating, working with and binding to lists has been improved through the <b>ObservableList&lt;T&gt;</b> class. More information on <a href="../tutorials/how-to-work-with-list-data.html">how to work with list data here</a>.
+              <br>
+            </li>            
+          </ol>
+          <br>
+          <b>Migrating from MarkUX?</b> Read the <b><a href="https://www.reddit.com/r/MarkLight/comments/4gmnx2/migrating_from_markux/">migration guide</a></b><br>
+          <br>
+          <br>
+          <h2>Change Log</h2>
+          <br>
+          <span class="changelog">
+<b>v2.1.0</b><br>
+<ul>
+<li>Added selection and replace logic to ObservableList</li>
+<li>ListItems can be set in Disabled state through IsDisabled field</li>
+<li>Moved source code into /Plugins directory so framework isn't recompiled when project code changes</li>
+<li>Intellisense in XUML now possible through simple configuration. XSD schema can be updated by clicking a button on the view presenter</li>
+<li>View switcher can pass along custom data to the view switched to through the SwitchTo method and Activated view action</li>
+<li>Action handlers can now take any custom data as parameter</li>
+<li>Default state of views is now stored in serializable format and view state can be changed during compile time</li>
+<li>Fixed bug with programmatically loaded view XUML missing when reloading the scene</li>
+<li>Fixed bug where local bindings propagated in the wrong order</li>
+<li>Added ShowTemplateInEditor to List so template can be made visible while working with it in the editor</li>
+<li>Added mechanism to update bound list item data through ObservableList methods: ItemModified and ItemsModified.</li>
+<li>Added Activated/Deactivated view action to View that gets triggered once after view is initialized and every time the view is activated/deactivated</li>
+<li>Added DeselectAfterSelect and SelectOnMouseUp fields to List </li>
+<li>BaseDirectory can now be specified on views (inherited by children). Default value can be set on view presenter</li>
+<li>Added UnitSize a user-defined scalable element size unit (postfix "ux", "uy" and "uz"). Can specified on views (inherited by children) and the default value can be set on the view presenter</li>
+<li>Added option on view presenter to disable automatic reloading of views when XUML changes</li>
+<li>Added view actions for dragging to ScrollRect and Panel</li>
+<li>Added DisableInteractionScrollDelta to ScrollRect so user interaction with child views can be disabled while scrolling</li>
+<li>Dependency fields functionality added and all views have been converted to utilize dependency fields</li>
+<li>Replaced AlwaysBlockRaycast with RaycastBlockMode enum and fixed bug where setting was ignored when Alpha was set to 0</li>
+<li>Fixed bug in tab panel were dynamically created tabs wasn't deactivated by default</li>
+<li>Fixed bug where list didn't notify parents of layout change when list is rebuilt</li>
+</ul>
+<b>v2.0.0</b><br>
+<ul>
+<li>Bigger scope. The framework is no longer limited to UI. Any element in the scene can be created with the framework</li>
+<li>Binding to properties as well as fields</li>
+<li>Multi-binding through binding transformations or format strings</li>
+<li>New binding operators for creating local bindings, one-way bindings, and negated bindings</li>
+<li>More dynamic handling of value propagation and binding dependency checks</li>
+<li>Dynamic loading of view XUML. View XUML can be loaded during run-time</li>
+<li>View fields (i.e. both fields and properties) can be mapped through class attributes</li>
+<li>State-management. Simplified handling of views having different states. You no longer need separate fields for different states, e.g. PressedButtonColor, HighlightedButtonColor, etc. You only need one field and storing the various states is handled by the framework</li>
+<li>Animation between states are defined using a new StateAnimation view. Overall handling different states and animation between them requires much less code</li>
+<li>New ObservableList<T> class that is a generic list that can be bound to views such as the List, FlowList, DataGrid, ComboBox and TabPanel. Any changes to the list (add, remove) will be automatically propagated to the views that it's bound to</li>
+<li>List-views respond to changes in their data better (no longer rebuilds entire list on changes)</li>
+<li>TabPanel can be bound to dynamic list for dynamic tab creation</li>
+<li>Multiple themes in the same scene. No longer restricted to one default theme. Themes can also be specified for individual views</li>
+<li>AdjustToText fields on Button and ListItem <li>for adjusting its size to text</li>
+<li>Disabled button styles added to the themes</li>
+<li>Base directory of the framework can be changed and be put in any folder</li>
+<li>Events and view actions added to animation views</li>
+<li>The framework now provides means to access all of the unity component fields even if mappings doesn't exist</li>
+<li>Fixed Panel bug where breadth of scrollbars where assumed to be 20px</li>
+<li>Add disabled Button styles to CheckBox and RadioButton</li>
+<li>Added OverrideWidth and OverrideHeight fields to UIView</li>
+<li>Added IsVisible field that when set to false still renders the view but with alpha = 0</li>
+<li>Local state field can be changed on views by using the "--" notation</li>
+<li>Added Content view to base view that references the view that contains the contents of the view (usually the view itself unless a ContentPlaceholder is used)</li>
+<li>The fields Theme and Style are now inherited and applied to children that haven't set their styles</li>
+<li>Added Next/Previous method and ActiveView to ViewSwitcher</li>
+<li>ListItem size can be adjusted with AdjustToText field. If set the ListItems will adjust their width/height to the text. Useful mainly if you want to create horizontal lists where each item is adjusted to the length of the text</li>
+<li>Dynamic data is no longer removed upone clean up so dynamic data can be visible even though the scene isn't running</li>
+<li>IsAlive property added to View</li>
+<li>View actions can be disabled so even when triggered no action handlers are invoked</li>
+<li>More flexible binding system, we can bind to uninitialized data, example: SelectedItem on the List.</li>
+<li>Sprites and fonts can be loaded dynamically by using path strings provided they've been loaded once in the scene before the scene is run</li>
+<li>Set-fields no longer required, View.IsSet(viewpath) can be used to see if a view field has been set</li>
+</ul>
+</span>
+
+
+          <br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+          </div> <!-- END OF FIRST COLUMN -->
+
+        </div><!-- END OF ROW-->
+      </div> <!-- END OF CONTAINER -->
+    </section>
+
+
+    <!-- Start subscription box -->
+    <section id="promoBox">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4><span>Join the Announcement List</span></h4>
+            <p>Be notified when new themes, views, tutorials and updates are available</p>
+          </div>
+          <div class="col-lg-6">
+            <form method="post" name="subscribeForm" id="subscribeForm" action="http://scripts.dreamhost.com/add_list.cgi">
+                <input type="hidden" name="list" value="news" />
+                <input type="hidden" name="domain" value="markux.com" />
+                <input type="text" name="email" id="emailInput" placeholder="your email here" /> 
+                <input type="submit" name="submit" id="subscribeButton" value="Subscribe" /> 
+            </form>
+
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END container -->
+    </section><!-- END Promo box -->
+
+    <footer>
+      <div class="container">
+        <div class="row footer-info">
+          <div class="col-lg-5">
+            <img src="../../images/exmakina.png" alt="company logo" />
+          </div>
+          <div class="col-lg-3 contact">
+            <ul>
+              <li><img src="../../images/icons/footerMail.png" alt="mail icon" /><a href="mailto:contact@marklightforunity.com "> contact@marklightforunity.com </a></li> 
+            </ul>                
+          </div>
+          <div class="col-lg-4">
+            <ul class="socialIcons footer-social socialIconsOffset">
+                <li><a href="https://twitter.com/MarkUX" onclick="trackOutboundLink('https://twitter.com/MarkUX'); return false;" class="twitterIcon" target="_blank"></a></li>
+                <li><a href="http://www.reddit.com/r/marklight" onclick="trackOutboundLink('http://www.reddit.com/r/marklight'); return false;" class="redditIcon" target="_blank"></a></li>
+                <li><span class="slackOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span></li>
+            </ul>
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END Container -->
+    </footer><!-- END Footer -->
+    
+<!-- JavaScript file links -->
+<script src="../../js/jquery-1.12.3.min.js"></script>            <!-- Jquery -->
+<script src="../../js/bootstrap.min.js"></script>     <!-- bootstrap -->
+<script src="../../js/jquery.bxslider.min.js"></script>  <!-- bxslider -->
+<script src="../../js/tabs.js"></script> <!-- custom tab script -->
+<script src="../../js/lightbox-2.6.min.js"></script>  <!-- lightbox -->
+<script src="../../js/jquery.scrollTo.js"></script>  <!-- scollTo -->
+<script src="../../js/jquery.nav.js"></script>  <!-- one page nav -->
+<script src="../../js/respond.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+
+<script>
+  "use strict";
+
+$(document).ready(function() {
+    hljs.initHighlightingOnLoad();
+    $('.nav.navbar-nav.navbar-right').onePageNav({
+        currentClass: 'current',
+        filter: ':not(.external)'
+    }); 
+    $('span code').each(function(i, inline)
+    {
+      hljs.highlightBlock(inline);
+    });
+});
+</script>
+
+</body>
+</html>

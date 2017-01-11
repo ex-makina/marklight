@@ -1,0 +1,654 @@
+/*** RESET ***/
+* {
+	margin:0px;
+	padding:0px;
+}
+
+/*** GLOBAL SETTINGS ***/
+
+@font-face {
+    font-family: 'Proxima Nova Light';
+    src: url('type/proximanova-light-webfont.eot');
+    src: url('type/proximanova-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('type/proximanova-light-webfont.woff') format('woff'),
+         url('type/proximanova-light-webfont.ttf') format('truetype'),
+         url('type/proximanova-light-webfont.svg#proxima_novalight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Nova Reg';
+    src: url('type/proximanova-regular-webfont.eot');
+    src: url('type/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('type/proximanova-regular-webfont.woff') format('woff'),
+         url('type/proximanova-regular-webfont.ttf') format('truetype'),
+         url('type/proximanova-regular-webfont.svg#proxima_nova_rgregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Nova Semi-bold';
+    src: url('type/proximanova-semibold-webfont.eot');
+    src: url('type/proximanova-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('type/proximanova-semibold-webfont.woff') format('woff'),
+         url('type/proximanova-semibold-webfont.ttf') format('truetype'),
+         url('type/proximanova-semibold-webfont.svg#proxima_novasemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	font-family:Proxima Nova Light, Helvetica, Arial;
+	font-size:16px;
+	color:#737373;
+	padding-top: 90px;
+	-webkit-font-smoothing: antialiased;
+}
+
+.row {
+	margin-top:40px;
+	/* [ignore] image preload for button hover */
+	background: url('../images/buttonHover.png') no-repeat -9999px -9999px; 
+}
+
+a:focus {outline:none;}
+
+.anchor {
+	display: block; 
+	position: relative; 
+	top: -80px; 
+	visibility: hidden;
+}
+
+.patreon {
+	background-image: url('../images/becomeAPatronBanner.png');
+	width:200px;
+	height:66px;
+	top:-10px;
+}
+
+.button {
+	font-family:Proxima Nova Semi-bold, Helvetica, Arial;
+	background-image: url('../images/button.png');
+	background-repeat:no-repeat;
+	color:white;
+	font-size:18px;
+	padding:21px 41px 22px 77px;
+	-webkit-text-shadow:0px 0px 3px #525252;
+	-moz-text-shadow:0px 0px 3px #525252;
+	text-shadow:0px 0px 3px #525252;
+}
+
+.button:hover {
+	color:white;
+	text-decoration:none;
+	background-image: url('../images/buttonHover.png');
+}
+
+.buttonSmall {
+	font-family:Proxima Nova Reg, Helvetica, Arial;
+	color:white;
+	border-radius:30px;
+	background-color:#c76c57;
+	padding:10px 35px 10px 35px;
+	background-image: -webkit-linear-gradient(bottom, rgba(0,0,0,.10), rgba(2,2,2,0)); 
+	background-image: -moz-linear-gradient(bottom, rgba(0,0,0,.10), rgba(2,2,2,0)); 
+	background-image: -o-linear-gradient(bottom, rgba(0,0,0,.10), rgba(2,2,2,0)); 
+	background-image: -ms-linear-gradient(bottom, rgba(0,0,0,.10), rgba(2,2,2,0)); 
+	background-image: linear-gradient(to top, rgba(0,0,0,.10), rgba(2,2,2,0));
+	border-style:solid;
+	border-width:1px;
+	border-color:#9b4c2d;
+	-webkit-box-shadow: inset 0px 1px 1px white;
+    -moz-box-shadow: inset 0px 1px 1px white;
+    box-shadow: inset 0px 1px 1px white;
+}
+
+.buttonSmall:hover {
+	color:white;
+	text-decoration:none;
+	background-image: -webkit-linear-gradient(bottom, rgba(0,0,0,.10), rgba(2,2,2,0)); 
+	background-image: -moz-linear-gradient(bottom, rgba(0,0,0,.10), rgba(2,2,2,0)); 
+	background-image: -o-linear-gradient(bottom, rgba(0,0,0,.10), rgba(2,2,2,0)); 
+	background-image: -ms-linear-gradient(bottom, rgba(0,0,0,.10), rgba(2,2,2,0)); 
+	background-image: linear-gradient(to top, rgba(2,2,2,0), rgba(0,0,0,.10));
+}
+
+
+.socialIcons li {
+	list-style:none;
+	display:inline;
+	margin-right:6px;
+}
+
+.socialIcons li a { display:inline-block; width:25px; height:25px;}
+
+.fbIcon { background-image: url('../images/icons/socialFb.png');}
+.twitterIcon { background-image: url('../images/icons/socialTwitter.png');}
+.googleIcon { background-image: url('../images/icons/socialGoogle.png');}
+.flickrIcon { background-image: url('../images/icons/socialFlickr.png');}
+.redditIcon { background-image: url('../images/icons/socialReddit.png');}
+
+.socialIcons a:hover {
+	opacity:0.7;
+}
+
+
+
+/******************************** HEADER ********************************/
+
+.navbar.navbar-default.navbar-fixed-top {
+	font-family:Proxima Nova Reg, Helvetica, Arial;
+	background-color: white;
+    background-image: none;
+    padding:20px 0px 0px 0px;
+    border:none;
+    -webkit-box-shadow: 0px 0px 5px #bababa;
+    -moz-box-shadow: 0px 0px 5px #bababa;
+    box-shadow: 0px 0px 3px #747474;
+}
+
+.navbar.navbar-default.navbar-fixed-top .navbar-header { margin-left:15px;}
+
+.navbar-brand {
+	background-image: url('../images/logobrand.png');
+	background-repeat:no-repeat;
+	margin-top:-8px;
+	display:block;
+	margin-left:20px;
+	padding-left:0px;
+	width:328px;
+	height:66px;
+}
+
+.nav.navbar-nav.navbar-right li.current a {
+	color:#ef706a;
+	font-weight:600;
+	background:none;
+	padding-bottom:35px;
+	background: url('../images/triangleBlue.png');
+	background-repeat:no-repeat;
+	background-position:center bottom;
+}
+
+.nav.navbar-nav.navbar-right li a:hover {
+	color:#ef706a;
+}
+
+/******************************** PROMO BOX ********************************/
+
+#promoBox {
+	background: url('../images/sliderBg.jpg');
+	background-size: cover;
+	background-repeat:no-repeat;
+	color:white;
+	-webkit-text-shadow:0px 0px 4px #202020;
+	-moz-text-shadow:0px 0px 4px #202020;
+	text-shadow:0px 0px 4px #202020;
+	padding-bottom:35px;
+	margin-bottom:0px;
+}
+
+#promoBox h4 {color:white;}
+#promoBox h4 span 
+{
+	color:#c76c57;
+	-webkit-text-shadow:0px 0px 0px #202020;
+	-moz-text-shadow:0px 0px 0px #202020;
+	text-shadow:0px 0px 0px #202020;
+}
+#promoBox p
+{
+	color: #333333;
+	-webkit-text-shadow:0px 0px 0px #202020;
+	-moz-text-shadow:0px 0px 0px #202020;
+	text-shadow:0px 0px 0px #202020;
+}
+
+
+/*** SUBSCRIBE FORM ***/
+
+#subscribeForm {
+	margin-top:5px;
+}
+
+#emailInput {
+	width:374px;
+	padding-left:30px;
+	background-image: url('../images/emailInput.png');
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	height:55px;
+}
+
+#subscribeButton {
+	font-family:Proxima Nova Semi-bold, Helvetica, Arial;
+	height:55px;
+	width:180px;
+	background-image: url('../images/subscribeButton.png');
+	background-repeat:no-repeat;
+	background-color:transparent;
+	border:none;
+	color:white;
+	margin-left:-4px;
+	padding-right:13px;
+	-webkit-text-shadow:0px 0px 3px #525252;
+	-moz-text-shadow:0px 0px 3px #525252;
+	text-shadow:0px 0px 3px #525252;
+}
+
+#subscribeButton:hover { background-image: url('../images/subscribeButtonHover.png');  }
+
+
+/******************************** DOCUMENTATION **************************/
+
+#documentation
+{
+	font-size: 20px;
+	color: #333333;
+	-webkit-text-shadow:0px 0px 0px #202020;
+	-moz-text-shadow:0px 0px 0px #202020;
+	text-shadow:0px 0px 0px #202020;
+}
+
+#documentation h1
+{
+	font-family:Proxima Nova Light, Helvetica, Arial;
+	font-size: 40px;
+}
+
+#documentation h2
+{
+	font-family:Proxima Nova Semi-bold, Helvetica, Arial;
+	font-size: 28px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#documentation h3
+{
+	font-family:Proxima Nova Semi-bold, Helvetica, Arial;
+	font-size: 24px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#documentation h4
+{
+	font-family:Proxima Nova Light, Helvetica, Arial;
+	font-size: 22px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.toc 
+{
+	margin-left: 50px;
+}
+
+.affix
+{
+	position: fixed;
+	top: 180px;
+}
+
+.affix-top
+{
+}
+
+.noBorder
+{
+	padding: 0px;
+	border: 0px;
+}
+
+span > code.hljs { display: inline; }
+
+.inlineCode 
+{
+	font-family: Segoe UI, Courier New, Arial;
+}
+
+.inlineHighlight
+{
+	line-height: 40px;
+}
+
+.slackOffset
+{
+	position:relative;
+	top: -3px;
+}
+
+.changelog
+{
+	font-family: Segoe UI, Courier New, Arial;
+
+}
+
+.slackLeftOffset
+{
+	position: absolute;
+	right: 80px;
+	top: 15px;
+}
+
+#documentation h5
+{
+	font-family:Proxima Nova Light, Helvetica, Arial;
+	font-size: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#documentation li
+{
+	margin-left: 50px;
+}
+
+.mainNavBar
+{
+	height: 90px;
+}
+
+.subNavBar
+{
+	top: 90px;
+	/*background-color: #9FDCFF;*/
+	background-color: #BFD0FB;
+	background: url('../images/sliderBg.jpg');
+	background-size: cover;
+	background-repeat:no-repeat;
+}
+
+.subCategories
+{
+	margin-bottom: -2px;
+}
+
+.subCategories a
+{
+	color: #333333;
+	font-size: 20px;
+}
+
+.subCategorySelected
+{
+	background-color: #ffffff;
+}
+
+.subCategorySelected a
+{
+	color: #ef706a;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.sectionSelected
+{
+	color: #ef706a;
+	font-weight: bold;
+}
+
+.marginSubMenu
+{
+	margin-top: 50px;
+}
+
+.tocApi
+{
+	top: 130px;
+	margin-left: 0px;
+}
+
+.tabSelected a
+{
+	color: #ef706a;
+}
+
+.viewTableViewFields
+{	
+	table-layout: fixed;
+    word-wrap: break-word;
+}
+
+.viewTableViewActions
+{	
+	border-collapse:collapse;
+	table-layout: fixed;
+    word-wrap: break-word;
+}
+
+.viewFieldName
+{
+	font-size: 20px;
+}
+
+.mappedViewFieldName
+{
+	font-size: 20px;
+	color: #555;
+}
+
+.viewFieldType
+{
+	color: #777;	
+}
+
+.fa-tiny
+{
+	font-size:14px;
+}
+
+.viewFieldDetails
+{
+	background-color: #dfdfdf;
+    /*padding: 12px;*/
+}
+
+.viewFieldDetailsContent
+{
+    padding: 12px;
+}
+
+.hiddenRow {
+    padding: 0 !important;
+}
+
+.viewTableSummary
+{
+
+}
+
+.indexAnchor {
+	display: block; 
+	position: relative; 
+	top: -100px; 
+	visibility: hidden;
+}
+
+.docIndexAnchor {
+	display: block; 
+	position: relative; 
+	top: -150px; 
+	visibility: hidden;
+}
+
+.tableExpandColumn
+{
+	width: 36px;
+}
+
+.tooltip-inner {
+    max-width: 350px;
+}
+
+mark {
+	color:#000;
+	background:#EDD8FE;
+}
+
+.inherit-info
+{
+	color: #aaa;
+}
+
+.example-title
+{
+	color: #999;
+}
+
+.table tbody>tr>td{
+    vertical-align: middle;
+}
+
+
+/******************************** CONTACT ********************************/
+
+#contact {
+	background: url('../images/sliderBg.jpg');
+	background-size: cover;
+	background-repeat:no-repeat;
+	color:white;
+	text-align:center;
+}
+
+#contact h3 {
+	color:white;
+	-webkit-text-shadow:0px 0px 3px #202020;
+	-moz-text-shadow:0px 0px 3px #202020;
+	text-shadow:0px 0px 3px #202020;
+}
+
+.col-lg-8.col-lg-offset-2 {
+	background: url('../images/contactFormBg.png');
+	border-radius:5px;
+	padding:30px;
+	margin-bottom:90px;
+}
+
+.contactInput {
+	width:330px;
+	padding-left:13px;
+	background-color:white;
+	opacity:0.6;
+	border:none;
+	height:40px;
+	border-radius:5px;
+	margin-top:20px;
+	margin-bottom:20px;
+	margin-right:20px;
+}
+
+.contactMessage {
+	width:687px;
+	height:200px;
+	border-radius:5px;
+	border:none;
+	padding:13px;
+	margin-bottom:20px;
+	opacity:0.6;
+}
+
+.contactInput:hover, .contactMessage:hover {
+	opacity:0.7;
+	animation-duration: 0.4s;
+  	animation-name: inputHover;
+  	animation-direction: normal;
+  	animation-iteration-count: 1;
+}
+
+.contactInput:focus, .contactMessage:hover { opacity:0.7; }
+
+/* animation */
+@keyframes inputHover {
+  from {
+    opacity:0.6;
+  }
+
+  to {
+    opacity:0.7;
+  }
+}
+
+.error { 
+	font-family:Proxima Nova Semi-bold;
+	font-size:14px;
+	padding:5px;
+	border-radius:5px;
+	color:#e4b4b4; 
+	background:#bb4141;
+	display:inline-block;
+	margin-right:5px;
+}
+
+
+/******************************** FOOTER ********************************/
+
+footer {
+	background-color:#242424;
+	color:#8e8e8e;
+	font-size:14px;
+	padding-top:0px;
+}
+
+.footer-info {
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+.company-logo {
+	margin-top:0px;
+	margin-top:0px;
+}
+
+footer a {
+	color:#c76c57;
+}
+
+footer a:hover {
+	color:#758ab2; 
+	text-decoration:none;
+}
+
+footer h4 {
+	color:#d6d6d6;
+}
+
+footer ul li {
+	list-style:none;
+}
+
+.contact ul li {
+	font-family:Proxima Nova Semi-bold, Helvetica, Arial;
+	margin-top:35px;
+}
+
+.col-lg-4.contact img {
+	margin-right:15px;
+}
+
+.footer-social
+{
+	margin-top:33px;
+}
+
+
+/******************************** BUTTONS ********************************/
+
+.btn-expand
+{
+	color:#fff;
+	background-color:#ef706a;
+	border-color:#ccc
+}
+
+.btn-expand:hover,.btn-expand:focus,.btn-expand:active
+{
+	color:#333;
+	background-color:#fff;
+	border-color:#adadad
+}

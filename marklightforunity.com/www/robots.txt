@@ -1,0 +1,5 @@
+User-agent: *
+
+Allow: /
+#Sitemap Reference
+Sitemap:http://www.marklightforunity.com/sitemap.xml

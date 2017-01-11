@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="MarkLight is a framework for Unity that offers XUML a design language similar to HTML but instead of creating webpages it is used to design scenes in Unity.">
+<meta name="keywords" content="marklight, markux, mvvm, unity, unity3d, mvm, mvp, mvc, ux, ui, user interface, user experience, interfaces, game, games, controls, widgets, xml, markup, framework, design, create, share, dream, build, play, dynamic, responsive, fluid, intuitive, easy, simple, powerful, sleek, elegant, structured, flow, creative">
+<meta name="author" content="Ex Makina">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>State Management | MarkLight</title>
+<script src="../../js/html5shiv.js"></script>  <!-- support for HTML5 in IE8 -->
+<!-- CSS file links -->
+<link href="../../css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../../css/bootstrap.icon-large.min.css" rel="stylesheet">
+<link href="../../css/style-documentation.css" rel="stylesheet" type="text/css" media="all" id="styleChange" />
+<link href="../../css/lightbox.css" type="text/css" rel="stylesheet" />
+<link href="../../css/responsive.css" type="text/css" rel="stylesheet" />
+<link href="../../css/vs.css" type="text/css" rel="stylesheet" />
+<link href="../../css/font-awesome-4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76413937-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script>
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+     function () {
+     document.location = url;
+     }
+   });
+}
+</script>
+</head>
+
+<body>
+
+    <!-- Sub-Header Start -->
+    <header class="navbar navbar-fixed-top subNavBar" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+        <ul class="nav navbar-nav navbar-left subCategories">
+            <li><a href="../introduction.html" class="external">Introduction</a></li>
+            <li class="subCategorySelected"><a href="../tutorials.html">Tutorials</a></li>
+            <li><a href="../api/MarkLight.Views.Animate.html" class="external">API docs</a></li>            
+        </ul>
+        <span class="slackLeftOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span>
+      </div><!-- /.navbar-collapse -->
+    </header>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top mainNavBar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.marklightforunity.com/"></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../../index.html" class="external">Home</a></li>
+                    <li><a href="https://www.assetstore.unity3d.com/#!/content/37466" class="external" onclick="trackOutboundLink('https://www.assetstore.unity3d.com/#!/content/37466'); return false;">Download</a></li>
+                    <li class="current"><a href="../introduction.html" class="current">Documentation</a></li>
+                    <li><a href="https://www.patreon.com/studiodelight" class="external patreon"></a></li> 
+                </ul>
+            </div><!--/.navbar-collapse -->
+      </div><!-- END Container -->
+    </header><!-- END Header -->
+
+    <!-- Documentation Start -->
+    <a class="anchor" id="documentationAnchor"></a>
+    <section id="documentation" class="marginSubMenu">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">   
+            <h1>State Management</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-8">        
+
+          <a class="docIndexAnchor" id="introduction"></a>
+          <h2>Introduction</h2>         
+          The state management features of the framework allows you to easily create and configure views having various states. An example is the <a href="../api/MarkLight.Views.UI.Button.html">Button</a> view that has four states: Pressed, Highlighted, Disabled and Default. When you hover the mouse over it the button changes its state to Highlighted and various view fields are changed/animated such as the BackgroundColor. Which view fields changes is based on what <b>state fields</b> and <b>state animations</b> are defined for that state.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="state-fields"></a>
+          <h2>State Fields</h2>          
+          State fields simplifies creating views that can have different states. Without state fields (before 2.x) you had to create separate view fields for each state, e.g. the Button would have a BackgroundColor, HighlightedBackgroundColor, DisabledBackgroundColor and a PressedBackgroundColor declared in the view model. The Button would then switch between these values as the user hovered the mouse over or pressed the button. This is rather cumbersome specially as the number of states and view fields increases.<br>
+          <br>
+          With state fields you don't need to create any extra view fields. You only need to define the different state field values in XUML using the following syntax:<br>
+          <br>
+          <span class="inlineCode">StateName-ViewField="Value"</span><br>
+          <br>
+          The following theme XUML shows how to set the state fields for the Button view:<br>
+          <br>
+          <i>Flat.xml</i>
+          <pre><code class="xml">
+  &lt;Button BackgroundColor="#7d7d7d" FontColor="#ffffff" FontStyle="Normal" Height="50px"
+          <mark>Highlighted-BackgroundColor="Gray90"</mark> 
+          <mark>Highlighted-FontColor="#000000"</mark>
+          <mark>Pressed-BackgroundColor="#ef706a"</mark>
+          <mark>Pressed-FontColor="#ffffff"</mark>
+          <mark>Disabled-BackgroundColor="#7d7d7d"</mark>
+          <mark>Disabled-FontStyle="Italic"</mark>
+          <mark>Disabled-FontColor="Gray80"</mark>
+          /&gt;
+          </code></pre>
+          <br>
+          The state fields are usually defined in the theme as you generally want them applied universally. You can define any state field you want, e.g. you could introduce a third state to the button simply by adding another state field:<br>
+          <br>
+          <pre><code class="xml">
+  &lt;Button BackgroundColor="#7d7d7d" FontColor="#ffffff" FontStyle="Normal" Height="50px"
+          ...
+          <mark>MyState-BackgroundColor="Indigo"</mark> 
+          /&gt;
+          </code></pre>
+          <br>
+          The button's internal logic never switches to this state but you could change the button's state yourself.<br>
+
+          <br>
+          <a class="docIndexAnchor" id="changing-view-state"></a>
+          <h2>Changing View State</h2>
+          To change the state of a view you can call the method <b>SetState</b>:<br>
+          <br>
+          <pre><code class="C#">
+  SetState("MyState"); // change state to MyState
+
+  Button.SetState("MyState"); // change state of Button to MyState
+
+  SetState("Default"); // change to default state  
+          </code></pre>
+          <br>
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <i class="icon-large icon-info-sign"></i>           If you're creating a custom view having different states, there are some cases where you want to change the state of child views as your view changes state. You can do this by overriding the SetState method:<br>
+              <pre class="noBorder"><code class="C#">
+public override void SetState(string state)
+{
+    base.SetState(state); // set state of this view
+
+    // set state of a child view
+    ChildView.SetState(state);
+}
+              </code></pre>              
+            </div>
+          </div>  
+          <br>
+
+          <a class="docIndexAnchor" id="default-state"></a>
+          <h2>Default State</h2>
+          All views start out in a state called <b>"Default"</b>. If you set a view field in XUML without using a state prefix you are changing that view's default state. <br>
+          <br>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <i class="icon-large icon-info-sign"></i> One thing to note is that if you change a view to a non-default state and then change a view field in code those changes can be overwritten when the view changes back to its default state.
+            </div>
+          </div>  
+          <br>
+
+          <a class="docIndexAnchor" id="animating"></a>
+          <h2>Animating Between States</h2> 
+          When switching between states you have the option to specify which fields should be animated and how. Animating between view states is explained in the <a href="animations.html#state-animations">Creating Animations tutorial</a>. If you're new to animation using MarkLight I recommend you read through the tutorial from the start.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="setting-nested-states"></a>
+          <h2>Setting Nested States</h2> 
+          In some advanced cases you want a style in your theme XUML to not only define the state fields on the view currently being styled but also on a nested view. You can do this by using a double dash <b>"--"</b> between the state name and view field. This is used, e.g. when styling the Window view that contains a CloseButton view:<br>
+          <br>
+          <i>Flat.xml</i>
+          <pre><code class="xml">
+  &lt;Window Highlighted--CloseButtonColor="#626262" /&gt;
+          </code></pre>
+          <br>          
+          If you were to use a single dash you wouldn't set the state field on the button itself but rather on the window. Which means the window has to change its state to Highlighted for the close button to change color. But in this case we want the close button to change color when the button itself changes state to Highlighted.<br>
+          <br> 
+
+          <br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+          </div> <!-- END OF FIRST COLUMN -->
+
+          <div class="col-lg-4">
+
+              <div class="toc hidden-print hidden-xs hidden-sm" data-spy="affix" data-offset-top="115">
+                <ul>
+                  <li><a href="#introduction">Introduction</a></li>
+                  <li><a href="#state-fields">State Fields</a></li>
+                  <li><a href="#changing-view-state">Changing View State</a></li>
+                  <li><a href="#default-state">Default State</a></li>
+                  <li><a href="#animating">Animating Between States</a></li>
+                  <li><a href="#setting-nested-states">Setting Nested States</a></li>
+                </ul>
+              </div>
+
+          </div> <!-- END OF SECOND COLUMN -->          
+        </div><!-- END OF ROW-->
+      </div> <!-- END OF CONTAINER -->
+    </section>
+
+
+    <!-- Start subscription box -->
+    <section id="promoBox">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4><span>Join the Announcement List</span></h4>
+            <p>Be notified when new themes, views, tutorials and updates are available</p>
+          </div>
+          <div class="col-lg-6">
+            <form method="post" name="subscribeForm" id="subscribeForm" action="http://scripts.dreamhost.com/add_list.cgi">
+                <input type="hidden" name="list" value="news" />
+                <input type="hidden" name="domain" value="markux.com" />
+                <input type="text" name="email" id="emailInput" placeholder="your email here" /> 
+                <input type="submit" name="submit" id="subscribeButton" value="Subscribe" /> 
+            </form>
+
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END container -->
+    </section><!-- END Promo box -->
+
+    <footer>
+      <div class="container">
+        <div class="row footer-info">
+          <div class="col-lg-5">
+            <img src="../../images/exmakina.png" alt="company logo" />
+          </div>
+          <div class="col-lg-3 contact">
+            <ul>
+              <li><img src="../../images/icons/footerMail.png" alt="mail icon" /><a href="mailto:contact@marklightforunity.com "> contact@marklightforunity.com </a></li> 
+            </ul>                
+          </div>
+          <div class="col-lg-4">
+            <ul class="socialIcons footer-social socialIconsOffset">
+                <li><a href="https://twitter.com/MarkUX" onclick="trackOutboundLink('https://twitter.com/MarkUX'); return false;" class="twitterIcon" target="_blank"></a></li>
+                <li><a href="http://www.reddit.com/r/marklight" onclick="trackOutboundLink('http://www.reddit.com/r/marklight'); return false;" class="redditIcon" target="_blank"></a></li>
+                <li><span class="slackOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span></li>
+            </ul>
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END Container -->
+    </footer><!-- END Footer -->
+    
+<!-- JavaScript file links -->
+<script src="../../js/jquery-1.12.3.min.js"></script>            <!-- Jquery -->
+<script src="../../js/bootstrap.min.js"></script>     <!-- bootstrap -->
+<script src="../../js/jquery.bxslider.min.js"></script>  <!-- bxslider -->
+<script src="../../js/tabs.js"></script> <!-- custom tab script -->
+<script src="../../js/lightbox-2.6.min.js"></script>  <!-- lightbox -->
+<script src="../../js/jquery.scrollTo.js"></script>  <!-- scollTo -->
+<script src="../../js/jquery.nav.js"></script>  <!-- one page nav -->
+<script src="../../js/respond.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+
+<script>
+  "use strict";
+
+$(document).ready(function() {
+    hljs.initHighlightingOnLoad();
+    $('.nav.navbar-nav.navbar-right').onePageNav({
+        currentClass: 'current',
+        filter: ':not(.external)'
+    }); 
+    $('span code').each(function(i, inline)
+    {
+      hljs.highlightBlock(inline);
+    });
+});
+</script>
+
+</body>
+</html>

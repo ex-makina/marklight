@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="MarkLight is a framework for Unity that offers XUML a design language similar to HTML but instead of creating webpages it is used to design scenes in Unity.">
+<meta name="keywords" content="marklight, markux, mvvm, unity, unity3d, mvm, mvp, mvc, ux, ui, user interface, user experience, interfaces, game, games, controls, widgets, xml, markup, framework, design, create, share, dream, build, play, dynamic, responsive, fluid, intuitive, easy, simple, powerful, sleek, elegant, structured, flow, creative">
+<meta name="author" content="Ex Makina">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Data Binding | MarkLight</title>
+<script src="../../js/html5shiv.js"></script>  <!-- support for HTML5 in IE8 -->
+<!-- CSS file links -->
+<link href="../../css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../../css/bootstrap.icon-large.min.css" rel="stylesheet">
+<link href="../../css/style-documentation.css" rel="stylesheet" type="text/css" media="all" id="styleChange" />
+<link href="../../css/lightbox.css" type="text/css" rel="stylesheet" />
+<link href="../../css/responsive.css" type="text/css" rel="stylesheet" />
+<link href="../../css/vs.css" type="text/css" rel="stylesheet" />
+<link href="../../css/font-awesome-4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76413937-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script>
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+     function () {
+     document.location = url;
+     }
+   });
+}
+</script>
+</head>
+
+<body>
+
+    <!-- Sub-Header Start -->
+    <header class="navbar navbar-fixed-top subNavBar" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+        <ul class="nav navbar-nav navbar-left subCategories">
+            <li><a href="../introduction.html" class="external">Introduction</a></li>
+            <li class="subCategorySelected"><a href="../tutorials.html">Tutorials</a></li>
+            <li><a href="../api/MarkLight.Views.Animate.html" class="external">API docs</a></li>            
+        </ul>
+        <span class="slackLeftOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span>
+      </div><!-- /.navbar-collapse -->
+    </header>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top mainNavBar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.marklightforunity.com/"></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../../index.html" class="external">Home</a></li>
+                    <li><a href="https://www.assetstore.unity3d.com/#!/content/37466" class="external" onclick="trackOutboundLink('https://www.assetstore.unity3d.com/#!/content/37466'); return false;">Download</a></li>
+                    <li class="current"><a href="../introduction.html" class="current">Documentation</a></li>
+                    <li><a href="https://www.patreon.com/studiodelight" class="external patreon"></a></li> 
+                </ul>
+            </div><!--/.navbar-collapse -->
+      </div><!-- END Container -->
+    </header><!-- END Header -->
+
+    <!-- Documentation Start -->
+    <a class="anchor" id="documentationAnchor"></a>
+    <section id="documentation" class="marginSubMenu">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">   
+            <h1>Data Binding</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-8">        
+
+          <a class="docIndexAnchor" id="introduction"></a>
+          <h2>Introduction</h2>
+          This tutorial will explain what data binding is, the various forms of data binding supported by the MarkLight framework and how to utilize them.<br>
+          <br>
+          Data binding is a mechanism to connect data together and keep it synchronized. It ensures that changes in the data is automatically reflected in the sources bound to the data. It also makes it possible to establish a loose connection between data sources, e.g. a DataGrid can be bound to an external list of data but it doesn't need to know where it comes from nor does it need to know any details about the data model. This is useful when we want to connect data, e.g. from our project's game logic to a more generic UI presentation logic. It enables us to create modular reusable components that can be used in different projects featuring very different data models.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="declaring-binding"></a>
+          <h2>Declaring a Binding in XUML</h2>
+          The default binding in XUML is the two-way binding which can be declared using the following syntax:<br>
+          <br>
+          <span class="inlineCode">TargetViewField="{SourceViewField}"</span><br>
+          <br>
+          <pre><code class="xml">
+&lt;BindingExample&gt;
+    &lt;Label <mark>Text="{Player}"</mark> /&gt;
+&lt;/BindingExample&gt;
+          </code></pre>
+          <br>
+          In the example above we have established a two-way data binding between the view fields <b>Label.Text</b> and <b>BindingExample.Player</b>. If one field changes the other is automatically updated. The value initially propagates from SourceViewField to TargetViewField.<br>
+          <br>
+          <img src="../../images/documentation/data-binding/two-way-binding.png" class="img-responsive" alt="data binding"><br>
+          To utilize the binding mechanism in code you can set values using the <b>SetValue</b> method:<br>
+          <br>
+          <i>BindingExample.cs</i>
+          <pre><code class="c#">
+public class BindingExample : UIView
+{
+    public string Player;
+    
+    public void ChangePlayer()
+    {
+        SetValue(() => Player, "Player Name"); // changes are propagated to Label.Text
+    }
+}
+          </code></pre>
+          <br>
+          To avoid having to use SetValue every time you change a view field value you can change the view field <b>Player</b> into a <a href="view-model.html#dependency-fields">dependency field</a>. A dependency field wraps the <b>SetValue</b> logic:<br>
+          <br>
+          <pre><code class="c#">
+public class BindingExample : UIView
+{
+    public <mark>_string</mark> Player;
+    
+    public void ChangePlayer()
+    {
+        Player.Value = "Player Name";
+    }
+}
+          </code></pre>
+          <br>
+          The syntax is cleaner and the advantages are even more apparent when working with <a href="view-model.html#mapping-fields">mapped fields</a>. All the standard views in the framework uses dependency fields.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="binding-paths"></a>
+          <h2>Binding Paths</h2>
+          MarkLight supports nested fields and ID-selectors when specifying source view field in a binding:<br>
+          <br>
+          <pre><code class="xml">
+&lt;BindingExample&gt;
+    &lt;Group&gt;
+        &lt;Label Id="Label1" Text="{PlayerName.FirstName}" /&gt;
+        &lt;Label Text="{Label1.Text}" /&gt;
+    &lt;/Group&gt;
+&lt;/BindingExample&gt;
+          </code></pre>
+          <br>
+          The first label binds to a nested field on the parent view model <b>PlayerName.FirstName</b>. The second label uses an ID-selector to bind to the first label's Text field.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="multi-binding"></a>
+          <h2>Multi Binding</h2>
+          Multi binding is a one-way binding that binds multiple view fields to a single target view field. It's declared using the following syntax:<br>
+          <br>
+          Regular:<br>
+          <span class="inlineCode">TargetViewField="$MethodName({ViewField1}, {ViewField2}, ...)"</span><br>
+          <br>
+          Using static method:<br>
+          <span class="inlineCode">TargetViewField="$ViewName.StaticMethodName({ViewField1}, {ViewField2}, ...)"</span><br>
+          <br>
+
+          To create a multi binding we first need a <b>transformation method</b> that either resides in the parent view model or if it's a static method it should reside in the view specified in the binding. The transformation method combines multiple values into one. For this example we create a method that returns the sum of three values:<br>
+          <br>
+          <pre><code class="c#">
+public class BindingExample : UIView
+{
+    public _int Value1;
+    public _int Value2;
+    public _int Value3;
+    
+    public int Sum(int a, int b, int c)
+    {
+        return a + b + c;
+    }
+}
+          </code></pre>
+          <br>
+          We can then bind Value1, Value2 and Value3 to a view field like this:<br>
+          <br>
+          <pre><code class="xml">
+&lt;BindingExample&gt;
+    &lt;Label <mark>Text="$Sum({Value1}, {Value2}, {Value3})"</mark> /&gt;
+&lt;/BindingExample&gt;
+          </code></pre>
+          <br>
+          <img src="../../images/documentation/data-binding/multi-binding.png" class="img-responsive" alt="multi binding"><br>
+          If Value1, Value2 or Value3 changes the Label's text is updated.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="format-string"></a>
+          <h2>Format String Binding</h2>
+          If you want to transform multiple values into a formatted string you can do so by specifying a string containing format items. For example:<br>
+          <br>
+          <pre><code class="xml">
+&lt;BindingExample&gt;
+    &lt;Label <mark>Text="Hello {FirstName} {LastName}!"</mark> /&gt;
+&lt;/BindingExample&gt;
+          </code></pre>
+          <br>
+          Which translates to the following C# operation:<br>
+          <br>
+          <span class="inlineCode">Label.Text = String.Format("Hello {0} {1}!", FirstName, LastName);</span><br>
+          <br>
+          You can follow the binding path with a format modifier to control things like number of decimals printed:<br>
+          <br>
+          <pre><code class="xml">
+&lt;BindingExample&gt;
+    &lt;Label <mark>Text="{Value:0.0} %"</mark> /&gt;
+&lt;/BindingExample&gt;
+          </code></pre>
+          <br>
+          The example above prints out <b>Value</b> with one decimal followed by a percentage sign. It translates to <b>{0.0}</b> in the String.Format string. You can find more information about text formatting options here: <a href="https://msdn.microsoft.com/en-us/library/system.string.format(v=vs.110).aspx">String.Format Method</a>.<br>
+          <br>
+          <a class="docIndexAnchor" id="one-way"></a>
+          <h2>One-way Binding</h2>
+          If you want the values to only flow in one direction you can specify that the binding is one-way by using the following syntax:<br>
+          <br>
+          <pre><code class="xml">
+&lt;BindingExample&gt;
+    &lt;Label <mark>Text="{=Player}"</mark> /&gt;
+&lt;/BindingExample&gt;
+          </code></pre>
+          <br>
+          <img src="../../images/documentation/data-binding/one-way-binding.png" class="img-responsive" alt="One-way binding"><br>
+          The leading <b>=</b> sign denotes that the binding is one-way. Changes in Player will propagate to the label text but changes in the text won't be propagated back to Player.<br>
+          <br>
+
+
+          <a class="docIndexAnchor" id="local-binding"></a>
+          <h2>Local Binding</h2>
+          You can bind to a local view field using the following syntax:
+          <br>
+          <pre><code class="xml">
+&lt;BindingExample&gt;
+    &lt;Label <mark>Text="{#Theme}"</mark> /&gt;
+&lt;/BindingExample&gt;
+          </code></pre>
+          <br>
+          <img src="../../images/documentation/data-binding/local-binding.png" class="img-responsive" alt="Local binding"><br>
+          The leading <b>#</b> sign denotes that the following view field resides in the Label.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="list-item-binding"></a>
+          <h2>List Item Binding</h2>
+          Every view contains a view field called <b>Item</b> which is a reference to user-defined item data that is populated by views such as the <a href="../api/MarkLight.Views.UI.List.html">List</a> and <a href="../api/MarkLight.Views.UI.DataGrid.html">DataGrid</a>. This is used e.g. when creating list item templates that bind to list item data:<br>
+          <br>
+          <pre><code class="xml">
+&lt;BindingExample&gt;
+    &lt;List Items="{Highscores}"&gt;
+        &lt;ListItem IsTemplate="True" <mark>Text="{#Item.Score}"</mark> /&gt;
+    &lt;/List&gt;
+&lt;/BindingExample&gt;
+          </code></pre>
+          <br> 
+          In the above example the List will generate a ListItem for each highscore object in the list Highscores. For each ListItem (and its child views) it will set its <b>Item</b> to the corresponding highscore object. In this example it binds <b>ListItem.Text</b> to the highscore object's <b>Score</b> field.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="negated-binding"></a>
+          <h2>Negated Binding</h2>
+          When binding to a boolean field we have the option to negate the value by using the following syntax:<br>
+          <br>
+          <pre><code class="xml">
+&lt;BindingExample&gt;
+    &lt;CheckBox Text="Shield Deactivated" <mark>IsChecked="{!ShieldActive}"</mark> /&gt;
+&lt;/BindingExample&gt;
+          </code></pre>
+          <br> 
+          The leading <b>!</b> sign denotes that the bound bool value is to be negated before set.<br>
+          <br>
+
+
+          <a class="docIndexAnchor" id="resource-binding"></a>
+          <h2>Resource Binding</h2>
+          To bind to a resource in a dictionary you use the following syntax:<br>
+          <br>
+          <span class="inlineCode">{@DictionaryName.ResourceKey}</span> or <span class="inlineCode">{@ResourceKey}</span><br>
+          <br>
+          <pre><code class="xml">
+&lt;BindingExample&gt;
+    &lt;Label <mark>Text="{@Loc.Greeting}"</mark> /&gt;
+&lt;/BindingExample&gt;
+          </code></pre>
+          <br>
+          See the <a href="resource-dictionaries.html">resource dictionaries tutorial</a> for more information.<br>
+          <br>
+
+
+          <a class="docIndexAnchor" id="cheat-sheet"></a>
+          <h2>Binding Cheat Sheet</h2>
+          <br>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Binding</th>
+                <th>Example Syntax</th>
+              </tr>
+            </thead>
+            <tbody>            
+              <tr>
+                <td>Two-way Binding</td>
+                <td>
+                  <span><code class="xml">&lt;Label Text="{Player}" /&gt;</code></span><br>
+                  <span><code class="xml">&lt;Label Text="{PlayerName.FirstName}" /&gt;</code></span><br>
+                  <span><code class="xml">&lt;Label Text="{Label1.Text}" /&gt;</code></span>
+                </td>
+              </tr>
+              <tr>
+                <td>One-way Binding</td>
+                <td><span><code class="xml">&lt;Label Text="{=Player}" /&gt;</code></span></td>
+              </tr>
+              <tr>
+                <td>Multi Binding</td>
+                <td>
+                  <span><code class="xml">&lt;Label Text="$Sum({Value1}, {Value2})" /&gt;</code></span><br>
+                  <span><code class="xml">&lt;Label Text="$MyView.StaticMethod({v1}, {v2})" /&gt;</code></span>
+                </td>
+              </tr>
+              <tr>
+                <td>Format String</td>
+                <td>
+                  <span><code class="xml">&lt;Label Text="Hello {FirstName} {LastName}!" /&gt;</code></span><br>
+                  <span><code class="xml">&lt;Label Text="{Progress:0.0} %" /&gt;</code></span><br>
+                </td>
+              </tr>
+              <tr>
+                <td>Local Binding</td>
+                <td>
+                  <span><code class="xml">&lt;Label Text="{#Theme}" /&gt;</code></span>
+                </td>
+              </tr>
+              <tr>
+                <td>List Item Binding</td>
+                <td>
+                  <span><code class="xml">&lt;Label Text="{#Item.Score}" /&gt;</code></span>
+                </td>
+              </tr>
+              <tr>
+                <td>Negated Binding</td>
+                <td>
+                  <span><code class="xml">&lt;CheckBox IsChecked="{!ShieldActive}" /&gt;</code></span>
+                </td>
+              </tr>
+              <tr>
+                <td>Resource Binding</td>
+                <td>
+                  <span><code class="xml">&lt;Label Text="{@Loc.Greeting}" /&gt;</code></span><br>
+                  <span><code class="xml">&lt;Label Text="{@GameTitle}" /&gt;</code></span>
+                </td>
+              </tr>
+              <tr>
+                <td>Negated One-way Local</td>
+                <td>
+                  <span><code class="xml">&lt;Label Text="{!=#IsActive}" /&gt;</code></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+
+
+          <br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+          </div> <!-- END OF FIRST COLUMN -->
+          <div class="col-lg-4">
+
+              <div class="toc hidden-print hidden-xs hidden-sm" data-spy="affix" data-offset-top="115">
+                <ul>
+                  <li><a href="#introduction">Introduction</a></li>
+                  <li><a href="#declaring-binding">Declaring a Binding in XUML</a></li>
+                  <li><a href="#binding-paths">Binding Paths</a></li>
+                  <li><a href="#multi-binding">Multi Binding</a></li>
+                  <li><a href="#format-string">Format String Binding</a></li>
+                  <li><a href="#one-way">One-way Binding</a></li>
+                  <li><a href="#local-binding">Local Binding</a></li>
+                  <li><a href="#list-item-binding">List Item Binding</a></li>
+                  <li><a href="#negated-binding">Negated Binding</a></li>
+                  <li><a href="#resource-binding">Resource Binding</a></li>
+                  <li><a href="#cheat-sheet">Binding Cheat Sheet</a></li>
+                </ul>
+              </div>
+
+          </div> <!-- END OF SECOND COLUMN -->          
+        </div><!-- END OF ROW-->
+      </div> <!-- END OF CONTAINER -->
+    </section>
+
+
+    <!-- Start subscription box -->
+    <section id="promoBox">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4><span>Join the Announcement List</span></h4>
+            <p>Be notified when new themes, views, tutorials and updates are available</p>
+          </div>
+          <div class="col-lg-6">
+            <form method="post" name="subscribeForm" id="subscribeForm" action="http://scripts.dreamhost.com/add_list.cgi">
+                <input type="hidden" name="list" value="news" />
+                <input type="hidden" name="domain" value="markux.com" />
+                <input type="text" name="email" id="emailInput" placeholder="your email here" /> 
+                <input type="submit" name="submit" id="subscribeButton" value="Subscribe" /> 
+            </form>
+
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END container -->
+    </section><!-- END Promo box -->
+
+    <footer>
+      <div class="container">
+        <div class="row footer-info">
+          <div class="col-lg-5">
+            <img src="../../images/exmakina.png" alt="company logo" />
+          </div>
+          <div class="col-lg-3 contact">
+            <ul>
+              <li><img src="../../images/icons/footerMail.png" alt="mail icon" /><a href="mailto:contact@marklightforunity.com "> contact@marklightforunity.com </a></li> 
+            </ul>                
+          </div>
+          <div class="col-lg-4">
+            <ul class="socialIcons footer-social socialIconsOffset">
+                <li><a href="https://twitter.com/MarkUX" onclick="trackOutboundLink('https://twitter.com/MarkUX'); return false;" class="twitterIcon" target="_blank"></a></li>
+                <li><a href="http://www.reddit.com/r/marklight" onclick="trackOutboundLink('http://www.reddit.com/r/marklight'); return false;" class="redditIcon" target="_blank"></a></li>
+                <li><span class="slackOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span></li>
+            </ul>
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END Container -->
+    </footer><!-- END Footer -->
+    
+<!-- JavaScript file links -->
+<script src="../../js/jquery-1.12.3.min.js"></script>            <!-- Jquery -->
+<script src="../../js/bootstrap.min.js"></script>     <!-- bootstrap -->
+<script src="../../js/jquery.bxslider.min.js"></script>  <!-- bxslider -->
+<script src="../../js/tabs.js"></script> <!-- custom tab script -->
+<script src="../../js/lightbox-2.6.min.js"></script>  <!-- lightbox -->
+<script src="../../js/jquery.scrollTo.js"></script>  <!-- scollTo -->
+<script src="../../js/jquery.nav.js"></script>  <!-- one page nav -->
+<script src="../../js/respond.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+
+<script>
+  "use strict";
+
+$(document).ready(function() {
+    hljs.initHighlightingOnLoad();
+    $('.nav.navbar-nav.navbar-right').onePageNav({
+        currentClass: 'current',
+        filter: ':not(.external)'
+    }); 
+    $('span code').each(function(i, inline)
+    {
+      hljs.highlightBlock(inline);
+    });
+});
+</script>
+
+</body>
+</html>

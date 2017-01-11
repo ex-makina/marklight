@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="MarkLight is a framework for Unity that offers XUML a design language similar to HTML but instead of creating webpages it is used to design scenes in Unity.">
+<meta name="keywords" content="marklight, markux, mvvm, unity, unity3d, mvm, mvp, mvc, ux, ui, user interface, user experience, interfaces, game, games, controls, widgets, xml, markup, framework, design, create, share, dream, build, play, dynamic, responsive, fluid, intuitive, easy, simple, powerful, sleek, elegant, structured, flow, creative">
+<meta name="author" content="Ex Makina">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Themes and Styles | MarkLight</title>
+<script src="../../js/html5shiv.js"></script>  <!-- support for HTML5 in IE8 -->
+<!-- CSS file links -->
+<link href="../../css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../../css/bootstrap.icon-large.min.css" rel="stylesheet">
+<link href="../../css/style-documentation.css" rel="stylesheet" type="text/css" media="all" id="styleChange" />
+<link href="../../css/lightbox.css" type="text/css" rel="stylesheet" />
+<link href="../../css/responsive.css" type="text/css" rel="stylesheet" />
+<link href="../../css/vs.css" type="text/css" rel="stylesheet" />
+<link href="../../css/font-awesome-4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76413937-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script>
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+     function () {
+     document.location = url;
+     }
+   });
+}
+</script>
+</head>
+
+<body>
+
+    <!-- Sub-Header Start -->
+    <header class="navbar navbar-fixed-top subNavBar" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+        <ul class="nav navbar-nav navbar-left subCategories">
+            <li><a href="../introduction.html" class="external">Introduction</a></li>
+            <li class="subCategorySelected"><a href="../tutorials.html">Tutorials</a></li>
+            <li><a href="../api/MarkLight.Views.Animate.html" class="external">API docs</a></li>            
+        </ul>
+        <span class="slackLeftOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span>
+      </div><!-- /.navbar-collapse -->
+    </header>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top mainNavBar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.marklightforunity.com/"></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../../index.html" class="external">Home</a></li>
+                    <li><a href="https://www.assetstore.unity3d.com/#!/content/37466" class="external" onclick="trackOutboundLink('https://www.assetstore.unity3d.com/#!/content/37466'); return false;">Download</a></li>
+                    <li class="current"><a href="../introduction.html" class="current">Documentation</a></li>
+                    <li><a href="https://www.patreon.com/studiodelight" class="external patreon"></a></li> 
+                </ul>
+            </div><!--/.navbar-collapse -->
+      </div><!-- END Container -->
+    </header><!-- END Header -->
+
+    <!-- Documentation Start -->
+    <a class="anchor" id="documentationAnchor"></a>
+    <section id="documentation" class="marginSubMenu">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">   
+            <h1>Themes and Styles</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-8">        
+
+          <a class="docIndexAnchor" id="introduction"></a>
+          <h2>Introduction</h2>
+          Themes and styles can be used to control the configuration, behavior and apperance of views in your scene. A theme is a XUML file containing a collection of styles that defines the default values a view should have. If you're familiar with HTML, a theme can be seen as the CSS file and its content (selectors) would be equivalent to the styles.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="using-themes"></a>
+          <h2>Using Themes</h2>
+          If you want to use an existing theme you can set the default theme on the view presenter:<br>
+          <br>
+          <img src="../../images/marklight/documentation/gettingstarted/selecttheme.png" alt="select theme"><br>
+          <br>
+          This theme will be applied to all views in the scene. The standard theme files resides at <i>Assets\MarkLight\Views\Themes</i>.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="creating-new-theme"></a>
+          <h2>Creating a New Theme</h2>
+          A theme is a XUML file that has the root element <b>Theme</b>:<br>       
+          <br>
+          <i>MyCustomTheme.xml</i>
+          <pre><code class="xml">
+&lt;Theme Name="MyCustomTheme"&gt;
+&lt;/Theme&gt;
+          </code></pre>
+          <br>        
+          The theme file can be put in any of the views-folders (defined in the configuration asset). The theme element has a few attributes that you can set. The <b>Name</b> attribute is required.<br>
+          <br>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Attribute</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Name</b></td>
+                <td>The name of the theme. Seen in the drop-down list on the view presenter and used when <a href="#view-level-theme">specifying theme on view level</a>.</td>
+              </tr>
+              <tr>
+                <td><b>BaseDirectory</b></td>
+                <td>Base directory for the assets (sprites, fonts, etc) referenced within the theme file. E.g. if BaseDirectory is set to <i>"Assets/MarkLight/Themes/Flat/"</i> a path within the theme can be specified as <i>"Sprites/CheckBox.psd"</i> which will be translated to <i>"Assets/MarkLight/Themes/Flat/Sprites/CheckBox.psd"</i>.</td>
+              </tr>
+              <tr>
+                <td><b>UnitSize</b></td>
+                <td>Unit size is a user-defined element size unit that can be set and used within the theme by using the postfixes <b>ux</b>, <b>uy</b> and <b>uz</b>. E.g. if UnitSize is set to "40,50,20" you can specify the width of a view as <b>"1ux"</b> and it will be translated to 40 pixels, 1uy = 50 pixels and 1uz = 20 pixels.</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+
+          <a class="docIndexAnchor" id="creating-styles"></a>
+          <h2>Creating Styles</h2>
+          Let's say you want all buttons in your scene to have another background color. You can define this by creating a new style in your theme:<br>
+          <br>
+          <i>MyCustomTheme.xml</i>
+          <pre><code class="xml">
+&lt;Theme Name="MyCustomTheme"&gt;
+    <mark>&lt;Button BackgroundColor="Blue" /&gt;</mark>
+&lt;/Theme&gt;
+          </code></pre>
+          <br>
+          You've created a universal style that will be applied to all button views. If you want your style to only be applied to certain buttons you specify this through the Id and Style attributes:<br>
+          <br>
+          <i>MyCustomTheme.xml</i>
+          <pre><code class="xml">
+&lt;Theme Name="MyCustomTheme"&gt;
+    &lt;Button BackgroundColor="Blue" /&gt;
+    <mark>&lt;Button Style="RedButton" BackgroundColor="Red" /&gt;</mark>
+    <mark>&lt;Button Id="MyButton1" BackgroundColor="Green" /&gt;</mark>
+&lt;/Theme&gt;
+          </code></pre>
+          <br>
+          Now all buttons that has <b>Style="RedButton"</b> will have a red background color. The button with <b>Id="MyButton1"</b> will have a green background color. All other buttons will have a blue background color. Here is an example of how the styles can be used in your scene:<br>
+          <br>
+          <i>MainMenu.xml</i>
+          <pre><code class="xml">
+&lt;MainMenu&gt;
+    &lt;Group Spacing="10"&gt;
+        &lt;Button Text="Button1" Width="180" Height="50" /&gt;
+        &lt;Button Style="RedButton" Text="Button2" Width="180" Height="50" /&gt;
+        &lt;Button Style="RedButton" Text="Button3" Width="180" Height="50" /&gt;
+        &lt;Button Id="MyButton1" Text="Button4" Width="180" Height="50" /&gt;
+    &lt;/Group&gt;
+&lt;/Theme&gt;
+          </code></pre>
+          <br>
+          If <b>MyCustomTheme</b> is set on the view presenter the first button should be blue, the second and third will be red and the last will be green.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="based-on"></a>
+          <h2>Basing Styles on Others</h2>
+          If you want to create a new style that is based on an existing style you can use the <b>BasedOn</b> attribute:<br>
+          <br>
+          <pre><code class="xml">
+&lt;Theme Name="MyCustomTheme"&gt;
+    &lt;Label Style="NormalText" FontSize="22" FontColor="#333" Font="MyDefaultFont.ttf" /&gt;
+    &lt;Label Style="SmallText" <mark>BasedOn="NormalText"</mark> FontSize="16" /&gt;
+&lt;/Theme&gt;
+          </code></pre>
+          <br>
+          The SmallText style will inherit the values of the NormalText style.<br>
+          <br>
+
+
+          <a class="docIndexAnchor" id="not-just-looks"></a>
+          <h2>Not Just Looks</h2>
+          Styles can be used to set any view field value which means it's not just about defining the visual appearance of a view. E.g. do you want lists to select items on mouse up by default? Use the theme file:<br>
+          <br>
+          <pre><code class="xml">
+&lt;Theme Name="MyCustomTheme"&gt;
+    &lt;Group Orientation="Horizontal" Spacing="4" /&gt;
+    <mark>&lt;List SelectOnMouseUp="True" /&gt;</mark>
+&lt;/Theme&gt;
+          </code></pre>
+          <br>
+
+          <a class="docIndexAnchor" id="multiple-themes"></a>
+          <h2>Using Multiple Themes in a Scene</h2>
+          You have the option to specify the theme on a view level and have multiple themes in the same scene:<br>
+          <br>
+          <i>MainMenu.xml</i>
+          <pre><code class="xml">
+&lt;MainMenu&gt;
+    &lt;Group Spacing="10"&gt;
+        &lt;Button <mark>Theme="Flat"</mark> Text="Button1" /&gt;
+        &lt;Button Theme="Neat" Text="Button2" /&gt;
+        &lt;Button Theme="Toon" Text="Button3" /&gt;
+    &lt;/Group&gt;
+&lt;/Theme&gt;
+          </code></pre>
+          <br>
+          In the above example the <b>Flat</b> theme will be applied to the first button and all its children.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="inheriting-style"></a>
+          <h2>Views Inhereting Style</h2>
+          In some advanced cases when creating custom views, you may want the style of a view to be inherited from the parent. You can implement this by setting the style to <b>*</b>:<br>
+          <br>
+          <pre><code class="xml">
+&lt;MyCustomView&gt;    
+    &lt;Label <mark>Style="*"</mark> Text="Label Text" /&gt;</mark>
+&lt;/MyCustomView&gt;
+          </code></pre>
+          <br>          
+          You can set the style of MyCustomView:<br>
+          <br>
+          <pre><code class="xml">
+&lt;AnotherView&gt;    
+    <mark>&lt;MyCustomView Style="SomeStyle" /&gt;</mark>
+&lt;/AnotherView&gt;
+          </code></pre>
+          <br>
+          And the Label within MyCustomView will receive the style "SomeStyle".<br>
+          <br>
+          <br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+          </div> <!-- END OF FIRST COLUMN -->
+
+          <div class="col-lg-4">
+
+              <div class="toc hidden-print hidden-xs hidden-sm" data-spy="affix" data-offset-top="115">
+                <ul>
+                  <li><a href="#introduction">Introduction</a></li>
+                  <li><a href="#using-themes">Using Themes</a></li>
+                  <li><a href="#creating-new-theme">Creating a New Theme</a></li>
+                  <li><a href="#creating-styles">Creating Styles</a></li>
+                  <li><a href="#based-on">Basing Styles on Others</a></li>
+                  <li><a href="#not-just-looks">Not Just Looks</a></li>
+                  <li><a href="#multiple-themes">Using Multiple Themes in a Scene</a></li>
+                  <li><a href="#inheriting-style">Views Inhereting Style</a></li>
+                </ul>
+              </div>
+
+          </div> <!-- END OF SECOND COLUMN -->          
+        </div><!-- END OF ROW-->
+      </div> <!-- END OF CONTAINER -->
+    </section>
+
+
+    <!-- Start subscription box -->
+    <section id="promoBox">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4><span>Join the Announcement List</span></h4>
+            <p>Be notified when new themes, views, tutorials and updates are available</p>
+          </div>
+          <div class="col-lg-6">
+            <form method="post" name="subscribeForm" id="subscribeForm" action="http://scripts.dreamhost.com/add_list.cgi">
+                <input type="hidden" name="list" value="news" />
+                <input type="hidden" name="domain" value="markux.com" />
+                <input type="text" name="email" id="emailInput" placeholder="your email here" /> 
+                <input type="submit" name="submit" id="subscribeButton" value="Subscribe" /> 
+            </form>
+
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END container -->
+    </section><!-- END Promo box -->
+
+    <footer>
+      <div class="container">
+        <div class="row footer-info">
+          <div class="col-lg-5">
+            <img src="../../images/exmakina.png" alt="company logo" />
+          </div>
+          <div class="col-lg-3 contact">
+            <ul>
+              <li><img src="../../images/icons/footerMail.png" alt="mail icon" /><a href="mailto:contact@marklightforunity.com "> contact@marklightforunity.com </a></li> 
+            </ul>                
+          </div>
+          <div class="col-lg-4">
+            <ul class="socialIcons footer-social socialIconsOffset">
+                <li><a href="https://twitter.com/MarkUX" onclick="trackOutboundLink('https://twitter.com/MarkUX'); return false;" class="twitterIcon" target="_blank"></a></li>
+                <li><a href="http://www.reddit.com/r/marklight" onclick="trackOutboundLink('http://www.reddit.com/r/marklight'); return false;" class="redditIcon" target="_blank"></a></li>
+                <li><span class="slackOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span></li>
+            </ul>
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END Container -->
+    </footer><!-- END Footer -->
+    
+<!-- JavaScript file links -->
+<script src="../../js/jquery-1.12.3.min.js"></script>            <!-- Jquery -->
+<script src="../../js/bootstrap.min.js"></script>     <!-- bootstrap -->
+<script src="../../js/jquery.bxslider.min.js"></script>  <!-- bxslider -->
+<script src="../../js/tabs.js"></script> <!-- custom tab script -->
+<script src="../../js/lightbox-2.6.min.js"></script>  <!-- lightbox -->
+<script src="../../js/jquery.scrollTo.js"></script>  <!-- scollTo -->
+<script src="../../js/jquery.nav.js"></script>  <!-- one page nav -->
+<script src="../../js/respond.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+
+<script>
+  "use strict";
+
+$(document).ready(function() {
+    hljs.initHighlightingOnLoad();
+    $('.nav.navbar-nav.navbar-right').onePageNav({
+        currentClass: 'current',
+        filter: ':not(.external)'
+    }); 
+    $('span code').each(function(i, inline)
+    {
+      hljs.highlightBlock(inline);
+    });
+});
+</script>
+
+</body>
+</html>

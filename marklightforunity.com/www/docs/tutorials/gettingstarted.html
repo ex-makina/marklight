@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="MarkLight is a framework for Unity that offers XUML a design language similar to HTML but instead of creating webpages it is used to design scenes in Unity.">
+<meta name="keywords" content="marklight, markux, mvvm, unity, unity3d, mvm, mvp, mvc, ux, ui, user interface, user experience, interfaces, game, games, controls, widgets, xml, markup, framework, design, create, share, dream, build, play, dynamic, responsive, fluid, intuitive, easy, simple, powerful, sleek, elegant, structured, flow, creative">
+<meta name="author" content="Ex Makina">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Getting Started | MarkLight</title>
+<script src="../../js/html5shiv.js"></script>  <!-- support for HTML5 in IE8 -->
+<!-- CSS file links -->
+<link href="../../css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../../css/bootstrap.icon-large.min.css" rel="stylesheet">
+<link href="../../css/style-documentation.css" rel="stylesheet" type="text/css" media="all" id="styleChange" />
+<link href="../../css/lightbox.css" type="text/css" rel="stylesheet" />
+<link href="../../css/responsive.css" type="text/css" rel="stylesheet" />
+<link href="../../css/vs.css" type="text/css" rel="stylesheet" />
+<link href="../../css/font-awesome-4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76413937-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script>
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+     function () {
+     document.location = url;
+     }
+   });
+}
+</script>
+</head>
+
+<body>
+
+    <!-- Sub-Header Start -->
+    <header class="navbar navbar-fixed-top subNavBar" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+        <ul class="nav navbar-nav navbar-left subCategories">
+            <li><a href="../introduction.html" class="external">Introduction</a></li>
+            <li class="subCategorySelected"><a href="../tutorials.html">Tutorials</a></li>
+            <li><a href="../api/MarkLight.Views.Animate.html" class="external">API docs</a></li>            
+        </ul>        
+
+        <span class="slackLeftOffset"><script defer src="https://marklight.herokuapp.com/slackin.js"></script></span>
+      </div><!-- /.navbar-collapse -->
+    </header>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top mainNavBar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.marklightforunity.com/"></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../../index.html" class="external">Home</a></li>
+                    <li><a href="https://www.assetstore.unity3d.com/#!/content/37466" class="external" onclick="trackOutboundLink('https://www.assetstore.unity3d.com/#!/content/37466'); return false;">Download</a></li>
+                    <li class="current"><a href="../introduction.html" class="current">Documentation</a></li>
+                    <li><a href="https://www.patreon.com/studiodelight" class="external patreon"></a></li> 
+                </ul>
+            </div><!--/.navbar-collapse -->
+      </div><!-- END Container -->
+    </header><!-- END Header -->
+
+    <!-- Documentation Start -->
+    <a class="anchor" id="documentationAnchor"></a>
+    <section id="documentation" class="marginSubMenu">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">   
+            <h1>Getting Started</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-8">        
+
+          <a class="docIndexAnchor" id="introduction"></a>
+          <h2>Introduction</h2>          
+          MarkLight is a markup extension framework for Unity that allows programmers and designers to create game components or <b>views</b>, using <b>XUML</b> a declarative design language similar to HTML/XAML. The views you create can easily be combined, shared, re-used, styled, extended and plugged into different projects. You can build upon existing views and create advanced functionality with much less effort.<br>
+          <br>
+          This tutorial will introduce you to the features of the framework by using MarkLight to build a main menu.<br>
+          <br>
+          Using XUML you can express the design of your UI and its relationship with the underlying game logic:<br>
+          <br>
+          <i>MainMenu.xml</i>
+          <pre><code class="xml">
+&lt;MainMenu&gt;
+    &lt;Group Spacing="10px"&gt;
+        &lt;Button Text="Play" Click="StartGame" /&gt;
+        &lt;Button Text="Options" /&gt;
+        &lt;Button Text="Quit" /&gt;
+    &lt;/Group&gt;
+&lt;/MainMenu&gt;
+          </code></pre>            
+          <br>
+          The above example shows a simple main menu <b>view</b> created in XUML. Programmers that are comfortable with code can express designs in a structured language. Designers should be somewhat used to the idea if they've worked with HTML before.<br>
+          <br>
+          As the designer works on the view the programmer can work on the view's logic in what is called the <b>view model</b>:<br>
+          <br>
+          <i>MainMenu.cs</i>
+          <pre><code class="c#">
+public class MainMenu : UIView
+{
+    public void StartGame()
+    {
+        // called when user clicks on "Play" button
+    }
+}
+          </code></pre>
+          <br>  
+          Together the view and the view model forms a cohesive element (simply referred to as the view) that can be combined to form more advanced views:<br>
+          <br>
+          <i>AnotherView.xml</i>
+          <pre><code class="xml">
+&lt;AnotherView&gt;
+    &lt;MainMenu Width="50%" Alignment="Left" /&gt;
+    &lt;MainMenu Width="50%" Alignment="Right" /&gt;
+&lt;/AnotherView&gt;
+          </code></pre> 
+          <br>          
+          This pattern of separating application logic from UI design is called <b>MVVM</b> (Model, View, View Model). The <i>model</i> part of the pattern is not relevant to this tutorial. Just know that the model refers to actual application data that is completely independent of the UI.<br>
+          <br>
+          The views and view models interacts using <b>data binding</b> and <b>view actions</b>. But before we get into those concepts, let's get started building our first UI with MarkLight from scratch.
+          <br><br>
+
+            
+          <a class="docIndexAnchor" id="installation"></a>
+          <h2>Installation</h2>
+
+          Start a new unity project and import the MarkLight package.<br>
+          <br>
+          <img src="../../images/marklight/documentation/gettingstarted/package.png" alt="package details"><br>
+          <br>
+          Create an empty game object and add a <b>View Presenter</b> component to it:<br>
+          <br>
+          <img src="../../images/marklight/documentation/gettingstarted/viewpresenter.png" alt="add view presenter"><br>
+          <br>             
+          The view presenter will generate your views in the scene.<br>
+          <br>
+
+
+          <a class="docIndexAnchor" id="creating-view"></a>
+          <h2>Creating a View</h2>
+
+          A view is represented by a XUML file (with the extension .xml). Create one in your project's view folder <i>Assets/Views</i>. To create a new view, right-click on a views-folder and select <i>Create->View</i>.<br><br>
+          <img src="../../images/marklight/documentation/gettingstarted/createview.png" alt="create view"><br>
+          <br>
+          The file <i>NewView.xml</i> should now be in the <i>Assets/Views</i> folder. Rename the file <i>MainMenu.xml</i>. <br>
+          <br>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <i class="icon-large icon-info-sign"></i> Views are automatically imported and processed by the MarkLight editor extension when XUML files under any views folder gets added, deleted or changed. Views are also processed if you click on the button <b>Reload Views</b> on the View Presenter's inspector window. You can add view folders to be processed by modifying the configuration asset file.
+            </div>
+          </div>            
+          Edit the view <i>MainMenu.xml</i> so that it contains the following:<br>
+          <br>
+          <i>MainMenu.xml</i>
+          <pre><code class="xml">
+&lt;MainMenu&gt;
+    &lt;Group Spacing="10px"&gt;
+        &lt;Button Text="Play" /&gt;
+        &lt;Button Text="Options" /&gt;
+        &lt;Button Text="Quit" /&gt;
+    &lt;/Group&gt;
+&lt;/MainMenu&gt;
+          </code></pre>
+          <br>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <i class="icon-large icon-info-sign"></i> When editing XUML I recommend you use an editor that supports XML validation and syntax highlighting. It will save you a lot of time by catching common formatting mistakes. If you're using Visual Studio be sure to <a href="how-to-get-intellisense.html">follow this guide</a> to get intellisense when editing XUML.
+            </div>
+          </div>
+          The name of the root tag <i>&lt;MainMenu&gt;</i> is the name we've given the view. The view contains three <a href="../api/MarkLight.Views.UI.Button.html">Button</a> views that are arranged vertically by a <a href="../api/MarkLight.Views.UI.Group.html">Group</a> view. The <a href="../api/MarkLight.Views.UI.Group.html">Group</a> and <a href="../api/MarkLight.Views.UI.Button.html">Button</a> are <a href="../api/MarkLight.Views.UI.UIView.html">UIViews</a> that are designed to be rendered under a UI canvas. Consult the <a href="../api/MarkLight.Views.Animate.html">API docs</a> to find out detailed information about the 40+ views included in the MarkLight framework.<br>
+          <br>
+          <i>Spacing</i> and <i>Text</i> are <b>View Fields</b> which are values that can be set on the views that changes their layout and behavior. All UIViews have the following fields that are used to do layout:<br>
+          <br>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>View Field</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Width</td>
+                <td>Width of the view that can be specified in pixels or percentage. Set to 100% by default</td>
+              </tr>
+              <tr>
+                <td>Height</td>
+                <td>Height of the view that can be specified in pixels or percentage. Set to 100% by default.</td>
+              </tr>
+              <tr>
+                <td>Alignment</td>
+                <td>Alignment of the view: TopLeft, Top, TopRight, Left, Center, Right, BottomLeft, Bottom, BottomRight. Set to Center by default.</td>
+              </tr>
+              <tr>
+                <td>Margin</td>
+                <td>Specifies the view's margin from left, top, right and bottom. Default value: "0,0,0,0".</td>
+              </tr>
+              <tr>
+                <td>Offset</td>
+                <td>Specifies the view's offset from left, top, right and bottom. Default value: "0,0,0,0".</td>
+              </tr>
+              <tr>
+                <td>BackgroundColor</td>
+                <td>Background color overlay or tint of the view. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value (1.0,0.0,0.5 or 1,1,1,0.5). Default value: (not set).</td>
+              </tr>
+              <tr>
+                <td>BackgroundImage</td>
+                <td>The background image of the view. The value is the path to the sprite asset, e.g. "Assets/MySprites/Sprite.psd". Default value: (not set)</td>
+              </tr>
+              <tr>
+                <td>BackgroundImageType</td>
+                <td>The image type of the background image: Simple, Sliced, Tiled or Filled. Default value: "Simple". </td>
+              </tr>
+            </tbody>
+          </table>
+
+          Views also has their own custom fields like the <i>Text</i> field on the button. For information on what fields a certain view has check the <a href="../api/MarkLight.Views.Animate.html">API docs</a>. We'll also go over how to add custom fields to our view in the <a href="#data-binding">Data Binding</a> section.<br>
+          <br>            
+
+          <a class="docIndexAnchor" id="creating-view-model"></a>
+          <h2>Creating a View Model</h2>
+          Since we plan on having some logic in our main menu (like responding to user clicks, managing data etc.) we need to create a view model for it. We also need a view model to inform the framework that our main menu view should inherit the functionality of the <a href="../api/MarkLight.Views.UI.UIView.html">UIView</a> base class. This is required if we want to be able to position our view under a UI canvas. To create a view model add a new script <i>MainMenu.cs</i>, e.g. in the <i>/Assets/Scripts/</i> folder.<br>
+          <br>
+          Edit the script so that it contains the following:<br>
+          <br>
+          <i>MainMenu.cs</i>
+          <pre><code class="c#">
+using MarkLight.Views.UI;
+
+public class MainMenu : UIView
+{
+}
+          </code></pre>
+          <br>
+          Note that the class has the same name we gave the view in the XUML and that it inherits from UIView. All views must inherit from View or a subclass of it (like UIView) for it to be managed by the framework. For now our MainMenu view model is empty but we will add functionality to it soon. First we just want to make sure we can present it in the scene.
+          <br>
+          <br>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <i class="icon-large icon-info-sign"></i> MarkLight relies heavily on <i>naming conventions</i> to simplify the workflow by removing the need to add configurations and "plumbing" logic.
+            </div>
+          </div>
+          <br>
+
+          <a class="docIndexAnchor" id="presenting-view"></a>
+          <h2>Presenting the View</h2>
+
+          To present our MainMenu view we need to create a new view that will set up our scene. This view will add a UI canvas and present our MainMenu view inside it. To do this create a new view called <i>MainMenuScene.xml</i> and add the following XUML to it: <br>
+          <br>
+          <i>MainMenuScene.xml</i>
+          <pre><code class="xml">
+&lt;MainMenuScene&gt;
+    &lt;UserInterface&gt;
+        <mark>&lt;MainMenu /&gt;</mark>
+    &lt;/UserInterface&gt;
+    &lt;EventSystem /&gt;
+&lt;/MainMenuScene&gt;
+          </code></pre>
+          <br>
+          And add an empty view model:<br>
+          <br>
+          <i>MainMenuScene.cs</i>
+          <pre><code class="C#">
+using MarkLight;
+
+public class MainMenuScene : <mark>View</mark>
+{
+}
+          </code></pre>
+          <br>
+          Now our scene is set up to present UI views and handle user interaction through the unity event system. To present this scene go to the inspector window for the View Presenter component. Change the <i>Main View</i> value to be the <b>MainMenuScene</b> view just created.<br>
+          <br>
+          <img src="../../images/marklight/documentation/gettingstarted/selectmainview.png" alt="select main view"><br>
+          <br>
+          The scene window should now show the view being rendered. In order to make the standard views (the buttons in this case) more presentable, pick a theme.<br>
+          <br>
+          <img src="../../images/marklight/documentation/gettingstarted/selecttheme.png" alt="select theme"><br>
+          <br>
+          There are three themes included in the framework. The <i>Flat</i> theme is the default theme and is the most practical one (recommended for mockup during development). The toon theme is a casual style with some visual flair. The <i>Neat</i> theme is a clean, spacious theme with a rounded look. <br>
+          <br>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <i class="icon-large icon-info-sign"></i> Themes are XUML files that modify the look &amp; feel of views similar to style-sheets in HTML. More information in the <a href="themes-and-styles.html">Themes and Styles</a> tutorial.
+            </div>
+          </div>            
+          The scene window should now show our main menu:<br>
+          <br>            
+          <img src="../../images/marklight/documentation/gettingstarted/mainmenu.png" alt="main menu"><br>
+          <br>
+          Next we'll add some game logic to our view.<br>
+          <br>
+
+
+          <a class="docIndexAnchor" id="view-actions"></a>
+          <h2>Adding View Actions</h2>
+
+          Edit the main menu view model so that it contains the following:<br>
+          <br>
+          <i>MainMenu.cs</i>
+          <pre><code class="c#">
+public class MainMenu : UIView
+{
+    public void StartGame()
+    {
+        Debug.Log("StartGame() called.");
+    }
+
+    public void Options()
+    {
+        Debug.Log("Options() called.");
+    }
+
+    public void Quit()
+    {
+        Debug.Log("Quit() called.");
+    }
+}
+          </code></pre>
+          <br>
+          The MainMenu view model now contains three methods. To add the methods as click handlers to the buttons in the menu add the following to the main menu XUML:<br>
+          <br>
+          <i>MainMenu.xml</i>
+<pre><code class="xml">
+&lt;MainMenu&gt;
+  &lt;Group Spacing="10px"&gt;
+      &lt;Button Text="Play" <mark>Click="StartGame"</mark> /&gt;
+      &lt;Button Text="Options" <mark>Click="Options"</mark> /&gt;
+      &lt;Button Text="Quit" <mark>Click="Quit"</mark> /&gt;
+  &lt;/Group&gt;
+&lt;/MainMenu&gt;
+          </code></pre>
+          <br>
+          If you run the application and click on the Play button you should see the following in the console window: <br>
+          <br>
+          <img src="../../images/marklight/documentation/gettingstarted/clicklog.png" alt="create script"><br>
+          <br>
+          View Actions are ways to bind operational logic between view models. In this case Button exposes a View Action called <i>Click</i> that is triggered when the user clicks on the button. When an action is triggered all its handlers are invoked.<br>
+          <br>
+          Before we continue adding logic to our view model I want to go over some fundamentals on UI layout.<br>
+          <br>
+
+
+          <a class="docIndexAnchor" id="layout"></a>
+          <h2>Layout</h2>
+          This is the kind of layout we are going for: <br>
+          <br>
+          <img src="../../images/marklight/documentation/gettingstarted/layout.png" alt="create script"><br>
+          <br>
+          MarkLight includes various views that can be used to do layout. We've seen the <a href="../api/MarkLight.Views.UI.Group.html">Group</a> that is used to group views vertically or horizontally with spacing between. A more basic layout view is the <a href="../api/MarkLight.Views.UI.Region.html">Region</a> which is simply an empty UIView used to spacially arrange views. Let's edit our view MainMenu to make use of regions to get the layout we want:<br>
+          <br>
+          <i>MainMenu.xml</i>
+<pre><code class="xml">
+&lt;MainMenu&gt;
+  <mark>&lt;Region Width="25%" Alignment="Left" Margin="30,30,15,30" 
+      BackgroundColor="#ef706a"&gt;</mark>
+      &lt;Group Spacing="10px" <mark>Alignment="Top"</mark>&gt;
+          &lt;Button Text="Play" Click="StartGame" /&gt;
+          &lt;Button Text="Options" Click="Options" /&gt;
+          &lt;Button Text="Quit" Click="Quit" /&gt;
+      &lt;/Group&gt;
+  <mark>&lt;/Region&gt;
+  &lt;Region Width="75%" Alignment="Right" Margin="15,30,30,30" 
+      BackgroundColor="#949494"&gt;
+      &lt;!-- content area --&gt; 
+  &lt;/Region&gt;</mark>
+&lt;/MainMenu&gt;
+          </code></pre>
+          <br>
+          We've added background colors to the regions just to make it easier to see the space they cover. When you've seen the result, remove the background colors and we'll move on to adding a <a href="../api/MarkLight.Views.UI.ViewSwitcher.html">view switcher</a> to our main menu.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="view-switcher"></a>
+          <h2>View Switcher</h2>
+          The <a href="../api/MarkLight.Views.UI.ViewSwitcher.html">View Switcher</a> is a view that provides functionality for switching its content. We can use it to switch between menus. Add a view switcher to the main menu:<br>
+          <br>
+          <i>MainMenu.xml</i>
+          <pre><code class="xml">
+&lt;MainMenu&gt;
+  &lt;Region Width="25%" Alignment="Left" Margin="30,30,15,30"&gt;
+      &lt;Group Spacing="10px" Alignment="Top"&gt;
+          &lt;Button Text="Play" Click="StartGame" /&gt;
+          &lt;Button Text="Options" Click="Options" /&gt;
+          &lt;Button Text="Quit" Click="Quit" /&gt;
+      &lt;/Group&gt;
+  &lt;/Region&gt;
+  &lt;Region Width="75%" Alignment="Right" Margin="15,30,30,30"&gt;        
+      <mark>&lt;ViewSwitcher Id="ContentViewSwitcher"&gt;
+          &lt;Region /&gt;
+          &lt;Region BackgroundColor="Red" /&gt;
+          &lt;Region BackgroundColor="Blue" /&gt;
+      &lt;/ViewSwitcher></mark>
+  &lt;/Region&gt;
+&lt;/MainMenu&gt;
+          </code></pre>
+          <br>
+          Note that we've given <i>ViewSwitcher</i> an <b>Id</b> which we need to be able to reference it in our view model. Currently it contains three empty regions that it will switch between. It will show the first region by default.<br>
+          <br>
+          Next update the view model to make use of the view switcher:<br>
+          <br>
+          <i>MainMenu.cs</i>
+          <pre><code class="c#">
+public class MainMenu : UIView
+{
+  public ViewSwitcher ContentViewSwitcher;
+
+  public void StartGame()
+  {
+      ContentViewSwitcher.SwitchTo(1);
+  }
+
+  public void Options()
+  {
+      ContentViewSwitcher.SwitchTo(2);
+  }
+
+  public void Quit()
+  {
+      Application.Quit();
+  }
+}
+          </code></pre>
+          <br>
+          We've added the field <i>ContentViewSwitcher</i> which will automatically be set to reference the view with the same <i>Id</i>. The ViewSwitcher contains the method <i>SwitchTo(int zeroBasedIndex)</i> that we use to switch between the views.<br>
+          <br>
+          If you run the scene and click on "Play" and "Options" you'll see the view switcher in action. In order to demonstrate the data binding capabilities we'll go on to implement a very simple options menu.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="data-binding"></a>
+          <h2>Data Binding</h2>
+          For the options menu we'll create a separate view that we then will put inside the main menu view. This time we'll begin by creating the view-model. Create a new script called <i>Options</i> and edit it so it contains the following:<br>
+          <br>
+          <i>Options.cs</i>            
+          <pre><code class="c#">
+public class Options : UIView
+{
+  public float Volume;
+  public bool EasyMode;
+  public string PlayerName;
+}
+          </code></pre>
+          <br>
+          Our options view will contain three <b>View Fields</b> that we can reference in code and in XUML. Next we'll create a options view that contains various views that we will bind the fields we've just created to. Create a new view <i>Options.xml</i>.<br>
+          <br>
+          <i>Options.xml</i>
+          <pre><code class="xml">
+&lt;Options&gt;
+  &lt;Group Spacing="20px" Alignment="TopLeft" ContentAlignment="Left"&gt;
+    &lt;Label Text="Volume: " /&gt;
+    &lt;Slider Value="<mark>{Volume}</mark>" Min="0" Max="100" Width="400px" /&gt;
+
+    &lt;CheckBox Text="Easy Mode" IsChecked="<mark>{EasyMode}</mark>" /&gt;
+
+    &lt;Label Text="Player: " /&gt;
+    &lt;InputField Text="<mark>{PlayerName}</mark>" /&gt;
+  &lt;/Group&gt;
+&lt;/Options&gt;
+          </code></pre>    
+          <br>
+          Data binding is a key feature of MarkLight and it enables our views to connect data between view models. E.g. in this example we've bound the field <i>Value</i> of the slider view:<br>
+          <br>
+          <pre><code class="xml">
+    &lt;Slider Value="<mark>{Volume}</mark>" /&gt;
+          </code></pre>    
+          <br>
+          ...to the field <i>Volume</i> on the options view. If we interact with the slider it will change its <i>Value</i> field and its value will automatically propagate to the Volume field. Likewise if we change the Volume field the value will propagate to the slider's Value field.<br>
+          <br>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <i class="icon-large icon-info-sign"></i> Data binding in XUML is done using the <b>{FieldPath}</b> notation. Most of the time you'll bind directly to a field on the parent view-model. However, MarkLight also supports more advanced field path bindings:<br><br><ul><li>nested fields: {field1.field2}</li><li>ID-selectors: {viewID.field}</li><li>format strings: "Hello, {name}!"</li><li>multi-bindings: "$sum({field1}, {field2})"</li></ul><a href="data-binding.html">More information about data binding here</a>.
+            </div>
+          </div>
+          Put the options view we've just created in the view switcher in our main menu:<br>
+          <br>
+          <i>MainMenu.xml</i>
+          <pre><code class="xml">
+      ...
+      &lt;ViewSwitcher Id="ContentViewSwitcher"&gt;
+          &lt;Region /&gt;
+          &lt;Region BackgroundColor="Red" /&gt;
+          <mark>&lt;Options Volume="75" PlayerName="Player" EasyMode="True" /&gt;</mark>
+      &lt;/ViewSwitcher>    
+      ...
+          </code></pre>
+          <br>
+          Run the scene and click on the Options button to see the options view with default values being set.<br>
+          <br>
+          <img src="../../images/marklight/documentation/gettingstarted/options.png" alt="options menu"><br>
+          <br>
+          The image above shows how you can inspect the view fields on the options view using the inspector window. Next we'll add some animations to create smoother transitions between the views.<br>
+          <br>
+
+
+          <a class="docIndexAnchor" id="animations"></a>
+          <h2>Animations</h2>
+          The view switcher can work with animations to make smooth animated transitions between views. Animations are special views that animates view fields using specified parameters. For this example we will create a fade-in animation. Add the following to the main menu view: <br>
+          <br>
+          <i>MainMenu.xml</i>
+          <pre><code class="xml">
+...
+      &lt;ViewSwitcher Id="ContentViewSwitcher" <mark>TransitionIn="FadeIn"</mark>&gt;
+          &lt;Region /&gt;
+          &lt;Region BackgroundColor="Red" /&gt;
+          &lt;Options Volume="75" PlayerName="Player" EasyMode="True" /&gt;
+      &lt;/ViewSwitcher>
+  &lt;/Region>
+<mark>
+  &lt;ViewAnimation Id="FadeIn"&gt;
+      &lt;Animate Field="Alpha" From="0" To="1" Duration="0.2s" 
+               EasingFunction="QuadraticEaseIn" /&gt;
+  &lt;/ViewAnimation&gt;
+</mark>
+&lt;/MainMenu&gt;
+          </code></pre>
+          <br>
+          We've created a view animation with the Id <b>FadeIn</b> and told the view switcher to apply the animation on views being transitioned to. If you run the scene you should see the views being faded in when clicking on "Options" and "Play". See <a href="animations.html">this tutorial</a> for more information on how to work with animations. Lastly I like to show how to programmatically change field values in a way that utilizes the binding system.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="settingvalues"></a>
+          <h2>Setting Values Programmatically</h2>
+          Let's add a button to the options view that resets the values to default:<br>
+          <br>
+          <i>Options.xml</i>
+          <pre><code class="xml">
+...
+    &lt;Label Text="Player: " /&gt;
+    &lt;InputField Text="{PlayerName}" /&gt;
+
+    <mark>&lt;Button Text="Reset Defaults" Click="ResetDefaults" Width="250px" /&gt;</mark>
+  &lt;/Group&gt;
+&lt;/Options&gt;
+          </code></pre>
+          <br>
+          <i>Options.cs</i>            
+          <pre><code class="c#">
+public class Options : UIView
+{
+  public float Volume;
+  public bool EasyMode;
+  public string PlayerName = "";
+
+  public void ResetDefaults()
+  {
+      SetValue(() => Volume, 75.0f); // Volume = 75.0f
+      SetValue(() => EasyMode, true); // EasyMode = true
+      SetValue(() => PlayerName, "Player"); // PlayerName = "Player"
+  }
+}
+          </code></pre>
+          <br>
+          By using the <b>SetValue</b> method you utilize the change tracking and binding system. This means that bound values gets propagated and listening change handlers gets invoked. If you run the scene, open the options menu, change some values and click the button "Reset Defaults" - you should see the values reset back to default.<br>
+          <br>
+          <a class="docIndexAnchor" id="dependency-fields"></a>
+          <h2>Using Dependency Fields</h2>
+          Dependency fields wraps the SetValue calls through a <b>Value</b> property and makes things a bit more user-friendly and readable. To use dependency fields simply add an underscore <b>_</b> to the type name.<br>
+                    <br>
+          <i>Options.cs</i>            
+          <pre><code class="c#">
+public class Options : UIView
+{
+  public <mark>_float</mark> Volume;
+  public _bool EasyMode;
+  public _string PlayerName;
+
+  public void ResetDefaults()
+  {
+      <mark>Volume.Value = 75.0f;</mark>
+      EasyMode.Value = true;
+      PlayerName.Value = "Player";
+  }
+}
+          </code></pre>
+          <br>
+          See <a href="view-model.html#dependency-fields">more info here</a>. This was the last step in the tutorial. I'd like to end by mentioning the standard views that are at your disposal.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="standardviews"></a>
+          <h2>Standard Views</h2>
+          There are currently 40+ views included in the framework. The <a href="../api/MarkLight.Views.Animate.html">API docs</a> provides detailed information. I also recommend checking out the <b>UIExamples</b> scene that shows the most common UI views in action. The table below provides links and a short summary to some of the most common UI views.<br>
+          <br>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>View</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.Button.html">Button</a></td>
+                <td>Clickable region with text. Can be set to toggle and can have content.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.Checkbox.html">CheckBox</a></td>
+                <td>A box that can be ticked with a label.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.ComboBox.html">ComboBox</a></td>
+                <td>Presents dynamic or static list of items in a drop-down list.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.DataGrid.html">DataGrid</a></td>
+                <td>A content view that arranges static or dynamic content in a grid.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.Group.html">Group</a></td>
+                <td>A content view that arranges its content vertically or horizontally with a set spacing between.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.HyperLink.html">HyperLink</a></td>
+                <td>Displays clickable text.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.InputField.html">InputField</a></td>
+                <td>Input field where the user can type text.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.Label.html">Label</a></td>
+                <td>Displays text. Supports rich text and embedded views.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.List.html">List</a></td>
+                <td>Arranges static or dynamic content as a selectable list.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.Panel.html">Panel</a></td>
+                <td>Content view that provides functionality for scrolling content.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.RadialMenu.html">RadialMenu</a></td>
+                <td>Arranges its content in a circle that can be opened/closed with optional animation.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.RadioButton.html">RadioButton</a></td>
+                <td>For presenting one-of-many selection.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.Region.html">Region</a></td>
+                <td>Content view used to spacially arrange views.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.Slider.html">Slider</a></td>
+                <td>Slider with a handle that can be moved with the mouse.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.TabPanel.html">TabPanel</a></td>
+                <td>A content view that arranges its content in a series of tabs that can be switched between.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.ViewSwitcher.html">ViewSwitcher</a></td>
+                <td>Content view that provides functionality for switching its content.</td>
+              </tr>
+              <tr>
+                <td><a href="../api/MarkLight.Views.UI.Window.html">Window</a></td>
+                <td>Arranges content in a window that can be movable and closable.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          This concludes the introductory guide. There are much more topics to delve into but this should be enough to get you started using MarkLight. I hope you've caught a glimpse of the capabilities of the framework.<br>
+          <br>
+          Comments, questions, suggestions? Discuss this tutorial at the <a href="http://www.reddit.com/r/marklight" onclick="trackOutboundLink('http://www.reddit.com/r/marklight'); return false;">MarkLight developer subreddit</a>.
+
+            <br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+          </div> <!-- END OF FIRST COLUMN -->
+          <div class="col-lg-4">
+
+              <div class="toc hidden-print hidden-xs hidden-sm" data-spy="affix" data-offset-top="115">
+                <ul>
+                  <li><a href="#introduction">Introduction</a></li>
+                  <li><a href="#installation">Installation</a></li>
+                  <li><a href="#creating-view">Creating a View</a></li>
+                  <li><a href="#creating-view-model">Creating a View Model</a></li>
+                  <li><a href="#presenting-view">Presenting the View</a></li>
+                  <li><a href="#view-actions">Adding View Actions</a></li>
+                  <li><a href="#layout">Layout</a></li>
+                  <li><a href="#view-switcher">View Switcher</a></li>
+                  <li><a href="#data-binding">Data Binding</a></li>
+                  <li><a href="#animations">Animations</a></li>
+                  <li><a href="#settingvalues">Setting Values Programmatically</a></li>                  
+                  <li><a href="#dependency-fields">Using Dependency Fields</a></li>                  
+                  <li><a href="#standardviews">Standard Views</a></li>
+                </ul>
+              </div>
+
+          </div> <!-- END OF SECOND COLUMN -->          
+        </div><!-- END OF ROW-->
+      </div> <!-- END OF CONTAINER -->
+    </section>
+
+
+    <!-- Start subscription box -->
+    <section id="promoBox">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4><span>Join the Announcement List</span></h4>
+            <p>Be notified when new themes, views, tutorials and updates are available</p>
+          </div>
+          <div class="col-lg-6">
+            <form method="post" name="subscribeForm" id="subscribeForm" action="http://scripts.dreamhost.com/add_list.cgi">
+                <input type="hidden" name="list" value="news" />
+                <input type="hidden" name="domain" value="markux.com" />
+                <input type="text" name="email" id="emailInput" placeholder="your email here" /> 
+                <input type="submit" name="submit" id="subscribeButton" value="Subscribe" /> 
+            </form>
+
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END container -->
+    </section><!-- END Promo box -->
+
+    <footer>
+      <div class="container">
+        <div class="row footer-info">
+          <div class="col-lg-5">
+            <img src="../../images/exmakina.png" alt="company logo" />
+          </div>
+          <div class="col-lg-3 contact">
+            <ul>
+              <li><img src="../../images/icons/footerMail.png" alt="mail icon" /><a href="mailto:contact@marklightforunity.com "> contact@marklightforunity.com </a></li> 
+            </ul>                
+          </div>
+          <div class="col-lg-4">
+            <ul class="socialIcons footer-social socialIconsOffset">
+                <li><a href="https://twitter.com/MarkUX" onclick="trackOutboundLink('https://twitter.com/MarkUX'); return false;" class="twitterIcon" target="_blank"></a></li>
+                <li><a href="http://www.reddit.com/r/marklight" onclick="trackOutboundLink('http://www.reddit.com/r/marklight'); return false;" class="redditIcon" target="_blank"></a></li>
+                <li><span class="slackOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span></li>
+            </ul>
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END Container -->
+    </footer><!-- END Footer -->
+    
+<!-- JavaScript file links -->
+<script src="../../js/jquery-1.12.3.min.js"></script>            <!-- Jquery -->
+<script src="../../js/jquery.bxslider.min.js"></script>  <!-- bxslider -->
+<script src="../../js/jquery.scrollTo.js"></script>  <!-- scollTo -->
+<script src="../../js/jquery.nav.js"></script>  <!-- one page nav -->
+<script src="../../js/bootstrap.min.js"></script>     <!-- bootstrap -->
+<script src="../../js/tabs.js"></script> <!-- custom tab script -->
+<script src="../../js/lightbox-2.6.min.js"></script>  <!-- lightbox -->
+<script src="../../js/respond.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+
+<script>
+  "use strict";
+
+$(document).ready(function() {
+    hljs.initHighlightingOnLoad();
+    $('.nav.navbar-nav.navbar-right').onePageNav({
+        currentClass: 'current',
+        filter: ':not(.external)'
+    }); 
+});
+</script>
+
+</body>
+</html>

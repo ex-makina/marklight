@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="MarkLight is a framework for Unity that offers XUML a design language similar to HTML but instead of creating webpages it is used to design scenes in Unity.">
+<meta name="keywords" content="marklight, markux, mvvm, unity, unity3d, mvm, mvp, mvc, ux, ui, user interface, user experience, interfaces, game, games, controls, widgets, xml, markup, framework, design, create, share, dream, build, play, dynamic, responsive, fluid, intuitive, easy, simple, powerful, sleek, elegant, structured, flow, creative">
+<meta name="author" content="Ex Makina">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Creating Animations | MarkLight</title>
+<script src="../../js/html5shiv.js"></script>  <!-- support for HTML5 in IE8 -->
+<!-- CSS file links -->
+<link href="../../css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../../css/bootstrap.icon-large.min.css" rel="stylesheet">
+<link href="../../css/style-documentation.css" rel="stylesheet" type="text/css" media="all" id="styleChange" />
+<link href="../../css/lightbox.css" type="text/css" rel="stylesheet" />
+<link href="../../css/responsive.css" type="text/css" rel="stylesheet" />
+<link href="../../css/vs.css" type="text/css" rel="stylesheet" />
+<link href="../../css/font-awesome-4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76413937-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script>
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+     function () {
+     document.location = url;
+     }
+   });
+}
+</script>
+</head>
+
+<body>
+
+    <!-- Sub-Header Start -->
+    <header class="navbar navbar-fixed-top subNavBar" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+        <ul class="nav navbar-nav navbar-left subCategories">
+            <li><a href="../introduction.html" class="external">Introduction</a></li>
+            <li class="subCategorySelected"><a href="../tutorials.html">Tutorials</a></li>
+            <li><a href="../api/MarkLight.Views.Animate.html" class="external">API docs</a></li>            
+        </ul>
+        <span class="slackLeftOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span>
+      </div><!-- /.navbar-collapse -->
+    </header>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top mainNavBar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.marklightforunity.com/"></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../../index.html" class="external">Home</a></li>
+                    <li><a href="https://www.assetstore.unity3d.com/#!/content/37466" class="external" onclick="trackOutboundLink('https://www.assetstore.unity3d.com/#!/content/37466'); return false;">Download</a></li>
+                    <li class="current"><a href="../introduction.html" class="current">Documentation</a></li>
+                    <li><a href="https://www.patreon.com/studiodelight" class="external patreon"></a></li> 
+                </ul>
+            </div><!--/.navbar-collapse -->
+      </div><!-- END Container -->
+    </header><!-- END Header -->
+
+    <!-- Documentation Start -->
+    <a class="anchor" id="documentationAnchor"></a>
+    <section id="documentation" class="marginSubMenu">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">   
+            <h1>Creating Animations</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-8">        
+
+          <a class="docIndexAnchor" id="introduction"></a>
+          <h2>Introduction</h2>
+          Animations can be used to create movement, transitions and have your views visually respond to user interaction. This tutorial explains how to create animations in XUML as well as in code. We'll also explain how to create <b>state animations</b> that can be used to animate between different view states.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="example-scene"></a>
+          <h2>Preparing the Scene</h2>
+          We'll start by setting up a simple example scene that we will add animations to.<br>
+          <br>
+          <i>AnimationExample.xml</i>
+          <pre><code class="xml">
+&lt;AnimationExample&gt;
+    &lt;UserInterace&gt;
+        &lt;Group Spacing="10"&gt;
+            &lt;Button Text="Animate" Click="AnimateClick" /&gt;
+            &lt;Region Id="AnimatedRegion" Width="100" Height="100" BackgroundColor="Red" /&gt;
+        &lt;/Group&gt;
+    &lt;/UserInterace&gt;
+    &lt;EventSystem /&gt;
+&lt;/AnimationExample&gt;
+          </code></pre>
+          <br>
+          <i>AnimationExample.cs</i>
+          <pre><code class="C#">
+public class AnimationExample : View
+{
+    public void AnimateClick()
+    {
+        // TODO do animations
+    }
+}
+          </code></pre>
+          <br>
+          <img src="../../images/documentation/animation/animate.png" class="img-responsive" alt="animation scene"><br>          
+          The scene displays a button with a red square region underneath. Next we'll try make the square move when the user clicks on the button.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="view-animation"></a>
+          <h2>ViewAnimation</h2>
+          To create an animation in XUML we can use the <a href="../api/MarkLight.Views.ViewAnimation.html">ViewAnimation</a> view:<br>
+          <br>
+          <i>AnimationExample.xml</i>
+          <pre><code class="xml">
+&lt;AnimationExample&gt;
+    ...
+<mark>    &lt;ViewAnimation Id="MyAnimation"&gt;
+    &lt;/ViewAnimation&gt;</mark>
+&lt;/AnimationExample&gt;
+          </code></pre>
+          <br> 
+          We have given our animation the ID <b>MyAnimation</b> that we can use to reference it in our view model:<br>
+          <br>
+          <i>AnimationExample.cs</i>
+          <pre><code class="C#">
+public class AnimationExample : View
+{
+    <mark>public ViewAnimation MyAnimation;</mark>
+
+    public void AnimateClick()
+    {
+        MyAnimation.StartAnimation();
+    }
+}
+          </code></pre>
+          <br>
+          As you can see we use the ViewAnimation reference to start the animation using the <b>StartAnimation</b> method. The ViewAnimation class contains the following methods:<br>
+          <br>
+          <table class="table condensed">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>StartAnimation</td>
+                <td>Starts the animation.</td>
+              </tr>
+              <tr>
+                <td>StopAnimation</td>
+                <td>Stops the animation. Called when the animation is not to continue anymore. Note that the animated views doesn't reset to its initial state when the animation is stopped.</td>
+              </tr>
+              <tr>
+                <td>ResetAnimation</td>
+                <td>Resets the animation to its initial state but doesn't stop the animation.</td>
+              </tr>
+              <tr>
+                <td>ResetAndStopAnimation</td>
+                <td>Resets the animation to its initial state and stops the animation.</td>
+              </tr>
+              <tr>
+                <td>ReverseAnimation</td>
+                <td>Makes the animation run in reverse back to its initial state.</td>
+              </tr>
+              <tr>
+                <td>PauseAnimation</td>
+                <td>Pauses the animation.</td>
+              </tr>
+              <tr>
+                <td>ResumeAnimation</td>
+                <td>Resumes a paused animation.</td>
+              </tr>
+              <tr>
+                <td>SetAnimationTarget</td>
+                <td>Changes the animation target view.</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          Right now the animation doesn't do anything. To define what is to be animated and how we can add an <a href="../api/MarkLight.Views.Animate.html">Animate</a> view.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="animate"></a>
+          <h2>Animate</h2>
+          The <a href="../api/MarkLight.Views.Animate.html">Animate</a> view animates a view field. We will use it to animate the Offset of the red square:<br>
+          <br>
+          <pre><code class="xml">
+&lt;AnimationExample&gt;
+    ...
+    &lt;ViewAnimation Id="MyAnimation"&gt;
+        <mark>&lt;Animate Field="AnimatedRegion.Offset" From="0,0,0" To="300,0,0" Duration="750ms" /&gt;</mark>
+    &lt;/ViewAnimation&gt;
+&lt;/AnimationExample&gt;
+          </code></pre>
+          <br>
+          There are a few important things going on here:<br>
+          <br> 
+          <ol>
+            <li>
+              The first thing we do is to set the field that is to be animated:<br><span><code class="xml">&lt;Animate <mark>Field="AnimatedRegion.Offset"</mark> ...</code></span><br>We reference the region by its ID and specify that the Offset field is to be animated.<br>
+              <br>
+            </li>
+            <li>
+              Then we specify the values the animation is to interpolate between:<br><span><code class="xml">&lt;Animate ... <mark>From="0,0,0" To="300,0,0"</mark> ...</code></span><br>Note that you can remove the From value and the animation will use the field's current value as From value when the animation is started.<br>
+              <br>
+            </li>
+            <li>
+              Lastly we set the duration of the animation:<br>
+              <span><code class="xml">&lt;Animate ... <mark>Duration="750ms"</mark> /&gt;</code></span><br>
+              The duration can be specified in milliseconds (ms), seconds (s) or minutes (min).<br>
+              <br>
+            </li>
+          </ol>
+          If you run the scene now you should see the red square move to the right.<br>
+          <img src="../../images/documentation/animation/linear.gif" alt="animation scene"><br>
+          <br>
+          Here is a full list of fields we can set on the <b>Animate</b> view:<br>
+          <br>
+          <table class="table condensed">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>EasingFunction</td>
+                <td>Easing function to be used when interpolating between From and To values.</td>
+              </tr>
+              <tr>
+                <td>AutoReset</td>
+                <td>Indicates that the animation should be reset to its startnig position when completed (false by default).</td>
+              </tr>
+              <tr>
+                <td>AutoReverse</td>
+                <td>Indicates if the animation should be reversed when the animation is completed.</td>
+              </tr>
+              <tr>
+                <td>Field</td>
+                <td>Path to the view field that should be animated.</td>
+              </tr>
+              <tr>
+                <td>From</td>
+                <td>The starting value to be set when the animation starts.</td>
+              </tr>
+              <tr>
+                <td>To</td>
+                <td>The end value to be interpolated to during animation.</td>
+              </tr>
+              <tr>
+                <td>ReverseSpeed</td>
+                <td>The speed the animation should have when run in reverse (percentage of original speed).</td>
+              </tr>
+              <tr>
+                <td>Duration</td>
+                <td>Duration of the animation.</td>
+              </tr>
+              <tr>
+                <td>StartOffset</td>
+                <td>Delay in the interpolation of values after the animation is started.</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          Before we continue we can try setting AutoReverse to make the animation a little more interesting:<br> 
+          <br>
+          <pre><code class="xml">
+&lt;AnimationExample&gt;
+    ...
+    &lt;ViewAnimation Id="MyAnimation"&gt;
+        &lt;Animate Field="AnimatedRegion.Offset" From="0,0,0" To="300,0,0" Duration="750ms" 
+                 <mark>AutoReverse="True"</mark> /&gt;
+    &lt;/ViewAnimation&gt;
+&lt;/AnimationExample&gt;
+          </code></pre>
+          <br>
+
+
+          <a class="docIndexAnchor" id="easing-functions"></a>
+          <h2>Easing Functions</h2>
+          Easing functions defines the rate of change of the view field value over time. By default values are interpolated in a linear fashion. Sometimes you want to utilize other forms of easing to, e.g. make the animation seem more smooth or interesting. Let's change the easing function of our animation:<br>
+          <br>
+          <pre><code class="xml">
+&lt;AnimationExample&gt;
+    ...
+    &lt;ViewAnimation Id="MyAnimation"&gt;
+        &lt;Animate Field="AnimatedRegion.Offset" From="0,0,0" To="300,0,0" Duration="750ms" 
+                 AutoReverse="True" <mark>EasingFunction="QuadraticEaseIn"</mark> /&gt;
+    &lt;/ViewAnimation&gt;
+&lt;/AnimationExample&gt;
+          </code></pre>
+          <br>
+          <img src="../../images/documentation/animation/easing.gif" alt="animation scene"><br>
+          <br>
+
+          For more details on easing functions I recommend checking out <a href="http://easings.net/">easings.net</a>.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="multiple-fields"></a>
+          <h2>Animating Multiple Fields</h2>
+          To animate more than one field you can add more <b>Animate</b>. We can add one more to animate the color of the square:<br>
+          <br>          
+          <pre><code class="xml">
+&lt;AnimationExample&gt;
+    ...
+    &lt;ViewAnimation Id="MyAnimation"&gt;
+        &lt;Animate Field="AnimatedRegion.Offset" From="0,0,0" To="300,0,0" Duration="750ms" 
+                 AutoReverse="True" EasingFunction="QuadraticEaseIn" /&gt;
+<mark>        &lt;Animate Field="AnimatedRegion.BackgroundColor" From="Red" To="Indigo" Duration="750ms" 
+                 AutoReverse="True" EasingFunction="QuadraticEaseIn" /&gt;</mark>
+    &lt;/ViewAnimation&gt;
+&lt;/AnimationExample&gt;
+          </code></pre>
+          <br>
+          Finally we can animate the scale of the button. We end up with the following scene:<br>
+          <br>
+          <i>AnimationExample.xml</i>
+          <pre><code class="xml">
+&lt;AnimationExample&gt;
+    &lt;UserInterace&gt;
+        &lt;Group Spacing="10"&gt;
+            &lt;Button <mark>Id="AnimatedButton"</mark> Text="Animate" Click="AnimateClick" /&gt;
+            &lt;Region Id="AnimatedRegion" Width="100" Height="100" BackgroundColor="Red" /&gt;
+        &lt;/Group&gt;
+    &lt;/UserInterace&gt;
+    &lt;EventSystem /&gt;
+
+    &lt;ViewAnimation Id="MyAnimation"&gt;
+        &lt;Animate Field="AnimatedRegion.Offset" From="0,0,0" To="300,0,0" Duration="750ms" 
+                 AutoReverse="True" EasingFunction="QuadraticEaseIn" /&gt;
+        &lt;Animate Field="AnimatedRegion.BackgroundColor" From="Red" To="Indigo" Duration="750ms" 
+                 AutoReverse="True" EasingFunction="QuadraticEaseIn" /&gt;
+<mark>        &lt;Animate Field="AnimatedButton.Scale" From="1" To="0.7" Duration="250ms" 
+                 AutoReverse="True" EasingFunction="QuadraticEaseOut" /&gt;</mark>
+    &lt;/ViewAnimation&gt;
+&lt;/AnimationExample&gt;
+          </code></pre>
+          <br>
+          <img src="../../images/documentation/animation/multiple.gif" alt="animation scene"><br>
+          <br>
+          That concludes the use of <b>ViewAnimation</b> to animate views. Next we take a look into the StateAnimations view that can be used to animate between view states.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="state-animations"></a>
+          <h2>State Animations</h2>          
+          The <a href="../api/MarkLight.Views.StateAnimation.html">StateAnimation</a> view defines which <a href="state-management.html#state-fields">state fields</a> should be animated and how when the view changes from one state to another. We will start with a similar scene we prepared at the beginning of this tutorial:<br>
+          <br>
+          <i>StateAnimationExample.xml</i>
+          <pre><code class="xml">
+&lt;StateAnimationExample&gt;
+    &lt;UserInterace&gt;
+        &lt;Group Spacing="10"&gt;
+            &lt;Button Text="Change State" Click="ChangeState" /&gt;
+            &lt;Region Width="100" Height="100" BackgroundColor="Red" /&gt;
+        &lt;/Group&gt;
+    &lt;/UserInterace&gt;
+    &lt;EventSystem /&gt;
+&lt;/StateAnimationExample&gt;
+          </code></pre>
+          <br>
+          Let's design two new states for our view: <b>Left</b> and <b>Right</b>. When the view is in the Left state we want the red square to be on the left and when it's in the Right state we want the square on the right side. We can do this by adding two new <b>state fields</b> to our view:<br>
+          <br>
+          <pre><code class="xml">
+&lt;StateAnimationExample <mark>Left-Region.Offset="-200,0,0"</mark> <mark>Right-Region.Offset="200,0,0"</mark> &gt;
+    &lt;UserInterace&gt;
+        &lt;Group Spacing="10"&gt;
+            &lt;Button Text="Change State" Click="ChangeState" /&gt;
+            &lt;Region <mark>Id="Region"</mark> Width="100" Height="100" BackgroundColor="Red" /&gt;
+        &lt;/Group&gt;
+    &lt;/UserInterace&gt;
+    &lt;EventSystem /&gt;
+&lt;/StateAnimationExample&gt;
+          </code></pre>
+          <br>
+          Next we add a button click handler that toggles the state of our view between Left and Right:<br>
+          <br>
+          <i>StateAnimationExample.cs</i>
+          <pre><code class="C#">
+public class StateAnimationExample : View
+{   
+    public void ChangeState()
+    {
+        if (State == "Right")
+        {
+            SetState("Left");
+        }
+        else
+        {
+            SetState("Right");
+        }
+    }
+}
+          </code></pre>
+          <br>
+          If you run the scene and click on the button you should see the square start out in its default state and when you click on the button it toggles between right and left.<br>
+          <br>
+          <img src="../../images/documentation/animation/states.gif" alt="switching states"><br>
+          <br>
+          To animate between the Left and Right states we need to add two StateAnimation views:<br>
+          <br>
+          <pre><code class="xml">
+&lt;StateAnimationExample Left-Region.Offset="-200,0,0" Right-Region.Offset="200,0,0" &gt;
+    ...
+
+<mark>    &lt;StateAnimation From="Any" To="Right"&gt;
+        &lt;Animate Field="Region.Offset" Duration="500ms" EasingFunction="QuadraticEaseOut" /&gt;
+    &lt;/StateAnimation&gt;
+
+    &lt;StateAnimation From="Any" To="Left"&gt;
+        &lt;Animate Field="Region.Offset" Duration="500ms" EasingFunction="QuadraticEaseOut" /&gt;
+    &lt;/StateAnimation&gt;</mark>
+
+&lt;/StateAnimationExample&gt;
+          </code></pre>
+          <br>
+          To create the state animation we do the following:<br>
+          <br>
+          <ol>
+            <li>
+              We create a StateAnimation view and set which state change it applies to:<br><span><code class="xml">&lt;StateAnimation <mark>From="Any"</mark> <mark>To="Right"</mark>&gt;</code></span><br>This state animation is to be applied when the view changes state from anything to Right.<br>
+              <br>
+            </li>
+            <li>
+              Next we specify which field should be animated and how by adding an Animate field:<br><span><code class="xml">&lt;Animate <mark>Field="Region.Offset" Duration="500ms" ...</mark></code></span><br>Note that we don't need to specify From and To values as we did with the ViewAnimation example. This is because the From and To values are derived from the state fields we've already defined.<br>
+              <br>
+            </li>
+            <li>
+              We do the same thing for the left state animation.<br>
+              <br>
+            </li>
+          </ol>
+          Now we have a smoother transition between the states:<br>
+          <br>
+          <img src="../../images/documentation/animation/state-animation.gif" alt="animating states"><br>
+          <br>
+
+
+          <a class="docIndexAnchor" id="code-animations"></a>
+          <h2>Creating Animations in Code</h2>          
+          To create animations in code you can use the <a href="../api/MarkLight.Animation.ViewFieldAnimator.html">ViewFieldAnimator</a> class. Creating animations in code can be useful if the parameters of your animation need to adjust to runtime changes in data. Here is to create a new animation in code:<br>
+          <br>
+          <pre><code class="C#">
+    var offsetAnimator = new ViewFieldAnimator();
+
+    // set up animation
+    offsetAnimator.EasingFunction = EasingFunctionType.QuadraticEaseOut;
+    offsetAnimator.Field = "Offset"; // the field that is to be animated
+    offsetAnimator.From = new ElementMargin();
+    offsetAnimator.To = new ElementMargin(x, y, 0, 0); // x and y set during runtime
+    offsetAnimator.Duration = 0.2f; // duration in seconds
+    offsetAnimator.TargetView = MyRegion; // the view whose Offset field is to be animated
+
+    // start animation
+    offsetAnimator.StartAnimation();
+          </code></pre>
+          <br>
+          When creating animation in code you need to manually update the animation each frame:<br>
+          <br>
+          <pre><code class="C#">
+    public void Update()
+    {
+        offsetAnimator.Update();
+    }
+          </code></pre>
+          <br>
+          <br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+          </div> <!-- END OF FIRST COLUMN -->
+
+          <div class="col-lg-4">
+
+              <div class="toc hidden-print hidden-xs hidden-sm" data-spy="affix" data-offset-top="115">
+                <ul>
+                  <li><a href="#introduction">Introduction</a></li>
+                  <li><a href="#example-scene">Preparing the Scene</a></li>
+                  <li><a href="#view-animation">ViewAnimation</a></li>
+                  <li><a href="#animate">Animate</a></li>
+                  <li><a href="#easing-functions">Easing Functions</a></li>
+                  <li><a href="#multiple-fields">Animating Multiple Fields</a></li>
+                  <li><a href="#state-animations">State Animations</a></li>
+                  <li><a href="#code-animations">Creating Animations in Code</a></li>
+                </ul>
+              </div>
+
+          </div> <!-- END OF SECOND COLUMN -->          
+        </div><!-- END OF ROW-->
+      </div> <!-- END OF CONTAINER -->
+    </section>
+
+
+    <!-- Start subscription box -->
+    <section id="promoBox">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4><span>Join the Announcement List</span></h4>
+            <p>Be notified when new themes, views, tutorials and updates are available</p>
+          </div>
+          <div class="col-lg-6">
+            <form method="post" name="subscribeForm" id="subscribeForm" action="http://scripts.dreamhost.com/add_list.cgi">
+                <input type="hidden" name="list" value="news" />
+                <input type="hidden" name="domain" value="markux.com" />
+                <input type="text" name="email" id="emailInput" placeholder="your email here" /> 
+                <input type="submit" name="submit" id="subscribeButton" value="Subscribe" /> 
+            </form>
+
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END container -->
+    </section><!-- END Promo box -->
+
+    <footer>
+      <div class="container">
+        <div class="row footer-info">
+          <div class="col-lg-5">
+            <img src="../../images/exmakina.png" alt="company logo" />
+          </div>
+          <div class="col-lg-3 contact">
+            <ul>
+              <li><img src="../../images/icons/footerMail.png" alt="mail icon" /><a href="mailto:contact@marklightforunity.com "> contact@marklightforunity.com </a></li> 
+            </ul>                
+          </div>
+          <div class="col-lg-4">
+            <ul class="socialIcons footer-social socialIconsOffset">
+                <li><a href="https://twitter.com/MarkUX" onclick="trackOutboundLink('https://twitter.com/MarkUX'); return false;" class="twitterIcon" target="_blank"></a></li>
+                <li><a href="http://www.reddit.com/r/marklight" onclick="trackOutboundLink('http://www.reddit.com/r/marklight'); return false;" class="redditIcon" target="_blank"></a></li>
+                <li><span class="slackOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span></li>
+            </ul>
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END Container -->
+    </footer><!-- END Footer -->
+    
+<!-- JavaScript file links -->
+<script src="../../js/jquery-1.12.3.min.js"></script>            <!-- Jquery -->
+<script src="../../js/bootstrap.min.js"></script>     <!-- bootstrap -->
+<script src="../../js/jquery.bxslider.min.js"></script>  <!-- bxslider -->
+<script src="../../js/tabs.js"></script> <!-- custom tab script -->
+<script src="../../js/lightbox-2.6.min.js"></script>  <!-- lightbox -->
+<script src="../../js/jquery.scrollTo.js"></script>  <!-- scollTo -->
+<script src="../../js/jquery.nav.js"></script>  <!-- one page nav -->
+<script src="../../js/respond.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+
+<script>
+  "use strict";
+
+$(document).ready(function() {
+    hljs.initHighlightingOnLoad();
+    $('.nav.navbar-nav.navbar-right').onePageNav({
+        currentClass: 'current',
+        filter: ':not(.external)'
+    }); 
+    $('span code').each(function(i, inline)
+    {
+      hljs.highlightBlock(inline);
+    });
+});
+</script>
+
+</body>
+</html>

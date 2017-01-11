@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="MarkLight is a framework for Unity that offers XUML a design language similar to HTML but instead of creating webpages it is used to design scenes in Unity.">
+<meta name="keywords" content="marklight, markux, mvvm, unity, unity3d, mvm, mvp, mvc, ux, ui, user interface, user experience, interfaces, game, games, controls, widgets, xml, markup, framework, design, create, share, dream, build, play, dynamic, responsive, fluid, intuitive, easy, simple, powerful, sleek, elegant, structured, flow, creative">
+<meta name="author" content="Ex Makina">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Working with List Data | MarkLight</title>
+<script src="../../js/html5shiv.js"></script>  <!-- support for HTML5 in IE8 -->
+<!-- CSS file links -->
+<link href="../../css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="../../css/bootstrap.icon-large.min.css" rel="stylesheet">
+<link href="../../css/style-documentation.css" rel="stylesheet" type="text/css" media="all" id="styleChange" />
+<link href="../../css/lightbox.css" type="text/css" rel="stylesheet" />
+<link href="../../css/responsive.css" type="text/css" rel="stylesheet" />
+<link href="../../css/vs.css" type="text/css" rel="stylesheet" />
+<link href="../../css/font-awesome-4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76413937-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<script>
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {'hitCallback':
+     function () {
+     document.location = url;
+     }
+   });
+}
+</script>
+</head>
+
+<body>
+
+    <!-- Sub-Header Start -->
+    <header class="navbar navbar-fixed-top subNavBar" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+        <ul class="nav navbar-nav navbar-left subCategories">
+            <li><a href="../introduction.html" class="external">Introduction</a></li>
+            <li class="subCategorySelected"><a href="../tutorials.html">Tutorials</a></li>
+            <li><a href="../api/MarkLight.Views.Animate.html" class="external">API docs</a></li>            
+        </ul>
+        <span class="slackLeftOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span>
+      </div><!-- /.navbar-collapse -->
+    </header>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top mainNavBar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.marklightforunity.com/"></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../../index.html" class="external">Home</a></li>
+                    <li><a href="https://www.assetstore.unity3d.com/#!/content/37466" class="external" onclick="trackOutboundLink('https://www.assetstore.unity3d.com/#!/content/37466'); return false;">Download</a></li>
+                    <li class="current"><a href="../introduction.html" class="current">Documentation</a></li>
+                    <li><a href="https://www.patreon.com/studiodelight" class="external patreon"></a></li> 
+                </ul>
+            </div><!--/.navbar-collapse -->
+      </div><!-- END Container -->
+    </header><!-- END Header -->
+
+    <!-- Documentation Start -->
+    <a class="anchor" id="documentationAnchor"></a>
+    <section id="documentation" class="marginSubMenu">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">   
+            <h1>Working with List Data</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-8">        
+
+          <a class="docIndexAnchor" id="introduction"></a>
+          <h2>Introduction</h2>
+          
+          This tutorial will go over how to work with list data within MarkLight. It will show you how to present static and dynamic list data. You'll learn how to customize the look of list items by using item templates and how to bind data to the template. Finally we will go over how to handle item selection and touch on some common list operations such as adding, updating and sorting.<br>
+          <br>
+          There are a number of views that work with list data: <a href="../api/MarkLight.Views.UI.List.html">List</a>, <a href="../api/MarkLight.Views.UI.DataGrid.html"/>DataGrid</a>, <a href="../api/MarkLight.Views.UI.ComboBox.html">ComboBox</a> and <a href="../api/MarkLight.Views.UI.TabPanel.html">TabPanel</a>. In this tutorial we will work with the <b>List</b> view as it's the most fundamental view for presenting lists, however, most of the information will be applicable to the other views as well.<br>
+          <br>
+
+          <a class="docIndexAnchor" id="static-list"></a>
+          <h2>Static List</h2>
+          If the list data you want to present is static, i.e. items will not be dynamically added or removed, you can either use a Group or a List view. Group is useful if you want to snug items together horizontally or vertically. The List view provides additional functionality such as selection logic and the option to have items wrap as they reach the boundaries of the list. Here is an example how to create a simple static selectable list using the List view:<br>
+          <br>          
+          <i>StaticListExample.xml</i>
+          <pre><code class="xml">
+&lt;StaticListExample&gt;
+    &lt;List Width="200"&gt;
+        &lt;ListItem Text="Item 1" /&gt;
+        &lt;ListItem Text="Item 2" /&gt;
+        &lt;ListItem Text="Long Item 3" /&gt;
+        &lt;ListItem Text="Item 4" /&gt;
+    &lt;/List&gt;
+&lt;/StaticListExample&gt;
+          </code></pre>   
+          <br>
+          <img src="../../images/documentation/working-with-list-data/listview.png" class="img-responsive" alt="list view"><br>          
+          The items are arranged vertically by default and the height of the list will automatically adjust to the items (unless height is explicitly specified). The items can also contain any content you want:<br>
+          <br>
+          <pre><code class="xml">
+    &lt;ListItem Text="Item 4"&gt;
+        &lt;CheckBox Alignment="Right"&gt;
+    &lt;/ListItem&gt;
+          </code></pre>   
+          <br>
+          <img src="../../images/documentation/working-with-list-data/listitemcontent.png" class="img-responsive" alt="list item content"><br>
+          <br>                    
+
+          <a class="docIndexAnchor" id="dynamic-list"></a>
+          <h2>Dynamic List</h2>
+          Let's assume we want to present a dynamic list of highscores represented by the following data model:<br>
+          <br>
+          <i>Highscore.cs</i>
+          <pre><code class="c#">
+public class Highscore
+{
+    public string Player;
+    public int Score;    
+}
+          </code></pre>
+          <br>
+          First we need a way to bind the list of highscores to the List view in such a way that it can automatically respond to changes in the list. To do this we need to store the list of highscores using the generic list collection <a href="../api/MarkLight.ObservableListT.html">ObservableList&lt;T&gt;</a>. Besides normal list operations (add, insert, remove, etc) this collection provides a mechanism for observers to listen to and respond to changes made in the collection. So our view model containing the list looks like this:<br>
+          <br>
+          <i>DynamicListExample.cs</i>
+          <pre><code class="c#">
+public class DynamicListExample : UIView
+{
+    <mark>public ObservableList&lt;Highscore&gt; Highscores;</mark>
+
+    public override void Initialize()
+    {
+        // initialize and populate highscores
+        Highscores = new ObservableList&lt;Highscore&gt;();
+        Highscores.Add(new Highscore { Player = "PlayerA", Score = 100 });
+        Highscores.Add(new Highscore { Player = "PlayerB", Score = 750 });
+        Highscores.Add(new Highscore { Player = "PlayerC", Score = 9000 });
+        Highscores.Add(new Highscore { Player = "PlayerD", Score = 9000 });
+    }
+}
+          </code></pre>
+          <br>  
+          We now have an observable list called <i>Highscores</i> that can be bound to our list view like this:<br>
+          <br>
+          <i>DynamicListExample.xml</i>
+          <pre><code class="xml">
+&lt;DynamicListExample&gt;
+    &lt;List Items="{Highscores}" Width="200"&gt;
+        &lt;ListItem IsTemplate="True" Text="{#Item.Player} {#Item.Score}" /&gt;
+    &lt;/List&gt;
+&lt;/DynamicListExample&gt;
+          </code></pre>   
+          <br>
+          There are three important things going on here:<br>
+          <br> 
+          <ol>
+            <li>
+              The first thing we do is to bind the highscore data to the list view:<br><span><code class="xml">&lt;List <mark>Items="{Highscores}"</mark>&gt;</code></span><br>
+              <br>
+            </li>
+            <li>
+              We inform the List view that the list item is to be used as a template for dynamic data by setting: <span><code class="xml">&lt;ListItem <mark>IsTemplate="True"</mark> .../&gt;</code></span><br>
+              <br>
+            </li>
+            <li>
+              Lastly we bind item data to the item template:<br>
+              <span><code class="xml">&lt;ListItem IsTemplate="True" <mark>Text="{#Item.Player} {#Item.Score}"</mark> /&gt;<br></code></span><br>
+              We use the notation <b>#Item</b> which always points to the current item data being populated by the List view. In this case we bind the item text to a format string containing the player name followed by the score.<br>
+              <br>
+            </li>
+          </ol>
+
+          Our list now looks like this:<br>
+          <br>
+          <img src="../../images/documentation/working-with-list-data/dynamiclist.png" class="img-responsive" alt="dynamic list view"><br>
+          We can make it look a bit better by changing the template. Like with the static list example we have the option to create more advanced item templates by adding some content:<br>
+          <br>
+          <i>DynamicListExample.xml</i>
+          <pre><code class="xml">
+&lt;DynamicListExample&gt;
+    &lt;List Items="{Highscores}" Width="250"&gt;
+        &lt;ListItem IsTemplate="True"&gt;
+            &lt;Region Margin="10"&gt;
+                &lt;Label Text="{#Item.Player}" Alignment="Left" FontColor="Black" 
+                       FontSize="22" AdjustToText="Width" /&gt;
+                &lt;Label Text="{#Item.Score}" Alignment="Right" FontColor="Black" 
+                       AdjustToText="Width" /&gt;
+            &lt;/Region>
+        &lt;/ListItem&gt;
+    &lt;/List&gt;
+&lt;/DynamicListExample&gt;
+          </code></pre>   
+          <br>
+          <img src="../../images/documentation/working-with-list-data/dynamiclist2.png" class="img-responsive" alt="polished dynamic list view"><br>
+          <br>
+
+          <a class="docIndexAnchor" id="adding-removing-items"></a>
+          <h2>Adding / Removing Items</h2>
+          Any changes to the list are done through the reference to the ObservableList. Adding and removing items from the list is pretty straightforward. Here are examples of common add/remove list operations:<br>
+          <br>
+          <pre><code class="c#">
+    public void AddAndRemove()
+    {
+        // remove item at index
+        Highscores.RemoveAt(0);
+
+        // remove item by reference
+        var item = Hishscores.Find(x => x.Player == "PlayerB");
+        Highscores.Remove(item);
+
+        // add new item
+        Highscores.Add(new Highscore { Player = "Player" , Score = 0 });
+
+        // add new item at index
+        Highscores.Insert(0, new Highscore { Player = "Player" , Score = 0 });
+    }
+          </code></pre>
+          <br>  
+          <a class="docIndexAnchor" id="updating-items"></a>
+          <h2>Updating Items</h2>
+          If an item has been internally modified, e.g. the score on an existing highscore entry has changed, you can notify the list of these changes through the <b>ItemModified</b> method. This ensures that the changed values are propagated to any bound fields:<br>
+          <br>
+          <pre><code class="c#">
+    public void UpdateScores()
+    {
+        // scenario #1 - update the player's name on an item
+        var item = Highscores[0];
+        item.Player = "New Name";
+        <mark>Highscores.ItemModified(item, "Player");</mark>
+
+        // scenario #2 - add 100 to all scores
+        foreach (var highscore in Highscores)
+        {
+            highscore.Score += 100;
+        }
+
+        // ... update score on all items
+        Highscores.ItemsModified("Score");
+
+        // scenario #3 - update all fields on an item
+        var item2 = Highscores[1];        
+        item2.Player = "New Name 2";
+        item2.Score = 0;
+        Highscores.ItemModified(item2);
+
+        // scenario #4 - update all fields on all list items
+        Highscores.ItemsModified();
+
+        // scenario #5 - update nested object fields on item
+        var item3 = Highscores[3];
+        item3.NestedObject.Field1 = "new value";
+        item3.NextedObject.Field2 = "new value";
+
+        // ... only Field1 on the nested object will be updated
+        Highscores.ItemModified(item3, "NestedObject.Field1");
+
+        // ... all fields on the nested object will be updated
+        Highscores.ItemModified(item3, "NestedObject");
+    }
+          </code></pre>
+          <br>            
+          <a class="docIndexAnchor" id="list-selection"></a>
+          <h2>List Selection</h2>
+          If you want to be notified when the selection in the list view changes you can add an action handler to the List's <b>ItemSelected</b> view action:<br>
+          <br>
+          <pre><code class="xml">
+    &lt;List Items="{Highscores}" <mark>ItemSelected="HighscoreSelected"</mark>&gt;
+          </code></pre>
+          <br>
+          <pre><code class="c#">
+    public void HighscoreSelected()
+    {
+        var selectedHighscore = Highscores.SelectedItem;
+        // do something with selected item
+    }
+          </code></pre>
+          <br>            
+          If you want to programmatically set the selected list item you can do so by the SelectedItem or SelectedIndex property on the ObservableList:<br>
+          <br>
+          <pre><code class="c#">
+    public int _nextIndex = 0;
+
+    public void SelectNext()
+    {
+        // you can set selected by index:
+        <mark>Highscores.SelectedIndex = _nextIndex;</mark>
+
+        // or set selected by reference:
+        //var item = Higscores[_nextIndex];
+        //Highscores.SelectedItem = item;
+
+        ++_nextIndex;
+        if (_nextIndex >= Highscores.Count)
+        {
+            _nextIndex = 0;
+        }
+    }
+          </code></pre>
+          <br>                   
+          <a class="docIndexAnchor" id="list-sort"></a>
+          <h2>Sorting List</h2>
+          You can sort the list using the <b>Sort</b> method:<br>
+          <br>
+          <pre><code class="c#">
+    public void SortHighscores()
+    {
+        // sort highscores by score (descending)        
+        Highscores.Sort((x, y) => y.Score.CompareTo(x.Score));
+
+        // sort highscores by score (ascending)
+        //Highscores.Sort((x, y) => x.Score.CompareTo(y.Score));
+
+        // sort by using default comparer
+        //Highscores.Sort();
+    }
+          </code></pre>
+          <br>            
+          <a class="docIndexAnchor" id="replace-items"></a>
+          <h2>Replacing Items</h2>
+          The list operation <b>Replace</b> is used when you want to replace items in the list. The replace operation ensures than any existing generated list item views are reused which saves performance overhead.<br>
+          <br>
+          <pre><code class="c#">
+    public void ReplaceHighscores()
+    {
+        // create new highscore list
+        var newScores = new List<Highscore>();
+        newScores.Add({ Player = "PlayerX", Score = 999 });
+        newScores.Add({ Player = "PlayerY", Score = 888 });
+        newScores.Add({ Player = "PlayerZ", Score = 777 });
+
+        // replace highscores with new list
+        Highscores.Replace(newScores);
+
+        // replace single item at index
+        var score = new Highscore { Player = "PlayerW", Score = 1000 };
+        Highscores.Replace(0, score);
+    }
+          </code></pre>
+          <br>   
+
+
+          <br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+          </div> <!-- END OF FIRST COLUMN -->
+          <div class="col-lg-1">
+          </div>
+          <div class="col-lg-3">
+
+              <div class="toc hidden-print hidden-xs hidden-sm" data-spy="affix" data-offset-top="115">
+                <ul>
+                  <li><a href="#introduction">Introduction</a></li>
+                  <li><a href="#static-list">Static List</a></li>
+                  <li><a href="#dynamic-list">Dynamic List</a></li>
+                  <li><a href="#adding-removing-items">Adding / Removing Items</a></li>
+                  <li><a href="#updating-items">Updating Items</a></li>                  
+                  <li><a href="#list-selection">List Selection</a></li>
+                  <li><a href="#list-sort">Sorting List</a></li>
+                  <li><a href="#replace-items">Replacing Items</a></li>
+                </ul>
+              </div>
+
+          </div> <!-- END OF SECOND COLUMN -->          
+        </div><!-- END OF ROW-->
+      </div> <!-- END OF CONTAINER -->
+    </section>
+
+
+    <!-- Start subscription box -->
+    <section id="promoBox">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4><span>Join the Announcement List</span></h4>
+            <p>Be notified when new themes, views, tutorials and updates are available</p>
+          </div>
+          <div class="col-lg-6">
+            <form method="post" name="subscribeForm" id="subscribeForm" action="http://scripts.dreamhost.com/add_list.cgi">
+                <input type="hidden" name="list" value="news" />
+                <input type="hidden" name="domain" value="markux.com" />
+                <input type="text" name="email" id="emailInput" placeholder="your email here" /> 
+                <input type="submit" name="submit" id="subscribeButton" value="Subscribe" /> 
+            </form>
+
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END container -->
+    </section><!-- END Promo box -->
+
+    <footer>
+      <div class="container">
+        <div class="row footer-info">
+          <div class="col-lg-5">
+            <img src="../../images/exmakina.png" alt="company logo" />
+          </div>
+          <div class="col-lg-3 contact">
+            <ul>
+              <li><img src="../../images/icons/footerMail.png" alt="mail icon" /><a href="mailto:contact@marklightforunity.com "> contact@marklightforunity.com </a></li> 
+            </ul>                
+          </div>
+          <div class="col-lg-4">
+            <ul class="socialIcons footer-social socialIconsOffset">
+                <li><a href="https://twitter.com/MarkUX" onclick="trackOutboundLink('https://twitter.com/MarkUX'); return false;" class="twitterIcon" target="_blank"></a></li>
+                <li><a href="http://www.reddit.com/r/marklight" onclick="trackOutboundLink('http://www.reddit.com/r/marklight'); return false;" class="redditIcon" target="_blank"></a></li>
+                <li><span class="slackOffset"><script async defer src="https://marklight.herokuapp.com/slackin.js"></script></span></li>
+            </ul>
+          </div>
+        </div><!-- END Row -->
+      </div><!-- END Container -->
+    </footer><!-- END Footer -->
+    
+<!-- JavaScript file links -->
+<script src="../../js/jquery-1.12.3.min.js"></script>            <!-- Jquery -->
+<script src="../../js/bootstrap.min.js"></script>     <!-- bootstrap -->
+<script src="../../js/jquery.bxslider.min.js"></script>  <!-- bxslider -->
+<script src="../../js/tabs.js"></script> <!-- custom tab script -->
+<script src="../../js/lightbox-2.6.min.js"></script>  <!-- lightbox -->
+<script src="../../js/jquery.scrollTo.js"></script>  <!-- scollTo -->
+<script src="../../js/jquery.nav.js"></script>  <!-- one page nav -->
+<script src="../../js/respond.js"></script>
+<script src="../../js/highlight.pack.js"></script>
+
+<script>
+  "use strict";
+
+$(document).ready(function() {
+    hljs.initHighlightingOnLoad();
+    $('.nav.navbar-nav.navbar-right').onePageNav({
+        currentClass: 'current',
+        filter: ':not(.external)'
+    }); 
+    $('span code').each(function(i, inline)
+    {
+      hljs.highlightBlock(inline);
+    });
+});
+</script>
+
+</body>
+</html>
