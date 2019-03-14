@@ -219,7 +219,7 @@ namespace MarkLight.ValueConverters
         public override string ConvertToString(object value)
         {
             Color color = (Color)value;
-            return String.Format("{0},{1},{2},{3}", color.r, color.g, color.b, color.a);
+            return String.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", color.r, color.g, color.b, color.a);
         }
 
         /// <summary>
