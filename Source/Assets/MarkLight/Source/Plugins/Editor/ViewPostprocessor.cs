@@ -156,12 +156,25 @@ namespace MarkLight.Editor
 
             Utils.SuppressLogging = true;
 
+            var replacedViewModels =
+                from viewType in ViewPresenter.Instance.ViewTypeDataList
+                where !String.IsNullOrEmpty(viewType.ReplacesViewModel)
+                select viewType.ReplacesViewModel;
+
             // generate XSD schema based on view type data
             foreach (var viewType in ViewPresenter.Instance.ViewTypeDataList)
             {
+                if (replacedViewModels.Contains(viewType.ViewTypeName))
+                {
+                    // skip replaced view models because the replacement view model will define the schema
+                    continue;
+                }
+
+                var elementName = String.IsNullOrEmpty(viewType.ReplacesViewModel) ? viewType.ViewTypeName : viewType.ReplacesViewModel;
+
                 sb.AppendLine();
-                sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", viewType.ViewTypeName, Environment.NewLine);
-                sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", viewType.ViewTypeName, Environment.NewLine);
+                sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", elementName, Environment.NewLine);
+                sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", elementName, Environment.NewLine);
                 sb.AppendFormat("    <xs:sequence>{0}", Environment.NewLine);
                 sb.AppendFormat("      <xs:any processContents=\"lax\" minOccurs=\"0\" maxOccurs=\"unbounded\" />{0}", Environment.NewLine);
                 sb.AppendFormat("    </xs:sequence>{0}", Environment.NewLine);
